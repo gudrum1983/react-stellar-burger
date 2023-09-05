@@ -1,21 +1,23 @@
-import styles from "../AppHeader/AppHeader.module.css";
-
+import PropTypes from 'prop-types';
 
 const textType = {
   primary: "text text_type_main-default",
   secondary: "text text_type_main-default text_color_inactive",
 }
 
+NavigationLink.propTypes = {
+  icon: PropTypes.node.isRequired,
+  text: PropTypes.string.isRequired}
 
-function ButtonS(props) {
+function NavigationLink(props) {
   return (
-    <li style={{display: 'flex', flexDirection: 'row', gap: '8px'}} className={`${styles.nav_link} pl-5 pr-5 pb-5 pt-5`}>
+    <>
       {props.icon}
       <p className={textType[props.icon.props.type]} style={{textWrap: "nowrap"}}>
         {props.text}
       </p>
-    </li>
+    </>
   );
 }
 
-export {ButtonS}
+export {NavigationLink}
