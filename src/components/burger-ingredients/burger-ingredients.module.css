@@ -1,0 +1,65 @@
+
+.ingredients {
+  width: 100%;
+  display: flex;
+  overflow-y: scroll;
+  align-items: stretch;
+  flex-direction: column;
+  scroll-behavior: smooth;
+}
+
+.type{
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  align-items: stretch;
+  grid-column-gap: 24px;
+  grid-row-gap: 32px;
+}
+
+.typePart{
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sectionClass {
+  flex-direction: column;
+  display: flex;
+  width: 50%;
+  box-sizing: border-box;
+}
+
+.price{
+  display: flex;
+  justify-content: center;
+
+}
+
+
+.card{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  align-items: center;
+  overflow: hidden;
+
+}
+
+.cardName{
+  height: 48px;
+  width: 100%;
+  text-align: center;
+}
+
+.imgCard {
+  width: 240px;
+  height: 120px;
+  object-fit: cover;
+}
+
+.nonLink{
+  text-decoration: none;
+}

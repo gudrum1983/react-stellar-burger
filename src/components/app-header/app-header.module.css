@@ -27,10 +27,10 @@
   justify-self: end;
 }
 
-.flex_row_8gap {
+.flex_row {
   display: flex;
   flex-direction: row;
-  gap: 8px;
+
 }
 
 .p_m_0 {
@@ -43,6 +43,6 @@
 }
 
 .links {
-  composes: flex_row_8gap;
+  composes: flex_row;
   composes: non_list;
 }
