@@ -105,6 +105,7 @@ const Card = ({item, setComposition, composition}) => {
   }
 
   function BurgerIngredients(props) {
+    console.log("555")
 
     const sauces = props.data.filter((item) => item.type === "sauce");
     const buns = props.data.filter((item) => item.type === "bun");
