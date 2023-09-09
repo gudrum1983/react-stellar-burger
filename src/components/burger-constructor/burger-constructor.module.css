@@ -1,9 +1,75 @@
 .BurgerConstructor {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 52px;
+  box-sizing: border-box;
+  height: calc(100% - 152px);
+  gap: 40px;
+
+
+}
+
+.containerList {
+  display: flex;
+  flex-direction: column;
+  box-sizing: content-box;
+}
+
+.list {
   width: 100%;
-  height: 100%;
-  border: red dashed 1px;
-  padding-bottom: 52px;
+  align-items: end;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: calc(100% - 40px - 66px);
 
 }
 
 
+.listScroll {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.scroll {
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+
+.price {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.iconPrice {
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
+  background-image: url("../../images/icon 36x36.svg");
+}
+
+
+.scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+  background: #8585ad;
+  /*  border: 3px solid #2F2F37;*/
+  border: none;
+  border-radius: 0px
+}
+
+
+.itemConst {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-start;
+}

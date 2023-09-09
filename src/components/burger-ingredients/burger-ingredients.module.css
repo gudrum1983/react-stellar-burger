@@ -2,10 +2,9 @@
 .ingredients {
   width: 100%;
   display: flex;
-  overflow-y: scroll;
   align-items: stretch;
   flex-direction: column;
-  scroll-behavior: smooth;
+
 }
 
 .type{
@@ -27,6 +26,7 @@
   flex-direction: column;
   display: flex;
   width: 50%;
+/*  max-width: 600px;*/
   box-sizing: border-box;
 }
 

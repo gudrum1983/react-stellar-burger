@@ -1,90 +1,131 @@
 import React from "react";
 import styles from "./burger-ingredients.module.css";
+import stylesConstr from "../burger-constructor/burger-constructor.module.css";
 import {Tab, CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-components'
 
 
 const Card = ({item, setComposition, composition}) => {
-  const [count, setCount] = React.useState(0);
+
+  let count = 0
+
+
+const text = composition.other
+/*  console.log(text)
+  console.log(item._id)*/
+  if(text.length > 0) {
+
+    const TEST1 =  text.filter((ttt) => ttt.itemR._id === item._id)
+    const TEST2 = TEST1.map((item) => item.itemR._id)
+    console.log(TEST2.length)
+    count = TEST2.length
+
+  } else {
+    count = 0
+  }
+/*  const number = composition.other.filter((item) => (item.itemR._id === item._id)).length
+  console.log(number)*/
+
+
+/*  const [count, setCount] = React.useState(0);*/
 
 
   function toggleCount() {
-    setCount(count + 1);
+/*    setCount(count + 1);*/
     const newCompositionNumber = composition.other.length ? composition.other.length + 1 : 1;
     setComposition({
       ...composition,
       other: [...composition.other,
 
         {
-          id: newCompositionNumber,
+          _id: newCompositionNumber,
           itemR: item,
         }]
-  })
+    })
   }
 
-    function isNum(num) {
-      return (num !== 0)
-    }
-
-
-    return (
-      <div className={styles.card} onClick={toggleCount}>
-        <img className={styles.imgCard} alt={item.name} src={item.image}/>
-        <div className={`pt-1 pb-1 ${styles.price}`}>
-          <p className="text text_type_digits-default pr-2">{item.price}</p>
-          <CurrencyIcon type="primary"/>
-        </div>
-        <div className={styles.cardName}>
-          <p className="text text_type_main-default">{item.name}</p>
-        </div>
-        {isNum(count) && <Counter count={count} size="default" extraClass="m-1"/>}
-      </div>
-    );
-  };
-
-
-  const CardB = ({item, bullka, bun, setComposition, composition}) => {
-
-    function toggleCount() {
-      bullka(item._id);
-      setComposition({
-        ...composition,
-        bun: item,
-      });
-    }
-
-    function isNum(num) {
-      return (num !== 0)
-    }
-
-    const num = (item._id === bun) ? 1 : 0
-
-    return (
-      <div className={styles.card} onClick={toggleCount}>
-        <img className={styles.imgCard} alt={item.name} src={item.image}/>
-        <div className={`pt-1 pb-1 ${styles.price}`}>
-          <p className="text text_type_digits-default pr-2">{item.price}</p>
-          <CurrencyIcon type="primary"/>
-        </div>
-        <div className={styles.cardName}>
-          <p className="text text_type_main-default">{item.name}</p>
-        </div>
-        {isNum(num) && <Counter count={num} size="default" extraClass="m-1"/>}
-      </div>
-    );
-  };
-
-
-  function TypeP(props) {
-    return (
-      <div className={`${styles.type} pt-6 pr-4 pl-4 pb-10`}>
-        {props.data.map((item) => (
-          <React.Fragment key={item._id}>
-            <Card item={item} setComposition={props.setComposition} composition={props.composition}/>
-          </React.Fragment>
-        ))}
-      </div>
-    )
+  function isNum(num) {
+    return (num !== 0)
   }
+
+
+  return (
+    <div className={styles.card} onClick={toggleCount}>
+      <img className={styles.imgCard} alt={item.name} src={item.image}/>
+      <div className={`pt-1 pb-1 ${styles.price}`}>
+        <p className="text text_type_digits-default pr-2">{item.price}</p>
+        <CurrencyIcon type="primary"/>
+      </div>
+      <div className={styles.cardName}>
+        <p className="text text_type_main-default">{item.name}</p>
+      </div>
+      {isNum(count) && <Counter count={count} size="default" extraClass="m-1"/>}
+    </div>
+  );
+};
+
+
+const CardB = ({item, bullka, bun, setComposition, composition}) => {
+  /*    const CardB = React.memo(({item, bullka, bun, setComposition, composition}) => {*/
+  React.useEffect(() => {
+    function check() {
+      if (item._id === bun) {
+        setComposition({
+          ...composition,
+          bun: item,
+        });
+      }
+    }
+
+    check();
+
+  }, [])
+
+
+  const num = (item._id === bun) ? 1 : 0
+
+
+  function toggleCount() {
+    bullka(item._id);
+    setComposition({
+      ...composition,
+      bun: item,
+    });
+  }
+
+  function isNum(num) {
+    return (num !== 0)
+  }
+
+
+  return (
+    <div className={styles.card} onClick={toggleCount}>
+      <img className={styles.imgCard} alt={item.name} src={item.image}/>
+      <div className={`pt-1 pb-1 ${styles.price}`}>
+        <p className="text text_type_digits-default pr-2">{item.price}</p>
+        <CurrencyIcon type="primary"/>
+      </div>
+      <div className={styles.cardName}>
+        <p className="text text_type_main-default">{item.name}</p>
+      </div>
+      {isNum(num) && <Counter count={num} size="default" extraClass="m-1"/>}
+    </div>
+  );
+}/*)*/;
+
+
+/*function TypeP(props) {*/
+  const TypeP = React.memo((props) => {
+      return (
+        <div className={`${styles.type} pt-6 pr-4 pl-4 pb-10`}>
+          {props.data.map((item) => (
+            <React.Fragment key={item._id}>
+              <Card item={item} setComposition={props.setComposition} composition={props.composition}/>
+            </React.Fragment>
+          ))}
+        </div>
+      )
+    }
+  )
 
   function TypeB(props) {
 
@@ -105,16 +146,14 @@ const Card = ({item, setComposition, composition}) => {
   }
 
   function BurgerIngredients(props) {
-    console.log("555")
-
     const sauces = props.data.filter((item) => item.type === "sauce");
     const buns = props.data.filter((item) => item.type === "bun");
     const mains = props.data.filter((item) => item.type === "main")
 
     const [current, setCurrent] = React.useState('one');
     return (
-      <section className={`pl-5 pr-5 pt-10 pb-10 ${styles.sectionClass}`}>
-        <p className="text text_type_main-large mb-5">Соберите&nbsp;бургер</p>
+      <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
+        <p className="text text_type_main-large mb-5 pt-10">Соберите&nbsp;бургер</p>
         <div style={{display: 'flex'}} className={`pb-10`}>
           <a href="#buns" className={styles.nonLink}>
             <Tab value="one" active={current === 'one'} onClick={setCurrent}>
@@ -131,10 +170,8 @@ const Card = ({item, setComposition, composition}) => {
               Начинки
             </Tab>
           </a>
-
-
         </div>
-        <div className={`${styles.ingredients} custom-scroll`}>
+        <div className={`${styles.ingredients} ${stylesConstr.scroll} custom-scroll`}>
           <div className={styles.typePart}>
             <p id="buns" className="text text_type_main-medium">Булки</p>
             <TypeB data={buns} setComposition={props.setComposition} composition={props.composition}/>

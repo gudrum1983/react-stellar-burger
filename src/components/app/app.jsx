@@ -7,9 +7,6 @@ import React from "react";
 
 function App() {
 
-  console.log("777")
-
-
   const [composition, setComposition] = React.useState({
     bun: {},
     other: [],
@@ -21,7 +18,7 @@ function App() {
       <AppHeader/>
       <main className={styles.Appmain}>
         <BurgerIngredients data={data} setComposition={setComposition} composition={composition}/>
-        <BurgerConstructor composition={composition}/>
+        <BurgerConstructor composition={composition} setComposition={setComposition}/>
       </main>
 
     </div>
