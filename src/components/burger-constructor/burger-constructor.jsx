@@ -1,9 +1,35 @@
 import React from "react";
 import styles from "../burger-ingredients/burger-ingredients.module.css";
 import stylesConstr from "../burger-constructor/burger-constructor.module.css";
-import {ConstructorElement, DragIcon, CurrencyIcon, Button} from "@ya.praktikum/react-developer-burger-ui-components";
+import {ConstructorElement, DragIcon, Button} from "@ya.praktikum/react-developer-burger-ui-components";
 
-function TypeD({data}) {
+function TypeD({data, setComposition, composition}) {
+
+
+
+
+
+  function deleteCard(idItem) {
+
+    const index = composition.other.findIndex(item => item._id === idItem)
+    console.log(index)
+
+    const arr1 = composition.other.slice(index+1,composition.other.length+1)
+    const arr2 = composition.other.slice(0,index)
+    const arr3 = arr2.concat(arr1)
+
+    console.log(arr1)
+    console.log(arr2)
+    console.log(arr3)
+
+    setComposition({
+      ...composition,
+      other: arr3
+
+    });
+  }
+
+
 
   return (
     <div className={`${stylesConstr.listScroll} ${stylesConstr.scroll} custom-scroll`}>
@@ -15,6 +41,7 @@ function TypeD({data}) {
               text={item.itemR.name}
               price={item.itemR.price}
               thumbnail={item.itemR.image}
+              handleClose={() => {deleteCard(item._id)}}
             />
           </div>
         </React.Fragment>
@@ -35,12 +62,9 @@ function TotalPrice({composition}) {
   let sumWithInitial = 0
 
   if (test > 0) {
-/*    composition.other.forEach((item) => console.log(item.itemR.price))*/
     const arrayOtherPrice = other.map((item) => (item.itemR.price))
-
     const initialValue = 0;
     sumWithInitial = arrayOtherPrice.reduce((accumulator, currentValue) => accumulator + currentValue, initialValue);
-
   } else {
     sumWithInitial = 0
   }
@@ -86,7 +110,8 @@ function clear() {
                               price={priceBun}
                               thumbnail={imgBun}
           />
-          <TypeD data={mains}/>
+
+          <TypeD data={mains} setComposition={setComposition} composition={composition}/>
 
           <ConstructorElement extraClass="ml-8 mr-4"
                               type="bottom"
@@ -94,6 +119,7 @@ function clear() {
                               text={`${textBun} (низ)`}
                               price={priceBun}
                               thumbnail={imgBun}
+
           />
         </div>
 

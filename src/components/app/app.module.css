@@ -14,7 +14,8 @@
 .Appmain{
   box-sizing: border-box;
   width: 100%;
-  height: calc(100% - (40px + 88px));
+  height: 100%;
+  max-height: calc(100% - (40px + 88px));
   max-width: 1280px;
 
   display: flex;
