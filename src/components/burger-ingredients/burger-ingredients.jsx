@@ -2,8 +2,8 @@ import React from "react";
 import styles from "./burger-ingredients.module.css";
 import stylesConstr from "../burger-constructor/burger-constructor.module.css";
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
-import {OtherList} from "../other-list/other-list";
-import {BunsList} from "../buns-list/buns-list";
+import {CardList} from "../card-list/card-list";
+
 
 
 function BurgerIngredients({data, setSelectedIngredients, selectedIngredients}) {
@@ -47,17 +47,17 @@ function BurgerIngredients({data, setSelectedIngredients, selectedIngredients}) 
       <div className={`${styles.ingredients} ${stylesConstr.scroll} custom-scroll`}>
         <div className={styles.typePart}>
           <p id="buns" className="text text_type_main-medium">Булки</p>
-          <OtherList data={buns} setSelectedIngredients={setSelectedIngredients}
+          <CardList data={buns} setSelectedIngredients={setSelectedIngredients}
                     selectedIngredients={selectedIngredients}/>
         </div>
         <div className={styles.typePart}>
           <p id="sauces" className="text text_type_main-medium">Соусы</p>
-          <OtherList data={sauces} setSelectedIngredients={setSelectedIngredients}
+          <CardList data={sauces} setSelectedIngredients={setSelectedIngredients}
                      selectedIngredients={selectedIngredients}/>
         </div>
         <div className={styles.typePart}>
           <p id="mains" className="text text_type_main-medium">Начинки</p>
-          <OtherList data={mains} setSelectedIngredients={setSelectedIngredients}
+          <CardList data={mains} setSelectedIngredients={setSelectedIngredients}
                      selectedIngredients={selectedIngredients}/>
         </div>
       </div>
