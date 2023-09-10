@@ -16,11 +16,15 @@ function App() {
     <div className={styles.app}>
       <AppHeader/>
       <main className={styles.main}>
-        <BurgerIngredients  data={data}
-                            selectedIngredients={selectedIngredients}
-                            setSelectedIngredients={setSelectedIngredients}/>
-        <BurgerConstructor  selectedIngredients={selectedIngredients}
-                            setSelectedIngredients={setSelectedIngredients}/>
+        <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
+          <BurgerIngredients data={data}
+                             selectedIngredients={selectedIngredients}
+                             setSelectedIngredients={setSelectedIngredients}/>
+        </section>
+        <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
+          <BurgerConstructor selectedIngredients={selectedIngredients}
+                             setSelectedIngredients={setSelectedIngredients}/>
+        </section>
       </main>
     </div>
   );

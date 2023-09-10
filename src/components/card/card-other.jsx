@@ -1,4 +1,4 @@
-import styles from "../burger-ingredients/burger-ingredients.module.css";
+import styles from "./card.module.css";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import uuid from "react-uuid";
@@ -28,7 +28,7 @@ const CardOther = ({currentItem, setSelectedIngredients, selectedIngredients}) =
   }
 
   return (
-    <div className={styles.card} onClick={toggleCount}>
+    <li className={styles.card} onClick={toggleCount}>
       <img className={styles.imgCard} alt={currentItem.name} src={currentItem.image}/>
       <div className={`pt-1 pb-1 ${styles.price}`}>
         <p className="text text_type_digits-default pr-2">{currentItem.price}</p>
@@ -38,7 +38,7 @@ const CardOther = ({currentItem, setSelectedIngredients, selectedIngredients}) =
         <p className="text text_type_main-default">{currentItem.name}</p>
       </div>
       {isNum(count) && <Counter count={count} size="default" extraClass="m-1"/>}
-    </div>
+    </li>
   );
 };
 

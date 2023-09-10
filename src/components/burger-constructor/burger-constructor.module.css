@@ -1,4 +1,4 @@
-.BurgerConstructor {
+.burgerConstructor {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -23,20 +23,6 @@
   max-height: calc(100% - 40px - 66px);
 }
 
-
-.listScroll {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.scroll {
-  overflow-y: auto;
-  scroll-behavior: smooth;
-}
-
-
 .price {
   display: flex;
   justify-content: end;
@@ -50,6 +36,11 @@
   background-image: url("../../images/icon 36x36.svg");
 }
 
+.scroll {
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
 .scroll::-webkit-scrollbar {
   width: 8px;
 }
@@ -57,13 +48,5 @@
 .scroll::-webkit-scrollbar-thumb {
   background: #8585ad;
   border: none;
-  border-radius: 0px
-}
-
-.itemConst {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 8px;
-  justify-content: flex-start;
+  border-radius: 0;
 }

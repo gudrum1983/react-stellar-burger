@@ -2,8 +2,7 @@ import React from "react";
 import styles from "./burger-ingredients.module.css";
 import stylesConstr from "../burger-constructor/burger-constructor.module.css";
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
-import {CardList} from "../card-list/card-list";
-
+import {ListCards} from "../list-cards/list-cards";
 
 
 function BurgerIngredients({data, setSelectedIngredients, selectedIngredients}) {
@@ -25,43 +24,49 @@ function BurgerIngredients({data, setSelectedIngredients, selectedIngredients}) 
   const [current, setCurrent] = React.useState('one');
 
   return (
-    <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
+    <>
       <p className="text text_type_main-large mb-5 pt-10">Соберите&nbsp;бургер</p>
-      <div style={{display: 'flex'}} className={`pb-10`}>
-        <a href="#buns" className={styles.nonLink}>
-          <Tab value="one" active={current === 'one'} onClick={setCurrent}>
-            Булки
-          </Tab>
-        </a>
-        <a href="#sauces" className={styles.nonLink}>
-          <Tab value="two" active={current === 'two'} onClick={setCurrent}>
-            Соусы
-          </Tab>
-        </a>
-        <a href="#mains" className={styles.nonLink}>
-          <Tab value="three" active={current === 'three'} onClick={setCurrent}>
-            Начинки
-          </Tab>
-        </a>
-      </div>
-      <div className={`${styles.ingredients} ${stylesConstr.scroll} custom-scroll`}>
-        <div className={styles.typePart}>
+      <ul className={`pb-10 ${styles.tab} ${styles.nonList} `}>
+        <li>
+          <a href="#buns" className={styles.nonLink}>
+            <Tab value="one" active={current === 'one'} onClick={setCurrent}>
+              Булки
+            </Tab>
+          </a>
+        </li>
+        <li>
+          <a href="#sauces" className={styles.nonLink}>
+            <Tab value="two" active={current === 'two'} onClick={setCurrent}>
+              Соусы
+            </Tab>
+          </a>
+        </li>
+        <li>
+          <a href="#mains" className={styles.nonLink}>
+            <Tab value="three" active={current === 'three'} onClick={setCurrent}>
+              Начинки
+            </Tab>
+          </a>
+        </li>
+      </ul>
+      <ul className={`${styles.ingredients} ${stylesConstr.scroll} ${styles.nonList} custom-scroll`}>
+        <li className={styles.typePart}>
           <p id="buns" className="text text_type_main-medium">Булки</p>
-          <CardList data={buns} setSelectedIngredients={setSelectedIngredients}
-                    selectedIngredients={selectedIngredients}/>
-        </div>
-        <div className={styles.typePart}>
+          <ListCards data={buns} setSelectedIngredients={setSelectedIngredients}
+                     selectedIngredients={selectedIngredients}/>
+        </li>
+        <li className={styles.typePart}>
           <p id="sauces" className="text text_type_main-medium">Соусы</p>
-          <CardList data={sauces} setSelectedIngredients={setSelectedIngredients}
+          <ListCards data={sauces} setSelectedIngredients={setSelectedIngredients}
                      selectedIngredients={selectedIngredients}/>
-        </div>
-        <div className={styles.typePart}>
+        </li>
+        <li className={styles.typePart}>
           <p id="mains" className="text text_type_main-medium">Начинки</p>
-          <CardList data={mains} setSelectedIngredients={setSelectedIngredients}
+          <ListCards data={mains} setSelectedIngredients={setSelectedIngredients}
                      selectedIngredients={selectedIngredients}/>
-        </div>
-      </div>
-    </section>
+        </li>
+      </ul>
+    </>
   );
 }
 

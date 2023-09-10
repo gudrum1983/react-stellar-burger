@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from "react";
-import styles from "../app-header/app-header.module.css";
 
 const textType = {
   primary: "text text_type_main-default",
@@ -8,7 +7,8 @@ const textType = {
 }
 
 NavigationLink.propTypes = {
-    icon: PropTypes.node.isRequired}
+  icon: PropTypes.node.isRequired
+}
 
 function NavigationLink(props) {
   return (

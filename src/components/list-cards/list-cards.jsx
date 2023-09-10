@@ -1,9 +1,10 @@
 import React from "react";
-import styles from "../burger-ingredients/burger-ingredients.module.css";
-import {CardOther} from "../card-other/card-other";
-import {CardBuns} from "../card-buns/card-buns";
+import styles from "./list-cards.module.css";
+import {CardOther} from "../card/card-other";
+import {CardBuns} from "../card/card-buns";
 
-function CardList({data, setSelectedIngredients, selectedIngredients}) {
+
+function ListCards({data, setSelectedIngredients, selectedIngredients}) {
   let defaultBunId = false
 
   if (data[0].type === "bun") {
@@ -11,20 +12,20 @@ function CardList({data, setSelectedIngredients, selectedIngredients}) {
   }
 
   return (
-    <div className={`${styles.type} pt-6 pr-4 pl-4 pb-10`}>
+    <ul className={styles.listCards}>
       {data.map((currentItem) => (
         <React.Fragment key={currentItem._id}>
           {!!(defaultBunId)
             ? <CardBuns currentItem={currentItem} setSelectedIngredients={setSelectedIngredients}
                         selectedIngredients={selectedIngredients} defaultBunId={defaultBunId}/>
             : <CardOther currentItem={currentItem} setSelectedIngredients={setSelectedIngredients}
-                        selectedIngredients={selectedIngredients}/>}
+                         selectedIngredients={selectedIngredients}/>}
         </React.Fragment>
       ))}
-    </div>
+    </ul>
   )
 }
 
 export {
-  CardList
+  ListCards
 }
