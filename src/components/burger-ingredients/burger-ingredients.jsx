@@ -47,7 +47,7 @@ function BurgerIngredients({data, setSelectedIngredients, selectedIngredients}) 
       <div className={`${styles.ingredients} ${stylesConstr.scroll} custom-scroll`}>
         <div className={styles.typePart}>
           <p id="buns" className="text text_type_main-medium">Булки</p>
-          <BunsList data={buns} setSelectedIngredients={setSelectedIngredients}
+          <OtherList data={buns} setSelectedIngredients={setSelectedIngredients}
                     selectedIngredients={selectedIngredients}/>
         </div>
         <div className={styles.typePart}>

@@ -1,6 +1,7 @@
 import styles from "../burger-ingredients/burger-ingredients.module.css";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
+import uuid from "react-uuid";
 
 const CardOther = ({currentItem, setSelectedIngredients, selectedIngredients}) => {
 
@@ -11,12 +12,12 @@ const CardOther = ({currentItem, setSelectedIngredients, selectedIngredients}) =
   }
 
   function toggleCount() {
-    const newSelectedIngredientsNumber = selectedIngredients.other.length ? selectedIngredients.other.length + 1 : 1;
+    const numberIngredient = uuid();
     setSelectedIngredients({
       ...selectedIngredients,
       other: [...selectedIngredients.other,
         {
-          numberIngredient: `${newSelectedIngredientsNumber}_${currentItem._id}`,
+          numberIngredient: numberIngredient,
           ingredient: currentItem,
         }]
     })
