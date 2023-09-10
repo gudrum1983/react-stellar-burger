@@ -2,7 +2,6 @@ body {
   margin: 0;
 }
 
-
 .flex_row {
   display: flex;
   flex-direction: row;

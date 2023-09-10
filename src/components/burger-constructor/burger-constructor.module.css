@@ -6,8 +6,6 @@
   box-sizing: border-box;
   height: calc(100% - 152px);
   gap: 40px;
-
-
 }
 
 .containerList {
@@ -23,7 +21,6 @@
   flex-direction: column;
   gap: 10px;
   max-height: calc(100% - 40px - 66px);
-
 }
 
 
@@ -53,18 +50,15 @@
   background-image: url("../../images/icon 36x36.svg");
 }
 
-
 .scroll::-webkit-scrollbar {
   width: 8px;
 }
 
 .scroll::-webkit-scrollbar-thumb {
   background: #8585ad;
-  /*  border: 3px solid #2F2F37;*/
   border: none;
   border-radius: 0px
 }
-
 
 .itemConst {
   display: flex;

@@ -3,73 +3,57 @@ import styles from "../burger-ingredients/burger-ingredients.module.css";
 import stylesConstr from "../burger-constructor/burger-constructor.module.css";
 import {ConstructorElement, DragIcon, Button} from "@ya.praktikum/react-developer-burger-ui-components";
 
-function TypeD({data, setComposition, composition}) {
-
-
-
-
+function TypeD({data, setSelectedIngredients, selectedIngredients}) {
 
   function deleteCard(idItem) {
+    const index = selectedIngredients.other.findIndex(item => item.numberIngredient === idItem)
+    const arrEnd = selectedIngredients.other.slice(index + 1, selectedIngredients.other.length + 1)
+    const arrStart = selectedIngredients.other.slice(0, index)
+    const newOtherSelectedIngredients = arrStart.concat(arrEnd)
 
-    const index = composition.other.findIndex(item => item._id === idItem)
-    console.log(index)
-
-    const arr1 = composition.other.slice(index+1,composition.other.length+1)
-    const arr2 = composition.other.slice(0,index)
-    const arr3 = arr2.concat(arr1)
-
-    console.log(arr1)
-    console.log(arr2)
-    console.log(arr3)
-
-    setComposition({
-      ...composition,
-      other: arr3
-
+    setSelectedIngredients({
+      ...selectedIngredients,
+      other: newOtherSelectedIngredients
     });
   }
-
-
 
   return (
     <div className={`${stylesConstr.listScroll} ${stylesConstr.scroll} custom-scroll`}>
       {data.map((item) => (
-        <React.Fragment key={item._id}>
+        <React.Fragment key={item.numberIngredient}>
           <div className={stylesConstr.itemConst}>
             <DragIcon type="primary"/>
             <ConstructorElement
-              text={item.itemR.name}
-              price={item.itemR.price}
-              thumbnail={item.itemR.image}
-              handleClose={() => {deleteCard(item._id)}}
+              text={item.ingredient.name}
+              price={item.ingredient.price}
+              thumbnail={item.ingredient.image}
+              handleClose={() => {
+                deleteCard(item.numberIngredient)
+              }}
             />
           </div>
         </React.Fragment>
-
       ))}
     </div>
   )
 }
 
-function TotalPrice({composition}) {
+function TotalPrice({selectedIngredients}) {
 
-  const totalBun = composition.bun.price * 2
-  const test = composition.other.length
-
-
-  const other = composition.other
-
+  const costBun = selectedIngredients.bun.price * 2
+  /* В макете фигма стоимость была указана с учетом двойной стоимости булочки */
+  const other = selectedIngredients.other
+  const numberOtherIngredients = other.length
   let sumWithInitial = 0
 
-  if (test > 0) {
-    const arrayOtherPrice = other.map((item) => (item.itemR.price))
+  if (numberOtherIngredients > 0) {
+    const arrayOtherPrice = other.map((item) => (item.ingredient.price))
     const initialValue = 0;
     sumWithInitial = arrayOtherPrice.reduce((accumulator, currentValue) => accumulator + currentValue, initialValue);
   } else {
     sumWithInitial = 0
   }
-
-  const stringTotal = String(totalBun + sumWithInitial)
+  const stringTotal = String(costBun + sumWithInitial)
 
   return (
     <p className="text text_type_digits-medium">{stringTotal}</p>
@@ -77,31 +61,27 @@ function TotalPrice({composition}) {
 }
 
 
-function BurgerConstructor({composition, setComposition}) {
+function BurgerConstructor({selectedIngredients, setSelectedIngredients}) {
 
-  const bun = composition.bun
+  const bun = selectedIngredients.bun
   const textBun = bun.name
   const imgBun = bun.image
   const priceBun = bun.price
 
 
-  const mains = composition.other
+  const mains = selectedIngredients.other
 
-function clear() {
-  setComposition({
-    ...composition,
-    other: [],
-
-  });
-}
-
-
+  function clear() {
+    setSelectedIngredients({
+      ...selectedIngredients,
+      other: [],
+    });
+  }
 
 
   return (
     <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
       <div className={`ml-4 mt-25 ${stylesConstr.BurgerConstructor}`}>
-
         <div className={stylesConstr.list}>
           <ConstructorElement extraClass='ml-8 mr-4'
                               type="top"
@@ -110,31 +90,25 @@ function clear() {
                               price={priceBun}
                               thumbnail={imgBun}
           />
-
-          <TypeD data={mains} setComposition={setComposition} composition={composition}/>
-
+          <TypeD data={mains} setSelectedIngredients={setSelectedIngredients} selectedIngredients={selectedIngredients}/>
           <ConstructorElement extraClass="ml-8 mr-4"
                               type="bottom"
                               isLocked={true}
                               text={`${textBun} (низ)`}
                               price={priceBun}
                               thumbnail={imgBun}
-
           />
         </div>
-
         <div className={`${stylesConstr.price} mr-4`}>
-          <TotalPrice composition={composition}/>
+          <TotalPrice selectedIngredients={selectedIngredients}/>
           <div className={`${stylesConstr.iconPrice} ml-2 mr-10`}/>
           <Button htmlType="button" type="primary" size="large" onClick={clear}>
             Оформить заказ
           </Button>
         </div>
       </div>
-
     </section>
   );
-
 }
 
 export {
