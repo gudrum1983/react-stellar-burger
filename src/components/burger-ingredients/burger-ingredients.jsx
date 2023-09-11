@@ -6,29 +6,18 @@ import {ListCards} from "../list-cards/list-cards";
 import {optionalArray, optionalFunc, optionalObject} from "../../utils/prop-types";
 
 
-function BurgerIngredients({data, setSelectedIngredients, selectedIngredients}) {
+function BurgerIngredients({data, setSelectedIngredients, selectedIngredients, defaultBun}) {
 
   BurgerIngredients.propTypes = {
     data: optionalArray,
     selectedIngredients: optionalObject,
     setSelectedIngredients: optionalFunc,
+
   };
 
-
-
-  const sortedData = data.toSorted(function (a, b) {
-    if (a._id > b._id) {
-      return 1;
-    }
-    if (a._id < b._id) {
-      return -1;
-    }
-    return 0;
-  });
-
-  const sauces = sortedData.filter((item) => item.type === "sauce");
-  const buns = sortedData.filter((item) => item.type === "bun");
-  const mains = sortedData.filter((item) => item.type === "main")
+  const filteredIngredients = (type) => {
+    return data.filter((item) => item.type === type);
+  }
 
   const [current, setCurrent] = React.useState('one');
 
@@ -61,17 +50,17 @@ function BurgerIngredients({data, setSelectedIngredients, selectedIngredients}) 
       <ul className={`${styles.ingredients} ${stylesConstr.scroll} ${styles.nonList} custom-scroll`}>
         <li className={styles.typePart}>
           <p id="buns" className="text text_type_main-medium">Булки</p>
-          <ListCards data={buns} setSelectedIngredients={setSelectedIngredients}
+          <ListCards data={filteredIngredients("bun")} setSelectedIngredients={setSelectedIngredients}
                      selectedIngredients={selectedIngredients}/>
         </li>
         <li className={styles.typePart}>
           <p id="sauces" className="text text_type_main-medium">Соусы</p>
-          <ListCards data={sauces} setSelectedIngredients={setSelectedIngredients}
+          <ListCards data={filteredIngredients("sauce")} setSelectedIngredients={setSelectedIngredients}
                      selectedIngredients={selectedIngredients}/>
         </li>
         <li className={styles.typePart}>
           <p id="mains" className="text text_type_main-medium">Начинки</p>
-          <ListCards data={mains} setSelectedIngredients={setSelectedIngredients}
+          <ListCards data={filteredIngredients("main")} setSelectedIngredients={setSelectedIngredients}
                      selectedIngredients={selectedIngredients}/>
         </li>
       </ul>

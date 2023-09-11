@@ -3,14 +3,15 @@ import stylesConstr from "../burger-constructor/burger-constructor.module.css";
 import {ConstructorElement, Button} from "@ya.praktikum/react-developer-burger-ui-components";
 import {ConstructorList} from "../constructor-list/constructor-list";
 import {TotalPrice} from "../total-price/total-price";
-import {optionalFunc, optionalObject} from "../../utils/prop-types";
+import {ingredientPropType, optionalFunc, optionalObject} from "../../utils/prop-types";
 
 
-function BurgerConstructor({selectedIngredients, setSelectedIngredients}) {
+function BurgerConstructor({selectedIngredients, setSelectedIngredients, defaultBun}) {
 
   BurgerConstructor.propTypes = {
     selectedIngredients: optionalObject,
     setSelectedIngredients: optionalFunc,
+    defaultBun: ingredientPropType,
   };
 
 
@@ -24,6 +25,7 @@ function BurgerConstructor({selectedIngredients, setSelectedIngredients}) {
   function clear() {
     setSelectedIngredients({
       ...selectedIngredients,
+      bun: defaultBun,
       other: [],
     });
   }

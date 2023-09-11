@@ -12,7 +12,7 @@ const CardBuns = ({currentItem, setSelectedIngredients, selectedIngredients, def
     selectedIngredients: optionalObject,
   };
 
-  React.useEffect(() => {
+/*  React.useEffect(() => {
     function check() {
       if (currentItem._id === defaultBunId) {
         setSelectedIngredients({
@@ -23,7 +23,7 @@ const CardBuns = ({currentItem, setSelectedIngredients, selectedIngredients, def
     }
 
     check();
-  }, [])
+  }, [])*/
   const count = (currentItem._id === selectedIngredients.bun._id) ? 1 : 0
 
   function toggleCount() {
