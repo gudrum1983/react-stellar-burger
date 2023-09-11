@@ -1,9 +1,9 @@
 import React from "react";
 import styles from "./card.module.css";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {ingredientPropType, optionalFunc, optionalObject, optionalString} from "../../utils/prop-types";
+import {ingredientPropType, optionalFunc, optionalObject, optionalString} from "../../../utils/prop-types";
 
-const CardBuns = ({currentItem, setSelectedIngredients, selectedIngredients, defaultBunId}) => {
+const CardBuns = ({currentItem, setSelectedIngredients, selectedIngredients}) => {
 
   CardBuns.propTypes = {
     currentItem: ingredientPropType,
@@ -12,18 +12,6 @@ const CardBuns = ({currentItem, setSelectedIngredients, selectedIngredients, def
     selectedIngredients: optionalObject,
   };
 
-/*  React.useEffect(() => {
-    function check() {
-      if (currentItem._id === defaultBunId) {
-        setSelectedIngredients({
-          ...selectedIngredients,
-          bun: currentItem,
-        });
-      }
-    }
-
-    check();
-  }, [])*/
   const count = (currentItem._id === selectedIngredients.bun._id) ? 1 : 0
 
   function toggleCount() {

@@ -1,7 +1,7 @@
 import styles from "./constructor-list.module.css";
 import React from "react";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {optionalArray, optionalFunc, optionalObject} from "../../utils/prop-types";
+import {optionalArray, optionalFunc, optionalObject} from "../../../utils/prop-types";
 
 function ConstructorList({data, setSelectedIngredients, selectedIngredients}) {
 

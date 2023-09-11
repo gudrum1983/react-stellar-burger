@@ -2,7 +2,7 @@ import styles from "./card.module.css";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import uuid from "react-uuid";
-import {ingredientPropType, optionalFunc, optionalObject} from "../../utils/prop-types";
+import {ingredientPropType, optionalFunc, optionalObject} from "../../../utils/prop-types";
 
 const CardOther = ({currentItem, setSelectedIngredients, selectedIngredients}) => {
 

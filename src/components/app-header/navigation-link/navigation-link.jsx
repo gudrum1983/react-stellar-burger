@@ -1,5 +1,5 @@
 import React from "react";
-import {navigationLinkPropType} from "../../utils/prop-types";
+import {navigationLinkPropType} from "../../../utils/prop-types";
 
 const textType = {
   primary: "text text_type_main-default",

@@ -1,5 +1,5 @@
 import React from "react";
-import {optionalObject} from "../../utils/prop-types";
+import {optionalObject} from "../../../utils/prop-types";
 
 function TotalPrice({selectedIngredients}) {
 

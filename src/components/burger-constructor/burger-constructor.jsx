@@ -1,8 +1,8 @@
 import React from "react";
 import stylesConstr from "../burger-constructor/burger-constructor.module.css";
 import {ConstructorElement, Button} from "@ya.praktikum/react-developer-burger-ui-components";
-import {ConstructorList} from "../constructor-list/constructor-list";
-import {TotalPrice} from "../total-price/total-price";
+import {ConstructorList} from "./constructor-list/constructor-list";
+import {TotalPrice} from "./total-price/total-price";
 import {ingredientPropType, optionalFunc, optionalObject} from "../../utils/prop-types";
 
 
