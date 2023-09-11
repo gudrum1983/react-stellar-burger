@@ -17,6 +17,7 @@
 
 .navigation {
   justify-self: start;
+
 }
 
 .logo {
@@ -40,4 +41,5 @@
 .links {
   composes: flex_row;
   composes: non_list;
+  gap: 8px;
 }

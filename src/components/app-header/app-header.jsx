@@ -4,7 +4,7 @@ import {NavigationLink} from "../navigation-link/navigation-link";
 
 
 const classes = {
-  link: "pl-5 pr-5 pb-4 pt-4 mr-2",
+  link: "pl-5 pr-5 pb-4 pt-4",
   panel: "pt-4 pb-4",
 }
 

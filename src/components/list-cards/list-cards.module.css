@@ -6,5 +6,5 @@
   align-items: stretch;
   grid-column-gap: 24px;
   grid-row-gap: 32px;
-  padding: 24px 16px 40px;
+  padding: 24px 8px 40px 16px;
 }

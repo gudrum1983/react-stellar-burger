@@ -12,6 +12,7 @@
   box-sizing: border-box;
   align-items: center;
   overflow: hidden;
+  gap: 4px;
 
 }
 

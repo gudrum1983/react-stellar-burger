@@ -45,7 +45,7 @@ const CardOther = ({currentItem, setSelectedIngredients, selectedIngredients}) =
       <div className={styles.cardName}>
         <p className="text text_type_main-default">{currentItem.name}</p>
       </div>
-      {isNum(count) && <Counter count={count} size="default" extraClass="m-1"/>}
+      {isNum(count) && <Counter count={count} size="default"/>}
     </li>
   );
 };
