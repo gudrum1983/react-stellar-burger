@@ -5,12 +5,33 @@ import {AppHeader} from '../app-header/app-header'
 import {BurgerIngredients} from "../burger-ingredients/burger-ingredients";
 import {BurgerConstructor} from "../burger-constructor/burger-constructor";
 
+const url = "https://norma.nomoreparties.space/api/ingredients";
+
 
 function App() {
+
+  const [ingredients, setIngredients] = React.useState({
+    ingredientsData: null,
+    loading: true
+  })
+
   const [selectedIngredients, setSelectedIngredients] = React.useState({
     bun: {},
     other: [],
   });
+
+  React.useEffect(() => {
+    const getIngredientsData = async () => {
+      setIngredients({...ingredients, loading: true});
+      const res = await fetch(url);
+      const data = await res.json();
+      setIngredients({ ingredientsData: data.data, loading: false });
+    }
+
+    getIngredientsData();
+  }, [])
+
+
 
   return (
     <div className={styles.app}>
