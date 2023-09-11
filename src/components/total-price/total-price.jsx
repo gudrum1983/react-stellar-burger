@@ -1,6 +1,11 @@
 import React from "react";
+import {optionalObject} from "../../utils/prop-types";
 
 function TotalPrice({selectedIngredients}) {
+
+  TotalPrice.propTypes = {
+    selectedIngredients: optionalObject,
+  };
 
   const costBun = selectedIngredients.bun.price * 2
   /* В макете фигма стоимость была указана с учетом двойной стоимости булочки */

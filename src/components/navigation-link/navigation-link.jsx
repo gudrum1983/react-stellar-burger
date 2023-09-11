@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
 import React from "react";
+import {navigationLinkPropType} from "../../utils/prop-types";
 
 const textType = {
   primary: "text text_type_main-default",
@@ -7,8 +7,8 @@ const textType = {
 }
 
 NavigationLink.propTypes = {
-  icon: PropTypes.node.isRequired
-}
+  icon: navigationLinkPropType,
+};
 
 function NavigationLink(props) {
   return (

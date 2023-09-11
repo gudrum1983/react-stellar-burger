@@ -3,9 +3,16 @@ import stylesConstr from "../burger-constructor/burger-constructor.module.css";
 import {ConstructorElement, Button} from "@ya.praktikum/react-developer-burger-ui-components";
 import {ConstructorList} from "../constructor-list/constructor-list";
 import {TotalPrice} from "../total-price/total-price";
+import {optionalFunc, optionalObject} from "../../utils/prop-types";
 
 
 function BurgerConstructor({selectedIngredients, setSelectedIngredients}) {
+
+  BurgerConstructor.propTypes = {
+    selectedIngredients: optionalObject,
+    setSelectedIngredients: optionalFunc,
+  };
+
 
   const bun = selectedIngredients.bun
   const textBun = bun.name

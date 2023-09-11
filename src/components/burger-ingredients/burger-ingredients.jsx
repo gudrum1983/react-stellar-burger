@@ -3,9 +3,18 @@ import styles from "./burger-ingredients.module.css";
 import stylesConstr from "../burger-constructor/burger-constructor.module.css";
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
 import {ListCards} from "../list-cards/list-cards";
+import {optionalArray, optionalFunc, optionalObject} from "../../utils/prop-types";
 
 
 function BurgerIngredients({data, setSelectedIngredients, selectedIngredients}) {
+
+  BurgerIngredients.propTypes = {
+    data: optionalArray,
+    selectedIngredients: optionalObject,
+    setSelectedIngredients: optionalFunc,
+  };
+
+
 
   const sortedData = data.toSorted(function (a, b) {
     if (a._id > b._id) {

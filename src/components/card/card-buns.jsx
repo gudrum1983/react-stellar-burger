@@ -1,8 +1,17 @@
 import React from "react";
 import styles from "./card.module.css";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {ingredientPropType, optionalFunc, optionalObject, optionalString} from "../../utils/prop-types";
 
 const CardBuns = ({currentItem, setSelectedIngredients, selectedIngredients, defaultBunId}) => {
+
+  CardBuns.propTypes = {
+    currentItem: ingredientPropType,
+    defaultBunId: optionalString,
+    setSelectedIngredients: optionalFunc,
+    selectedIngredients: optionalObject,
+  };
+
   React.useEffect(() => {
     function check() {
       if (currentItem._id === defaultBunId) {

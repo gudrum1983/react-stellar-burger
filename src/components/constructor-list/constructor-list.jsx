@@ -1,8 +1,15 @@
 import styles from "./constructor-list.module.css";
 import React from "react";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {optionalArray, optionalFunc, optionalObject} from "../../utils/prop-types";
 
 function ConstructorList({data, setSelectedIngredients, selectedIngredients}) {
+
+  ConstructorList.propTypes = {
+    data: optionalArray,
+    selectedIngredients: optionalObject,
+    setSelectedIngredients: optionalFunc,
+  };
 
   function deleteCard(idItem) {
     const index = selectedIngredients.other.findIndex(item => item.numberIngredient === idItem)

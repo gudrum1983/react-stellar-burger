@@ -2,8 +2,16 @@ import styles from "./card.module.css";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import uuid from "react-uuid";
+import {ingredientPropType, optionalFunc, optionalObject} from "../../utils/prop-types";
 
 const CardOther = ({currentItem, setSelectedIngredients, selectedIngredients}) => {
+
+  CardOther.propTypes = {
+    currentItem: ingredientPropType,
+    setSelectedIngredients: optionalFunc,
+    selectedIngredients: optionalObject,
+  };
+
 
   let count = 0
   const otherIngredients = selectedIngredients.other
