@@ -31,8 +31,7 @@ function BurgerConstructor({selectedIngredients, setSelectedIngredients, default
   }
 
   return (
-    <>
-      <div className={`ml-4 mt-25 ${stylesConstr.burgerConstructor}`}>
+       <div className={`ml-4 mt-25 ${stylesConstr.burgerConstructor}`}>
         <div className={stylesConstr.list}>
           <ConstructorElement extraClass='ml-8 mr-4'
                               type="top"
@@ -59,7 +58,6 @@ function BurgerConstructor({selectedIngredients, setSelectedIngredients, default
           </Button>
         </div>
       </div>
-    </>
   );
 }
 

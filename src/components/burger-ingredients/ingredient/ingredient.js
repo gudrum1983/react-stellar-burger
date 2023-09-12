@@ -1,31 +1,20 @@
-import React from "react";
-import styles from "./card.module.css";
+import styles from "./ingredient.module.css";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {ingredientPropType, optionalFunc, optionalObject, optionalString} from "../../../utils/prop-types";
+import React from "react";
+import {ingredientPropType} from "../../../utils/prop-types";
 
-const CardBuns = ({currentItem, setSelectedIngredients, selectedIngredients}) => {
 
-  CardBuns.propTypes = {
+function Ingredient ({currentItem, count, toggleCount}) {
+
+  Ingredient.propTypes = {
     currentItem: ingredientPropType,
-    defaultBunId: optionalString,
-    setSelectedIngredients: optionalFunc,
-    selectedIngredients: optionalObject,
   };
-
-  const count = (currentItem._id === selectedIngredients.bun._id) ? 1 : 0
-
-  function toggleCount() {
-    setSelectedIngredients({
-      ...selectedIngredients,
-      bun: currentItem,
-    });
-  }
 
   function isNum(num) {
     return (num !== 0)
   }
 
-  return (
+  return(
     <li className={styles.card} onClick={toggleCount}>
       <img className={styles.imgCard} alt={currentItem.name} src={currentItem.image}/>
       <div className={`pt-1 pb-1 ${styles.price}`}>
@@ -37,9 +26,9 @@ const CardBuns = ({currentItem, setSelectedIngredients, selectedIngredients}) =>
       </div>
       {isNum(count) && <Counter count={count} size="default"/>}
     </li>
-  );
-};
+  )
+}
 
 export {
-  CardBuns
+  Ingredient
 }

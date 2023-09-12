@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./list-cards.module.css";
-import {CardOther} from "../card/card-other";
-import {CardBuns} from "../card/card-buns";
+import {CardOther} from "../card-other/card-other";
+import {CardBuns} from "../card-buns/card-buns";
 import {optionalArray, optionalFunc, optionalObject} from "../../../utils/prop-types";
 
 function ListCards({data, setSelectedIngredients, selectedIngredients}) {

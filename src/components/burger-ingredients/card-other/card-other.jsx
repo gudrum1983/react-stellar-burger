@@ -1,8 +1,7 @@
-import styles from "./card.module.css";
-import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import uuid from "react-uuid";
 import {ingredientPropType, optionalFunc, optionalObject} from "../../../utils/prop-types";
+import {Ingredient} from "../ingredient/ingredient";
 
 const CardOther = ({currentItem, setSelectedIngredients, selectedIngredients}) => {
 
@@ -31,23 +30,10 @@ const CardOther = ({currentItem, setSelectedIngredients, selectedIngredients}) =
     })
   }
 
-  function isNum(num) {
-    return (num !== 0)
-  }
-
   return (
-    <li className={styles.card} onClick={toggleCount}>
-      <img className={styles.imgCard} alt={currentItem.name} src={currentItem.image}/>
-      <div className={`pt-1 pb-1 ${styles.price}`}>
-        <p className="text text_type_digits-default pr-2">{currentItem.price}</p>
-        <CurrencyIcon type="primary"/>
-      </div>
-      <div className={styles.cardName}>
-        <p className="text text_type_main-default">{currentItem.name}</p>
-      </div>
-      {isNum(count) && <Counter count={count} size="default"/>}
-    </li>
+    <Ingredient currentItem={currentItem} count={count} toggleCount={toggleCount}/>
   );
+
 };
 
 export {
