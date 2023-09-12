@@ -5,8 +5,7 @@ import {AppHeader} from '../app-header/app-header'
 import {BurgerIngredients} from "../burger-ingredients/burger-ingredients";
 import {BurgerConstructor} from "../burger-constructor/burger-constructor";
 import {Logo} from "@ya.praktikum/react-developer-burger-ui-components";
-
-
+import {Modal} from "../modal/modal";
 
 
 function App() {
@@ -29,6 +28,11 @@ function App() {
     data: [],
     defaultBun: {},
   });
+
+  const [showModal, setShowModal] = React.useState({
+    visible: false,
+  });
+
 
   function check(datat) {
     if (datat) {
@@ -66,6 +70,15 @@ function App() {
     return 0;
   });
 
+  function handleCloseModal () {
+    setShowModal({ visible: false })};
+
+
+  const modal = (
+    <Modal header="Внимание!" onClose={handleCloseModal}>
+    </Modal>
+  );
+
   return (
     <div className={`text text_type_main-default ${styles.app}`}>
       {isLoading && <Logo/>}
@@ -73,7 +86,7 @@ function App() {
       {!isLoading &&
         !hasError &&
         data.length &&
-        <>        <AppHeader/>
+        <>        <AppHeader setShowModal={setShowModal}/>
           <main className={styles.main}>
             <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
               <BurgerIngredients data={data}
@@ -85,6 +98,7 @@ function App() {
                                  setSelectedIngredients={setSelectedIngredients}
                                  defaultBun={defaultBun}/>
             </section>
+            {showModal.visible && modal}
           </main>
         </>
 

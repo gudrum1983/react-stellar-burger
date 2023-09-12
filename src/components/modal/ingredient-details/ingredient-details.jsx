@@ -1,0 +1,7 @@
+function ModalIngredientDetails(){
+
+}
+
+export {
+  ModalIngredientDetails
+}

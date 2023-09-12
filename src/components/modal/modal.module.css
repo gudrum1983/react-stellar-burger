@@ -1,0 +1,33 @@
+.modalContainer {
+  background-color: #1c1c21;
+  color: #f2f2f3;
+  border-radius: 40px;
+  border: 1px solid #4C4CFF33;
+  width: 100%;
+  max-width: 720px;
+
+
+  /* card/x-large */
+  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.04)
+
+
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 0;
+
+}
+
+
+.buttonClose{
+  margin-left: auto;
+  background-color: #1c1c21;
+  color: #f2f2f3;
+  border: none;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+}
