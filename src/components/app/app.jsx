@@ -6,6 +6,8 @@ import {BurgerIngredients} from "../burger-ingredients/burger-ingredients";
 import {BurgerConstructor} from "../burger-constructor/burger-constructor";
 import {Logo} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Modal} from "../modal/modal";
+import {ModalOrderDetails} from "../modal/order-details/order-details";
+import {ModalIngredientDetails} from "../modal/ingredient-details/ingredient-details";
 
 
 function App() {
@@ -31,6 +33,8 @@ function App() {
 
   const [showModal, setShowModal] = React.useState({
     visible: false,
+    type: "",
+    ingredient: {},
   });
 
 
@@ -70,14 +74,26 @@ function App() {
     return 0;
   });
 
-  function handleCloseModal () {
-    setShowModal({ visible: false })};
+  function handleCloseModal() {
+    setShowModal({visible: false})
+  };
 
 
-  const modal = (
-    <Modal header="Внимание!" onClose={handleCloseModal}>
-    </Modal>
-  );
+  function modal(comnonent) {
+    let header = "";
+
+    if (showModal.type !== "order") {
+      header = "Детали ингредиента";
+    }
+
+
+  return(
+
+  <Modal onClose={handleCloseModal} header={header}>
+    {comnonent}
+  </Modal>)
+};
+
 
   return (
     <div className={`text text_type_main-default ${styles.app}`}>
@@ -86,7 +102,7 @@ function App() {
       {!isLoading &&
         !hasError &&
         data.length &&
-        <>        <AppHeader setShowModal={setShowModal}/>
+        <>        <AppHeader />
           <main className={styles.main}>
             <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
               <BurgerIngredients data={data}
@@ -96,9 +112,12 @@ function App() {
             <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
               <BurgerConstructor selectedIngredients={selectedIngredients}
                                  setSelectedIngredients={setSelectedIngredients}
-                                 defaultBun={defaultBun}/>
+                                 defaultBun={defaultBun}
+                                 setShowModal={setShowModal}/>
             </section>
-            {showModal.visible && modal}
+            {showModal.visible && showModal.type === "order" && modal(<ModalOrderDetails/>)}
+            {showModal.visible && showModal.type === "ingredient" && !!(showModal.ingredient) && modal(<ModalIngredientDetails data={showModal.ingredient}/>)}
+
           </main>
         </>
 

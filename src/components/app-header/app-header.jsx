@@ -8,11 +8,13 @@ const classes = {
   panel: "pt-4 pb-4",
 }
 
-function AppHeader({setShowModal}) {
+function AppHeader() {
 
+/*
   function handleOpenModal() {
     setShowModal({ visible: true });
   }
+*/
 
 
 
@@ -30,7 +32,7 @@ function AppHeader({setShowModal}) {
           </ul>
         </nav>
         <Logo className={styles.logo}/>
-        <div onClick={handleOpenModal} className={`${styles.flex_row} ${styles.profile} ${classes.link}`}>
+        <div className={`${styles.flex_row} ${styles.profile} ${classes.link}`}>
           <NavigationLink icon={<ProfileIcon type="secondary"/>}>Личный&nbsp;кабинет</NavigationLink>
         </div>
       </div>

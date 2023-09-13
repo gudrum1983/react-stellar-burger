@@ -1,0 +1,74 @@
+.modalOverlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.60);
+  z-index: 2;
+
+}
+
+/*
+.popup {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  min-width: 320px;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.5s, opacity 0.5s linear;
+  z-index: 9;
+}
+
+.popup_opened {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+.popup__container {
+  z-index: 2;
+  align-self: center;
+  padding-left: 40px;
+  padding-bottom: 40px;
+  display: grid;
+  gap: 8px;
+  grid-template-areas:
+    '. button_close'
+    'window .'
+}
+
+@media screen and (max-width: 618px) {
+  .popup__container {
+    padding-left: 0;
+    gap: 16px;
+    padding-bottom: 36px;
+    grid-template-areas:
+      'button_close'
+      'window'
+  }
+}
+
+.popup__button-close {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  margin: 0;
+  grid-area: button_close;
+  background-color: transparent;
+  border: 0;
+
+  background-size: cover;
+}
+
+@media screen and (max-width: 618px) {
+  .popup__button-close {
+    justify-self: end;
+    width: 20px;
+    height: 20px;
+  }
+}*/
