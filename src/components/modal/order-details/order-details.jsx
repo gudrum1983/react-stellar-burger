@@ -1,4 +1,3 @@
-
 import styles from "./order-details.module.css";
 
 function ModalOrderDetails(){
@@ -12,7 +11,6 @@ function ModalOrderDetails(){
       <p className="text text_type_main-small text_color_inactive">Дождитесь готовности на орбитальной станции</p>
     </div>
   )
-
 
 }
 

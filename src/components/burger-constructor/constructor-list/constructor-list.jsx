@@ -1,14 +1,15 @@
 import styles from "./constructor-list.module.css";
 import React from "react";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {optionalArray, optionalFunc, optionalObject} from "../../../utils/prop-types";
+import {optionalFunc, selectedIngredientsPropType, selectedOtherIngredientsPropType } from "../../../utils/prop-types";
 
-function ConstructorList({data, setSelectedIngredients, selectedIngredients, setShowModal}) {
-
+function ConstructorList({filling, setSelectedIngredients, selectedIngredients, setShowModal}) {
+console.log(filling)
   ConstructorList.propTypes = {
-    data: optionalArray,
-    selectedIngredients: optionalObject,
+    filling: selectedOtherIngredientsPropType,
+    selectedIngredients: selectedIngredientsPropType,
     setSelectedIngredients: optionalFunc,
+    setShowModal: optionalFunc,
   };
 
   function deleteCard(idItem) {
@@ -23,19 +24,16 @@ function ConstructorList({data, setSelectedIngredients, selectedIngredients, set
     });
   }
 
-
   function showItemDetails(item,e) {
     const action = e.nativeEvent.target.closest(".constructor-element__action")
     if (!action) {
-      setShowModal({visible: true, type: "ingredient", ingredient: item.ingredient});
+      setShowModal({type: "ingredient", ingredient: item.ingredient, visible: true});
     }
   }
 
-
-
   return (
     <div className={`${styles.listScroll} ${styles.scroll} custom-scroll`}>
-      {data.map((item) => (
+      {filling.map((item) => (
         <React.Fragment key={item.numberIngredient}>
           <div className={styles.elementConstructor} onClick={(e) => {showItemDetails(item,e)}}>
             <DragIcon type="primary"/>

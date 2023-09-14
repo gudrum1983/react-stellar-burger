@@ -1,5 +1,5 @@
 import React from "react";
-import {navigationLinkPropType} from "../../../utils/prop-types";
+import {nodePropType} from "../../../utils/prop-types";
 
 const textType = {
   primary: "text text_type_main-default",
@@ -9,7 +9,8 @@ const textType = {
 function NavigationLink({icon, children}) {
 
   NavigationLink.propTypes = {
-    icon: navigationLinkPropType,
+    icon: nodePropType,
+    children: nodePropType,
   };
 
   return (

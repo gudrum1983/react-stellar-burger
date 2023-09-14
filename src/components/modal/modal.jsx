@@ -1,15 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {ModalOrderDetails} from "./order-details/order-details";
+
 import styles from "./modal.module.css";
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {ModalOverlay} from "./modal-overlay/modal-overlay";
+import {nodePropType, optionalFunc, optionalString} from "../../utils/prop-types";
 
-function Modal(props) {
-  /*  render() {*/
-  const {children, header, onClose} = props;
-  // Возвращаем ReactDOM.createPortal,
-  // который поместит дочерние элементы в modalRoot
+function Modal({children, header, onClose}) {
+
+  Modal.propTypes = {
+    children: nodePropType,
+    header: optionalString,
+    onClose: optionalFunc,
+  };
+
   return ReactDOM.createPortal(
     (
       <div className={styles.modalWindow}>

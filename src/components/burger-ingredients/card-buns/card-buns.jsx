@@ -1,13 +1,13 @@
 import React from "react";
 import {Ingredient} from "../ingredient/ingredient";
-import {ingredientPropType, optionalFunc, optionalObject} from "../../../utils/prop-types";
+import {ingredientPropType, optionalFunc, selectedIngredientsPropType} from "../../../utils/prop-types";
 
 const CardBuns = ({currentItem, setSelectedIngredients, selectedIngredients, setShowModal}) => {
 
   CardBuns.propTypes = {
     currentItem: ingredientPropType,
     setSelectedIngredients: optionalFunc,
-    selectedIngredients: optionalObject,
+    selectedIngredients: selectedIngredientsPropType,
     setShowModal: optionalFunc,
   };
 

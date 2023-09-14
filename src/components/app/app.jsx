@@ -128,7 +128,7 @@ function App() {
             </section>
             {showModal.visible && showModal.type === "order" && modal(<ModalOrderDetails/>)}
             {showModal.visible && showModal.type === "ingredient" && !!(showModal.ingredient) && modal(
-              <ModalIngredientDetails data={showModal.ingredient}/>)}
+              <ModalIngredientDetails ingredient={showModal.ingredient}/>)}
           </main>
         </>
       }

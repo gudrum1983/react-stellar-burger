@@ -1,27 +1,31 @@
 import React from "react";
 import stylesConstr from "../burger-constructor/burger-constructor.module.css";
-import {ConstructorElement, Button, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {ConstructorElement, Button} from "@ya.praktikum/react-developer-burger-ui-components";
 import {ConstructorList} from "./constructor-list/constructor-list";
 import {TotalPrice} from "./total-price/total-price";
-import {ingredientPropType, optionalFunc, optionalObject} from "../../utils/prop-types";
+import {
+  ingredientPropType,
+  optionalFunc,
+  selectedIngredientsPropType,
+} from "../../utils/prop-types";
 import styles from "./constructor-list/constructor-list.module.css";
 
 
 function BurgerConstructor({selectedIngredients, setSelectedIngredients, defaultBun, setShowModal}) {
-
+  console.log(selectedIngredients)
   BurgerConstructor.propTypes = {
-    selectedIngredients: optionalObject,
     setSelectedIngredients: optionalFunc,
     defaultBun: ingredientPropType,
+    setShowModal: optionalFunc,
+    selectedIngredients: selectedIngredientsPropType
   };
 
+  let filling = selectedIngredients.other
 
   const bun = selectedIngredients.bun
   const textBun = bun.name
   const imgBun = bun.image
   const priceBun = bun.price
-
-  const mains = selectedIngredients.other
 
   function clear() {
     setShowModal({visible: true, type: "order", ingredient: {}});
@@ -30,14 +34,11 @@ function BurgerConstructor({selectedIngredients, setSelectedIngredients, default
       bun: defaultBun,
       other: [],
     });
-
   }
-
 
   function showBunDetails() {
     setShowModal({visible: true, type: "ingredient", ingredient: bun});
   }
-
 
   return (
     <div className={`ml-4 mt-25 ${stylesConstr.burgerConstructor}`}>
@@ -52,8 +53,8 @@ function BurgerConstructor({selectedIngredients, setSelectedIngredients, default
                               item={bun}
           />
         </div>
-        <ConstructorList data={mains} setSelectedIngredients={setSelectedIngredients}
-                         selectedIngredients={selectedIngredients} setShowModal={setShowModal}/>
+        {(filling.length > 0) && <ConstructorList filling={filling} setSelectedIngredients={setSelectedIngredients}
+                                                selectedIngredients={selectedIngredients} setShowModal={setShowModal}/>}
         <div className={styles.elementConstructor} onClick={showBunDetails}>
           <ConstructorElement extraClass="ml-8 mr-4"
                               type="bottom"

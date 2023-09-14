@@ -1,6 +1,6 @@
 import React from "react";
 import uuid from "react-uuid";
-import {ingredientPropType, optionalFunc, optionalObject} from "../../../utils/prop-types";
+import {ingredientPropType, optionalFunc, selectedIngredientsPropType} from "../../../utils/prop-types";
 import {Ingredient} from "../ingredient/ingredient";
 
 const CardOther = ({currentItem, setSelectedIngredients, selectedIngredients, setShowModal}) => {
@@ -8,7 +8,7 @@ const CardOther = ({currentItem, setSelectedIngredients, selectedIngredients, se
   CardOther.propTypes = {
     currentItem: ingredientPropType,
     setSelectedIngredients: optionalFunc,
-    selectedIngredients: optionalObject,
+    selectedIngredients: selectedIngredientsPropType,
     setShowModal: optionalFunc,
   };
 
