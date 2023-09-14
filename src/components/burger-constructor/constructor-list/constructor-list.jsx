@@ -4,7 +4,6 @@ import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger
 import {optionalFunc, selectedIngredientsPropType, selectedOtherIngredientsPropType } from "../../../utils/prop-types";
 
 function ConstructorList({filling, setSelectedIngredients, selectedIngredients, setShowModal}) {
-console.log(filling)
   ConstructorList.propTypes = {
     filling: selectedOtherIngredientsPropType,
     selectedIngredients: selectedIngredientsPropType,

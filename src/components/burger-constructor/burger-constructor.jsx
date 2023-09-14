@@ -12,7 +12,6 @@ import styles from "./constructor-list/constructor-list.module.css";
 
 
 function BurgerConstructor({selectedIngredients, setSelectedIngredients, defaultBun, setShowModal}) {
-  console.log(selectedIngredients)
   BurgerConstructor.propTypes = {
     setSelectedIngredients: optionalFunc,
     defaultBun: ingredientPropType,
