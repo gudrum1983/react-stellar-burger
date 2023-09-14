@@ -1,10 +1,8 @@
 import React from "react";
 import styles from "./app.module.css";
-import {dataS} from "../../utils/data";
 import {AppHeader} from '../app-header/app-header'
 import {BurgerIngredients} from "../burger-ingredients/burger-ingredients";
 import {BurgerConstructor} from "../burger-constructor/burger-constructor";
-import {Logo} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Modal} from "../modal/modal";
 import {ModalOrderDetails} from "../modal/order-details/order-details";
 import {ModalIngredientDetails} from "../modal/ingredient-details/ingredient-details";
@@ -15,8 +13,7 @@ function App() {
   const url = "https://norma.nomoreparties.space/api/ingredients";
 
   React.useEffect(() => {
-    getFilms();
-
+    getAppData();
   }, [])
 
   const [selectedIngredients, setSelectedIngredients] = React.useState({
@@ -24,10 +21,10 @@ function App() {
     other: [],
   });
 
-  const [stateApp, setStateApp] = React.useState({
+  const [downloadedAppData, setDownloadedAppData] = React.useState({
     isLoading: false,
     hasError: false,
-    data: [],
+    ingredients: [],
     defaultBun: {},
   });
 
@@ -38,9 +35,9 @@ function App() {
   });
 
 
-  function check(datat) {
-    if (datat) {
-      const defaultBun = datat.find(item => item.type === "bun")
+  function findDefaultBun(ingredientsData) {
+    if (ingredientsData) {
+      const defaultBun = ingredientsData.find(item => item.type === "bun")
       setSelectedIngredients({
         ...selectedIngredients,
         bun: defaultBun,
@@ -51,18 +48,30 @@ function App() {
     }
   }
 
-  const getFilms = () => {
-    setStateApp({...stateApp, hasError: false, isLoading: true});
+  const getAppData = () => {
+    setDownloadedAppData({...downloadedAppData, hasError: false, isLoading: true});
     fetch(url)
       .then(res => res.json())
       .then(data => data.data)
-      .then(data => setStateApp({...stateApp, data: sortedData(data), isLoading: false, defaultBun: check(data),}))
-      .catch(e => {
-        setStateApp({...stateApp, hasError: true, isLoading: false});
+      .then(ingredientsData =>
+        setDownloadedAppData(
+          {
+            ...downloadedAppData,
+            ingredients: sortedData(ingredientsData),
+            isLoading: false,
+            defaultBun: findDefaultBun(ingredientsData),
+          }))
+      .catch(() => {
+        setDownloadedAppData(
+          {
+            ...downloadedAppData,
+            hasError: true,
+            isLoading: false
+          });
       });
   };
 
-  const {data, isLoading, hasError, defaultBun} = stateApp;
+  const {ingredients, isLoading, hasError, defaultBun} = downloadedAppData;
 
   const sortedData = (data) => data.toSorted(function (a, b) {
     if (a._id > b._id) {
@@ -75,39 +84,41 @@ function App() {
   });
 
   function handleCloseModal() {
-    setShowModal({visible: false})
-  };
+    setShowModal({
+      visible: false,
+      type: "",
+      ingredient: {},
+    })
+  }
 
 
   function modal(comnonent) {
     let header = "";
-
     if (showModal.type !== "order") {
       header = "Детали ингредиента";
     }
-
-
-  return(
-
-  <Modal onClose={handleCloseModal} header={header}>
-    {comnonent}
-  </Modal>)
-};
+    return (
+      <Modal onClose={handleCloseModal} header={header}>
+        {comnonent}
+      </Modal>)
+  }
 
 
   return (
     <div className={`text text_type_main-default ${styles.app}`}>
-      {isLoading && <Logo/>}
+      {isLoading && 'Загрузка..'}
       {hasError && 'Произошла ошибка'}
       {!isLoading &&
         !hasError &&
-        data.length &&
-        <>        <AppHeader />
+        ingredients.length &&
+        <>
+          <AppHeader/>
           <main className={styles.main}>
             <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
-              <BurgerIngredients data={data}
+              <BurgerIngredients ingredients={ingredients}
                                  selectedIngredients={selectedIngredients}
-                                 setSelectedIngredients={setSelectedIngredients}/>
+                                 setSelectedIngredients={setSelectedIngredients}
+                                 setShowModal={setShowModal}/>
             </section>
             <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
               <BurgerConstructor selectedIngredients={selectedIngredients}
@@ -116,13 +127,11 @@ function App() {
                                  setShowModal={setShowModal}/>
             </section>
             {showModal.visible && showModal.type === "order" && modal(<ModalOrderDetails/>)}
-            {showModal.visible && showModal.type === "ingredient" && !!(showModal.ingredient) && modal(<ModalIngredientDetails data={showModal.ingredient}/>)}
-
+            {showModal.visible && showModal.type === "ingredient" && !!(showModal.ingredient) && modal(
+              <ModalIngredientDetails data={showModal.ingredient}/>)}
           </main>
         </>
-
       }
-
     </div>
   )
 }

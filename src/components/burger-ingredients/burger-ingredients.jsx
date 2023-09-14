@@ -3,21 +3,52 @@ import styles from "./burger-ingredients.module.css";
 import stylesConstr from "../burger-constructor/burger-constructor.module.css";
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
 import {ListCards} from "./list-cards/list-cards";
-import {optionalArray, optionalFunc, optionalObject} from "../../utils/prop-types";
+import {optionalArrayOfIngredients, optionalFunc, optionalObject} from "../../utils/prop-types";
 
 
-function BurgerIngredients({data, setSelectedIngredients, selectedIngredients}) {
+function BurgerIngredients({ingredients, setSelectedIngredients, selectedIngredients, setShowModal}) {
 
   BurgerIngredients.propTypes = {
-    data: optionalArray,
+    ingredients: optionalArrayOfIngredients,
     selectedIngredients: optionalObject,
     setSelectedIngredients: optionalFunc,
-
+    setShowModal: optionalFunc,
   };
 
-  const filteredIngredients = (type) => {
-    return data.filter((item) => item.type === type);
+  const filtered = (type) => {
+    return ingredients.filter((item) => item.type === type);
   }
+
+  const [filteredIngredients, setFilteredIngredients] = React.useState(
+    {
+      buns: [],
+      sauces: [],
+      mains: [],
+    }
+  )
+
+  const list = (name, data, id) => {
+    return (
+      <li className={styles.typePart}>
+        <p id={id} className="text text_type_main-medium">{name}</p>
+        <ListCards ingredients={data} setSelectedIngredients={setSelectedIngredients}
+                   selectedIngredients={selectedIngredients} setShowModal={setShowModal}/>
+      </li>)
+  }
+
+
+  React.useMemo(
+    () =>
+      setFilteredIngredients(
+        {
+          buns: filtered("bun"),
+          sauces: filtered("sauce"),
+          mains: filtered("main"),
+        }
+      )
+    , [ingredients]
+  );
+
 
   const [current, setCurrent] = React.useState('one');
 
@@ -48,21 +79,9 @@ function BurgerIngredients({data, setSelectedIngredients, selectedIngredients}) 
         </li>
       </ul>
       <ul className={`${styles.ingredients} ${stylesConstr.scroll} ${styles.nonList} custom-scroll`}>
-        <li className={styles.typePart}>
-          <p id="buns" className="text text_type_main-medium">Булки</p>
-          <ListCards data={filteredIngredients("bun")} setSelectedIngredients={setSelectedIngredients}
-                     selectedIngredients={selectedIngredients}/>
-        </li>
-        <li className={styles.typePart}>
-          <p id="sauces" className="text text_type_main-medium">Соусы</p>
-          <ListCards data={filteredIngredients("sauce")} setSelectedIngredients={setSelectedIngredients}
-                     selectedIngredients={selectedIngredients}/>
-        </li>
-        <li className={styles.typePart}>
-          <p id="mains" className="text text_type_main-medium">Начинки</p>
-          <ListCards data={filteredIngredients("main")} setSelectedIngredients={setSelectedIngredients}
-                     selectedIngredients={selectedIngredients}/>
-        </li>
+        {list("Булки", filteredIngredients.buns, "buns")}
+        {list("Соусы", filteredIngredients.sauces, "sauces")}
+        {list("Начинки", filteredIngredients.mains, "mains")}
       </ul>
     </>
   );

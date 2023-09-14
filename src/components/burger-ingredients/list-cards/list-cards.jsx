@@ -2,31 +2,32 @@ import React from "react";
 import styles from "./list-cards.module.css";
 import {CardOther} from "../card-other/card-other";
 import {CardBuns} from "../card-buns/card-buns";
-import {optionalArray, optionalFunc, optionalObject} from "../../../utils/prop-types";
+import {optionalArrayOfIngredients, optionalFunc, optionalObject} from "../../../utils/prop-types";
 
-function ListCards({data, setSelectedIngredients, selectedIngredients}) {
+function ListCards({ingredients, setSelectedIngredients, selectedIngredients, setShowModal}) {
 
   ListCards.propTypes = {
-    data: optionalArray,
+    ingredients: optionalArrayOfIngredients,
     selectedIngredients: optionalObject,
     setSelectedIngredients: optionalFunc,
+    setShowModal: optionalFunc,
   };
 
   let defaultBunId = false
 
-  if (data[0].type === "bun") {
-    defaultBunId = data[0]._id;
+  if (ingredients[0].type === "bun") {
+    defaultBunId = ingredients[0]._id;
   }
 
   return (
     <ul className={styles.listCards}>
-      {data.map((currentItem) => (
+      {ingredients.map((currentItem) => (
         <React.Fragment key={currentItem._id}>
           {!!(defaultBunId)
             ? <CardBuns currentItem={currentItem} setSelectedIngredients={setSelectedIngredients}
-                        selectedIngredients={selectedIngredients} defaultBunId={defaultBunId}/>
+                        selectedIngredients={selectedIngredients} defaultBunId={defaultBunId} setShowModal={setShowModal}/>
             : <CardOther currentItem={currentItem} setSelectedIngredients={setSelectedIngredients}
-                         selectedIngredients={selectedIngredients}/>}
+                         selectedIngredients={selectedIngredients} setShowModal={setShowModal}/>}
         </React.Fragment>
       ))}
     </ul>

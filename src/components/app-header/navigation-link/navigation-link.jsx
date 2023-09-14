@@ -6,16 +6,17 @@ const textType = {
   secondary: "text text_type_main-default text_color_inactive",
 }
 
-NavigationLink.propTypes = {
-  icon: navigationLinkPropType,
-};
+function NavigationLink({icon, children}) {
 
-function NavigationLink(props) {
+  NavigationLink.propTypes = {
+    icon: navigationLinkPropType,
+  };
+
   return (
     <>
-      {props.icon}
-      <p className={`${textType[props.icon.props.type]} pl-2`}>
-        {props.children}
+      {icon}
+      <p className={`${textType[icon.props.type]} pl-2`}>
+        {children}
       </p>
     </>
   );

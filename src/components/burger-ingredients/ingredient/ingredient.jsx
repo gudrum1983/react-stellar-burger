@@ -1,21 +1,29 @@
 import styles from "./ingredient.module.css";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
-import {ingredientPropType} from "../../../utils/prop-types";
+import {ingredientPropType, optionalFunc, optionalNum} from "../../../utils/prop-types";
 
 
-function Ingredient ({currentItem, count, toggleCount}) {
+function Ingredient({currentItem, count, toggleCount, setShowModal}) {
 
   Ingredient.propTypes = {
     currentItem: ingredientPropType,
+    count: optionalNum,
+    toggleCount: optionalFunc,
+    setShowModal: optionalFunc,
   };
+
+  function handleClick() {
+    toggleCount();
+    setShowModal({visible: true, type: "ingredient", ingredient: currentItem});
+  }
 
   function isNum(num) {
     return (num !== 0)
   }
 
-  return(
-    <li className={styles.card} onClick={toggleCount}>
+  return (
+    <li className={styles.card} onClick={handleClick}>
       <img className={styles.imgCard} alt={currentItem.name} src={currentItem.image}/>
       <div className={`pt-1 pb-1 ${styles.price}`}>
         <p className="text text_type_digits-default pr-2">{currentItem.price}</p>

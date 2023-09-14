@@ -17,7 +17,6 @@
 
 .navigation {
   justify-self: start;
-
 }
 
 .logo {
@@ -31,7 +30,6 @@
 .flex_row {
   display: flex;
   flex-direction: row;
-
 }
 
 .non_list {

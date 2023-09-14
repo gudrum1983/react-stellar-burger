@@ -11,7 +11,7 @@ function ConstructorList({data, setSelectedIngredients, selectedIngredients, set
     setSelectedIngredients: optionalFunc,
   };
 
-  function deleteCard(idItem, e) {
+  function deleteCard(idItem) {
     const index = selectedIngredients.other.findIndex(item => item.numberIngredient === idItem)
     const arrEnd = selectedIngredients.other.slice(index + 1, selectedIngredients.other.length + 1)
     const arrStart = selectedIngredients.other.slice(0, index)
@@ -26,17 +26,9 @@ function ConstructorList({data, setSelectedIngredients, selectedIngredients, set
 
   function showItemDetails(item,e) {
     const action = e.nativeEvent.target.closest(".constructor-element__action")
-    console.log(action)
-
-
-/*const isPath = e.target.nodeName === 'path'
-    const isSvgPath = e.target.firstChild.nodeName ==='path'*/
-
-    console.log(!action)
     if (!action) {
       setShowModal({visible: true, type: "ingredient", ingredient: item.ingredient});
     }
-
   }
 
 

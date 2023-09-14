@@ -3,12 +3,13 @@ import uuid from "react-uuid";
 import {ingredientPropType, optionalFunc, optionalObject} from "../../../utils/prop-types";
 import {Ingredient} from "../ingredient/ingredient";
 
-const CardOther = ({currentItem, setSelectedIngredients, selectedIngredients}) => {
+const CardOther = ({currentItem, setSelectedIngredients, selectedIngredients, setShowModal}) => {
 
   CardOther.propTypes = {
     currentItem: ingredientPropType,
     setSelectedIngredients: optionalFunc,
     selectedIngredients: optionalObject,
+    setShowModal: optionalFunc,
   };
 
 
@@ -31,7 +32,7 @@ const CardOther = ({currentItem, setSelectedIngredients, selectedIngredients}) =
   }
 
   return (
-    <Ingredient currentItem={currentItem} count={count} toggleCount={toggleCount}/>
+    <Ingredient currentItem={currentItem} count={count} toggleCount={toggleCount} setShowModal={setShowModal}/>
   );
 
 };

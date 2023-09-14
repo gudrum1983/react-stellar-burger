@@ -16,8 +16,10 @@ export const ingredientPropType = PropTypes.shape({
 });
 
 export const navigationLinkPropType = PropTypes.node.isRequired;
-
+export const optionalNum = PropTypes.number.isRequired;
 export const optionalString = PropTypes.string.isRequired;
 export const optionalArray = PropTypes.array.isRequired;
 export const optionalObject = PropTypes.object.isRequired;
 export const optionalFunc = PropTypes.func.isRequired;
+
+export const optionalArrayOfIngredients = PropTypes.arrayOf(ingredientPropType).isRequired;

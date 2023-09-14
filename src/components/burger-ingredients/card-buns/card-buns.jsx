@@ -1,14 +1,14 @@
 import React from "react";
 import {Ingredient} from "../ingredient/ingredient";
-import {ingredientPropType, optionalFunc, optionalObject, optionalString} from "../../../utils/prop-types";
+import {ingredientPropType, optionalFunc, optionalObject} from "../../../utils/prop-types";
 
-const CardBuns = ({currentItem, setSelectedIngredients, selectedIngredients}) => {
+const CardBuns = ({currentItem, setSelectedIngredients, selectedIngredients, setShowModal}) => {
 
   CardBuns.propTypes = {
     currentItem: ingredientPropType,
-    defaultBunId: optionalString,
     setSelectedIngredients: optionalFunc,
     selectedIngredients: optionalObject,
+    setShowModal: optionalFunc,
   };
 
   const count = (currentItem._id === selectedIngredients.bun._id) ? 1 : 0
@@ -21,7 +21,7 @@ const CardBuns = ({currentItem, setSelectedIngredients, selectedIngredients}) =>
   }
 
   return (
-    <Ingredient currentItem={currentItem} count={count} toggleCount={toggleCount}/>
+    <Ingredient currentItem={currentItem} count={count} toggleCount={toggleCount} setShowModal={setShowModal}/>
   );
 };
 
