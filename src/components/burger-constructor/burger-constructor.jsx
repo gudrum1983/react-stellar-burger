@@ -35,7 +35,7 @@ function BurgerConstructor({selectedIngredients, setSelectedIngredients, default
     <div className={`ml-4 mt-25 ${stylesConstr.burgerConstructor}`}>
       <div className={stylesConstr.list}>
         <div className={styles.elementConstructor} onClick={showBunDetails}>
-          <ConstructorElement extraClass='ml-8 mr-4'
+          <ConstructorElement extraClass='ml-8 mr-4 cursor'
                               type="top"
                               isLocked={true}
                               text={`${textBun} (верх)`}
@@ -44,10 +44,12 @@ function BurgerConstructor({selectedIngredients, setSelectedIngredients, default
                               item={bun}
           />
         </div>
-        {(filling.length > 0) && <ConstructorList filling={filling} setSelectedIngredients={setSelectedIngredients}
-                                                selectedIngredients={selectedIngredients} setShowModal={setShowModal}/>}
+        {(filling.length > 0) && <ConstructorList filling={filling}
+                                                  setSelectedIngredients={setSelectedIngredients}
+                                                  selectedIngredients={selectedIngredients}
+                                                  setShowModal={setShowModal}/>}
         <div className={styles.elementConstructor} onClick={showBunDetails}>
-          <ConstructorElement extraClass="ml-8 mr-4"
+          <ConstructorElement extraClass="ml-8 mr-4 cursor"
                               type="bottom"
                               isLocked={true}
                               text={`${textBun} (низ)`}

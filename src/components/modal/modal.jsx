@@ -14,7 +14,7 @@ function Modal({children, header, onClose}) {
         <div className={`${styles.modalContainer} p-10`}>
           <div className={styles.header}>
             <p className="text text_type_main-large">{header}</p>
-            <button className={styles.buttonClose} onClick={onClose}><CloseIcon type="primary"/></button>
+            <button className={`${styles.buttonClose} cursor`} onClick={onClose}><CloseIcon type="primary"/></button>
           </div>
           {children}
         </div>

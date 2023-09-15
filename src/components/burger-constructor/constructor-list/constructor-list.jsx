@@ -31,6 +31,7 @@ function ConstructorList({filling, setSelectedIngredients, selectedIngredients, 
           <div className={styles.elementConstructor} onClick={(e) => {showItemDetails(item,e)}}>
             <DragIcon type="primary"/>
             <ConstructorElement
+              extraClass='cursor'
               text={item.ingredient.name}
               price={item.ingredient.price}
               thumbnail={item.ingredient.image}

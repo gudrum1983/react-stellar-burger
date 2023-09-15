@@ -16,7 +16,7 @@ function Ingredient({currentItem, count, toggleCount, setShowModal}) {
   }
 
   return (
-    <li className={styles.card} onClick={handleClick}>
+    <li className={`${styles.card} cursor`} onClick={handleClick} >
       <img className={styles.imgCard} alt={currentItem.name} src={currentItem.image}/>
       <div className={`pt-1 pb-1 ${styles.price}`}>
         <p className="text text_type_digits-default pr-2">{currentItem.price}</p>

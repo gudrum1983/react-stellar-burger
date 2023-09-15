@@ -50,21 +50,21 @@ function BurgerIngredients({ingredients, setSelectedIngredients, selectedIngredi
       <p className="text text_type_main-large mb-5 pt-10">Соберите&nbsp;бургер</p>
       <ul className={`pb-10 ${styles.tab} ${styles.nonList} `}>
         <li>
-          <a href="#buns" className={styles.nonLink}>
+          <a href="#buns" className={`${styles.nonLink} cursor`}>
             <Tab value="one" active={current === 'one'} onClick={setCurrent}>
               Булки
             </Tab>
           </a>
         </li>
         <li>
-          <a href="#sauces" className={styles.nonLink}>
+          <a href="#sauces" className={`${styles.nonLink} cursor`}>
             <Tab value="two" active={current === 'two'} onClick={setCurrent}>
               Соусы
             </Tab>
           </a>
         </li>
         <li>
-          <a href="#mains" className={styles.nonLink}>
+          <a href="#mains" className={`${styles.nonLink} cursor`}>
             <Tab value="three" active={current === 'three'} onClick={setCurrent}>
               Начинки
             </Tab>

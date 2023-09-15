@@ -14,16 +14,16 @@ function AppHeader() {
       <div className={`${styles.panel} ${classes.panel}`}>
         <nav className={styles.navigation}>
           <ul className={`${styles.links} text`}>
-            <li className={`${styles.flex_row} ${classes.link}`}>
+            <li className={`${styles.flex_row} ${classes.link} cursor`}>
               <NavigationLink icon={<BurgerIcon type="primary"/>}>Конструктор</NavigationLink>
             </li>
-            <li className={`${styles.flex_row} ${classes.link}`}>
+            <li className={`${styles.flex_row} ${classes.link} cursor`}>
               <NavigationLink icon={<ListIcon type="secondary"/>}>Лента&nbsp;заказов</NavigationLink>
             </li>
           </ul>
         </nav>
         <Logo className={styles.logo}/>
-        <div className={`${styles.flex_row} ${styles.profile} ${classes.link}`}>
+        <div className={`${styles.flex_row} ${styles.profile} ${classes.link} cursor`}>
           <NavigationLink icon={<ProfileIcon type="secondary"/>}>Личный&nbsp;кабинет</NavigationLink>
         </div>
       </div>
