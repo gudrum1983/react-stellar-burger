@@ -48,10 +48,11 @@ function App() {
     }
   }
 
+
   const getAppData = () => {
     setDownloadedAppData({...downloadedAppData, hasError: false, isLoading: true});
     fetch(url)
-      .then(res => res.json())
+      .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`))
       .then(data => data.data)
       .then(ingredientsData =>
         setDownloadedAppData(
@@ -106,7 +107,7 @@ function App() {
 
   return (
     <div className={`text text_type_main-default ${styles.app}`}>
-      {isLoading && 'Загрузка..'}
+      {isLoading && 'Загрузка...'}
       {hasError && 'Произошла ошибка'}
       {!isLoading &&
         !hasError &&
