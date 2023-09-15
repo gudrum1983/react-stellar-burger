@@ -1,12 +1,12 @@
 import React from "react";
 import {nodePropType} from "../../../utils/prop-types";
 
-const textType = {
-  primary: "text text_type_main-default",
-  secondary: "text text_type_main-default text_color_inactive",
-}
-
 function NavigationLink({icon, children}) {
+
+  const textType = {
+    primary: "text text_type_main-default",
+    secondary: "text text_type_main-default text_color_inactive",
+  }
 
   return (
     <>

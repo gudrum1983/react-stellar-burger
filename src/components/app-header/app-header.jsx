@@ -1,13 +1,14 @@
 import styles from "./app-header.module.css";
 import {Logo, BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import {NavigationLink} from "./navigation-link/navigation-link";
-import generalStyle from "../../index.css"
-const classes = {
-  link: "pl-5 pr-5 pb-4 pt-4",
-  panel: "pt-4 pb-4",
-}
 
 function AppHeader() {
+
+  const classes = {
+    link: "pl-5 pr-5 pb-4 pt-4",
+    panel: "pt-4 pb-4",
+  }
+
   return (
     <header className={styles.header}>
       <div className={`${styles.panel} ${classes.panel}`}>
@@ -16,7 +17,7 @@ function AppHeader() {
             <li className={`${styles.flex_row} ${classes.link}`}>
               <NavigationLink icon={<BurgerIcon type="primary"/>}>Конструктор</NavigationLink>
             </li>
-            <li className={`${styles.flex_row} ${classes.link} `}>
+            <li className={`${styles.flex_row} ${classes.link}`}>
               <NavigationLink icon={<ListIcon type="secondary"/>}>Лента&nbsp;заказов</NavigationLink>
             </li>
           </ul>
