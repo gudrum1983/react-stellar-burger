@@ -4,8 +4,8 @@ import {AppHeader} from '../app-header/app-header'
 import {BurgerIngredients} from "../burger-ingredients/burger-ingredients";
 import {BurgerConstructor} from "../burger-constructor/burger-constructor";
 import {Modal} from "../modal/modal";
-import {ModalOrderDetails} from "../modal/order-details/order-details";
-import {ModalIngredientDetails} from "../modal/ingredient-details/ingredient-details";
+import {OrderDetails} from "../modal/order-details/order-details";
+import {IngredientDetails} from "../modal/ingredient-details/ingredient-details";
 
 
 function App() {
@@ -127,9 +127,9 @@ function App() {
                                  defaultBun={defaultBun}
                                  setShowModal={setShowModal}/>
             </section>
-            {showModal.visible && showModal.type === "order" && modal(<ModalOrderDetails/>)}
+            {showModal.visible && showModal.type === "order" && modal(<OrderDetails/>)}
             {showModal.visible && showModal.type === "ingredient" && !!(showModal.ingredient) && modal(
-              <ModalIngredientDetails ingredient={showModal.ingredient}/>)}
+              <IngredientDetails ingredient={showModal.ingredient}/>)}
           </main>
         </>
       }

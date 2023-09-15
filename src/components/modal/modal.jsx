@@ -8,12 +8,6 @@ import {nodePropType, optionalFunc, optionalString} from "../../utils/prop-types
 
 function Modal({children, header, onClose}) {
 
-  Modal.propTypes = {
-    children: nodePropType,
-    header: optionalString,
-    onClose: optionalFunc,
-  };
-
   return ReactDOM.createPortal(
     (
       <div className={styles.modalWindow}>
@@ -29,7 +23,12 @@ function Modal({children, header, onClose}) {
     ),
     document.getElementById("modal")
   );
-  /*}*/
 }
+
+Modal.propTypes = {
+  children: nodePropType,
+  header: optionalString,
+  onClose: optionalFunc,
+};
 
 export {Modal}

@@ -5,10 +5,6 @@ import {optionalFunc} from "../../../utils/prop-types";
 
 function ModalOverlay({onClose}) {
 
-  ModalOverlay.propTypes = {
-    onClose: optionalFunc,
-  };
-
   function keyClose(e) {
     if (e.key === 'Escape') {
       onClose()
@@ -30,6 +26,10 @@ function ModalOverlay({onClose}) {
     <div className={`${styles.modalOverlay}`} onClick={clickClose}></div>
   )
 }
+
+ModalOverlay.propTypes = {
+  onClose: optionalFunc,
+};
 
 export {
   ModalOverlay

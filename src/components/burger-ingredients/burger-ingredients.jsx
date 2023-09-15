@@ -8,13 +8,6 @@ import {optionalArrayOfIngredients, optionalFunc, optionalObject} from "../../ut
 
 function BurgerIngredients({ingredients, setSelectedIngredients, selectedIngredients, setShowModal}) {
 
-  BurgerIngredients.propTypes = {
-    ingredients: optionalArrayOfIngredients,
-    selectedIngredients: optionalObject,
-    setSelectedIngredients: optionalFunc,
-    setShowModal: optionalFunc,
-  };
-
   const filtered = (type) => {
     return ingredients.filter((item) => item.type === type);
   }
@@ -86,6 +79,13 @@ function BurgerIngredients({ingredients, setSelectedIngredients, selectedIngredi
     </>
   );
 }
+
+BurgerIngredients.propTypes = {
+  ingredients: optionalArrayOfIngredients,
+  selectedIngredients: optionalObject,
+  setSelectedIngredients: optionalFunc,
+  setShowModal: optionalFunc,
+};
 
 export {
   BurgerIngredients

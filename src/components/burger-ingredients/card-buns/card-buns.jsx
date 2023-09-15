@@ -4,13 +4,6 @@ import {ingredientPropType, optionalFunc, selectedIngredientsPropType} from "../
 
 const CardBuns = ({currentItem, setSelectedIngredients, selectedIngredients, setShowModal}) => {
 
-  CardBuns.propTypes = {
-    currentItem: ingredientPropType,
-    setSelectedIngredients: optionalFunc,
-    selectedIngredients: selectedIngredientsPropType,
-    setShowModal: optionalFunc,
-  };
-
   const count = (currentItem._id === selectedIngredients.bun._id) ? 1 : 0
 
   function toggleCount() {
@@ -23,6 +16,13 @@ const CardBuns = ({currentItem, setSelectedIngredients, selectedIngredients, set
   return (
     <Ingredient currentItem={currentItem} count={count} toggleCount={toggleCount} setShowModal={setShowModal}/>
   );
+};
+
+CardBuns.propTypes = {
+  currentItem: ingredientPropType,
+  setSelectedIngredients: optionalFunc,
+  selectedIngredients: selectedIngredientsPropType,
+  setShowModal: optionalFunc,
 };
 
 export {

@@ -6,13 +6,6 @@ import {ingredientPropType, optionalFunc, optionalNum} from "../../../utils/prop
 
 function Ingredient({currentItem, count, toggleCount, setShowModal}) {
 
-  Ingredient.propTypes = {
-    currentItem: ingredientPropType,
-    count: optionalNum,
-    toggleCount: optionalFunc,
-    setShowModal: optionalFunc,
-  };
-
   function handleClick() {
     toggleCount();
     setShowModal({visible: true, type: "ingredient", ingredient: currentItem});
@@ -36,6 +29,13 @@ function Ingredient({currentItem, count, toggleCount, setShowModal}) {
     </li>
   )
 }
+
+Ingredient.propTypes = {
+  currentItem: ingredientPropType,
+  count: optionalNum,
+  toggleCount: optionalFunc,
+  setShowModal: optionalFunc,
+};
 
 export {
   Ingredient

@@ -1,11 +1,7 @@
 import styles from "./ingredient-details.module.css";
 import {ingredientPropType} from "../../../utils/prop-types";
 
-function ModalIngredientDetails({ingredient}) {
-
-  ModalIngredientDetails.propTypes = {
-    ingredient: ingredientPropType,
-  };
+function IngredientDetails({ingredient}) {
 
   const energyValue = (name, value) => {
     return (
@@ -31,6 +27,10 @@ function ModalIngredientDetails({ingredient}) {
   )
 }
 
+IngredientDetails.propTypes = {
+  ingredient: ingredientPropType,
+};
+
 export {
-  ModalIngredientDetails
+  IngredientDetails
 }

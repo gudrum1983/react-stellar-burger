@@ -1,6 +1,6 @@
 import styles from "./order-details.module.css";
 
-function ModalOrderDetails(){
+function OrderDetails(){
 
   return (
     <div className={`${styles.modalContainer} pt-4 pb-20`}>
@@ -15,5 +15,5 @@ function ModalOrderDetails(){
 }
 
 export {
-  ModalOrderDetails
+  OrderDetails
 }

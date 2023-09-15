@@ -5,14 +5,6 @@ import {Ingredient} from "../ingredient/ingredient";
 
 const CardOther = ({currentItem, setSelectedIngredients, selectedIngredients, setShowModal}) => {
 
-  CardOther.propTypes = {
-    currentItem: ingredientPropType,
-    setSelectedIngredients: optionalFunc,
-    selectedIngredients: selectedIngredientsPropType,
-    setShowModal: optionalFunc,
-  };
-
-
   let count = 0
   const otherIngredients = selectedIngredients.other
   if (otherIngredients.length > 0) {
@@ -35,6 +27,13 @@ const CardOther = ({currentItem, setSelectedIngredients, selectedIngredients, se
     <Ingredient currentItem={currentItem} count={count} toggleCount={toggleCount} setShowModal={setShowModal}/>
   );
 
+};
+
+CardOther.propTypes = {
+  currentItem: ingredientPropType,
+  setSelectedIngredients: optionalFunc,
+  selectedIngredients: selectedIngredientsPropType,
+  setShowModal: optionalFunc,
 };
 
 export {

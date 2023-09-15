@@ -10,17 +10,9 @@ import {
 } from "../../utils/prop-types";
 import styles from "./constructor-list/constructor-list.module.css";
 
-
 function BurgerConstructor({selectedIngredients, setSelectedIngredients, defaultBun, setShowModal}) {
-  BurgerConstructor.propTypes = {
-    setSelectedIngredients: optionalFunc,
-    defaultBun: ingredientPropType,
-    setShowModal: optionalFunc,
-    selectedIngredients: selectedIngredientsPropType
-  };
 
-  let filling = selectedIngredients.other
-
+  const filling = selectedIngredients.other
   const bun = selectedIngredients.bun
   const textBun = bun.name
   const imgBun = bun.image
@@ -75,6 +67,13 @@ function BurgerConstructor({selectedIngredients, setSelectedIngredients, default
     </div>
   );
 }
+
+BurgerConstructor.propTypes = {
+  setSelectedIngredients: optionalFunc,
+  defaultBun: ingredientPropType,
+  setShowModal: optionalFunc,
+  selectedIngredients: selectedIngredientsPropType
+};
 
 export {
   BurgerConstructor

@@ -3,10 +3,6 @@ import {optionalObject} from "../../../utils/prop-types";
 
 function TotalPrice({selectedIngredients}) {
 
-  TotalPrice.propTypes = {
-    selectedIngredients: optionalObject,
-  };
-
   const costBun = selectedIngredients.bun.price * 2
   /* В макете фигма стоимость была указана с учетом двойной стоимости булочки */
   const other = selectedIngredients.other
@@ -25,6 +21,10 @@ function TotalPrice({selectedIngredients}) {
     <p className="text text_type_digits-medium">{stringTotal}</p>
   )
 }
+
+TotalPrice.propTypes = {
+  selectedIngredients: optionalObject,
+};
 
 export {
   TotalPrice

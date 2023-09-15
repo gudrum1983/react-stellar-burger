@@ -4,12 +4,6 @@ import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger
 import {optionalFunc, selectedIngredientsPropType, selectedOtherIngredientsPropType } from "../../../utils/prop-types";
 
 function ConstructorList({filling, setSelectedIngredients, selectedIngredients, setShowModal}) {
-  ConstructorList.propTypes = {
-    filling: selectedOtherIngredientsPropType,
-    selectedIngredients: selectedIngredientsPropType,
-    setSelectedIngredients: optionalFunc,
-    setShowModal: optionalFunc,
-  };
 
   function deleteCard(idItem) {
     const index = selectedIngredients.other.findIndex(item => item.numberIngredient === idItem)
@@ -50,6 +44,13 @@ function ConstructorList({filling, setSelectedIngredients, selectedIngredients, 
     </div>
   )
 }
+
+ConstructorList.propTypes = {
+  filling: selectedOtherIngredientsPropType,
+  selectedIngredients: selectedIngredientsPropType,
+  setSelectedIngredients: optionalFunc,
+  setShowModal: optionalFunc,
+};
 
 export {
   ConstructorList

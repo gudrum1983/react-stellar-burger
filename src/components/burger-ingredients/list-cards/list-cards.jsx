@@ -2,16 +2,9 @@ import React from "react";
 import styles from "./list-cards.module.css";
 import {CardOther} from "../card-other/card-other";
 import {CardBuns} from "../card-buns/card-buns";
-import { optionalArrayOfIngredients, optionalFunc, selectedIngredientsPropType } from "../../../utils/prop-types";
+import {optionalArrayOfIngredients, optionalFunc, selectedIngredientsPropType} from "../../../utils/prop-types";
 
 function ListCards({ingredients, setSelectedIngredients, selectedIngredients, setShowModal}) {
-
-  ListCards.propTypes = {
-    ingredients: optionalArrayOfIngredients,
-    selectedIngredients: selectedIngredientsPropType,
-    setSelectedIngredients: optionalFunc,
-    setShowModal: optionalFunc,
-  };
 
   let defaultBunId = false
 
@@ -34,6 +27,13 @@ function ListCards({ingredients, setSelectedIngredients, selectedIngredients, se
     </ul>
   )
 }
+
+ListCards.propTypes = {
+  ingredients: optionalArrayOfIngredients,
+  selectedIngredients: selectedIngredientsPropType,
+  setSelectedIngredients: optionalFunc,
+  setShowModal: optionalFunc,
+};
 
 export {
   ListCards

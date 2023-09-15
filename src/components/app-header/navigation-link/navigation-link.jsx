@@ -8,11 +8,6 @@ const textType = {
 
 function NavigationLink({icon, children}) {
 
-  NavigationLink.propTypes = {
-    icon: nodePropType,
-    children: nodePropType,
-  };
-
   return (
     <>
       {icon}
@@ -22,5 +17,10 @@ function NavigationLink({icon, children}) {
     </>
   );
 }
+
+NavigationLink.propTypes = {
+  icon: nodePropType,
+  children: nodePropType,
+};
 
 export {NavigationLink}
