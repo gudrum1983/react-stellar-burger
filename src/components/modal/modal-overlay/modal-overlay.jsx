@@ -5,24 +5,22 @@ import {optionalFunc} from "../../../utils/prop-types";
 
 function ModalOverlay({onClose}) {
 
-  function clickClose() {
-      onClose()
-  }
-
   React.useEffect(() => {
-    document.addEventListener("keydown", keyClose)
+
     function keyClose(e) {
       if (e.key === 'Escape') {
         onClose()
       }
     }
+
+    document.addEventListener("keydown", keyClose)
     return () => {
       document.removeEventListener("keydown", keyClose);
     }
   }, [])
 
   return (
-    <div className={`${styles.modalOverlay}`} onClick={clickClose}></div>
+    <div className={`${styles.modalOverlay}`} onClick={onClose}></div>
   )
 }
 
