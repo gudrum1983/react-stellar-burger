@@ -1,3 +1,14 @@
 body {
   margin: 0;
 }
+
+/*не забыть подключить курсоры*/
+.cursor {
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+
+.cursor:hover {
+  opacity: 0.6;
+}

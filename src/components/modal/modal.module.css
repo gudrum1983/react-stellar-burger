@@ -1,0 +1,68 @@
+.modalWindow {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  min-width: 320px;
+  transition: visibility 0.5s, opacity 0.5s linear;
+  z-index: 9;
+}
+
+
+.modalContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background-color: #1c1c21;
+  color: #f2f2f3;
+  border-radius: 40px;
+  border: 1px solid #4c4cff33;
+  width: 100%;
+  max-width: 720px;
+  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.04);
+  height: fit-content;
+  z-index: 8;
+  box-sizing: border-box;
+
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 0;
+  width: 100%;
+
+}
+
+
+.buttonClose {
+  margin-left: auto;
+  background-color: transparent;
+  color: #f2f2f3;
+  border: none;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+}
+
+
+/*
+<div class="popup popup_type_delete">
+<div class="popup__shadow"></div>
+<div class="popup__container">
+<button class="popup__button-close button" type="button"></button>
+<div class="form form-delete">
+<h3 class="form__header">Вы уверены?</h3>
+<form class="form__admin" name="delete-form" id="form-delete" novalidate>
+<button class="form__button-submit button button_type_dark" type="submit">Да</button>
+</form>
+</div>
+</div>
+</div>*/

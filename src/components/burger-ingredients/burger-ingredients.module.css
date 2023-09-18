@@ -1,0 +1,26 @@
+.ingredients {
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+}
+
+.nonList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.typePart {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nonLink {
+  text-decoration: none;
+}
+
+.tab {
+  display: flex;
+  margin-bottom: 40px;
+}

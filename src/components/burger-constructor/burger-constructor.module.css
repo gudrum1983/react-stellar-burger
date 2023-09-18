@@ -1,0 +1,53 @@
+.burgerConstructor {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  height: 100%;
+  max-height: calc(100% - 100px);
+  gap: 40px;
+}
+
+.containerList {
+  display: flex;
+  flex-direction: column;
+  box-sizing: content-box;
+  max-height: calc(100% - 52px);
+}
+
+.list {
+  width: 100%;
+  align-items: end;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: calc(100% - 40px - 66px);
+}
+
+.price {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.iconPrice {
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
+  background-image: url("../../images/icon 36x36.svg");
+}
+
+.scroll {
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+  background: #8585ad;
+  border: none;
+  border-radius: 0;
+}
