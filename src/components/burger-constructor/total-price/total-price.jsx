@@ -1,10 +1,13 @@
 import React from "react";
-import {optionalObject} from "../../../utils/prop-types";
+import {SelectedIngredientsContext} from "../../../services/burgerConstructorContext";
 
-function TotalPrice({selectedIngredients}) {
+function TotalPrice() {
+
+  //получаем функцию-сеттер из контекста
+  const { selectedIngredients } = React.useContext(SelectedIngredientsContext);
 
   const costBun = selectedIngredients.bun.price * 2
-  /* В макете фигма стоимость была указана с учетом двойной стоимости булочки */
+
   const other = selectedIngredients.other
   const numberOtherIngredients = other.length
   let sumWithInitial = 0
@@ -21,10 +24,6 @@ function TotalPrice({selectedIngredients}) {
     <p className="text text_type_digits-medium">{stringTotal}</p>
   )
 }
-
-TotalPrice.propTypes = {
-  selectedIngredients: optionalObject,
-};
 
 export {
   TotalPrice

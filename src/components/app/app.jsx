@@ -6,7 +6,8 @@ import {BurgerConstructor} from "../burger-constructor/burger-constructor";
 import {Modal} from "../modal/modal";
 import {OrderDetails} from "../modal/order-details/order-details";
 import {IngredientDetails} from "../modal/ingredient-details/ingredient-details";
-
+import {SelectedIngredientsContext} from "../../services/burgerConstructorContext";
+import {ShowModalContext} from "../../services/modalContext";
 
 function App() {
 
@@ -16,10 +17,44 @@ function App() {
     getAppData();
   }, [])
 
-  const [selectedIngredients, setSelectedIngredients] = React.useState({
-    bun: {},
-    other: [],
-  });
+  //создать константу для начального состояния стейта
+  const selectedIngredientsInitialState = {bun: {}, other: []};
+
+  //Создать функцию reducer
+  function reducerSelectedIngredients(state, action) {
+    switch (action.type) {
+      case "defineBun":
+        return {
+          ...state,
+          bun: action.payload
+        };
+      case "addOther":
+        return {
+          ...state,
+          other: [...state.other,
+            {
+              numberIngredient: action.payload.numberIngredient,
+              ingredient: action.payload.ingredient,
+            }]
+        };
+      case "resetOnlyOther":
+        return {
+          bun: action.payload,
+          other: [],
+        };
+      case "replaceOther":
+        return {
+          ...state,
+          other: action.payload
+        };
+      default:
+        throw new Error(`Wrong type of action: ${action.type}`);
+    }
+  }
+
+  //заменить UseState на UseReducer
+  const [selectedIngredients, selectedIngredientsDispatcher] = React.useReducer(reducerSelectedIngredients, selectedIngredientsInitialState, undefined);
+
 
   const [downloadedAppData, setDownloadedAppData] = React.useState({
     isLoading: false,
@@ -38,10 +73,7 @@ function App() {
   function findDefaultBun(ingredientsData) {
     if (ingredientsData) {
       const defaultBun = ingredientsData.find(item => item.type === "bun")
-      setSelectedIngredients({
-        ...selectedIngredients,
-        bun: defaultBun,
-      });
+      selectedIngredientsDispatcher({type: 'defineBun', payload: defaultBun});
       return defaultBun
     } else {
       return {}
@@ -114,23 +146,21 @@ function App() {
         ingredients.length &&
         <>
           <AppHeader/>
-          <main className={styles.main}>
-            <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
-              <BurgerIngredients ingredients={ingredients}
-                                 selectedIngredients={selectedIngredients}
-                                 setSelectedIngredients={setSelectedIngredients}
-                                 setShowModal={setShowModal}/>
-            </section>
-            <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
-              <BurgerConstructor selectedIngredients={selectedIngredients}
-                                 setSelectedIngredients={setSelectedIngredients}
-                                 defaultBun={defaultBun}
-                                 setShowModal={setShowModal}/>
-            </section>
-            {showModal.visible && showModal.type === "order" && modal(<OrderDetails/>)}
-            {showModal.visible && showModal.type === "ingredient" && !!(showModal.ingredient) && modal(
-              <IngredientDetails ingredient={showModal.ingredient}/>)}
-          </main>
+          <SelectedIngredientsContext.Provider value={{selectedIngredients, selectedIngredientsDispatcher}}>
+            <main className={styles.main}>
+              <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
+                <BurgerIngredients ingredients={ingredients}
+                                   setShowModal={setShowModal}/>
+              </section>
+              <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
+                <BurgerConstructor defaultBun={defaultBun}
+                                   setShowModal={setShowModal}/>
+              </section>
+              {showModal.visible && showModal.type === "order" && modal(<OrderDetails/>)}
+              {showModal.visible && showModal.type === "ingredient" && !!(showModal.ingredient) && modal(
+                <IngredientDetails ingredient={showModal.ingredient}/>)}
+            </main>
+          </SelectedIngredientsContext.Provider>
         </>
       }
     </div>

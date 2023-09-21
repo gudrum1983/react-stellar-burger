@@ -3,10 +3,10 @@ import styles from "./burger-ingredients.module.css";
 import stylesConstr from "../burger-constructor/burger-constructor.module.css";
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
 import {ListCards} from "./list-cards/list-cards";
-import {optionalArrayOfIngredients, optionalFunc, optionalObject} from "../../utils/prop-types";
+import {optionalArrayOfIngredients, optionalFunc} from "../../utils/prop-types";
 
 
-function BurgerIngredients({ingredients, setSelectedIngredients, selectedIngredients, setShowModal}) {
+function BurgerIngredients({ingredients, setShowModal}) {
 
   const filtered = (type) => {
     return ingredients.filter((item) => item.type === type);
@@ -24,8 +24,7 @@ function BurgerIngredients({ingredients, setSelectedIngredients, selectedIngredi
     return (
       <li className={styles.typePart}>
         <p id={id} className="text text_type_main-medium">{name}</p>
-        <ListCards ingredients={data} setSelectedIngredients={setSelectedIngredients}
-                   selectedIngredients={selectedIngredients} setShowModal={setShowModal}/>
+        <ListCards ingredients={data} setShowModal={setShowModal}/>
       </li>)
   }
 
@@ -82,8 +81,6 @@ function BurgerIngredients({ingredients, setSelectedIngredients, selectedIngredi
 
 BurgerIngredients.propTypes = {
   ingredients: optionalArrayOfIngredients,
-  selectedIngredients: optionalObject,
-  setSelectedIngredients: optionalFunc,
   setShowModal: optionalFunc,
 };
 

@@ -3,15 +3,16 @@ import stylesConstr from "../burger-constructor/burger-constructor.module.css";
 import {ConstructorElement, Button} from "@ya.praktikum/react-developer-burger-ui-components";
 import {ConstructorList} from "./constructor-list/constructor-list";
 import {TotalPrice} from "./total-price/total-price";
+import {SelectedIngredientsContext} from "../../services/burgerConstructorContext";
 import {
   ingredientPropType,
   optionalFunc,
-  selectedIngredientsPropType,
 } from "../../utils/prop-types";
 import styles from "./constructor-list/constructor-list.module.css";
 
-function BurgerConstructor({selectedIngredients, setSelectedIngredients, defaultBun, setShowModal}) {
-
+function BurgerConstructor({defaultBun, setShowModal}) {
+  //получаем функцию-сеттер из контекста
+  const { selectedIngredients, selectedIngredientsDispatcher } = React.useContext(SelectedIngredientsContext);
   const filling = selectedIngredients.other
   const bun = selectedIngredients.bun
   const textBun = bun.name
@@ -20,11 +21,7 @@ function BurgerConstructor({selectedIngredients, setSelectedIngredients, default
 
   function clear() {
     setShowModal({visible: true, type: "order", ingredient: {}});
-    setSelectedIngredients({
-      ...selectedIngredients,
-      bun: defaultBun,
-      other: [],
-    });
+    selectedIngredientsDispatcher({type: 'resetOnlyOther', payload: defaultBun});
   }
 
   function showBunDetails() {
@@ -45,8 +42,6 @@ function BurgerConstructor({selectedIngredients, setSelectedIngredients, default
           />
         </div>
         {(filling.length > 0) && <ConstructorList filling={filling}
-                                                  setSelectedIngredients={setSelectedIngredients}
-                                                  selectedIngredients={selectedIngredients}
                                                   setShowModal={setShowModal}/>}
         <div className={styles.elementConstructor} onClick={showBunDetails}>
           <ConstructorElement extraClass="ml-8 mr-4 cursor"
@@ -71,10 +66,8 @@ function BurgerConstructor({selectedIngredients, setSelectedIngredients, default
 }
 
 BurgerConstructor.propTypes = {
-  setSelectedIngredients: optionalFunc,
   defaultBun: ingredientPropType,
   setShowModal: optionalFunc,
-  selectedIngredients: selectedIngredientsPropType
 };
 
 export {
