@@ -39,7 +39,7 @@ function App() {
         };
       case "resetOnlyOther":
         return {
-          bun: action.payload,
+          ...state,
           other: [],
         };
       case "replaceOther":
@@ -55,14 +55,6 @@ function App() {
   //заменить UseState на UseReducer
   const [selectedIngredients, selectedIngredientsDispatcher] = React.useReducer(reducerSelectedIngredients, selectedIngredientsInitialState, undefined);
 
-//создать константу для начального состояния стейта
-  /*  const downloadedAppDataInitialState = {
-      isLoading: false,
-      hasError: false,
-      ingredients: [],
-      defaultBun: {},
-    };*/
-
   const [downloadedAppData, setDownloadedAppData] = React.useState({
     isLoading: false,
     hasError: false,
@@ -75,6 +67,7 @@ function App() {
     visible: false,
     type: "",
     ingredient: {},
+    orderNumber: "",
   };
 
   //Создать функцию reducer
@@ -85,19 +78,21 @@ function App() {
           visible: false,
           type: "",
           ingredient: {},
+          orderNumber: "",
         }
           ;
       case "open":
         return {
           visible: true,
           type: action.payload.type,
-          ingredient: action.payload.ingredient
+          ingredient: action.payload.ingredient,
+          orderNumber: action.payload.orderNumber ??= "",
         };
       default:
         throw new Error(`Wrong type of action: ${action.type}`);
     }
   }
-
+  //заменить UseState на UseReducer
   const [showModal, showModalDispatcher] = React.useReducer(reducerShowModal, showModalInitialState, undefined);
 
   function findDefaultBun(ingredientsData) {
@@ -134,7 +129,7 @@ function App() {
       });
   };
 
-  const {ingredients, isLoading, hasError, defaultBun} = downloadedAppData;
+  const {ingredients, isLoading, hasError} = downloadedAppData;
 
   const sortedData = (data) => data.toSorted(function (a, b) {
     if (a._id > b._id) {
@@ -178,8 +173,7 @@ function App() {
                   />
                 </section>
                 <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
-                  <BurgerConstructor defaultBun={defaultBun}
-                                    />
+                  <BurgerConstructor/>
                 </section>
                 {showModal.visible && showModal.type === "order" && modal(<OrderDetails/>)}
                 {showModal.visible && showModal.type === "ingredient" && !!(showModal.ingredient) && modal(
