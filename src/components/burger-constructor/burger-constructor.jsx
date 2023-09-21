@@ -4,15 +4,13 @@ import {ConstructorElement, Button} from "@ya.praktikum/react-developer-burger-u
 import {ConstructorList} from "./constructor-list/constructor-list";
 import {TotalPrice} from "./total-price/total-price";
 import {SelectedIngredientsContext} from "../../services/burgerConstructorContext";
-import {
-  ingredientPropType,
-  optionalFunc,
-} from "../../utils/prop-types";
 import styles from "./constructor-list/constructor-list.module.css";
+import {ShowModalContext} from "../../services/modalContext";
 
-function BurgerConstructor({defaultBun, setShowModal}) {
+function BurgerConstructor() {
   //получаем функцию-сеттер из контекста
-  const { selectedIngredients, selectedIngredientsDispatcher } = React.useContext(SelectedIngredientsContext);
+  const { selectedIngredients } = React.useContext(SelectedIngredientsContext);
+  const { showModalDispatcher } = React.useContext(ShowModalContext);
   const filling = selectedIngredients.other
   const bun = selectedIngredients.bun
   const textBun = bun.name
@@ -20,12 +18,11 @@ function BurgerConstructor({defaultBun, setShowModal}) {
   const priceBun = bun.price
 
   function clear() {
-    setShowModal({visible: true, type: "order", ingredient: {}});
-    selectedIngredientsDispatcher({type: 'resetOnlyOther', payload: defaultBun});
+    showModalDispatcher({type: 'open', payload: {type: "order", ingredient: {}}})
   }
 
   function showBunDetails() {
-    setShowModal({visible: true, type: "ingredient", ingredient: bun});
+    showModalDispatcher({type: 'open', payload: {type: "ingredient", ingredient: bun}})
   }
 
   return (
@@ -42,7 +39,7 @@ function BurgerConstructor({defaultBun, setShowModal}) {
           />
         </div>
         {(filling.length > 0) && <ConstructorList filling={filling}
-                                                  setShowModal={setShowModal}/>}
+                                                  />}
         <div className={styles.elementConstructor} onClick={showBunDetails}>
           <ConstructorElement extraClass="ml-8 mr-4 cursor"
                               type="bottom"
@@ -64,11 +61,6 @@ function BurgerConstructor({defaultBun, setShowModal}) {
     </div>
   );
 }
-
-BurgerConstructor.propTypes = {
-  defaultBun: ingredientPropType,
-  setShowModal: optionalFunc,
-};
 
 export {
   BurgerConstructor

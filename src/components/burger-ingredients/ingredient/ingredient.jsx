@@ -2,13 +2,16 @@ import styles from "./ingredient.module.css";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import {ingredientPropType, optionalFunc, optionalNum} from "../../../utils/prop-types";
+import {ShowModalContext} from "../../../services/modalContext";
 
 
-function Ingredient({currentItem, count, toggleCount, setShowModal}) {
+function Ingredient({currentItem, count, toggleCount}) {
+
+  const { showModalDispatcher } = React.useContext(ShowModalContext);
 
   function handleClick() {
     toggleCount();
-    setShowModal({visible: true, type: "ingredient", ingredient: currentItem});
+    showModalDispatcher({type: 'open', payload: {type: "ingredient", ingredient: currentItem}})
   }
 
   function isNum(num) {
@@ -34,7 +37,7 @@ Ingredient.propTypes = {
   currentItem: ingredientPropType,
   count: optionalNum,
   toggleCount: optionalFunc,
-  setShowModal: optionalFunc,
+
 };
 
 export {

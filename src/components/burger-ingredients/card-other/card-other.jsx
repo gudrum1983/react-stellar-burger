@@ -1,10 +1,10 @@
 import React from "react";
 import uuid from "react-uuid";
-import {ingredientPropType, optionalFunc} from "../../../utils/prop-types";
+import {ingredientPropType} from "../../../utils/prop-types";
 import {Ingredient} from "../ingredient/ingredient";
 import {SelectedIngredientsContext} from "../../../services/burgerConstructorContext";
 
-const CardOther = ({currentItem, setShowModal}) => {
+const CardOther = ({currentItem}) => {
 
   //получаем функцию-сеттер из контекста
   const { selectedIngredients, selectedIngredientsDispatcher} = React.useContext(SelectedIngredientsContext);
@@ -31,14 +31,13 @@ const CardOther = ({currentItem, setShowModal}) => {
 
 
   return (
-    <Ingredient currentItem={currentItem} count={count} toggleCount={toggleCount} setShowModal={setShowModal}/>
+    <Ingredient currentItem={currentItem} count={count} toggleCount={toggleCount}/>
   );
 
 };
 
 CardOther.propTypes = {
   currentItem: ingredientPropType,
-  setShowModal: optionalFunc,
 };
 
 export {

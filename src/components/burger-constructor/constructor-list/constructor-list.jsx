@@ -1,13 +1,14 @@
 import styles from "./constructor-list.module.css";
 import React from "react";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {optionalFunc, selectedOtherIngredientsPropType} from "../../../utils/prop-types";
+import {selectedOtherIngredientsPropType} from "../../../utils/prop-types";
 import {SelectedIngredientsContext} from "../../../services/burgerConstructorContext";
+import {ShowModalContext} from "../../../services/modalContext";
 
-function ConstructorList({filling, setShowModal}) {
+function ConstructorList({filling}) {
 
   const {selectedIngredients, selectedIngredientsDispatcher} = React.useContext(SelectedIngredientsContext);
-
+  const { showModalDispatcher } = React.useContext(ShowModalContext);
   function deleteCard(idItem) {
     const index = selectedIngredients.other.findIndex(item => item.numberIngredient === idItem)
     const arrEnd = selectedIngredients.other.slice(index + 1, selectedIngredients.other.length + 1)
@@ -19,7 +20,7 @@ function ConstructorList({filling, setShowModal}) {
   function showItemDetails(item, e) {
     const action = e.nativeEvent.target.closest(".constructor-element__action")
     if (!action) {
-      setShowModal({type: "ingredient", ingredient: item.ingredient, visible: true});
+      showModalDispatcher({type: 'open', payload: {type: "ingredient", ingredient: item.ingredient}})
     }
   }
 
@@ -49,7 +50,6 @@ function ConstructorList({filling, setShowModal}) {
 
 ConstructorList.propTypes = {
   filling: selectedOtherIngredientsPropType,
-  setShowModal: optionalFunc,
 };
 
 export {

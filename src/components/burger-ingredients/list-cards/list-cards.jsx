@@ -2,9 +2,9 @@ import React from "react";
 import styles from "./list-cards.module.css";
 import {CardOther} from "../card-other/card-other";
 import {CardBuns} from "../card-buns/card-buns";
-import {optionalArrayOfIngredients, optionalFunc} from "../../../utils/prop-types";
+import {optionalArrayOfIngredients} from "../../../utils/prop-types";
 
-function ListCards({ingredients, setShowModal}) {
+function ListCards({ingredients}) {
 
   let defaultBunId = false
 
@@ -18,8 +18,8 @@ function ListCards({ingredients, setShowModal}) {
         <React.Fragment key={currentItem._id}>
           {!!(defaultBunId)
             ? <CardBuns currentItem={currentItem} defaultBunId={defaultBunId}
-                        setShowModal={setShowModal}/>
-            : <CardOther currentItem={currentItem} setShowModal={setShowModal}/>}
+                        />
+            : <CardOther currentItem={currentItem} />}
         </React.Fragment>
       ))}
     </ul>
@@ -28,7 +28,6 @@ function ListCards({ingredients, setShowModal}) {
 
 ListCards.propTypes = {
   ingredients: optionalArrayOfIngredients,
-  setShowModal: optionalFunc,
 };
 
 export {
