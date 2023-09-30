@@ -3,32 +3,42 @@ import stylesConstr from "../burger-constructor/burger-constructor.module.css";
 import {ConstructorElement, Button} from "@ya.praktikum/react-developer-burger-ui-components";
 import {ConstructorList} from "./constructor-list/constructor-list";
 import {TotalPrice} from "./total-price/total-price";
-import {
-  ingredientPropType,
-  optionalFunc,
-  selectedIngredientsPropType,
-} from "../../utils/prop-types";
+import {SelectedIngredientsContext} from "../../services/burgerConstructorContext";
 import styles from "./constructor-list/constructor-list.module.css";
+import {ShowModalContext} from "../../services/modalContext";
+import {getOrderData} from "../../api/config";
 
-function BurgerConstructor({selectedIngredients, setSelectedIngredients, defaultBun, setShowModal}) {
+function BurgerConstructor() {
+  //получаем функцию-сеттер из контекста
+  //const {selectedIngredients, selectedIngredientsDispatcher} = React.useContext(SelectedIngredientsContext);
 
-  const filling = selectedIngredients.other
-  const bun = selectedIngredients.bun
-  const textBun = bun.name
-  const imgBun = bun.image
-  const priceBun = bun.price
-
-  function clear() {
-    setShowModal({visible: true, type: "order", ingredient: {}});
-    setSelectedIngredients({
-      ...selectedIngredients,
-      bun: defaultBun,
-      other: [],
-    });
+  const {selectedIngredients: {bun: {name, image, price, _id}, bun, other}, selectedIngredientsDispatcher}= React.useContext(SelectedIngredientsContext);
+  const {showModalDispatcher} = React.useContext(ShowModalContext);
+  function getListIdIngredients() {
+    const idBun = [_id];
+    const idOther = other.map((item) => item.ingredient._id);
+    return idBun.concat(idOther, idBun)
   }
 
+  function handleSubmitOrder() {
+
+    const ingredientsOrder = getListIdIngredients();
+    // создаем функцию, которая возвращает промис, так как любой запрос возвращает его
+    // return позволяет потом дальше продолжать цепочку `then, catch, finally`
+      return getOrderData(ingredientsOrder)
+        .then(data => {
+          return data.order.number})
+        .then(orderNumber => {
+          showModalDispatcher({type: 'open', payload: {type: "order", ingredient: {}, orderNumber: orderNumber}})
+          selectedIngredientsDispatcher({type: 'resetOnlyOther'})
+        })
+        .catch(() => {
+          showModalDispatcher({type: 'open', payload: {type: "error", ingredient: {}, orderNumber: ''}})
+        })
+    }
+
   function showBunDetails() {
-    setShowModal({visible: true, type: "ingredient", ingredient: bun});
+    showModalDispatcher({type: 'open', payload: {type: "ingredient", ingredient: bun}})
   }
 
   return (
@@ -38,44 +48,33 @@ function BurgerConstructor({selectedIngredients, setSelectedIngredients, default
           <ConstructorElement extraClass='ml-8 mr-4 cursor'
                               type="top"
                               isLocked={true}
-                              text={`${textBun} (верх)`}
-                              price={priceBun}
-                              thumbnail={imgBun}
-                              item={bun}
-          />
+                              text={`${name} (верх)`}
+                              price={price}
+                              thumbnail={image}
+           />
         </div>
-        {(filling.length > 0) && <ConstructorList filling={filling}
-                                                  setSelectedIngredients={setSelectedIngredients}
-                                                  selectedIngredients={selectedIngredients}
-                                                  setShowModal={setShowModal}/>}
+        {(other.length > 0) && <ConstructorList filling={other}
+        />}
         <div className={styles.elementConstructor} onClick={showBunDetails}>
           <ConstructorElement extraClass="ml-8 mr-4 cursor"
                               type="bottom"
                               isLocked={true}
-                              text={`${textBun} (низ)`}
-                              price={priceBun}
-                              thumbnail={imgBun}
-                              item={bun}
+                              text={`${name} (низ)`}
+                              price={price}
+                              thumbnail={image}
           />
         </div>
       </div>
       <div className={`${stylesConstr.price} mr-4`}>
-        <TotalPrice selectedIngredients={selectedIngredients}/>
+        <TotalPrice/>
         <div className={`${stylesConstr.iconPrice} ml-2 mr-10`}/>
-        <Button htmlType="button" type="primary" size="large" onClick={clear}>
+        <Button htmlType="button" type="primary" size="large" onClick={handleSubmitOrder}>
           Оформить заказ
         </Button>
       </div>
     </div>
   );
 }
-
-BurgerConstructor.propTypes = {
-  setSelectedIngredients: optionalFunc,
-  defaultBun: ingredientPropType,
-  setShowModal: optionalFunc,
-  selectedIngredients: selectedIngredientsPropType
-};
 
 export {
   BurgerConstructor

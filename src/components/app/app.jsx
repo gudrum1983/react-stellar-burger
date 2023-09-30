@@ -6,20 +6,22 @@ import {BurgerConstructor} from "../burger-constructor/burger-constructor";
 import {Modal} from "../modal/modal";
 import {OrderDetails} from "../modal/order-details/order-details";
 import {IngredientDetails} from "../modal/ingredient-details/ingredient-details";
-
+import {SelectedIngredientsContext} from "../../services/burgerConstructorContext";
+import {ShowModalContext} from "../../services/modalContext";
+import {reducerSelectedIngredients} from "../../services/reducer/burgerConstructor";
+import {getIngredientsData} from "../../api/config";
 
 function App() {
 
-  const url = "https://norma.nomoreparties.space/api/ingredients";
-
   React.useEffect(() => {
-    getAppData();
+    fillIngredientContext();
   }, [])
 
-  const [selectedIngredients, setSelectedIngredients] = React.useState({
-    bun: {},
-    other: [],
-  });
+  //создать константу для начального состояния стейта
+  const selectedIngredientsInitialState = {bun: {}, other: []};
+
+  //заменить UseState на UseReducer
+  const [selectedIngredients, selectedIngredientsDispatcher] = React.useReducer(reducerSelectedIngredients, selectedIngredientsInitialState, undefined);
 
   const [downloadedAppData, setDownloadedAppData] = React.useState({
     isLoading: false,
@@ -28,31 +30,54 @@ function App() {
     defaultBun: {},
   });
 
-  const [showModal, setShowModal] = React.useState({
+  //создать константу для начального состояния стейта
+  const showModalInitialState = {
     visible: false,
     type: "",
     ingredient: {},
-  });
+    orderNumber: "",
+  };
 
+  //Создать функцию reducer
+  function reducerShowModal(state, action) {
+    switch (action.type) {
+      case "close":
+        return {
+          visible: false,
+          type: "",
+          ingredient: {},
+          orderNumber: "",
+        }
+          ;
+      case "open":
+        return {
+          visible: true,
+          type: action.payload.type,
+          ingredient: action.payload.ingredient,
+          orderNumber: action.payload.orderNumber ??= "",
+        };
+      default:
+        throw new Error(`Wrong type of action: ${action.type}`);
+    }
+  }
+  //заменить UseState на UseReducer
+  const [showModal, showModalDispatcher] = React.useReducer(reducerShowModal, showModalInitialState, undefined);
 
   function findDefaultBun(ingredientsData) {
     if (ingredientsData) {
       const defaultBun = ingredientsData.find(item => item.type === "bun")
-      setSelectedIngredients({
-        ...selectedIngredients,
-        bun: defaultBun,
-      });
+      selectedIngredientsDispatcher({type: 'defineBun', payload: defaultBun});
       return defaultBun
     } else {
       return {}
     }
   }
 
-
-  const getAppData = () => {
+  function fillIngredientContext() {
     setDownloadedAppData({...downloadedAppData, hasError: false, isLoading: true});
-    fetch(url)
-      .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`))
+    // создаем функцию, которая возвращает промис, так как любой запрос возвращает его
+    // return позволяет потом дальше продолжать цепочку `then, catch, finally`
+    return getIngredientsData()
       .then(data => data.data)
       .then(ingredientsData =>
         setDownloadedAppData(
@@ -70,11 +95,19 @@ function App() {
             isLoading: false
           });
       });
-  };
+  }
 
-  const {ingredients, isLoading, hasError, defaultBun} = downloadedAppData;
+  const {ingredients, isLoading, hasError} = downloadedAppData;
 
+  const sortedData = (data) => data.toSorted((a, b) => a._id > b._id ? 1 : -1)
+
+/*  kyzinatra last week
+  Можно лучше: тут можно записать просто data.toSorted((a, b) => a._id > b._id ? 1 : -1)
+  Можно не ставить return 0 так как _id все равно всегда уникальны
   const sortedData = (data) => data.toSorted(function (a, b) {
+
+    data.toSorted((a, b) => a._id > b._id ? 1 : -1)
+
     if (a._id > b._id) {
       return 1;
     }
@@ -82,28 +115,27 @@ function App() {
       return -1;
     }
     return 0;
-  });
+  });*/
 
   function handleCloseModal() {
-    setShowModal({
-      visible: false,
-      type: "",
-      ingredient: {},
-    })
+    showModalDispatcher({type: 'close'})
   }
-
 
   function modal(comnonent) {
     let header = "";
-    if (showModal.type !== "order") {
+    if (showModal.type === "ingredient") {
       header = "Детали ингредиента";
+    } else if (showModal.type === "error") {
+      header = "Ошибка"
     }
     return (
       <Modal onClose={handleCloseModal} header={header}>
         {comnonent}
+        {showModal.type === "error" && <p className="text text_type_main-medium">
+          Наш краторный хмель пожрал антарианский долгоносик, попробуйте сформировать заказ позже, Милорд...
+        </p> }
       </Modal>)
   }
-
 
   return (
     <div className={`text text_type_main-default ${styles.app}`}>
@@ -114,23 +146,23 @@ function App() {
         ingredients.length &&
         <>
           <AppHeader/>
-          <main className={styles.main}>
-            <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
-              <BurgerIngredients ingredients={ingredients}
-                                 selectedIngredients={selectedIngredients}
-                                 setSelectedIngredients={setSelectedIngredients}
-                                 setShowModal={setShowModal}/>
-            </section>
-            <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
-              <BurgerConstructor selectedIngredients={selectedIngredients}
-                                 setSelectedIngredients={setSelectedIngredients}
-                                 defaultBun={defaultBun}
-                                 setShowModal={setShowModal}/>
-            </section>
-            {showModal.visible && showModal.type === "order" && modal(<OrderDetails/>)}
-            {showModal.visible && showModal.type === "ingredient" && !!(showModal.ingredient) && modal(
-              <IngredientDetails ingredient={showModal.ingredient}/>)}
-          </main>
+          <SelectedIngredientsContext.Provider value={{selectedIngredients, selectedIngredientsDispatcher}}>
+            <ShowModalContext.Provider value={{showModal, showModalDispatcher}}>
+              <main className={styles.main}>
+                <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
+                  <BurgerIngredients ingredients={ingredients}
+                  />
+                </section>
+                <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
+                  <BurgerConstructor/>
+                </section>
+                {showModal.visible && showModal.type === "order" && modal(<OrderDetails/>)}
+                {showModal.visible && showModal.type === "error" && modal()}
+                {showModal.visible && showModal.type === "ingredient" && !!(showModal.ingredient) && modal(
+                  <IngredientDetails ingredient={showModal.ingredient}/>)}
+              </main>
+            </ShowModalContext.Provider>
+          </SelectedIngredientsContext.Provider>
         </>
       }
     </div>
