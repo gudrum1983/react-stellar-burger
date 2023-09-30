@@ -8,49 +8,17 @@ import {OrderDetails} from "../modal/order-details/order-details";
 import {IngredientDetails} from "../modal/ingredient-details/ingredient-details";
 import {SelectedIngredientsContext} from "../../services/burgerConstructorContext";
 import {ShowModalContext} from "../../services/modalContext";
+import {reducerSelectedIngredients} from "../../services/reducer/burgerConstructor";
+import {getIngredientsData} from "../../api/config";
 
 function App() {
 
-  const url = "https://norma.nomoreparties.space/api/ingredients";
-
   React.useEffect(() => {
-    getAppData();
+    fillIngredientContext();
   }, [])
 
   //создать константу для начального состояния стейта
   const selectedIngredientsInitialState = {bun: {}, other: []};
-
-  //Создать функцию reducer
-  function reducerSelectedIngredients(state, action) {
-    switch (action.type) {
-      case "defineBun":
-        return {
-          ...state,
-          bun: action.payload
-        };
-      case "addOther":
-        return {
-          ...state,
-          other: [...state.other,
-            {
-              numberIngredient: action.payload.numberIngredient,
-              ingredient: action.payload.ingredient,
-            }]
-        };
-      case "resetOnlyOther":
-        return {
-          ...state,
-          other: [],
-        };
-      case "replaceOther":
-        return {
-          ...state,
-          other: action.payload
-        };
-      default:
-        throw new Error(`Wrong type of action: ${action.type}`);
-    }
-  }
 
   //заменить UseState на UseReducer
   const [selectedIngredients, selectedIngredientsDispatcher] = React.useReducer(reducerSelectedIngredients, selectedIngredientsInitialState, undefined);
@@ -105,11 +73,11 @@ function App() {
     }
   }
 
-
-  const getAppData = () => {
+  function fillIngredientContext() {
     setDownloadedAppData({...downloadedAppData, hasError: false, isLoading: true});
-    fetch(url)
-      .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`))
+    // создаем функцию, которая возвращает промис, так как любой запрос возвращает его
+    // return позволяет потом дальше продолжать цепочку `then, catch, finally`
+    return getIngredientsData()
       .then(data => data.data)
       .then(ingredientsData =>
         setDownloadedAppData(
@@ -127,11 +95,19 @@ function App() {
             isLoading: false
           });
       });
-  };
+  }
 
   const {ingredients, isLoading, hasError} = downloadedAppData;
 
+  const sortedData = (data) => data.toSorted((a, b) => a._id > b._id ? 1 : -1)
+
+/*  kyzinatra last week
+  Можно лучше: тут можно записать просто data.toSorted((a, b) => a._id > b._id ? 1 : -1)
+  Можно не ставить return 0 так как _id все равно всегда уникальны
   const sortedData = (data) => data.toSorted(function (a, b) {
+
+    data.toSorted((a, b) => a._id > b._id ? 1 : -1)
+
     if (a._id > b._id) {
       return 1;
     }
@@ -139,7 +115,7 @@ function App() {
       return -1;
     }
     return 0;
-  });
+  });*/
 
   function handleCloseModal() {
     showModalDispatcher({type: 'close'})
@@ -147,12 +123,17 @@ function App() {
 
   function modal(comnonent) {
     let header = "";
-    if (showModal.type !== "order") {
+    if (showModal.type === "ingredient") {
       header = "Детали ингредиента";
+    } else if (showModal.type === "error") {
+      header = "Ошибка"
     }
     return (
       <Modal onClose={handleCloseModal} header={header}>
         {comnonent}
+        {showModal.type === "error" && <p className="text text_type_main-medium">
+          Наш краторный хмель пожрал антарианский долгоносик, попробуйте сформировать заказ позже, Милорд...
+        </p> }
       </Modal>)
   }
 
@@ -176,6 +157,7 @@ function App() {
                   <BurgerConstructor/>
                 </section>
                 {showModal.visible && showModal.type === "order" && modal(<OrderDetails/>)}
+                {showModal.visible && showModal.type === "error" && modal()}
                 {showModal.visible && showModal.type === "ingredient" && !!(showModal.ingredient) && modal(
                   <IngredientDetails ingredient={showModal.ingredient}/>)}
               </main>

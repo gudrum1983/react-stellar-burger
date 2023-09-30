@@ -2,8 +2,8 @@ import React from "react";
 import styles from "./burger-ingredients.module.css";
 import stylesConstr from "../burger-constructor/burger-constructor.module.css";
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
-import {ListCards} from "./list-cards/list-cards";
 import {optionalArrayOfIngredients} from "../../utils/prop-types";
+import {List} from "./ingredients-type-list/ingredients-type-list";
 
 
 function BurgerIngredients({ingredients}) {
@@ -19,15 +19,6 @@ function BurgerIngredients({ingredients}) {
       mains: [],
     }
   )
-
-  const list = (name, data, id) => {
-    return (
-      <li className={styles.typePart}>
-        <p id={id} className="text text_type_main-medium">{name}</p>
-        <ListCards ingredients={data} />
-      </li>)
-  }
-
 
   React.useMemo(
     () =>
@@ -71,9 +62,9 @@ function BurgerIngredients({ingredients}) {
         </li>
       </ul>
       <ul className={`${styles.ingredients} ${stylesConstr.scroll} ${styles.nonList} custom-scroll`}>
-        {list("Булки", filteredIngredients.buns, "buns")}
-        {list("Соусы", filteredIngredients.sauces, "sauces")}
-        {list("Начинки", filteredIngredients.mains, "mains")}
+        <List name="Булки" data={filteredIngredients.buns} id="buns"/>
+        <List name="Соусы" data={filteredIngredients.sauces} id="sauces"/>
+        <List name="Начинки" data={filteredIngredients.mains} id="mains"/>
       </ul>
     </>
   );

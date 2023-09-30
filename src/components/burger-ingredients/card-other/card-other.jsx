@@ -15,7 +15,6 @@ const CardOther = ({currentItem}) => {
     selectedIngredientsDispatcher({
       type: 'addOther', payload: {
         numberIngredient: numberIngredient,
-
         ingredient: currentItem,
       }
     })

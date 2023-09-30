@@ -6,7 +6,7 @@ import {SelectedIngredientsContext} from "../../../services/burgerConstructorCon
 const CardBuns = ({currentItem}) => {
   //получаем функцию-сеттер из контекста
   const { selectedIngredients, selectedIngredientsDispatcher } = React.useContext(SelectedIngredientsContext);
-  const count = (currentItem._id === selectedIngredients.bun._id) ? 1 : 0
+  const count = (currentItem._id === selectedIngredients.bun._id) ? 2 : 0
 
   function toggleCount() {
     selectedIngredientsDispatcher({type: 'defineBun', payload: currentItem})
