@@ -101,22 +101,6 @@ function App() {
 
   const sortedData = (data) => data.toSorted((a, b) => a._id > b._id ? 1 : -1)
 
-/*  kyzinatra last week
-  Можно лучше: тут можно записать просто data.toSorted((a, b) => a._id > b._id ? 1 : -1)
-  Можно не ставить return 0 так как _id все равно всегда уникальны
-  const sortedData = (data) => data.toSorted(function (a, b) {
-
-    data.toSorted((a, b) => a._id > b._id ? 1 : -1)
-
-    if (a._id > b._id) {
-      return 1;
-    }
-    if (a._id < b._id) {
-      return -1;
-    }
-    return 0;
-  });*/
-
   function handleCloseModal() {
     showModalDispatcher({type: 'close'})
   }
