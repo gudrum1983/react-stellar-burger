@@ -6,56 +6,36 @@ import {TotalPrice} from "./total-price/total-price";
 import {SelectedIngredientsContext} from "../../services/burgerConstructorContext";
 import styles from "./constructor-list/constructor-list.module.css";
 import {ShowModalContext} from "../../services/modalContext";
+import {getOrderData} from "../../api/config";
 
 function BurgerConstructor() {
   //получаем функцию-сеттер из контекста
-  const {selectedIngredients, selectedIngredientsDispatcher} = React.useContext(SelectedIngredientsContext);
+  //const {selectedIngredients, selectedIngredientsDispatcher} = React.useContext(SelectedIngredientsContext);
+
+  const {selectedIngredients: {bun: {name, image, price, _id}, bun, other}, selectedIngredientsDispatcher}= React.useContext(SelectedIngredientsContext);
   const {showModalDispatcher} = React.useContext(ShowModalContext);
-  const filling = selectedIngredients.other
-  const bun = selectedIngredients.bun
-  const textBun = bun.name
-  const imgBun = bun.image
-  const priceBun = bun.price
-
-
   function getListIdIngredients() {
-    const idBun = [selectedIngredients.bun._id];
-    const idOther = selectedIngredients.other.map((item) => item.ingredient._id);
-    const idIngredients = idBun.concat(idOther, idBun)
-    console.log(idIngredients)
-    return idIngredients
+    const idBun = [_id];
+    const idOther = other.map((item) => item.ingredient._id);
+    return idBun.concat(idOther, idBun)
   }
 
-  const url = "https://norma.nomoreparties.space/api/orders"
-  const getOrderData = () => {
+  function handleSubmitOrder() {
 
     const ingredientsOrder = getListIdIngredients();
-
-    let promise = fetch(url, {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        ingredients: ingredientsOrder,
-      })
-    })
-      .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`))
-      .then(data => data.order.number)
-      .then(orderNumber => {
-        showModalDispatcher({type: 'open', payload: {type: "order", ingredient: {}, orderNumber: orderNumber}})
-        selectedIngredientsDispatcher({type: 'resetOnlyOther'})
-      })
-      .catch(() => {
-        alert("При формировании заказа произошла ошибка, попробуйте позже...")
-      })
-  };
-
-
-  function clear() {
-    getOrderData()
-    showModalDispatcher({type: 'open', payload: {type: "order", ingredient: {}}})
-  }
+    // создаем функцию, которая возвращает промис, так как любой запрос возвращает его
+    // return позволяет потом дальше продолжать цепочку `then, catch, finally`
+      return getOrderData(ingredientsOrder)
+        .then(data => {
+          return data.order.number})
+        .then(orderNumber => {
+          showModalDispatcher({type: 'open', payload: {type: "order", ingredient: {}, orderNumber: orderNumber}})
+          selectedIngredientsDispatcher({type: 'resetOnlyOther'})
+        })
+        .catch(() => {
+          showModalDispatcher({type: 'open', payload: {type: "error", ingredient: {}, orderNumber: ''}})
+        })
+    }
 
   function showBunDetails() {
     showModalDispatcher({type: 'open', payload: {type: "ingredient", ingredient: bun}})
@@ -68,29 +48,27 @@ function BurgerConstructor() {
           <ConstructorElement extraClass='ml-8 mr-4 cursor'
                               type="top"
                               isLocked={true}
-                              text={`${textBun} (верх)`}
-                              price={priceBun}
-                              thumbnail={imgBun}
-                              item={bun}
-          />
+                              text={`${name} (верх)`}
+                              price={price}
+                              thumbnail={image}
+           />
         </div>
-        {(filling.length > 0) && <ConstructorList filling={filling}
+        {(other.length > 0) && <ConstructorList filling={other}
         />}
         <div className={styles.elementConstructor} onClick={showBunDetails}>
           <ConstructorElement extraClass="ml-8 mr-4 cursor"
                               type="bottom"
                               isLocked={true}
-                              text={`${textBun} (низ)`}
-                              price={priceBun}
-                              thumbnail={imgBun}
-                              item={bun}
+                              text={`${name} (низ)`}
+                              price={price}
+                              thumbnail={image}
           />
         </div>
       </div>
       <div className={`${stylesConstr.price} mr-4`}>
         <TotalPrice/>
         <div className={`${stylesConstr.iconPrice} ml-2 mr-10`}/>
-        <Button htmlType="button" type="primary" size="large" onClick={clear}>
+        <Button htmlType="button" type="primary" size="large" onClick={handleSubmitOrder}>
           Оформить заказ
         </Button>
       </div>
