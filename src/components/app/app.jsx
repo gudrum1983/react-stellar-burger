@@ -6,22 +6,34 @@ import {BurgerConstructor} from "../burger-constructor/burger-constructor";
 import {Modal} from "../modal/modal";
 import {OrderDetails} from "../modal/order-details/order-details";
 import {IngredientDetails} from "../modal/ingredient-details/ingredient-details";
-import {SelectedIngredientsContext} from "../../services/burgerConstructorContext";
 import {ShowModalContext} from "../../services/modalContext";
-import {reducerSelectedIngredients} from "../../services/reducer/burgerConstructor";
 import {getIngredientsData} from "../../api/config";
 
+
 function App() {
+
+
+/*  const dispatch = useDispatch();*/
+
+/*  useEffect(() => {
+    // Отправляем экшен при монтировании компонента
+    dispatch({type: RESET_ORDER });
+  }, [])*/
 
   React.useEffect(() => {
     fillIngredientContext();
   }, [])
 
+ // const chooseIngredients = useSelector(store => store.chooseIngredients)
+  //const {bun, other} = useSelector(store => store.chooseIngredients)
+
+
+
   //создать константу для начального состояния стейта
-  const selectedIngredientsInitialState = {bun: {}, other: []};
+  //const selectedIngredientsInitialState = {bun: {}, other: []};
 
   //заменить UseState на UseReducer
-  const [selectedIngredients, selectedIngredientsDispatcher] = React.useReducer(reducerSelectedIngredients, selectedIngredientsInitialState, undefined);
+  //const [selectedIngredients, selectedIngredientsDispatcher] = React.useReducer(reducerSelectedIngredients, selectedIngredientsInitialState, undefined);
 
   const [downloadedAppData, setDownloadedAppData] = React.useState({
     isLoading: false,
@@ -38,7 +50,7 @@ function App() {
     orderNumber: "",
   };
 
-  //Создать функцию reducer
+  //Создать функцию reducers
   function reducerShowModal(state, action) {
     switch (action.type) {
       case "close":
@@ -63,7 +75,7 @@ function App() {
   //заменить UseState на UseReducer
   const [showModal, showModalDispatcher] = React.useReducer(reducerShowModal, showModalInitialState, undefined);
 
-  function findDefaultBun(ingredientsData) {
+/*  function findDefaultBun(ingredientsData) {
     if (ingredientsData) {
       const defaultBun = ingredientsData.find(item => item.type === "bun")
       selectedIngredientsDispatcher({type: 'defineBun', payload: defaultBun});
@@ -71,7 +83,7 @@ function App() {
     } else {
       return {}
     }
-  }
+  }*/
 
   function fillIngredientContext() {
     setDownloadedAppData({...downloadedAppData, hasError: false, isLoading: true});
@@ -85,7 +97,6 @@ function App() {
             ...downloadedAppData,
             ingredients: sortedData(ingredientsData),
             isLoading: false,
-            defaultBun: findDefaultBun(ingredientsData),
           }))
       .catch(() => {
         setDownloadedAppData(
@@ -130,7 +141,6 @@ function App() {
         ingredients.length &&
         <>
           <AppHeader/>
-          <SelectedIngredientsContext.Provider value={{selectedIngredients, selectedIngredientsDispatcher}}>
             <ShowModalContext.Provider value={{showModal, showModalDispatcher}}>
               <main className={styles.main}>
                 <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
@@ -146,7 +156,6 @@ function App() {
                   <IngredientDetails ingredient={showModal.ingredient}/>)}
               </main>
             </ShowModalContext.Provider>
-          </SelectedIngredientsContext.Provider>
         </>
       }
     </div>

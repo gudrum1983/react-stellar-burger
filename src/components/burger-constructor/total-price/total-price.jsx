@@ -1,12 +1,14 @@
 import React from "react";
-import {SelectedIngredientsContext} from "../../../services/burgerConstructorContext";
+import { useSelector } from 'react-redux';
+
 
 function TotalPrice() {
 
   //получаем функцию-сеттер из контекста
-  const { selectedIngredients } = React.useContext(SelectedIngredientsContext);
+  //const { selectedIngredients } = React.useContext(SelectedIngredientsContext);
+  const selectedIngredients = useSelector(store => store.chooseIngredients)
 
-  const costBun = selectedIngredients.bun.price * 2
+  const costBun = !!(selectedIngredients.bun) ? selectedIngredients.bun.price * 2 : 0
 
   const other = selectedIngredients.other
   const numberOtherIngredients = other.length

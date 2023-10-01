@@ -2,19 +2,20 @@ import styles from "./constructor-list.module.css";
 import React from "react";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {selectedOtherIngredientsPropType} from "../../../utils/prop-types";
-import {SelectedIngredientsContext} from "../../../services/burgerConstructorContext";
 import {ShowModalContext} from "../../../services/modalContext";
+import { useDispatch } from 'react-redux';
+import {DELETE_FILLING} from "../../../services/actions/choose-ingredients";
+
 
 function ConstructorList({filling}) {
 
-  const {selectedIngredients, selectedIngredientsDispatcher} = React.useContext(SelectedIngredientsContext);
+  //const {selectedIngredients, selectedIngredientsDispatcher} = React.useContext(SelectedIngredientsContext);
+
+  const dispatch = useDispatch();
+
   const { showModalDispatcher } = React.useContext(ShowModalContext);
   function deleteCard(idItem) {
-    const index = selectedIngredients.other.findIndex(item => item.numberIngredient === idItem)
-    const arrEnd = selectedIngredients.other.slice(index + 1, selectedIngredients.other.length + 1)
-    const arrStart = selectedIngredients.other.slice(0, index)
-    const newOtherSelectedIngredients = arrStart.concat(arrEnd)
-    selectedIngredientsDispatcher({type: 'replaceOther', payload: newOtherSelectedIngredients})
+    dispatch({type: DELETE_FILLING, id: idItem})
   }
 
   function showItemDetails(item, e) {

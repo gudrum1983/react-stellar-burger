@@ -2,18 +2,19 @@ import React from "react";
 import uuid from "react-uuid";
 import {ingredientPropType} from "../../../utils/prop-types";
 import {Ingredient} from "../ingredient/ingredient";
-import {SelectedIngredientsContext} from "../../../services/burgerConstructorContext";
+import { useSelector, useDispatch } from 'react-redux';
+import {ADD_FILLING} from "../../../services/actions/choose-ingredients";
 
 const CardOther = ({currentItem}) => {
 
-  //получаем функцию-сеттер из контекста
-  const { selectedIngredients, selectedIngredientsDispatcher} = React.useContext(SelectedIngredientsContext);
+  const selectedIngredients = useSelector(store => store.chooseIngredients)
+  const dispatch = useDispatch();
 
   function toggleCount() {
 
     const numberIngredient = uuid();
-    selectedIngredientsDispatcher({
-      type: 'addOther', payload: {
+    dispatch({
+      type: ADD_FILLING, payload: {
         numberIngredient: numberIngredient,
         ingredient: currentItem,
       }
@@ -23,7 +24,7 @@ const CardOther = ({currentItem}) => {
   let count = 0
   const otherIngredients = selectedIngredients.other
 
-  if (otherIngredients.length > 0) {
+  if (otherIngredients) {
     count = otherIngredients.filter((itemOtherIng) => itemOtherIng.ingredient._id === currentItem._id).length
   }
 
