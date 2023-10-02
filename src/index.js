@@ -5,17 +5,27 @@ import App from "./components/app/app";
 import reportWebVitals from "./reportWebVitals";
 import { rootReducer } from './services/reducers/index';
 import "./index.css";
-import { compose, createStore } from 'redux';
+import { compose, createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 
-const composeEnhancers =
+/*const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
 
 const enhancer = composeEnhancers();
 
-const store = createStore(rootReducer, enhancer);
+const store = createStore(rootReducer, enhancer);*/
 
+
+const composeEnhancers =
+  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    : compose;
+
+const enhancer = composeEnhancers(applyMiddleware(thunk));
+
+const store = createStore(rootReducer, enhancer);
 
 // Инициализируем хранилище с помощью корневого редьюсера
 //const store = createStore(rootReducer);

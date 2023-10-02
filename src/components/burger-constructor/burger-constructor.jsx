@@ -5,9 +5,10 @@ import {ConstructorList} from "./constructor-list/constructor-list";
 import {TotalPrice} from "./total-price/total-price";
 import styles from "./constructor-list/constructor-list.module.css";
 
-import {getOrderData} from "../../api/config";
+
 import {useDispatch, useSelector} from "react-redux";
-import {OPEN_MODAL} from "../../services/actions/modal";
+
+import {getOrderDetails} from "../../services/actions/order-details";
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -26,9 +27,12 @@ function BurgerConstructor() {
   function handleSubmitOrder() {
 
     const ingredientsOrder = getListIdIngredients();
+    dispatch(getOrderDetails(ingredientsOrder))
+   /* getOrderDetails(ingredientsOrder, dispatch);*/
+
     // создаем функцию, которая возвращает промис, так как любой запрос возвращает его
     // return позволяет потом дальше продолжать цепочку `then, catch, finally`
-      return getOrderData(ingredientsOrder)
+/*      return getOrderDetailsRequest(ingredientsOrder)
         .then(data => {
           return data.order.number})
         .then(orderNumber => {
@@ -36,7 +40,7 @@ function BurgerConstructor() {
         })
         .catch(() => {
           dispatch({type: OPEN_MODAL, payload: {type: "error"}});
-        })
+        })*/
     }
 
   return (

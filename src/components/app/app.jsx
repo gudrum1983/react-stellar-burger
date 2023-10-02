@@ -69,9 +69,6 @@ function App() {
     return (
       <Modal onClose={handleCloseModal} header={header}>
         {comnonent}
-        {showModal.type === "error" && <p className="text text_type_main-medium">
-          Наш краторный хмель пожрал антарианский долгоносик, попробуйте сформировать заказ позже, Милорд...
-        </p>}
       </Modal>)
   }
 
@@ -93,7 +90,9 @@ function App() {
               <BurgerConstructor/>
             </section>
             {showModal.visible && showModal.type === "order" && modal(<OrderDetails/>)}
-            {showModal.visible && showModal.type === "error" && modal()}
+            {showModal.visible && showModal.type === "error" && modal(<p className="text text_type_main-medium">
+              Наш краторный хмель пожрал антарианский долгоносик, попробуйте сформировать заказ позже, Милорд...
+            </p>)}
             {showModal.visible && showModal.type === "ingredient" && modal(<IngredientDetails ingredient={showModal.ingredient}/>)}
           </main>
         </>

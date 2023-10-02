@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 
 function OrderDetails() {
 
-  const orderNumber = useSelector(store => store.showModal.orderNumber)
+  const orderNumber = useSelector(store => store.orderDetails.orderDetails)
 
   return (
     <div className={`${styles.modalContainer} pt-4 pb-20`}>
@@ -15,7 +15,6 @@ function OrderDetails() {
       <p className="text text_type_main-small text_color_inactive">Дождитесь готовности на орбитальной станции</p>
     </div>
   )
-
 }
 
 export {

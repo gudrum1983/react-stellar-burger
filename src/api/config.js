@@ -7,8 +7,7 @@ const endpoints = {
   orders: "orders",
 }
 
-
-export const getOrderData = (ingredientsOrder) => {
+export const getOrderDetailsRequest = (ingredientsOrder) => {
   return request(baseUrl, endpoints.orders, {
     method: 'POST',
     headers: {
