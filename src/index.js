@@ -1,14 +1,24 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import App from "./components/app/app";
 import reportWebVitals from "./reportWebVitals";
 import { rootReducer } from './services/reducers/index';
 import "./index.css";
+import { compose, createStore } from 'redux';
+
+const composeEnhancers =
+  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    : compose;
+
+const enhancer = composeEnhancers();
+
+const store = createStore(rootReducer, enhancer);
+
 
 // Инициализируем хранилище с помощью корневого редьюсера
-const store = createStore(rootReducer);
+//const store = createStore(rootReducer);
 
 ReactDOM.render(
   /*StrictMode — инструмент для обнаружения потенциальных проблем в приложении, не рендерит видимого UI.

@@ -1,12 +1,10 @@
 import styles from "./order-details.module.css";
-import {ShowModalContext} from "../../../services/modalContext";
 import React from "react";
+import {useSelector} from "react-redux";
 
-function OrderDetails(){
+function OrderDetails() {
 
-  const {showModal} = React.useContext(ShowModalContext);
-
-  const orderNumber = showModal.orderNumber
+  const orderNumber = useSelector(store => store.showModal.orderNumber)
 
   return (
     <div className={`${styles.modalContainer} pt-4 pb-20`}>

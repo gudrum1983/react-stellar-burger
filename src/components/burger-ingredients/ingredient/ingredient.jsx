@@ -2,16 +2,17 @@ import styles from "./ingredient.module.css";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import {ingredientPropType, optionalFunc, optionalNum} from "../../../utils/prop-types";
-import {ShowModalContext} from "../../../services/modalContext";
-
+import {useDispatch} from "react-redux";
+import {OPEN_MODAL} from "../../../services/actions/modal";
+import { setIngredientDetails } from "../../../services/actions/ingredient-details";
 
 function Ingredient({currentItem, count, toggleCount}) {
 
-  const { showModalDispatcher } = React.useContext(ShowModalContext);
-
+  const dispatch = useDispatch();
   function handleClick() {
     toggleCount();
-    showModalDispatcher({type: 'open', payload: {type: "ingredient", ingredient: currentItem}})
+    dispatch(setIngredientDetails(currentItem))
+    dispatch({type: OPEN_MODAL, payload: {type: "ingredient"}})
   }
 
   function isNum(num) {

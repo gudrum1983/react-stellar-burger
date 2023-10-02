@@ -4,25 +4,19 @@ import {ConstructorElement, Button} from "@ya.praktikum/react-developer-burger-u
 import {ConstructorList} from "./constructor-list/constructor-list";
 import {TotalPrice} from "./total-price/total-price";
 import styles from "./constructor-list/constructor-list.module.css";
-import {ShowModalContext} from "../../services/modalContext";
+
 import {getOrderData} from "../../api/config";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {OPEN_MODAL} from "../../services/actions/modal";
 
 function BurgerConstructor() {
-  //получаем функцию-сеттер из контекста
-  //const {selectedIngredients, selectedIngredientsDispatcher} = React.useContext(SelectedIngredientsContext);
-
-  //const {selectedIngredients: {bun: {name, image, price, _id}, bun, other}, selectedIngredientsDispatcher}= React.useContext(SelectedIngredientsContext);
-
+  const dispatch = useDispatch();
   const chooseIngredients = useSelector(store => store.chooseIngredients)
   const bun = chooseIngredients.bun
     ,{name, image, price, _id} = {...bun}
     ,other = chooseIngredients.other;
 
 
-
-
-  const {showModalDispatcher} = React.useContext(ShowModalContext);
   function getListIdIngredients() {
     const idBun = [_id];
     const idOther = other.map((item) => item.ingredient._id);
@@ -38,22 +32,17 @@ function BurgerConstructor() {
         .then(data => {
           return data.order.number})
         .then(orderNumber => {
-          showModalDispatcher({type: 'open', payload: {type: "order", ingredient: {}, orderNumber: orderNumber}})
-
+          dispatch({type: OPEN_MODAL, payload: {type: "order"}});
         })
         .catch(() => {
-          showModalDispatcher({type: 'open', payload: {type: "error", ingredient: {}, orderNumber: ''}})
+          dispatch({type: OPEN_MODAL, payload: {type: "error"}});
         })
     }
-
-  function showBunDetails() {
-    showModalDispatcher({type: 'open', payload: {type: "ingredient", ingredient: bun}})
-  }
 
   return (
     <div className={`ml-4 mt-25 ${stylesConstr.burgerConstructor}`}>
       <div className={stylesConstr.list}>
-        {bun && <div className={styles.elementConstructor} onClick={showBunDetails}>
+        {bun && <div className={styles.elementConstructor}>
           <ConstructorElement extraClass='ml-8 mr-4 cursor'
                               type="top"
                               isLocked={true}
@@ -64,7 +53,7 @@ function BurgerConstructor() {
         </div>}
         {(other.length > 0) && <ConstructorList filling={other}
         />}
-        {bun && <div className={styles.elementConstructor} onClick={showBunDetails}>
+        {bun && <div className={styles.elementConstructor}>
           <ConstructorElement extraClass="ml-8 mr-4 cursor"
                               type="bottom"
                               isLocked={true}

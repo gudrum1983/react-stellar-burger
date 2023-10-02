@@ -3,7 +3,7 @@ import uuid from "react-uuid";
 import {ingredientPropType} from "../../../utils/prop-types";
 import {Ingredient} from "../ingredient/ingredient";
 import { useSelector, useDispatch } from 'react-redux';
-import {ADD_FILLING} from "../../../services/actions/choose-ingredients";
+import {ADD_FILLING} from "../../../services/actions/burger-constructor";
 
 const CardOther = ({currentItem}) => {
 

@@ -6,34 +6,20 @@ import {BurgerConstructor} from "../burger-constructor/burger-constructor";
 import {Modal} from "../modal/modal";
 import {OrderDetails} from "../modal/order-details/order-details";
 import {IngredientDetails} from "../modal/ingredient-details/ingredient-details";
-import {ShowModalContext} from "../../services/modalContext";
 import {getIngredientsData} from "../../api/config";
+import {CLOSE_MODAL} from "../../services/actions/modal";
+import {useDispatch, useSelector} from "react-redux";
 
 
 function App() {
 
-
-/*  const dispatch = useDispatch();*/
-
-/*  useEffect(() => {
-    // Отправляем экшен при монтировании компонента
-    dispatch({type: RESET_ORDER });
-  }, [])*/
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
     fillIngredientContext();
   }, [])
 
- // const chooseIngredients = useSelector(store => store.chooseIngredients)
-  //const {bun, other} = useSelector(store => store.chooseIngredients)
-
-
-
-  //создать константу для начального состояния стейта
-  //const selectedIngredientsInitialState = {bun: {}, other: []};
-
-  //заменить UseState на UseReducer
-  //const [selectedIngredients, selectedIngredientsDispatcher] = React.useReducer(reducerSelectedIngredients, selectedIngredientsInitialState, undefined);
+  const showModal = useSelector(store => store.showModal)
 
   const [downloadedAppData, setDownloadedAppData] = React.useState({
     isLoading: false,
@@ -41,49 +27,6 @@ function App() {
     ingredients: [],
     defaultBun: {},
   });
-
-  //создать константу для начального состояния стейта
-  const showModalInitialState = {
-    visible: false,
-    type: "",
-    ingredient: {},
-    orderNumber: "",
-  };
-
-  //Создать функцию reducers
-  function reducerShowModal(state, action) {
-    switch (action.type) {
-      case "close":
-        return {
-          visible: false,
-          type: "",
-          ingredient: {},
-          orderNumber: "",
-        }
-          ;
-      case "open":
-        return {
-          visible: true,
-          type: action.payload.type,
-          ingredient: action.payload.ingredient,
-          orderNumber: action.payload.orderNumber ??= "",
-        };
-      default:
-        throw new Error(`Wrong type of action: ${action.type}`);
-    }
-  }
-  //заменить UseState на UseReducer
-  const [showModal, showModalDispatcher] = React.useReducer(reducerShowModal, showModalInitialState, undefined);
-
-/*  function findDefaultBun(ingredientsData) {
-    if (ingredientsData) {
-      const defaultBun = ingredientsData.find(item => item.type === "bun")
-      selectedIngredientsDispatcher({type: 'defineBun', payload: defaultBun});
-      return defaultBun
-    } else {
-      return {}
-    }
-  }*/
 
   function fillIngredientContext() {
     setDownloadedAppData({...downloadedAppData, hasError: false, isLoading: true});
@@ -113,7 +56,7 @@ function App() {
   const sortedData = (data) => data.toSorted((a, b) => a._id > b._id ? 1 : -1)
 
   function handleCloseModal() {
-    showModalDispatcher({type: 'close'})
+    dispatch({type: CLOSE_MODAL})
   }
 
   function modal(comnonent) {
@@ -128,7 +71,7 @@ function App() {
         {comnonent}
         {showModal.type === "error" && <p className="text text_type_main-medium">
           Наш краторный хмель пожрал антарианский долгоносик, попробуйте сформировать заказ позже, Милорд...
-        </p> }
+        </p>}
       </Modal>)
   }
 
@@ -141,21 +84,18 @@ function App() {
         ingredients.length &&
         <>
           <AppHeader/>
-            <ShowModalContext.Provider value={{showModal, showModalDispatcher}}>
-              <main className={styles.main}>
-                <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
-                  <BurgerIngredients ingredients={ingredients}
-                  />
-                </section>
-                <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
-                  <BurgerConstructor/>
-                </section>
-                {showModal.visible && showModal.type === "order" && modal(<OrderDetails/>)}
-                {showModal.visible && showModal.type === "error" && modal()}
-                {showModal.visible && showModal.type === "ingredient" && !!(showModal.ingredient) && modal(
-                  <IngredientDetails ingredient={showModal.ingredient}/>)}
-              </main>
-            </ShowModalContext.Provider>
+          <main className={styles.main}>
+            <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
+              <BurgerIngredients ingredients={ingredients}
+              />
+            </section>
+            <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
+              <BurgerConstructor/>
+            </section>
+            {showModal.visible && showModal.type === "order" && modal(<OrderDetails/>)}
+            {showModal.visible && showModal.type === "error" && modal()}
+            {showModal.visible && showModal.type === "ingredient" && modal(<IngredientDetails ingredient={showModal.ingredient}/>)}
+          </main>
         </>
       }
     </div>

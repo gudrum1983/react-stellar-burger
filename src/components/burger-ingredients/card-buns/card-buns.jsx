@@ -3,7 +3,7 @@ import {Ingredient} from "../ingredient/ingredient";
 import {ingredientPropType} from "../../../utils/prop-types";
 //import {SelectedIngredientsContext} from "../../../services/burgerConstructorContext";
 import { useSelector, useDispatch } from 'react-redux';
-import {CHOOSE_BUN} from "../../../services/actions/choose-ingredients";
+import {CHOOSE_BUN} from "../../../services/actions/burger-constructor";
 
 const CardBuns = ({currentItem}) => {
 

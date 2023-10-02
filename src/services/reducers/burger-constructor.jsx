@@ -1,4 +1,4 @@
-import {CHOOSE_BUN, RESET_ORDER, DELETE_FILLING, ADD_FILLING} from "../actions/choose-ingredients";
+import {CHOOSE_BUN, RESET_ORDER, DELETE_FILLING, ADD_FILLING} from "../actions/burger-constructor";
 
 //Создать функцию reducers
 /*export function reducerSelectedIngredients(state, action) {

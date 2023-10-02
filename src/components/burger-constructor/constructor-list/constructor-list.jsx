@@ -2,36 +2,23 @@ import styles from "./constructor-list.module.css";
 import React from "react";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {selectedOtherIngredientsPropType} from "../../../utils/prop-types";
-import {ShowModalContext} from "../../../services/modalContext";
 import { useDispatch } from 'react-redux';
-import {DELETE_FILLING} from "../../../services/actions/choose-ingredients";
+import {DELETE_FILLING} from "../../../services/actions/burger-constructor";
 
 
 function ConstructorList({filling}) {
 
-  //const {selectedIngredients, selectedIngredientsDispatcher} = React.useContext(SelectedIngredientsContext);
-
   const dispatch = useDispatch();
 
-  const { showModalDispatcher } = React.useContext(ShowModalContext);
   function deleteCard(idItem) {
     dispatch({type: DELETE_FILLING, id: idItem})
-  }
-
-  function showItemDetails(item, e) {
-    const action = e.nativeEvent.target.closest(".constructor-element__action")
-    if (!action) {
-      showModalDispatcher({type: 'open', payload: {type: "ingredient", ingredient: item.ingredient}})
-    }
   }
 
   return (
     <div className={`${styles.listScroll} ${styles.scroll} custom-scroll`}>
       {filling.map((item) => (
         <React.Fragment key={item.numberIngredient}>
-          <div className={styles.elementConstructor} onClick={(e) => {
-            showItemDetails(item, e)
-          }}>
+          <div className={styles.elementConstructor}>
             <DragIcon type="primary"/>
             <ConstructorElement
               extraClass='cursor'
