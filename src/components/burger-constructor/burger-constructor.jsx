@@ -28,19 +28,6 @@ function BurgerConstructor() {
 
     const ingredientsOrder = getListIdIngredients();
     dispatch(getOrderDetails(ingredientsOrder))
-   /* getOrderDetails(ingredientsOrder, dispatch);*/
-
-    // создаем функцию, которая возвращает промис, так как любой запрос возвращает его
-    // return позволяет потом дальше продолжать цепочку `then, catch, finally`
-/*      return getOrderDetailsRequest(ingredientsOrder)
-        .then(data => {
-          return data.order.number})
-        .then(orderNumber => {
-          dispatch({type: OPEN_MODAL, payload: {type: "order"}});
-        })
-        .catch(() => {
-          dispatch({type: OPEN_MODAL, payload: {type: "error"}});
-        })*/
     }
 
   return (

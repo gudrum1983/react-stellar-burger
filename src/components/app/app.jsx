@@ -6,9 +6,10 @@ import {BurgerConstructor} from "../burger-constructor/burger-constructor";
 import {Modal} from "../modal/modal";
 import {OrderDetails} from "../modal/order-details/order-details";
 import {IngredientDetails} from "../modal/ingredient-details/ingredient-details";
-import {getIngredientsData} from "../../api/config";
 import {CLOSE_MODAL} from "../../services/actions/modal";
 import {useDispatch, useSelector} from "react-redux";
+import {CLEAR_INGREDIENT_DETAILS} from "../../services/actions/ingredient-details";
+import {getBurgerIngredients} from "../../services/actions/burger-ingredient";
 
 
 function App() {
@@ -16,19 +17,21 @@ function App() {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    fillIngredientContext();
+/*    fillIngredientContext();*/
+    dispatch(getBurgerIngredients())
+
   }, [])
 
   const showModal = useSelector(store => store.showModal)
-
-  const [downloadedAppData, setDownloadedAppData] = React.useState({
+  const downloadedAppData = useSelector(store => store.burgerIngredients)
+/*  const [downloadedAppData, setDownloadedAppData] = React.useState({
     isLoading: false,
     hasError: false,
     ingredients: [],
     defaultBun: {},
-  });
+  });*/
 
-  function fillIngredientContext() {
+/*  function fillIngredientContext() {
     setDownloadedAppData({...downloadedAppData, hasError: false, isLoading: true});
     // создаем функцию, которая возвращает промис, так как любой запрос возвращает его
     // return позволяет потом дальше продолжать цепочку `then, catch, finally`
@@ -49,14 +52,17 @@ function App() {
             isLoading: false
           });
       });
-  }
+  }*/
 
   const {ingredients, isLoading, hasError} = downloadedAppData;
 
-  const sortedData = (data) => data.toSorted((a, b) => a._id > b._id ? 1 : -1)
+  //const sortedData = (data) => data.toSorted((a, b) => a._id > b._id ? 1 : -1)
 
   function handleCloseModal() {
     dispatch({type: CLOSE_MODAL})
+    if (showModal.type === "ingredient") {
+      dispatch({type: CLEAR_INGREDIENT_DETAILS})
+    }
   }
 
   function modal(comnonent) {

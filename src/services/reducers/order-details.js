@@ -26,4 +26,3 @@ export const orderDetailsReducer = (state = initialState, action) => {
   }
 };
 
-// Наш первый thunk
