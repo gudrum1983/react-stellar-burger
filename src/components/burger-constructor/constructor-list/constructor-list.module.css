@@ -27,3 +27,12 @@
   gap: 8px;
   justify-content: flex-start;
 }
+
+.opacity1 {
+  opacity: 1;
+  transition: 1s;
+}
+
+.opacity0 {
+  opacity: 0;
+}

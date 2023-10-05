@@ -4,13 +4,13 @@ import React from "react";
 import {optionalArrayOfIngredients, optionalString} from "../../../utils/prop-types";
 
 
-export function List ({name, data, id})  {
+export const List = React.forwardRef(({name, data, id}, ref) =>  {
   return (
-    <li className={styles.typePart}>
-      <p id={id} className="text text_type_main-medium">{name}</p>
+    <li ref={ref} className={styles.typePart}>
+      <p  id={id} className="text text_type_main-medium">{name}</p>
       <ListCards ingredients={data} />
     </li>)
-}
+});
 
 List.propTypes = {
   name: optionalString,

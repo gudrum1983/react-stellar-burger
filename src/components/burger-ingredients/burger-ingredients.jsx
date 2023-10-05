@@ -8,9 +8,52 @@ import {List} from "./ingredients-type-list/ingredients-type-list";
 
 function BurgerIngredients({ingredients}) {
 
+
+  const [current, setCurrent] = React.useState('buns');
+
+
   const filtered = (type) => {
     return ingredients.filter((item) => item.type === type);
   }
+
+
+  const tabsRef = React.useRef()
+  const mainsRef = React.useRef();
+  const bunsRef = React.useRef()
+  const saucesRef = React.useRef()
+
+
+  function handleScrollList() {
+    const tabsBottom = tabsRef.current?.getBoundingClientRect().bottom;
+    const bunsTop = bunsRef.current?.getBoundingClientRect().top;
+    const saucesTop = saucesRef.current?.getBoundingClientRect().top;
+    const mainsTop = mainsRef.current?.getBoundingClientRect().top;
+
+    if (!tabsBottom || !bunsTop || !saucesTop || !mainsTop) {
+      return
+    }
+
+    const bunsDelta = Math.abs(bunsTop - tabsBottom);
+    const saucesDelta = Math.abs(saucesTop - tabsBottom);
+    const mainsDelta = Math.abs(mainsTop - tabsBottom);
+/*
+    console.log("bunsDelta",bunsDelta)
+    console.log("saucesDelta",saucesDelta)
+    console.log("mainsDelta",mainsDelta)*/
+
+
+
+    const min = Math.min(bunsDelta,saucesDelta,mainsDelta);
+/*    console.log("min",min)*/
+    const newTab = min === bunsDelta ? "buns" : min === saucesDelta ? "sauces" : "mains";
+/*    console.log("newTab",newTab)*/
+    if (newTab !== current) {
+      setCurrent(newTab)
+
+    }
+
+  }
+
 
   const [filteredIngredients, setFilteredIngredients] = React.useState(
     {
@@ -33,38 +76,37 @@ function BurgerIngredients({ingredients}) {
   );
 
 
-  const [current, setCurrent] = React.useState('one');
-
   return (
     <>
       <p className="text text_type_main-large mb-5 pt-10">Соберите&nbsp;бургер</p>
-      <ul className={`pb-10 ${styles.tab} ${styles.nonList} `}>
+      <ul ref={tabsRef} className={`pb-10 ${styles.tab} ${styles.nonList} `}>
         <li>
           <a href="#buns" className={`${styles.nonLink} cursor`}>
-            <Tab value="one" active={current === 'one'} onClick={setCurrent}>
+            <Tab value="buns" active={current === 'buns'} onClick={setCurrent}>
               Булки
             </Tab>
           </a>
         </li>
         <li>
           <a href="#sauces" className={`${styles.nonLink} cursor`}>
-            <Tab value="two" active={current === 'two'} onClick={setCurrent}>
+            <Tab value="sauces" active={current === 'sauces'} onClick={setCurrent}>
               Соусы
             </Tab>
           </a>
         </li>
         <li>
           <a href="#mains" className={`${styles.nonLink} cursor`}>
-            <Tab value="three" active={current === 'three'} onClick={setCurrent}>
+            <Tab value="mains" active={current === 'mains'} onClick={setCurrent}>
               Начинки
             </Tab>
           </a>
         </li>
       </ul>
-      <ul className={`${styles.ingredients} ${stylesConstr.scroll} ${styles.nonList} custom-scroll`}>
-        <List name="Булки" data={filteredIngredients.buns} id="buns"/>
-        <List name="Соусы" data={filteredIngredients.sauces} id="sauces"/>
-        <List name="Начинки" data={filteredIngredients.mains} id="mains"/>
+      <ul onScroll={handleScrollList}
+          className={`${styles.ingredients} ${stylesConstr.scroll} ${styles.nonList} custom-scroll`}>
+        <List ref={bunsRef} name="Булки" data={filteredIngredients.buns} id="buns"/>
+        <List ref={saucesRef} name="Соусы" data={filteredIngredients.sauces} id="sauces"/>
+        <List ref={mainsRef} name="Начинки" data={filteredIngredients.mains} id="mains"/>
       </ul>
     </>
   );

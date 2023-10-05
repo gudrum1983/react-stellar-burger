@@ -1,4 +1,4 @@
-import {CHOOSE_BUN, RESET_ORDER, DELETE_FILLING, ADD_FILLING} from "../actions/burger-constructor";
+import {CHOOSE_BUN, RESET_ORDER, DELETE_FILLING, ADD_FILLING, MOVE_FILLING} from "../actions/burger-constructor";
 
 //Создать функцию reducers
 /*export function reducerSelectedIngredients(state, action) {
@@ -65,6 +65,11 @@ export function chooseIngredientsReducer(state = initialState, action) {
       return {
         ...state,
         other: [...state.other].filter(item => item.numberIngredient !== action.id),
+      };
+    case MOVE_FILLING:
+      return {
+        ...state,
+        other: action.payload,
       };
     default: {
       return state;

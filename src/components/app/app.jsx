@@ -10,53 +10,23 @@ import {CLOSE_MODAL} from "../../services/actions/modal";
 import {useDispatch, useSelector} from "react-redux";
 import {CLEAR_INGREDIENT_DETAILS} from "../../services/actions/ingredient-details";
 import {getBurgerIngredients} from "../../services/actions/burger-ingredient";
-
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import {ADD_FILLING, CHOOSE_BUN} from "../../services/actions/burger-constructor";
+import uuid from "react-uuid";
 
 function App() {
 
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-/*    fillIngredientContext();*/
     dispatch(getBurgerIngredients())
-
   }, [])
 
   const showModal = useSelector(store => store.showModal)
   const downloadedAppData = useSelector(store => store.burgerIngredients)
-/*  const [downloadedAppData, setDownloadedAppData] = React.useState({
-    isLoading: false,
-    hasError: false,
-    ingredients: [],
-    defaultBun: {},
-  });*/
-
-/*  function fillIngredientContext() {
-    setDownloadedAppData({...downloadedAppData, hasError: false, isLoading: true});
-    // создаем функцию, которая возвращает промис, так как любой запрос возвращает его
-    // return позволяет потом дальше продолжать цепочку `then, catch, finally`
-    return getIngredientsData()
-      .then(data => data.data)
-      .then(ingredientsData =>
-        setDownloadedAppData(
-          {
-            ...downloadedAppData,
-            ingredients: sortedData(ingredientsData),
-            isLoading: false,
-          }))
-      .catch(() => {
-        setDownloadedAppData(
-          {
-            ...downloadedAppData,
-            hasError: true,
-            isLoading: false
-          });
-      });
-  }*/
 
   const {ingredients, isLoading, hasError} = downloadedAppData;
-
-  //const sortedData = (data) => data.toSorted((a, b) => a._id > b._id ? 1 : -1)
 
   function handleCloseModal() {
     dispatch({type: CLOSE_MODAL})
@@ -78,6 +48,26 @@ function App() {
       </Modal>)
   }
 
+  const handleDrop = (ingredient) => {
+
+
+    const numberIngredient = uuid();
+
+if (ingredient.type === "bun") {
+  dispatch({
+    type: CHOOSE_BUN, payload: ingredient})
+} else {
+  dispatch({
+    type: ADD_FILLING, payload: {
+      numberIngredient: numberIngredient,
+      ingredient: ingredient,
+    }
+  })
+}
+  };
+
+
+
   return (
     <div className={`text text_type_main-default ${styles.app}`}>
       {isLoading && 'Загрузка...'}
@@ -88,21 +78,23 @@ function App() {
         <>
           <AppHeader/>
           <main className={styles.main}>
-            <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
-              <BurgerIngredients ingredients={ingredients}
-              />
-            </section>
-            <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
-              <BurgerConstructor/>
-            </section>
-            {showModal.visible && showModal.type === "order" && modal(<OrderDetails/>)}
-            {showModal.visible && showModal.type === "error" && modal(<p className="text text_type_main-medium">
-              Наш краторный хмель пожрал антарианский долгоносик, попробуйте сформировать заказ позже, Милорд...
-            </p>)}
-            {showModal.visible && showModal.type === "ingredient" && modal(<IngredientDetails ingredient={showModal.ingredient}/>)}
+            <DndProvider backend={HTML5Backend}>
+              <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
+                <BurgerIngredients ingredients={ingredients}
+                />
+              </section>
+              <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
+                <BurgerConstructor onDropHandler={handleDrop}/>
+              </section>
+            </DndProvider>
           </main>
-        </>
-      }
+          {showModal.visible && showModal.type === "order" && modal(<OrderDetails/>)}
+          {showModal.visible && showModal.type === "error" && modal(<p className="text text_type_main-medium">
+            Наш краторный хмель пожрал антарианский долгоносик, попробуйте сформировать заказ позже, Милорд...
+          </p>)}
+          {showModal.visible && showModal.type === "ingredient" && modal(<IngredientDetails
+            ingredient={showModal.ingredient}/>)}
+        </>}
     </div>
   )
 }

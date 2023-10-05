@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  padding: 0;
 }
 
 /*не забыть подключить курсоры*/
@@ -9,6 +10,37 @@ body {
   transition: opacity 0.5s;
 }
 
+.cursor_type_nresize {
+  cursor: n-resize
+}
+
+.notAllowed {
+  cursor: default;
+}
+
+.notAllowed  .constructor-element__action{
+  cursor: not-allowed
+}
+
+.cursor_type_grab {
+  cursor: grab;
+}
+
+.cursor_type_grabbing {
+  cursor: grabbing;
+}
+
+.cursor_type_noGrab {
+  cursor: no-drop;
+}
+
+
+
+
+
 .cursor:hover {
   opacity: 0.6;
 }
+
+/*  box-shadow: 0px 0px 16px 8px rgba(51, 51, 255, 0.25), 0px 0px 8px 8px rgba(51, 51, 255, 0.25);
+  filter: drop-shadow(0px 4px 32px rgba(51, 51, 255, 0.5));*/

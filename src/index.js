@@ -8,16 +8,6 @@ import "./index.css";
 import { compose, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
-/*const composeEnhancers =
-  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-    : compose;
-
-const enhancer = composeEnhancers();
-
-const store = createStore(rootReducer, enhancer);*/
-
-
 const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
@@ -26,17 +16,17 @@ const composeEnhancers =
 const enhancer = composeEnhancers(applyMiddleware(thunk));
 
 const store = createStore(rootReducer, enhancer);
+/*const store = createStore(rootReducer, applyMiddleware(thunk));*/
 
 // Инициализируем хранилище с помощью корневого редьюсера
 //const store = createStore(rootReducer);
-
+/*StrictMode — инструмент для обнаружения потенциальных проблем в приложении, не рендерит видимого UI.
+  Строгий режим активирует дополнительные проверки и предупреждения для своих потомков.*/
 ReactDOM.render(
-  /*StrictMode — инструмент для обнаружения потенциальных проблем в приложении, не рендерит видимого UI.
-    Строгий режим активирует дополнительные проверки и предупреждения для своих потомков.*/
   <React.StrictMode>
     <Provider store={store}>
       <App />
-    </Provider>,
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );

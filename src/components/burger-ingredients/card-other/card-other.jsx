@@ -1,25 +1,11 @@
 import React from "react";
-import uuid from "react-uuid";
 import {ingredientPropType} from "../../../utils/prop-types";
 import {Ingredient} from "../ingredient/ingredient";
-import { useSelector, useDispatch } from 'react-redux';
-import {ADD_FILLING} from "../../../services/actions/burger-constructor";
+import { useSelector } from 'react-redux';
 
 const CardOther = ({currentItem}) => {
 
   const selectedIngredients = useSelector(store => store.chooseIngredients)
-  const dispatch = useDispatch();
-
-  function toggleCount() {
-
-    const numberIngredient = uuid();
-    dispatch({
-      type: ADD_FILLING, payload: {
-        numberIngredient: numberIngredient,
-        ingredient: currentItem,
-      }
-    })
-  }
 
   let count = 0
   const otherIngredients = selectedIngredients.other
@@ -29,9 +15,8 @@ const CardOther = ({currentItem}) => {
   }
 
 
-
   return (
-    <Ingredient currentItem={currentItem} count={count} toggleCount={toggleCount}/>
+    <Ingredient currentItem={currentItem} count={count}/>
   );
 
 };
