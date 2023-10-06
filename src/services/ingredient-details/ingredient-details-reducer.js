@@ -1,4 +1,4 @@
-import {SET_INGREDIENT_DETAILS, CLEAR_INGREDIENT_DETAILS} from "../actions/ingredient-details";
+import {SET_INGREDIENT_DETAILS, CLEAR_INGREDIENT_DETAILS} from "./ingredient-details-actions";
 
 const initialState = {
   details: null,
@@ -20,4 +20,3 @@ export function ingredientDetailsReducer(state = initialState, action) {
     }
   }
 }
-

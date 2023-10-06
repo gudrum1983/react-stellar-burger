@@ -1,10 +1,9 @@
 import styles from "./ingredient.module.css";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
-import {ingredientPropType, optionalFunc, optionalNum} from "../../../utils/prop-types";
+import {ingredientPropType, optionalNum} from "../../../utils/prop-types";
 import {useDispatch} from "react-redux";
-import {OPEN_MODAL} from "../../../services/actions/modal";
-import { setIngredientDetails } from "../../../services/actions/ingredient-details";
+import { setIngredientDetails } from "../../../services/ingredient-details/ingredient-details-actions";
 import { useDrag } from "react-dnd";
 
 function Ingredient({currentItem, count}) {
@@ -19,20 +18,12 @@ function Ingredient({currentItem, count}) {
 
   function handleClick() {
     dispatch(setIngredientDetails(currentItem))
-    dispatch({type: OPEN_MODAL, payload: {type: "ingredient"}})
   }
   const canDraggabble = (currentItem.type !== "bun") ? true :!(count)
 
   function isNum(num) {
     return (num !== 0)
   }
-
-  let cursor = canDraggabble ? "cursor cursor_type_grab" : "cursor cursor_type_noGrab";
-
-
-  if (isDrag) {cursor = "cursor cursor_type_grabbing"}
-  console.log("isDrag",isDrag)
-
 
   return (
     <li className={`${styles.card} cursor`} {...(canDraggabble && {ref:dragRef})} onClick={handleClick} >
@@ -52,7 +43,6 @@ function Ingredient({currentItem, count}) {
 Ingredient.propTypes = {
   currentItem: ingredientPropType,
   count: optionalNum,
-  toggleCount: optionalFunc,
 
 };
 

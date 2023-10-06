@@ -1,10 +1,11 @@
 import React from "react";
 import {useSelector} from 'react-redux';
+import {chooseIngredients} from "../../../services/burger-constructor/burger-constructor-selector";
 
 
 function TotalPrice() {
 
-  const {bun, other} = useSelector(store => store.chooseIngredients)
+  const {bun, other} = useSelector(chooseIngredients)
   const numberOtherIngredients = other.length
 
   const total = React.useMemo(() => {

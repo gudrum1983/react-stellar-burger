@@ -1,4 +1,4 @@
-import {GET_INGREDIENTS_FAILED, GET_INGREDIENTS_REQUEST, GET_INGREDIENTS_SUCCESS,} from "../actions/burger-ingredient";
+import {GET_INGREDIENTS_FAILED, GET_INGREDIENTS_REQUEST, GET_INGREDIENTS_SUCCESS,} from "./burger-ingredients-actions";
 
 const initialState = {
   isLoading: false,

@@ -19,6 +19,6 @@ export const getOrderDetailsRequest = (ingredientsOrder) => {
   })
 };
 
-export const getIngredientsData = () => {
+export const getBurgerIngredientsData = () => {
   return request(baseUrl, endpoints.ingredients)
 };

@@ -2,58 +2,16 @@ import React from "react";
 import styles from "./burger-ingredients.module.css";
 import stylesConstr from "../burger-constructor/burger-constructor.module.css";
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
-import {optionalArrayOfIngredients} from "../../utils/prop-types";
 import {List} from "./ingredients-type-list/ingredients-type-list";
+import {useSelector} from "react-redux";
+import {burgerIngredients} from "../../services/burger-ingredients/burger-ingredients-selector";
 
+function BurgerIngredients() {
 
-function BurgerIngredients({ingredients}) {
-
-
-  const [current, setCurrent] = React.useState('buns');
-
-
+  const {ingredients} = useSelector(burgerIngredients)
   const filtered = (type) => {
     return ingredients.filter((item) => item.type === type);
   }
-
-
-  const tabsRef = React.useRef()
-  const mainsRef = React.useRef();
-  const bunsRef = React.useRef()
-  const saucesRef = React.useRef()
-
-
-  function handleScrollList() {
-    const tabsBottom = tabsRef.current?.getBoundingClientRect().bottom;
-    const bunsTop = bunsRef.current?.getBoundingClientRect().top;
-    const saucesTop = saucesRef.current?.getBoundingClientRect().top;
-    const mainsTop = mainsRef.current?.getBoundingClientRect().top;
-
-    if (!tabsBottom || !bunsTop || !saucesTop || !mainsTop) {
-      return
-    }
-
-    const bunsDelta = Math.abs(bunsTop - tabsBottom);
-    const saucesDelta = Math.abs(saucesTop - tabsBottom);
-    const mainsDelta = Math.abs(mainsTop - tabsBottom);
-/*
-    console.log("bunsDelta",bunsDelta)
-    console.log("saucesDelta",saucesDelta)
-    console.log("mainsDelta",mainsDelta)*/
-
-
-
-    const min = Math.min(bunsDelta,saucesDelta,mainsDelta);
-/*    console.log("min",min)*/
-    const newTab = min === bunsDelta ? "buns" : min === saucesDelta ? "sauces" : "mains";
-/*    console.log("newTab",newTab)*/
-    if (newTab !== current) {
-      setCurrent(newTab)
-
-    }
-
-  }
-
 
   const [filteredIngredients, setFilteredIngredients] = React.useState(
     {
@@ -75,6 +33,35 @@ function BurgerIngredients({ingredients}) {
     , [ingredients]
   );
 
+  console.log(filteredIngredients)
+
+  const [currentTab, setCurrentTab] = React.useState('buns');
+  const tabsRef = React.useRef()
+  const mainsRef = React.useRef();
+  const bunsRef = React.useRef()
+  const saucesRef = React.useRef()
+
+  function handleScrollList() {
+    const tabsBottom = tabsRef.current?.getBoundingClientRect().bottom;
+    const bunsTop = bunsRef.current?.getBoundingClientRect().top;
+    const saucesTop = saucesRef.current?.getBoundingClientRect().top;
+    const mainsTop = mainsRef.current?.getBoundingClientRect().top;
+
+    if (!tabsBottom || !bunsTop || !saucesTop || !mainsTop) {
+      return
+    }
+
+    const TabsWithBottomPadding = (tabsBottom + 40)
+    const bunsDelta = Math.abs(bunsTop - TabsWithBottomPadding);
+    const saucesDelta = Math.abs(saucesTop - TabsWithBottomPadding);
+    const mainsDelta = Math.abs(mainsTop - TabsWithBottomPadding);
+    const min = Math.min(bunsDelta, saucesDelta, mainsDelta);
+    const newTab = min === bunsDelta ? "buns" : min === saucesDelta ? "sauces" : "mains";
+    if (newTab !== currentTab) {
+      setCurrentTab(newTab)
+    }
+  }
+
 
   return (
     <>
@@ -82,21 +69,21 @@ function BurgerIngredients({ingredients}) {
       <ul ref={tabsRef} className={`pb-10 ${styles.tab} ${styles.nonList} `}>
         <li>
           <a href="#buns" className={`${styles.nonLink} cursor`}>
-            <Tab value="buns" active={current === 'buns'} onClick={setCurrent}>
+            <Tab value="buns" active={currentTab === 'buns'} onClick={setCurrentTab}>
               Булки
             </Tab>
           </a>
         </li>
         <li>
           <a href="#sauces" className={`${styles.nonLink} cursor`}>
-            <Tab value="sauces" active={current === 'sauces'} onClick={setCurrent}>
+            <Tab value="sauces" active={currentTab === 'sauces'} onClick={setCurrentTab}>
               Соусы
             </Tab>
           </a>
         </li>
         <li>
           <a href="#mains" className={`${styles.nonLink} cursor`}>
-            <Tab value="mains" active={current === 'mains'} onClick={setCurrent}>
+            <Tab value="mains" active={currentTab === 'mains'} onClick={setCurrentTab}>
               Начинки
             </Tab>
           </a>
@@ -112,11 +99,4 @@ function BurgerIngredients({ingredients}) {
   );
 }
 
-BurgerIngredients.propTypes = {
-  ingredients: optionalArrayOfIngredients,
-};
-
-export {
-  BurgerIngredients
-}
-
+export {BurgerIngredients}

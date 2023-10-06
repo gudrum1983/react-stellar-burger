@@ -1,13 +1,13 @@
 import styles from "./ingredient-details.module.css";
-import {ingredientPropType} from "../../../utils/prop-types";
 import {useSelector} from "react-redux";
+import {ingredientDetails} from "../../../services/ingredient-details/ingredient-details-selector";
 
 function IngredientDetails() {
-  const {proteins, calories, fat, carbohydrates, name, image_large} = useSelector(store => store.ingredientDetails.details)
-  const energyValue = (name, value) => {
+  const {proteins, calories, fat, carbohydrates, name, image_large} = useSelector(ingredientDetails)
+  const energyValue = (text, value) => {
     return (
       <li className={styles.column}>
-        <p className="text text_type_main-default text_color_inactive">{name}</p>
+        <p className="text text_type_main-default text_color_inactive">{text}</p>
         <p className="text text_type_digits-default text_color_inactive">{value}</p>
       </li>
     )
@@ -23,15 +23,10 @@ function IngredientDetails() {
         {energyValue('Жиры, г', fat)}
         {energyValue('Углеводы, г', carbohydrates)}
       </ul>
-
     </div>
   )
-
 }
 
-IngredientDetails.propTypes = {
-  ingredient: ingredientPropType,
-};
 
 export {
   IngredientDetails

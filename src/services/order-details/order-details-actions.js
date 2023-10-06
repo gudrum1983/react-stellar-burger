@@ -1,34 +1,45 @@
 import {getOrderDetailsRequest} from "../../api/config";
-import {OPEN_MODAL} from "./modal";
-import {RESET_ORDER} from "./burger-constructor";
+import {clearBurgerConstructor} from "../burger-constructor/burger-constructor-actions";
 
 export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST';
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
 export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
+export const CLEAR_ORDER = 'CLEAR_ORDER_FAILED';
+
+export function orderDetailsRequest() {
+  return {type: GET_ORDER_REQUEST};
+}
+
+export function orderDetailsSuccess(orderNumber) {
+  return {type: GET_ORDER_SUCCESS, payload: orderNumber};
+}
+
+export function orderDetailsFailed() {
+  return {type: GET_ORDER_FAILED};
+}
+
+export function clearOrderDetails() {
+  return {type: CLEAR_ORDER};
+}
 
 export function getOrderDetails(ingredientsOrder) {
 
   return function (dispatch) {
-    dispatch({
-      type: GET_ORDER_REQUEST
-    });
+    dispatch(orderDetailsRequest());
     getOrderDetailsRequest(ingredientsOrder)
       .then(res => {
         if (res && res.success) {
           // В случае успешного получения данных вызываем экшен
           // для записи полученных данных в хранилище
-          dispatch({type: GET_ORDER_SUCCESS, order: res.order.number});
-          dispatch({type: OPEN_MODAL, payload: {type: "order"}});
-          dispatch({type: RESET_ORDER});
+          dispatch(orderDetailsSuccess(res.order.number));
+          dispatch(clearBurgerConstructor());
         } else {
           // Если произошла ошибка, отправляем соответствующий экшен
-          dispatch({type: OPEN_MODAL, payload: {type: "error"}});
-          dispatch({type: GET_ORDER_FAILED});
+          dispatch(orderDetailsFailed());
         }
       })
       .catch(() => {
-        dispatch({type: OPEN_MODAL, payload: {type: "error"}});
-        dispatch({type: GET_ORDER_FAILED});
+        dispatch(orderDetailsFailed());
       })
   };
 }
