@@ -7,7 +7,6 @@ import {optionalArrayOfIngredients} from "../../../utils/prop-types";
 function ListCards({ingredients}) {
 
   const isBun = ingredients[0].type === "bun"
-  console.log(isBun)
 
   return (
     <ul className={styles.listCards}>

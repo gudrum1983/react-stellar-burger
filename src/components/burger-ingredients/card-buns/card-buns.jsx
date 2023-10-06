@@ -12,7 +12,6 @@ const CardBuns = ({currentItem}) => {
   React.useMemo(
     () => {
       setCount(currentItem._id === top?._id ? 2 : 0);
-      console.log(currentItem)
     }, [top]);
 
   return (
