@@ -14,3 +14,9 @@ export function setIngredientDetails({proteins, calories, fat, carbohydrates, na
     }
   }
 }
+
+export function clearIngredientDetails() {
+  return {
+    type: CLEAR_INGREDIENT_DETAILS
+  }
+}

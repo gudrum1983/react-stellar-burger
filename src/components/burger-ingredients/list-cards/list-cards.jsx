@@ -6,19 +6,15 @@ import {optionalArrayOfIngredients} from "../../../utils/prop-types";
 
 function ListCards({ingredients}) {
 
-  let defaultBunId = false
-
-  if (ingredients[0].type === "bun") {
-    defaultBunId = ingredients[0]._id;
-  }
+  const isBun = ingredients[0].type === "bun"
+  console.log(isBun)
 
   return (
     <ul className={styles.listCards}>
       {ingredients.map((currentItem) => (
         <React.Fragment key={currentItem._id}>
-          {!!(defaultBunId)
-            ? <CardBuns currentItem={currentItem} defaultBunId={defaultBunId}
-                        />
+          {isBun
+            ? <CardBuns currentItem={currentItem}/>
             : <CardOther currentItem={currentItem} />}
         </React.Fragment>
       ))}

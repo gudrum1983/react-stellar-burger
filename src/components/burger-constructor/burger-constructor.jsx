@@ -9,7 +9,8 @@ import {useDrop} from "react-dnd";
 
 import {useDispatch, useSelector} from "react-redux";
 
-import {getOrderDetails} from "../../services/actions/order-details";
+import {getOrderDetails} from "../../services/order-details/order-details-actions";
+import {chooseIngredients} from "../../services/burger-constructor/burger-constructor-selector";
 
 function BurgerConstructor({onDropHandler}) {
 
@@ -25,16 +26,14 @@ function BurgerConstructor({onDropHandler}) {
       isCanD: monitor.canDrop(),
     })
   });
-/*console.log("isCanD",isCanD)*/
-
 
   const borderColor = isHover ? stylesConstr.borderLightgreen : (isCanD ? stylesConstr.borderLightgreen2 : stylesConstr.borderTransparent);
 
   const dispatch = useDispatch();
-  const chooseIngredients = useSelector(store => store.chooseIngredients)
-  const bun = chooseIngredients.bun
+  const selectedIngredients = useSelector(chooseIngredients)
+  const bun = selectedIngredients.bun
     , {name, image, price, _id} = {...bun}
-    , other = chooseIngredients.other;
+    , other = selectedIngredients.other;
 
 
   function getListIdIngredients() {

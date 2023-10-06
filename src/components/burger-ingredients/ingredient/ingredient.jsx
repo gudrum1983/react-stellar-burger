@@ -1,16 +1,31 @@
 import styles from "./ingredient.module.css";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
-import {ingredientPropType, optionalFunc, optionalNum} from "../../../utils/prop-types";
+import {ingredientPropType, optionalNum} from "../../../utils/prop-types";
 import {useDispatch} from "react-redux";
-import {OPEN_MODAL} from "../../../services/actions/modal";
-import { setIngredientDetails } from "../../../services/actions/ingredient-details";
+import { setIngredientDetails } from "../../../services/ingredient-details/ingredient-details-actions";
 import { useDrag } from "react-dnd";
 
 function Ingredient({currentItem, count}) {
+
+   const [state, setState] = React.useState({item:currentItem, number: 0})
+
+
+  React.useMemo(
+    () =>
+      setState(
+        {
+          ...state,
+
+          number: count,
+        }
+      )
+    , [count]
+  );
+
   const [{isDrag}, dragRef] = useDrag({
     type: "burgerConstructor",
-    item: currentItem,
+    item: state.item,
     collect: monitor => ({
       isDrag: monitor.isDragging()
     })
@@ -18,33 +33,25 @@ function Ingredient({currentItem, count}) {
   const dispatch = useDispatch();
 
   function handleClick() {
-    dispatch(setIngredientDetails(currentItem))
-    dispatch({type: OPEN_MODAL, payload: {type: "ingredient"}})
+    dispatch(setIngredientDetails(state.item))
   }
-  const canDraggabble = (currentItem.type !== "bun") ? true :!(count)
+  const canDraggabble = (state.item.type !== "bun") ? true :!(state.number)
 
   function isNum(num) {
     return (num !== 0)
   }
 
-  let cursor = canDraggabble ? "cursor cursor_type_grab" : "cursor cursor_type_noGrab";
-
-
-  if (isDrag) {cursor = "cursor cursor_type_grabbing"}
-  console.log("isDrag",isDrag)
-
-
   return (
     <li className={`${styles.card} cursor`} {...(canDraggabble && {ref:dragRef})} onClick={handleClick} >
-      <img className={styles.imgCard} alt={currentItem.name} src={currentItem.image}/>
+      <img className={styles.imgCard} alt={state.item.name} src={state.item.image}/>
       <div className={`pt-1 pb-1 ${styles.price}`}>
-        <p className="text text_type_digits-default pr-2">{currentItem.price}</p>
+        <p className="text text_type_digits-default pr-2">{state.item.price}</p>
         <CurrencyIcon type="primary"/>
       </div>
       <div className={styles.cardName}>
-        <p className="text text_type_main-default">{currentItem.name}</p>
+        <p className="text text_type_main-default">{state.item.name}</p>
       </div>
-      {isNum(count) && <Counter count={count} size="default" />}
+      {isNum(state.number) && <Counter count={state.number} size="default" />}
     </li>
   )
 }
@@ -52,7 +59,6 @@ function Ingredient({currentItem, count}) {
 Ingredient.propTypes = {
   currentItem: ingredientPropType,
   count: optionalNum,
-  toggleCount: optionalFunc,
 
 };
 

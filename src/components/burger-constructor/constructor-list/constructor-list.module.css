@@ -36,3 +36,7 @@
 .opacity0 {
   opacity: 0;
 }
+
+.topGap {
+  padding-top: 96px;
+}

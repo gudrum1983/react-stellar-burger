@@ -1,10 +1,11 @@
 import styles from "./order-details.module.css";
 import React from "react";
 import {useSelector} from "react-redux";
+import {orderDetails} from "../../../services/order-details/order-details-selectors";
 
 function OrderDetails() {
 
-  const orderNumber = useSelector(store => store.orderDetails.orderDetails)
+  const {orderNumber} = useSelector(orderDetails)
 
   return (
     <div className={`${styles.modalContainer} pt-4 pb-20`}>
