@@ -33,7 +33,7 @@ export default function App() {
     dispatch(loadBurgerIngredients())
   }, [])
 
-  const {orderNumber, orderFailed} = useSelector(orderDetails)
+  const {orderNumber, orderRequest ,orderFailed} = useSelector(orderDetails)
   const showIngredientDetails = useSelector(ingredientDetails)
   const {ingredients, isLoading, hasError} = useSelector(burgerIngredients);
 
@@ -87,6 +87,7 @@ export default function App() {
       {orderFailed && modal(<p className="text text_type_main-medium">
         Наш краторный хмель пожрал антарианский долгоносик, попробуйте сформировать заказ позже, Милорд...
       </p>, "Ошибка")}
+      {orderRequest && modal(null,"Загрузка Милорд...")}
       {showIngredientDetails && modal(<IngredientDetails
         ingredient={showIngredientDetails}/>, "Детали ингредиента")}
     </div>

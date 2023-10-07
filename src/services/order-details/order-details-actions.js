@@ -1,6 +1,5 @@
-import {getIngredients, getOrderDetailsRequest} from "../../api/config";
+import {getOrderDetailsRequest} from "../../api/config";
 import {clearBurgerConstructor} from "../burger-constructor/burger-constructor-actions";
-import {getIngredientsFailed, getIngredientsRequest, getIngredientsSuccess} from "../burger-ingredients/burger-ingredients-actions";
 
 export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST';
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
@@ -33,19 +32,6 @@ export function getOrderDetails(ingredientsOrder) {
       })
       .catch(() => {
         dispatch(orderDetailsFailed());
-      })
-  };
-}
-
-export function loadBurgerIngredients() {
-  return function (dispatch) {
-    dispatch(getIngredientsRequest());
-    getIngredients()
-      .then(res => {
-        dispatch(getIngredientsSuccess(res.data));
-      })
-      .catch(() => {
-        dispatch(getIngredientsFailed());
       })
   };
 }

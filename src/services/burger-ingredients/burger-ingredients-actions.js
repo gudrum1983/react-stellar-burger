@@ -24,23 +24,6 @@ export function getIngredientsRequest() {
   }
 }
 
-/*export function loadBurgerIngredients() {
-  return function(dispatch) {
-    dispatch(getIngredientsRequest());
-    getBurgerIngredientsData()
-      .then(res => {
-        if (res && res.success) {
-          dispatch(getIngredientsSuccess(res.data));
-        } else {
-          dispatch(getIngredientsFailed());
-        }
-      })
-        .catch(() => {
-          dispatch(getIngredientsFailed());
-        })
-    };
-}*/
-
 export function loadBurgerIngredients() {
   return function (dispatch) {
     dispatch(getIngredientsRequest());
