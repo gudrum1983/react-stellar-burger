@@ -1,4 +1,4 @@
-import {getBurgerIngredientsData} from "../../api/config";
+import {getIngredients} from "../../api/config";
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
@@ -24,7 +24,7 @@ export function getIngredientsRequest() {
   }
 }
 
-export function loadBurgerIngredients() {
+/*export function loadBurgerIngredients() {
   return function(dispatch) {
     dispatch(getIngredientsRequest());
     getBurgerIngredientsData()
@@ -39,4 +39,19 @@ export function loadBurgerIngredients() {
           dispatch(getIngredientsFailed());
         })
     };
+}*/
+
+export function loadBurgerIngredients() {
+  return function (dispatch) {
+    dispatch(getIngredientsRequest());
+    getIngredients()
+      .then(res => {
+        dispatch(getIngredientsSuccess(res.data));
+      })
+      .catch(() => {
+        dispatch(getIngredientsFailed());
+      })
+  };
 }
+
+
