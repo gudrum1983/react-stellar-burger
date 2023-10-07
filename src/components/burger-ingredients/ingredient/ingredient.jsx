@@ -2,30 +2,75 @@ import styles from "./ingredient.module.css";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import {ingredientPropType, optionalNum} from "../../../utils/prop-types";
-import {useDispatch} from "react-redux";
-import { setIngredientDetails } from "../../../services/ingredient-details/ingredient-details-actions";
-import { useDrag } from "react-dnd";
+import {useDispatch, useSelector} from "react-redux";
+import {setIngredientDetails} from "../../../services/ingredient-details/ingredient-details-actions";
+import {useDrag} from "react-dnd";
+import {chooseIngredients} from "../../../services/burger-constructor/burger-constructor-selector";
+import {loadBurgerIngredients} from "../../../services/burger-ingredients/burger-ingredients-actions";
 
-function Ingredient({currentItem, count}) {
 
-   const [state, setState] = React.useState({item:currentItem, number: 0})
+function Number({id, type}) {
 
+  const [count, setCount] = React.useState(0)
+
+  const {bun, other} = useSelector(chooseIngredients)
+  const newCount = (type === "bun")
+    ? (id === bun?._id ? 2 : 0)
+    : (other.filter((itemOtherIng) => itemOtherIng.ingredient._id === id).length)
 
   React.useMemo(
-    () =>
-      setState(
-        {
-          ...state,
-
-          number: count,
-        }
-      )
-    , [count]
+    () => {
+      console.log("newCount", newCount)
+      setCount(newCount)
+    }, [newCount]
   );
+
+  const countClass = count > 0 ? styles.visible : styles.hidden
+
+
+    return (<Counter count={count} size="default" extraClass={countClass}/>)
+
+}
+
+
+function Ingredient({currentItem}) {
+
+
+  /* function findNewCount () {
+      const {bun, other} = useSelector(chooseIngredients)
+      return (currentItem.type === "bun")
+        ? (currentItem._id === bun?._id ? 2 : 0)
+        : (other.filter((itemOtherIng) => itemOtherIng.ingredient._id === currentItem._id).length)
+    }
+
+    const newCount = findNewCount()*/
+
+  console.log('currentItem', currentItem)
+  const [item, setItem] = React.useState({})
+
+
+  React.useEffect(() => {
+
+    setItem(currentItem)
+  }, [])
+
+
+  /*console.log(currentItem.name, 'render' )*/
+
+  /*  const newCount = (currentItem.type === "bun")
+      ? (currentItem._id === bun?._id ? 2 : 0)
+      : (other.filter((itemOtherIng) => itemOtherIng.ingredient._id === currentItem._id).length)*/
+
+
+  /*  React.useMemo(
+      () =>{
+       console.log("newCount",newCount)
+        setCount(newCount)}, [newCount]
+    );*/
 
   const [{isDrag}, dragRef] = useDrag({
     type: "burgerConstructor",
-    item: state.item,
+    item: item,
     collect: monitor => ({
       isDrag: monitor.isDragging()
     })
@@ -33,33 +78,33 @@ function Ingredient({currentItem, count}) {
   const dispatch = useDispatch();
 
   function handleClick() {
-    dispatch(setIngredientDetails(state.item))
+    dispatch(setIngredientDetails(item))
   }
-  const canDraggabble = (state.item.type !== "bun") ? true :!(state.number)
 
-  function isNum(num) {
-    return (num !== 0)
-  }
+  const count = 0
+  const canDraggabble = (item?.type !== "bun") ? true : !(count)
+
+
 
   return (
-    <li className={`${styles.card} cursor`} {...(canDraggabble && {ref:dragRef})} onClick={handleClick} >
-      <img className={styles.imgCard} alt={state.item.name} src={state.item.image}/>
+    <li className={`${styles.card} cursor`} {...(canDraggabble && {ref: dragRef})} onClick={handleClick}>
+      <img className={styles.imgCard} alt={item.name} src={item.image}/>
       <div className={`pt-1 pb-1 ${styles.price}`}>
-        <p className="text text_type_digits-default pr-2">{state.item.price}</p>
+        <p className="text text_type_digits-default pr-2">{item.price}</p>
         <CurrencyIcon type="primary"/>
       </div>
       <div className={styles.cardName}>
-        <p className="text text_type_main-default">{state.item.name}</p>
+        <p className="text text_type_main-default">{item.name}</p>
       </div>
-      {isNum(state.number) && <Counter count={state.number} size="default" />}
+      <Number id={item._id} type={item.type}></Number>
+      {/*      {isNum(count) && <Counter count={count} size="default"/>}*/}
+      {/*       <Counter count={count} size="default"/>*/}
     </li>
   )
 }
 
 Ingredient.propTypes = {
   currentItem: ingredientPropType,
-  count: optionalNum,
-
 };
 
 export {

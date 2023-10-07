@@ -8,6 +8,8 @@ import {burgerIngredients} from "../../services/burger-ingredients/burger-ingred
 
 function BurgerIngredients() {
 
+  console.log("BurgerIngredients")
+
   const {ingredients} = useSelector(burgerIngredients)
   const filtered = (type) => {
     return ingredients.filter((item) => item.type === type);
