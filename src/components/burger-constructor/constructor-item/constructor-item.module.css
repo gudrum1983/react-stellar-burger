@@ -1,0 +1,15 @@
+.elementConstructor {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-start;
+}
+
+.show {
+  opacity: 1;
+  transition: 1s;
+}
+
+.hidden {
+  opacity: 0;}

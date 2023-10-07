@@ -6,8 +6,6 @@ import {Ingredient} from "../ingredient/ingredient";
 
 export const IngredientsTypeList = React.forwardRef(({name, data, id}, ref) =>  {
 
-  console.log("IngredientsTypeList", name)
-
   return (
     <li  className={styles.typePart}>
       <p  ref={ref} id={id} className="text text_type_main-medium">{name}</p>

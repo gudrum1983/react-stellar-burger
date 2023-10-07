@@ -2,7 +2,7 @@ import styles from "./ingredient-details.module.css";
 import {useSelector} from "react-redux";
 import {ingredientDetails} from "../../../services/ingredient-details/ingredient-details-selector";
 
-function IngredientDetails() {
+export  function IngredientDetails() {
   const {proteins, calories, fat, carbohydrates, name, image_large} = useSelector(ingredientDetails)
   const energyValue = (text, value) => {
     return (
@@ -25,9 +25,4 @@ function IngredientDetails() {
       </ul>
     </div>
   )
-}
-
-
-export {
-  IngredientDetails
 }

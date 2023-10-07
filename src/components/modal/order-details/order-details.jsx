@@ -3,7 +3,7 @@ import React from "react";
 import {useSelector} from "react-redux";
 import {orderDetails} from "../../../services/order-details/order-details-selectors";
 
-function OrderDetails() {
+export function OrderDetails() {
 
   const {orderNumber} = useSelector(orderDetails)
 
@@ -16,8 +16,4 @@ function OrderDetails() {
       <p className="text text_type_main-small text_color_inactive">Дождитесь готовности на орбитальной станции</p>
     </div>
   )
-}
-
-export {
-  OrderDetails
 }

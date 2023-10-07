@@ -6,9 +6,7 @@ import {IngredientsTypeList} from "./ingredients-type-list/ingredients-type-list
 import {useSelector} from "react-redux";
 import {burgerIngredients} from "../../services/burger-ingredients/burger-ingredients-selector";
 
-function BurgerIngredients() {
-
-  console.log("BurgerIngredients")
+export function BurgerIngredients() {
 
   const {ingredients} = useSelector(burgerIngredients)
   const filtered = (type) => {
@@ -98,5 +96,3 @@ function BurgerIngredients() {
     </>
   );
 }
-
-export {BurgerIngredients}

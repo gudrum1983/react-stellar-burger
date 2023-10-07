@@ -25,7 +25,7 @@ import {ingredientDetails} from "../../services/ingredient-details/ingredient-de
 
 
 
-function App() {
+export default function App() {
 
   const dispatch = useDispatch();
 
@@ -92,5 +92,3 @@ function App() {
     </div>
   )
 }
-
-export default App;

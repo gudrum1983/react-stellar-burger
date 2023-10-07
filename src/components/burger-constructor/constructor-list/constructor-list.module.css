@@ -20,23 +20,6 @@
   border-radius: 0;
 }
 
-.elementConstructor {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 8px;
-  justify-content: flex-start;
-}
-
-.opacity1 {
-  opacity: 1;
-  transition: 1s;
-}
-
-.opacity0 {
-  opacity: 0;
-}
-
 .topGap {
   padding-top: 96px;
 }

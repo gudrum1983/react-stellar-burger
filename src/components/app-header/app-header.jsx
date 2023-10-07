@@ -2,7 +2,7 @@ import styles from "./app-header.module.css";
 import {Logo, BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import {NavigationLink} from "./navigation-link/navigation-link";
 
-function AppHeader() {
+export function AppHeader() {
 
   const classes = {
     link: "pl-5 pr-5 pb-4 pt-4",
@@ -29,8 +29,4 @@ function AppHeader() {
       </div>
     </header>
   );
-}
-
-export {
-  AppHeader
 }
