@@ -87,7 +87,7 @@ export default function App() {
       {orderFailed && modal(<p className="text text_type_main-medium">
         Наш краторный хмель пожрал антарианский долгоносик, попробуйте сформировать заказ позже, Милорд...
       </p>, "Ошибка")}
-      {orderRequest && modal(null,"Загрузка Милорд...")}
+      {orderRequest && modal('',"Загрузка Милорд...")}
       {showIngredientDetails && modal(<IngredientDetails
         ingredient={showIngredientDetails}/>, "Детали ингредиента")}
     </div>
