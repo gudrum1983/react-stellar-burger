@@ -1,32 +1,40 @@
 import styles from "./ingredient.module.css";
-import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import {ingredientPropType} from "../../../utils/prop-types";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {setIngredientDetails} from "../../../services/ingredient-details/ingredient-details-actions";
 import {useDrag} from "react-dnd";
-import {IngredientCounter} from "../ingredient-counter/ingredient-counter";
+import {selectCount} from "../../../services/burger-constructor/burger-constructor-selector";
 
 export function Ingredient({currentItem}) {
 
-  const [, dragRef] = useDrag({
+  const [{isDrag, cursor}, dragRef] = useDrag({
     type: "burgerConstructor",
     item: currentItem,
+
     collect: monitor => ({
-      isDrag: monitor.isDragging()
-    })
+      isDrag: monitor.isDragging(),
+      cursor: monitor.isDragging() ? 'grabbing' : 'grab'
+    }),
+
   });
   const dispatch = useDispatch();
+
+  function test() {
+    console.log("test")
+  }
+
 
   function handleClick() {
     dispatch(setIngredientDetails(currentItem))
   }
 
-  const count = 0
+ const count = useSelector(selectCount(currentItem._id, currentItem.type))
   const canDraggabble = (currentItem?.type !== "bun") ? true : !(count)
 
   return (
-    <li className={`${styles.card} cursor`} {...(canDraggabble && {ref: dragRef})} onClick={handleClick}>
+    <li className={`${styles.card}`} {...(canDraggabble && {ref: dragRef, style:{cursor}})}  onClick={handleClick}>
       <img className={styles.imgCard} alt={currentItem.name} src={currentItem.image}/>
       <div className={`pt-1 pb-1 ${styles.price}`}>
         <p className="text text_type_digits-default pr-2">{currentItem.price}</p>
@@ -35,7 +43,7 @@ export function Ingredient({currentItem}) {
       <div className={styles.cardName}>
         <p className="text text_type_main-default">{currentItem.name}</p>
       </div>
-      <IngredientCounter id={currentItem._id} type={currentItem.type}></IngredientCounter>
+      {(count > 0) ? <Counter count={count} size="default"/> : null}
     </li>
   )
 }

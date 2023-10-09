@@ -47,21 +47,21 @@ export function ConstructorItem({moveCard, index, id, item}) {
       item.index = hoverIndex
     },
   })
-  const [{isDragging}, drag] = useDrag({
+  const [{isDragging, cursor}, drag] = useDrag({
     type: "move",
     item: () => {
       return {id, index}
     },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
+      cursor: monitor.isDragging() ? 'grabbing' : 'grab'
     }),
   })
   const opacity = isDragging ? styles.hidden : styles.show
   drag(drop(ref))
 
-
   return (
-    <div ref={ref} data-handler-id={handlerId} className={`${styles.elementConstructor} ${opacity}`}>
+    <div ref={ref} data-handler-id={handlerId} className={`${styles.elementConstructor} ${opacity}`} style={{cursor}}>
       <DragIcon type="primary"/>
       <ConstructorElement
         extraClass='cursor cursor_type_nresize'
