@@ -31,3 +31,8 @@ export const selectedIngredientsPropType = PropTypes.shape({
   bun: ingredientPropType,
   other: selectedOtherIngredientsPropType,
 })
+
+export const otherIngredient = PropTypes.shape({
+  bun: ingredientPropType,
+  other: selectedOtherIngredientsPropType,
+})

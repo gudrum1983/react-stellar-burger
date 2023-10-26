@@ -1,172 +1,95 @@
 import React from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {DndProvider} from "react-dnd";
+import {HTML5Backend} from "react-dnd-html5-backend";
 import styles from "./app.module.css";
-import {AppHeader} from '../app-header/app-header'
-import {BurgerIngredients} from "../burger-ingredients/burger-ingredients";
-import {BurgerConstructor} from "../burger-constructor/burger-constructor";
-import {Modal} from "../modal/modal";
-import {OrderDetails} from "../modal/order-details/order-details";
-import {IngredientDetails} from "../modal/ingredient-details/ingredient-details";
-import {SelectedIngredientsContext} from "../../services/burgerConstructorContext";
-import {ShowModalContext} from "../../services/modalContext";
-import {reducerSelectedIngredients} from "../../services/reducer/burgerConstructor";
-import {getIngredientsData} from "../../api/config";
 
-function App() {
+import {AppHeader} from '../app-header/app-header'
+import {Modal} from "../modal/modal";
+import {BurgerConstructor} from "../burger-constructor/burger-constructor";
+import {OrderDetails} from "../modal/order-details/order-details";
+import {BurgerIngredients} from "../burger-ingredients/burger-ingredients";
+import {IngredientDetails} from "../modal/ingredient-details/ingredient-details";
+
+import {loadBurgerIngredients} from "../../services/burger-ingredients/burger-ingredients-actions";
+
+import {addFilling, chooseBun} from "../../services/burger-constructor/burger-constructor-actions";
+
+import {clearOrderDetails} from "../../services/order-details/order-details-actions";
+import {orderDetails} from "../../services/order-details/order-details-selectors";
+
+import {burgerIngredients} from "../../services/burger-ingredients/burger-ingredients-selector";
+
+import {clearIngredientDetails} from "../../services/ingredient-details/ingredient-details-actions";
+import {ingredientDetails} from "../../services/ingredient-details/ingredient-details-selector";
+
+
+
+export default function App() {
+
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
-    fillIngredientContext();
+    dispatch(loadBurgerIngredients())
   }, [])
 
-  //создать константу для начального состояния стейта
-  const selectedIngredientsInitialState = {bun: {}, other: []};
-
-  //заменить UseState на UseReducer
-  const [selectedIngredients, selectedIngredientsDispatcher] = React.useReducer(reducerSelectedIngredients, selectedIngredientsInitialState, undefined);
-
-  const [downloadedAppData, setDownloadedAppData] = React.useState({
-    isLoading: false,
-    hasError: false,
-    ingredients: [],
-    defaultBun: {},
-  });
-
-  //создать константу для начального состояния стейта
-  const showModalInitialState = {
-    visible: false,
-    type: "",
-    ingredient: {},
-    orderNumber: "",
-  };
-
-  //Создать функцию reducer
-  function reducerShowModal(state, action) {
-    switch (action.type) {
-      case "close":
-        return {
-          visible: false,
-          type: "",
-          ingredient: {},
-          orderNumber: "",
-        }
-          ;
-      case "open":
-        return {
-          visible: true,
-          type: action.payload.type,
-          ingredient: action.payload.ingredient,
-          orderNumber: action.payload.orderNumber ??= "",
-        };
-      default:
-        throw new Error(`Wrong type of action: ${action.type}`);
-    }
-  }
-  //заменить UseState на UseReducer
-  const [showModal, showModalDispatcher] = React.useReducer(reducerShowModal, showModalInitialState, undefined);
-
-  function findDefaultBun(ingredientsData) {
-    if (ingredientsData) {
-      const defaultBun = ingredientsData.find(item => item.type === "bun")
-      selectedIngredientsDispatcher({type: 'defineBun', payload: defaultBun});
-      return defaultBun
-    } else {
-      return {}
-    }
-  }
-
-  function fillIngredientContext() {
-    setDownloadedAppData({...downloadedAppData, hasError: false, isLoading: true});
-    // создаем функцию, которая возвращает промис, так как любой запрос возвращает его
-    // return позволяет потом дальше продолжать цепочку `then, catch, finally`
-    return getIngredientsData()
-      .then(data => data.data)
-      .then(ingredientsData =>
-        setDownloadedAppData(
-          {
-            ...downloadedAppData,
-            ingredients: sortedData(ingredientsData),
-            isLoading: false,
-            defaultBun: findDefaultBun(ingredientsData),
-          }))
-      .catch(() => {
-        setDownloadedAppData(
-          {
-            ...downloadedAppData,
-            hasError: true,
-            isLoading: false
-          });
-      });
-  }
-
-  const {ingredients, isLoading, hasError} = downloadedAppData;
-
-  const sortedData = (data) => data.toSorted((a, b) => a._id > b._id ? 1 : -1)
-
-/*  kyzinatra last week
-  Можно лучше: тут можно записать просто data.toSorted((a, b) => a._id > b._id ? 1 : -1)
-  Можно не ставить return 0 так как _id все равно всегда уникальны
-  const sortedData = (data) => data.toSorted(function (a, b) {
-
-    data.toSorted((a, b) => a._id > b._id ? 1 : -1)
-
-    if (a._id > b._id) {
-      return 1;
-    }
-    if (a._id < b._id) {
-      return -1;
-    }
-    return 0;
-  });*/
+  const {orderNumber, orderRequest ,orderFailed} = useSelector(orderDetails)
+  const showIngredientDetails = useSelector(ingredientDetails)
+  const {ingredients, isLoading, hasError} = useSelector(burgerIngredients);
 
   function handleCloseModal() {
-    showModalDispatcher({type: 'close'})
+    if (showIngredientDetails) {
+      dispatch(clearIngredientDetails())
+    } else {
+      dispatch(clearOrderDetails())
+    }
   }
 
-  function modal(comnonent) {
-    let header = "";
-    if (showModal.type === "ingredient") {
-      header = "Детали ингредиента";
-    } else if (showModal.type === "error") {
-      header = "Ошибка"
-    }
+  function modal(content, header = "") {
     return (
       <Modal onClose={handleCloseModal} header={header}>
-        {comnonent}
-        {showModal.type === "error" && <p className="text text_type_main-medium">
-          Наш краторный хмель пожрал антарианский долгоносик, попробуйте сформировать заказ позже, Милорд...
-        </p> }
+        {content}
       </Modal>)
   }
 
+  const handleDrop = (ingredient) => {
+    if (ingredient.type === "bun") {
+      dispatch(chooseBun(ingredient))
+    } else {
+      dispatch(addFilling(ingredient))
+    }
+  };
+
+  if (isLoading) {
+    return <div className={`text text_type_main-default`}>Загрузка...</div>
+  } else {
+    if (hasError) {
+      return <div className={`text text_type_main-default`}>Произошла ошибка</div>
+    } else if (ingredients.length === 0) {
+      return <div className={`text text_type_main-default`}>Нет данных</div>
+    }
+  }
+
   return (
-    <div className={`text text_type_main-default ${styles.app}`}>
-      {isLoading && 'Загрузка...'}
-      {hasError && 'Произошла ошибка'}
-      {!isLoading &&
-        !hasError &&
-        ingredients.length &&
-        <>
-          <AppHeader/>
-          <SelectedIngredientsContext.Provider value={{selectedIngredients, selectedIngredientsDispatcher}}>
-            <ShowModalContext.Provider value={{showModal, showModalDispatcher}}>
-              <main className={styles.main}>
-                <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
-                  <BurgerIngredients ingredients={ingredients}
-                  />
-                </section>
-                <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
-                  <BurgerConstructor/>
-                </section>
-                {showModal.visible && showModal.type === "order" && modal(<OrderDetails/>)}
-                {showModal.visible && showModal.type === "error" && modal()}
-                {showModal.visible && showModal.type === "ingredient" && !!(showModal.ingredient) && modal(
-                  <IngredientDetails ingredient={showModal.ingredient}/>)}
-              </main>
-            </ShowModalContext.Provider>
-          </SelectedIngredientsContext.Provider>
-        </>
-      }
+    <div className={`${styles.app}`}>
+      <AppHeader/>
+      <main className={styles.main}>
+        <DndProvider backend={HTML5Backend}>
+          <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
+            <BurgerIngredients/>
+          </section>
+          <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
+            <BurgerConstructor onDropHandler={handleDrop}/>
+          </section>
+        </DndProvider>
+      </main>
+      {orderNumber && modal(<OrderDetails/>)}
+      {orderFailed && modal(<p className="text text_type_main-medium">
+        Наш краторный хмель пожрал антарианский долгоносик, попробуйте сформировать заказ позже, Милорд...
+      </p>, "Ошибка")}
+      {orderRequest && modal('',"Загрузка Милорд...")}
+      {showIngredientDetails && modal(<IngredientDetails
+        ingredient={showIngredientDetails}/>, "Детали ингредиента")}
     </div>
   )
 }
-
-export default App;

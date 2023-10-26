@@ -4,15 +4,14 @@
   justify-content: space-between;
   box-sizing: border-box;
   height: 100%;
-  max-height: calc(100% - 100px);
-  gap: 40px;
+  max-height: calc(100% - 80px);
+  gap: 20px;
 }
 
 .containerList {
   display: flex;
   flex-direction: column;
   box-sizing: content-box;
-  max-height: calc(100% - 52px);
 }
 
 .list {
@@ -21,7 +20,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-height: calc(100% - 40px - 66px);
+  max-height: 100%;
 }
 
 .price {
@@ -50,4 +49,28 @@
   background: #8585ad;
   border: none;
   border-radius: 0;
+
+}
+
+.dropContainer {
+  transition: 1s;
+  height: 100%;
+  border-radius: 80px;
+  max-height: calc(100% - 125px);
+}
+
+
+.borderLightgreen2 {
+  box-shadow: 0 4px 32px 0 rgba(128, 26, 178, 0.35), 0 0 8px 8px rgba(128, 26, 178, 0.15), 0 0 16px 8px rgba(128, 26, 178, 0.15);
+  transition: 1s;
+}
+
+.borderLightgreen {
+  /*box-shadow: 0px 4px 32px 0px rgba(128, 26, 178, 0.70), 0px 0px 8px 8px rgba(128, 26, 178, 0.30), 0px 0px 16px 8px rgba(128, 26, 178, 0.30);*/
+  box-shadow: 0 4px 32px 0 rgba(51, 51, 255, 0.70), 0 0 8px 8px rgba(51, 51, 255, 0.30), 0 0 16px 8px rgba(51, 51, 255, 0.30);
+
+}
+
+.borderTransparent {
+  box-shadow: none;
 }

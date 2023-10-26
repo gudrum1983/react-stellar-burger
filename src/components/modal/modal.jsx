@@ -6,7 +6,7 @@ import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {ModalOverlay} from "./modal-overlay/modal-overlay";
 import {nodePropType, optionalFunc, optionalString} from "../../utils/prop-types";
 
-function Modal({children, header, onClose}) {
+export function Modal({children, header, onClose}) {
 
   return ReactDOM.createPortal(
     (
@@ -30,5 +30,3 @@ Modal.propTypes = {
   header: optionalString,
   onClose: optionalFunc,
 };
-
-export {Modal}

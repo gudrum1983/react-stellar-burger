@@ -1,7 +1,7 @@
 import React from "react";
 import {nodePropType} from "../../../utils/prop-types";
 
-function NavigationLink({icon, children}) {
+export function NavigationLink({icon, children}) {
 
   const textType = {
     primary: "text text_type_main-default",
@@ -22,5 +22,3 @@ NavigationLink.propTypes = {
   icon: nodePropType,
   children: nodePropType,
 };
-
-export {NavigationLink}

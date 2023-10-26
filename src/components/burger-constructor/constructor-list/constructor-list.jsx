@@ -1,57 +1,36 @@
 import styles from "./constructor-list.module.css";
 import React from "react";
-import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {selectedOtherIngredientsPropType} from "../../../utils/prop-types";
-import {SelectedIngredientsContext} from "../../../services/burgerConstructorContext";
-import {ShowModalContext} from "../../../services/modalContext";
+import {useDispatch, useSelector} from 'react-redux';
+import {moveFilling} from "../../../services/burger-constructor/burger-constructor-actions";
+import update from 'immutability-helper'
+import {selectBurgerConstructor} from "../../../services/burger-constructor/burger-constructor-selector";
+import {ConstructorItem} from "../constructor-item/constructor-item";
 
-function ConstructorList({filling}) {
+export function ConstructorList() {
 
-  const {selectedIngredients, selectedIngredientsDispatcher} = React.useContext(SelectedIngredientsContext);
-  const { showModalDispatcher } = React.useContext(ShowModalContext);
-  function deleteCard(idItem) {
-    const index = selectedIngredients.other.findIndex(item => item.numberIngredient === idItem)
-    const arrEnd = selectedIngredients.other.slice(index + 1, selectedIngredients.other.length + 1)
-    const arrStart = selectedIngredients.other.slice(0, index)
-    const newOtherSelectedIngredients = arrStart.concat(arrEnd)
-    selectedIngredientsDispatcher({type: 'replaceOther', payload: newOtherSelectedIngredients})
-  }
+  const {bun, other} = useSelector(selectBurgerConstructor)
+  const dispatch = useDispatch();
+  const topGap = !bun ? styles.topGap : '';
+  const moveCard = React.useCallback((dragIndex, hoverIndex, other) => {
 
-  function showItemDetails(item, e) {
-    const action = e.nativeEvent.target.closest(".constructor-element__action")
-    if (!action) {
-      showModalDispatcher({type: 'open', payload: {type: "ingredient", ingredient: item.ingredient}})
-    }
-  }
+    const newOther = update(other, {
+      $splice: [
+        [dragIndex, 1],
+        [hoverIndex, 0, other[dragIndex]],
+      ],
+    })
+
+    dispatch(moveFilling(newOther)
+    )
+  }, [])
 
   return (
-    <div className={`${styles.listScroll} ${styles.scroll} custom-scroll`}>
-      {filling.map((item) => (
-        <React.Fragment key={item.numberIngredient}>
-          <div className={styles.elementConstructor} onClick={(e) => {
-            showItemDetails(item, e)
-          }}>
-            <DragIcon type="primary"/>
-            <ConstructorElement
-              extraClass='cursor'
-              text={item.ingredient.name}
-              price={item.ingredient.price}
-              thumbnail={item.ingredient.image}
-              handleClose={(e) => {
-                deleteCard(item.numberIngredient, e)
-              }}
-            />
-          </div>
-        </React.Fragment>
+    <div className={`${styles.listScroll} ${styles.scroll} ${topGap} custom-scroll`}>
+      {other.map((item, i) => (
+        <ConstructorItem moveCard={moveCard} index={i} key={item.numberIngredient} id={item.numberIngredient} item={item}>
+
+        </ConstructorItem>
       ))}
     </div>
   )
-}
-
-ConstructorList.propTypes = {
-  filling: selectedOtherIngredientsPropType,
-};
-
-export {
-  ConstructorList
 }

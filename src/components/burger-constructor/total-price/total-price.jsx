@@ -1,30 +1,29 @@
 import React from "react";
-import {SelectedIngredientsContext} from "../../../services/burgerConstructorContext";
+import {useSelector} from 'react-redux';
+import {selectBurgerConstructor} from "../../../services/burger-constructor/burger-constructor-selector";
 
-function TotalPrice() {
 
-  //получаем функцию-сеттер из контекста
-  const { selectedIngredients } = React.useContext(SelectedIngredientsContext);
+export function TotalPrice() {
 
-  const costBun = selectedIngredients.bun.price * 2
-
-  const other = selectedIngredients.other
+  const {bun, other} = useSelector(selectBurgerConstructor)
   const numberOtherIngredients = other.length
-  let sumWithInitial = 0
 
-  if (numberOtherIngredients > 0) {
-    const arrayOtherPrice = other.map((item) => (item.ingredient.price))
-    const initialValue = 0;
-    sumWithInitial = arrayOtherPrice.reduce((accumulator, currentValue) => accumulator + currentValue, initialValue);
-  }
+  const total = React.useMemo(() => {
+    let sumWithInitial = 0
 
-  const stringTotal = String(costBun + sumWithInitial)
+    const costBun = !!(bun) ? bun.price * 2 : 0
+
+    if (numberOtherIngredients > 0) {
+      const arrayOtherPrice = other.map((item) => (item.ingredient.price))
+      const initialValue = 0;
+      sumWithInitial = arrayOtherPrice.reduce((accumulator, currentValue) => accumulator + currentValue, initialValue);
+    }
+
+    return String(costBun + sumWithInitial)
+
+  }, [bun, numberOtherIngredients])
 
   return (
-    <p className="text text_type_digits-medium">{stringTotal}</p>
+    <p className="text text_type_digits-medium">{total}</p>
   )
-}
-
-export {
-  TotalPrice
 }

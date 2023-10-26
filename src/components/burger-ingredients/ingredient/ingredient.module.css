@@ -27,3 +27,11 @@
   height: 120px;
   object-fit: cover;
 }
+
+.visible {
+  visibility: visible;
+}
+
+.hidden {
+  visibility: hidden;
+}
