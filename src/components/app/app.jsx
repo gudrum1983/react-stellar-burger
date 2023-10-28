@@ -1,14 +1,12 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {DndProvider} from "react-dnd";
-import {HTML5Backend} from "react-dnd-html5-backend";
 import styles from "./app.module.css";
+import { BrowserRouter, Routes, Route} from "react-router-dom";
+import { OrderConstructor} from "../../pages/order-constructor";
 
 import {AppHeader} from '../app-header/app-header'
 import {Modal} from "../modal/modal";
-import {BurgerConstructor} from "../burger-constructor/burger-constructor";
 import {OrderDetails} from "../modal/order-details/order-details";
-import {BurgerIngredients} from "../burger-ingredients/burger-ingredients";
 import {IngredientDetails} from "../modal/ingredient-details/ingredient-details";
 
 import {loadBurgerIngredients} from "../../services/burger-ingredients/burger-ingredients-actions";
@@ -23,11 +21,21 @@ import {burgerIngredients} from "../../services/burger-ingredients/burger-ingred
 import {clearIngredientDetails} from "../../services/ingredient-details/ingredient-details-actions";
 import {ingredientDetails} from "../../services/ingredient-details/ingredient-details-selector";
 
-
+import { checkUserAuth } from "../../services/action";
+import { OnlyAuth, OnlyUnAuth } from "./protected-route";
+import {Register} from "../../pages/register";
+import {Login} from "../../pages/login";
+import {ForgotPassword} from "../../pages/forgot-password";
+import {ResetPassword} from "../../pages/reset-password";
 
 export default function App() {
 
   const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(checkUserAuth());
+  }, []);
+
 
   React.useEffect(() => {
     dispatch(loadBurgerIngredients())
@@ -73,16 +81,19 @@ export default function App() {
   return (
     <div className={`${styles.app}`}>
       <AppHeader/>
-      <main className={styles.main}>
-        <DndProvider backend={HTML5Backend}>
-          <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
-            <BurgerIngredients/>
-          </section>
-          <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
-            <BurgerConstructor onDropHandler={handleDrop}/>
-          </section>
-        </DndProvider>
-      </main>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<OrderConstructor handleDrop={handleDrop} />} />
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/register" element={<Register/>} />
+          <Route path="/forgot-password" element={<ForgotPassword/>} />
+          <Route path="/reset-password" element={<ResetPassword/>} />
+{/*          <Route path="//ingredients/:id" element={<Ingredients/>} />*/}
+
+{/*          <Route path="/login" element={<OnlyUnAuth component={<Login/>} />} />
+          <Route path="/profile" element={<OnlyAuth component={<Register/>} />} />*/}
+
+
       {orderNumber && modal(<OrderDetails/>)}
       {orderFailed && modal(<p className="text text_type_main-medium">
         Наш краторный хмель пожрал антарианский долгоносик, попробуйте сформировать заказ позже, Милорд...
@@ -90,6 +101,9 @@ export default function App() {
       {orderRequest && modal('',"Загрузка Милорд...")}
       {showIngredientDetails && modal(<IngredientDetails
         ingredient={showIngredientDetails}/>, "Детали ингредиента")}
+        </Routes>
+      </BrowserRouter>
     </div>
+
   )
 }
