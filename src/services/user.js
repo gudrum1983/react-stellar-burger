@@ -5,7 +5,7 @@ const initialState = {
     isAuthChecked: false,
 };
 
-const reducer = (state = initialState, action) => {
+export const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_AUTH_CHECKED:
       return {
@@ -21,5 +21,3 @@ const reducer = (state = initialState, action) => {
       return state;    
   }
 };
-
-export default reducer; 

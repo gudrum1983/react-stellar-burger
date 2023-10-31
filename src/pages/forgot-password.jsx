@@ -1,16 +1,23 @@
 import React from "react";
-import styles from "../components/app/app.module.css";
-
-
+import {navigateButton, typeInputs, typeLinksFooter} from "../utils/inputs";
+import {FormContainerNew} from "../components/form-container/form-container";
+import {useNavigate} from "react-router-dom";
 
 export function ForgotPassword() {
 
-  return (
-    <main className={styles.main}>
-      <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
-        ForgotPassword
-      </section>
+  const navigate = useNavigate();
 
-    </main>
+  function onClick() {
+    navigate('/reset-password', {replace: false});
+  }
+
+  const forgotPasswordFormHeader = "Восстановление пароля"
+  const forgotPasswordInputs = [typeInputs.emailResetPassword];
+  const forgotPasswordButton = navigateButton({onClick: onClick, label: "Восстановить"});
+  const forgotPasswordFooterLinks = [typeLinksFooter.rememberPassword];
+
+  return (
+    <FormContainerNew header={forgotPasswordFormHeader} inputs={forgotPasswordInputs} button={forgotPasswordButton}
+                      links={forgotPasswordFooterLinks}/>
   )
 }

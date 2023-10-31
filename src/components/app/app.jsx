@@ -88,11 +88,6 @@ export default function App() {
           <Route path="/register" element={<Register/>} />
           <Route path="/forgot-password" element={<ForgotPassword/>} />
           <Route path="/reset-password" element={<ResetPassword/>} />
-{/*          <Route path="//ingredients/:id" element={<Ingredients/>} />*/}
-
-{/*          <Route path="/login" element={<OnlyUnAuth component={<Login/>} />} />
-          <Route path="/profile" element={<OnlyAuth component={<Register/>} />} />*/}
-
 
       {orderNumber && modal(<OrderDetails/>)}
       {orderFailed && modal(<p className="text text_type_main-medium">

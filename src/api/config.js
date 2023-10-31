@@ -3,6 +3,7 @@ export const BASE_URL = "https://norma.nomoreparties.space/api/";
 const endpoints = {
   ingredients: "ingredients",
   orders: "orders",
+  authRegister:"auth/register",
 }
 
 const checkResponse = (res) => {
@@ -36,5 +37,19 @@ export const getOrderDetailsRequest = (ingredientsOrder) => {
     body: JSON.stringify({
       ingredients: ingredientsOrder,
     })
+  })
+};
+
+export const getRegister = (name, pass, email) => {
+  return request(endpoints.authRegister, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      "email": email,
+      "password": pass,
+      "name": name
+    } )
   })
 };
