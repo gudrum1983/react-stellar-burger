@@ -1,6 +1,13 @@
 // В проектной работе эта функция будет обращаться к серверу
 // и обновлять токены если они уже устарели.
+import {getLogin, getRegister} from "../api/config";
+
 const getUser = () =>
+
+
+
+
+
   new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve({
@@ -9,16 +16,9 @@ const getUser = () =>
     }, 1000);
   });
 
-const login = () =>
-  new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve({
-        accessToken: "test-token",
-        refreshToken: "test-refresh-token",
-        user: {},
-      });
-    }, 1000);
-  });
+export const registerApi = (name, pass, email) => getRegister(name, pass, email);
+
+/*export const loginApi = (pass, email) => getLogin(pass, email);*/
 
 const logout = () =>
   new Promise((resolve, reject) => {
@@ -29,6 +29,5 @@ const logout = () =>
 
 export const api = {
   getUser,
-  login,
-  logout
+  logout,
 };

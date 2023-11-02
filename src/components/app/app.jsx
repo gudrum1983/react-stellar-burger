@@ -21,12 +21,13 @@ import {burgerIngredients} from "../../services/burger-ingredients/burger-ingred
 import {clearIngredientDetails} from "../../services/ingredient-details/ingredient-details-actions";
 import {ingredientDetails} from "../../services/ingredient-details/ingredient-details-selector";
 
-import { checkUserAuth } from "../../services/action";
+import { checkUserAuth } from "../../services/user/action";
 import { OnlyAuth, OnlyUnAuth } from "./protected-route";
 import {Register} from "../../pages/register";
 import {Login} from "../../pages/login";
 import {ForgotPassword} from "../../pages/forgot-password";
 import {ResetPassword} from "../../pages/reset-password";
+import {Profile} from "../../pages/profile";
 
 export default function App() {
 
@@ -80,14 +81,18 @@ export default function App() {
 
   return (
     <div className={`${styles.app}`}>
-      <AppHeader/>
+
       <BrowserRouter>
+        <AppHeader/>
         <Routes>
+
           <Route path="/" element={<OrderConstructor handleDrop={handleDrop} />} />
-          <Route path="/login" element={<Login/>}/>
-          <Route path="/register" element={<Register/>} />
-          <Route path="/forgot-password" element={<ForgotPassword/>} />
-          <Route path="/reset-password" element={<ResetPassword/>} />
+          <Route path="/login" element={<OnlyUnAuth component={<Login/>} />} />
+          <Route path="/register" element={<OnlyUnAuth component={<Register/>} />} />
+          <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPassword/>} />} />
+          <Route path="/reset-password" element={<OnlyUnAuth component={<ResetPassword/>} />} />
+          <Route path="/profile" element={<Profile/>} />
+
 
       {orderNumber && modal(<OrderDetails/>)}
       {orderFailed && modal(<p className="text text_type_main-medium">

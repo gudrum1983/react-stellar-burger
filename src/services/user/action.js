@@ -1,4 +1,5 @@
-import { api } from "../utils/api";
+import {api, loginApi, registerApi} from "../../utils/api";
+import {getLogin} from "../../api/config";
 
 export const SET_AUTH_CHECKED = "SET_AUTH_CHECKED";
 export const SET_USER = "SET_USER";
@@ -21,16 +22,36 @@ export const getUser = () => {
   };
 };
 
-export const login = () => {
+export const login = (pass, email) => {
   return (dispatch) => {
-    return api.login().then((res) => {
+    return getLogin(pass, email)
+      .then((res) => {
+      console.log('actionUserLogin', res)
       localStorage.setItem("accessToken", res.accessToken);
       localStorage.setItem("refreshToken", res.refreshToken);
       dispatch(setUser(res.user));
       dispatch(setAuthChecked(true));
-    });
+    })
+      .catch((err) => console.log('actionUserLoginErr',err));;
   };
 };
+
+export const register = (name, pass, email) => {
+  return (dispatch) => {
+    return registerApi(name, pass, email)
+      .then((res) => {
+      console.log('actionUserLogin', res)
+      localStorage.setItem("accessToken", res.accessToken);
+      localStorage.setItem("refreshToken", res.refreshToken);
+      dispatch(setUser(res.user));
+      dispatch(setAuthChecked(true));
+    })
+      .catch((err) => console.log(err));
+
+  };
+};
+
+
 
 export const checkUserAuth = () => {
     return (dispatch) => {

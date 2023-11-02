@@ -12,7 +12,7 @@ import {
 import {register} from "../services/user/action";
 
 
-export function Register() {
+export function Profile() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -23,30 +23,25 @@ export function Register() {
   function onClick(evt) {
     evt.preventDefault();
 
-/*   navigate('/login', {replace: false});*/
-/*     postApiRegister(name, pass, email);*/
+    /*   navigate('/login', {replace: false});*/
+    /*     postApiRegister(name, pass, email);*/
     dispatch(register(name, pass, email));
   }
 
-  const registerFormHeader = "Регистрация"
-  const registerInputs = [typeInputs.name, typeInputs.email, typeInputs.password];
+  const registerFormHeader = "PROFILE"
+/*  const registerInputs = [typeInputs.name, typeInputs.email, typeInputs.password];
   const registerButton = navigateButton({onClick: onClick, label: "Зарегистрироваться"});
-  const registerFooterLinks = [typeLinksFooter.alreadyRegistered];
+  const registerFooterLinks = [typeLinksFooter.alreadyRegistered];*/
 
 
   return (
     <FormContainerNew
       header={registerFormHeader}
-      inputs={registerInputs}
-      button={registerButton}
-      links={registerFooterLinks}
+      inputs={[]}
+      button={[]}
+      links={[]}
       name='formRegister'
     />
   )
 
 }
-
-
-/*
-dhlksdnlfd
-*/

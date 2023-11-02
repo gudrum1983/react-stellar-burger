@@ -1,17 +1,25 @@
 import React from "react";
-
-import {FormContainerNew
-} from "../components/form-container/form-container";
+import {FormContainerNew} from "../components/form-container/form-container";
 import {navigateButton, typeInputs, typeLinksFooter} from "../utils/inputs";
-import {useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {login} from "../services/user/action";
+import {postApiLogin} from "../utils/newApiRegister";
+import {selectedEmail, selectedPassword, selectedUserName} from "../services/user-inputs/user-inputs-selector";
 
 
 export function Login() {
 
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  function onClick() {
-    navigate('/', {replace: false});
+  const email = useSelector(selectedEmail)
+
+  const pass = useSelector(selectedPassword)
+  const onClick = (evt) => {
+    evt.preventDefault();
+
+    dispatch(login(pass, email));
+/*    postApiLogin(pass, email);
+    dispatch(login());*/
   }
 
   const loginFormHeader = "Вход"
@@ -19,10 +27,7 @@ export function Login() {
   const loginButton = navigateButton({onClick: onClick, label: "Войти"});
   const loginFooterLinks = [typeLinksFooter.newUser, typeLinksFooter.forgotPassword];
 
-
   return (
     <FormContainerNew header={loginFormHeader} inputs={loginInputs} button={loginButton} links={loginFooterLinks}/>
   )
 }
-
-
