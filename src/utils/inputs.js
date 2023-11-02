@@ -14,6 +14,8 @@ export const typeInputs = {
   checkedCode: <InputText placeholder="Введите код из письма" key='checkedCode' name='checkedCode'/>,
   name: <InputName placeholder="Имя" key='name' name='name'/>,
   emailResetPassword: <InputText placeholder="Укажите e-mail" key='emailResetPassword' name='emailResetPassword'/>,
+  profileLogin: <InputEmail placeholder="Логин" key='email' name='email'/>,
+  profilePassword: <InputPassword placeholder="Пароль" key='passwordProfile' name='passwordProfile'/>,
 }
 
 export const typeLinksFooter = {
@@ -25,4 +27,9 @@ export const typeLinksFooter = {
 
 export const navigateButton = ({onClick, label}) => {
   return <Button htmlType="submit" type="primary" size="medium" children={label} onClick={onClick}/>
+}
+
+export const typeButton = {
+  save: <Button htmlType="submit" type="primary" size="medium" children="Сохранить"/>,
+  cancel: <Button htmlType="button" type="secondary" size="medium" children="Отмена"/>
 }

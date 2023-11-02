@@ -20,19 +20,19 @@ export function Register() {
   const name = useSelector(selectedUserName)
   const pass = useSelector(selectedPassword)
 
-  function onClick(evt) {
+  function handleSubmit(evt) {
+    debugger
     evt.preventDefault();
 
-/*   navigate('/login', {replace: false});*/
-/*     postApiRegister(name, pass, email);*/
+    /*   navigate('/login', {replace: false});*/
+    /*     postApiRegister(name, pass, email);*/
     dispatch(register(name, pass, email));
   }
 
   const registerFormHeader = "Регистрация"
   const registerInputs = [typeInputs.name, typeInputs.email, typeInputs.password];
-  const registerButton = navigateButton({onClick: onClick, label: "Зарегистрироваться"});
+  const registerButton = navigateButton({label: "Зарегистрироваться"});
   const registerFooterLinks = [typeLinksFooter.alreadyRegistered];
-
 
   return (
     <FormContainerNew
@@ -41,12 +41,8 @@ export function Register() {
       button={registerButton}
       links={registerFooterLinks}
       name='formRegister'
+      handleSubmit={handleSubmit}
     />
   )
-
 }
 
-
-/*
-dhlksdnlfd
-*/

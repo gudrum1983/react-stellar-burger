@@ -7,46 +7,32 @@ import {ContainerLink} from "./container-link/container-link";
 import {typeInputs, typeLinksFooter} from "../../utils/inputs";
 
 
-export function FormContainer({header}) {
+export function FormContainerUser({inputs, button}) {
 
   return (
-
     <section className={`${styles.sectionClass}`}>
-
-
-      <p className="text text_type_main-medium">
-        {header}
-      </p>
       <form>
-        <fieldset>
+        <fieldset className={styles.fieldset}>
           <div className={`${styles.placeItems}`}>
-            {typeInputs.email}
-            {typeInputs.password}
+            {[...inputs]}
           </div>
-
-          <Button htmlType="button" type="primary" size="medium" extraClass={styles.buttonExtra} children={"Войти"}/>
+          <div className={`${styles.buttonExtra}`}>
+            {button}
+          </div>
         </fieldset>
       </form>
-
-
-      <div className={`${styles.placeLinks}`}>
-        {typeLinksFooter.newUser}
-        {typeLinksFooter.forgotPassword}
-      </div>
-
     </section>
-
   )
 }
 
-export function FormContainerNew({header, inputs, links, button}) {
+export function FormContainerNew({header, inputs, links, button, handleSubmit}) {
 
   return (
     <section className={`${styles.sectionClass}`}>
       <p className="text text_type_main-medium">
         {header}
       </p>
-      <form >
+      <form onSubmit={handleSubmit}>
         <fieldset className={styles.fieldset}>
           <div className={`${styles.placeItems}`}>
             {[...inputs]}
