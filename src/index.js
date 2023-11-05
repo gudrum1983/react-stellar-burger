@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import App from "./components/app/app";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
-import {store} from "./services/user/store";
+import {store} from "./services/store";
 
 /*StrictMode — инструмент для обнаружения потенциальных проблем в приложении, не рендерит видимого UI.
   Строгий режим активирует дополнительные проверки и предупреждения для своих потомков.*/

@@ -10,8 +10,8 @@ import {addEmail, addUser} from "../services/user-inputs/user-inputs-actions";
 import {usePrintParams} from "../utils/func";
 
 
-export function Profile() {
-  const dispatch = useDispatch();
+export function FeedOrders() {
+/*  const dispatch = useDispatch();
   const nameValueTest = useSelector(userDataName)
   const emailValueTest = useSelector(userDataMail)
 
@@ -24,7 +24,7 @@ export function Profile() {
   const params = useLocation();
   console.log('params',params)
 
-  const navigate = useNavigate();
+  const navigate = useNavigate();*/
 /*  const dispatch = useDispatch();
   const email = useSelector(userDataMail)
   const name = useSelector(userDataName)*/
@@ -38,16 +38,18 @@ export function Profile() {
     dispatch(register(name, pass, email));
   }*/
 
-/*  const registerFormHeader = "PROFILE"*/
-  const profileInputs = [typeInputs.name, typeInputs.profileLogin, typeInputs.password];
+/*  const registerFormHeader = "FeedOrders"*/
+ /* const profileInputs = [typeInputs.name, typeInputs.profileLogin, typeInputs.password];
   const profileButton = [typeButton.cancel, typeButton.save];
 /*  const registerFooterLinks = [typeLinksFooter.alreadyRegistered];*!/*/
 
 
   return (
-    <FormContainerUser
-      inputs={profileInputs}
-      button={profileButton}
+    <FormContainerNew
+      header={"FeedOrders"}
+      inputs={[]}
+      button={[]}
+      links={[]}
     />
   )
 

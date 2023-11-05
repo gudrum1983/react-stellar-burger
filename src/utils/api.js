@@ -4,10 +4,6 @@ import {getLogin, getRegister} from "../api/config";
 
 const getUser = () =>
 
-
-
-
-
   new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve({

@@ -1,8 +1,9 @@
 import styles from "./app-header.module.css";
 import {Logo, BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import {NavigationLink} from "./navigation-link/navigation-link";
-import {useNavigate} from "react-router-dom";
-import {fetchWithRefresh, getUser, getUser1, refreshToken} from "../../api/config";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {refreshToken} from "../../api/config";
+import {printParams, usePrintParams} from "../../utils/func";
 
 export function AppHeader() {
 
@@ -16,16 +17,24 @@ export function AppHeader() {
 
   function onClickProfile() {
     navigate('/profile', {replace: false})
-    getUser1()
-      .then((res) => console.log('resprofile', res))
+ /*   getUser1()
+      .then((res) => console.log('resprofile', res))*/
 
   }
 
   function onClickHome() {
-
-    console.log(32111)
     navigate('/', {replace: false})
   }
+
+  const location = useLocation();
+  const active = (to) => {
+    return to === location.pathname
+    ? "primary"
+      : "secondary"
+
+  }
+
+
 
 
   const classes = {
@@ -39,16 +48,16 @@ export function AppHeader() {
         <nav className={styles.navigation}>
           <ul className={`${styles.links} text`}>
             <li className={`${styles.flex_row} ${classes.link} cursor`} onClick={onClickHome}>
-              <NavigationLink icon={<BurgerIcon type="primary"/>}>Конструктор</NavigationLink>
+              <NavigationLink to={'/'} icon={<BurgerIcon type={active("/")}/>}>Конструктор</NavigationLink>
             </li>
             <li className={`${styles.flex_row} ${classes.link} cursor`}>
-              <NavigationLink icon={<ListIcon type="secondary"/>}>Лента&nbsp;заказов</NavigationLink>
+              <NavigationLink to={'/feed'} icon={<ListIcon type={active("/feed")}/>}>Лента&nbsp;заказов</NavigationLink>
             </li>
           </ul>
         </nav>
         <Logo className={styles.logo}/>
         <div className={`${styles.flex_row} ${styles.profile} ${classes.link} cursor`} onClick={onClickProfile}>
-          <NavigationLink icon={<ProfileIcon type="secondary"/>}>Личный&nbsp;кабинет</NavigationLink>
+          <NavigationLink to={'/profile'} icon={<ProfileIcon type={active("/profile")}/>}>Личный&nbsp;кабинет</NavigationLink>
         </div>
       </div>
     </header>

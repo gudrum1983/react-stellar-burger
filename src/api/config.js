@@ -14,7 +14,7 @@ const checkResponse = (res) => {
   if (res.ok) {
     return res.json();
   }
-  console.log('configCheckResponse', res)
+/*  console.log('configCheckResponse', res)*/
   return Promise.reject(`Ошибка ${res.status}`);
 };
 
@@ -60,6 +60,7 @@ export const getRegister = (name, pass, email) => {
   })
 };
 
+
 export const getLogin = (pass, email) => {
   return request(endpoints.authLogin, {
     method: 'POST',
@@ -87,7 +88,7 @@ export const getLogin = (pass, email) => {
 };*/
 
 
-export const getUser1 = () => {
+export const getUserDataRefresh = () => {
   return fetchWithRefresh(endpoints.authUser, {
     method: 'GET',
     headers: {
@@ -150,9 +151,8 @@ const checkReponse1 = (res) => {
 
 export const fetchWithRefresh = async (endpoint, options) => {
   try {
-    debugger
     const res = await fetch(`${BASE_URL}${endpoint}`, options);
-    console.log('fetchWithRefreshRes',res)
+/*    console.log('fetchWithRefreshRes',res)*/
     return await checkReponse1(res);
   } catch (err) {
     console.log("err-message", err.message)

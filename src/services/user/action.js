@@ -1,5 +1,5 @@
 import {api, loginApi, registerApi} from "../../utils/api";
-import {getLogin} from "../../api/config";
+import {getLogin, getUserDataRefresh} from "../../api/config";
 
 export const SET_AUTH_CHECKED = "SET_AUTH_CHECKED";
 export const SET_USER = "SET_USER";
@@ -16,8 +16,10 @@ export const setUser = (user) => ({
 
 export const getUser = () => {
   return (dispatch) => {
-    return api.getUser().then((res) => {
-      dispatch(setUser(res.user));
+    return getUserDataRefresh()
+      .then((res) => {
+
+        dispatch(setUser(res.user));
     });
   };
 };

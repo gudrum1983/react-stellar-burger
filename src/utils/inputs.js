@@ -30,6 +30,6 @@ export const navigateButton = ({onClick, label}) => {
 }
 
 export const typeButton = {
-  save: <Button htmlType="submit" type="primary" size="medium" children="Сохранить"/>,
-  cancel: <Button htmlType="button" type="secondary" size="medium" children="Отмена"/>
+  save: <Button htmlType="submit" type="primary" size="medium" children="Сохранить" key='save'/>,
+  cancel: <Button htmlType="button" type="secondary" size="medium" children="Отмена" key='cancel'/>
 }

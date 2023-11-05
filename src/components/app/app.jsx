@@ -1,7 +1,7 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import styles from "./app.module.css";
-import { BrowserRouter, Routes, Route} from "react-router-dom";
+import {BrowserRouter, Routes, Route, useParams, useLocation} from "react-router-dom";
 import { OrderConstructor} from "../../pages/order-constructor";
 
 import {AppHeader} from '../app-header/app-header'
@@ -28,6 +28,7 @@ import {Login} from "../../pages/login";
 import {ForgotPassword} from "../../pages/forgot-password";
 import {ResetPassword} from "../../pages/reset-password";
 import {Profile} from "../../pages/profile";
+import {FeedOrders} from "../../pages/feedOrders";
 
 export default function App() {
 
@@ -41,6 +42,7 @@ export default function App() {
   React.useEffect(() => {
     dispatch(loadBurgerIngredients())
   }, [])
+
 
   const {orderNumber, orderRequest ,orderFailed} = useSelector(orderDetails)
   const showIngredientDetails = useSelector(ingredientDetails)
@@ -79,6 +81,10 @@ export default function App() {
     }
   }
 
+
+
+
+
   return (
     <div className={`${styles.app}`}>
 
@@ -91,7 +97,8 @@ export default function App() {
           <Route path="/register" element={<OnlyUnAuth component={<Register/>} />} />
           <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPassword/>} />} />
           <Route path="/reset-password" element={<OnlyUnAuth component={<ResetPassword/>} />} />
-          <Route path="/profile" element={<Profile/>} />
+          <Route path="/profile" element={<OnlyAuth component={<Profile/>} />} />
+          <Route path="/feed" element={<OnlyAuth component={<FeedOrders/>} />} />
 
 
       {orderNumber && modal(<OrderDetails/>)}
