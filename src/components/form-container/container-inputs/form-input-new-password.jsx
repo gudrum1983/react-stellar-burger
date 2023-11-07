@@ -1,7 +1,7 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {addEmail, addPassword, addUser} from "../../../services/user-inputs/user-inputs-actions";
-import {EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {selectedPassword} from "../../../services/user-inputs/user-inputs-selector";
 import {optionalString} from "../../../utils/prop-types";
 import {useLocation} from "react-router-dom";
@@ -40,29 +40,24 @@ export function InputPassword({placeholder = 'Пароль', disabled = false}) 
 
   return (
 
-  <>  {isProfile ? <EmailInput
-    type={'password'}
+  <>  {isProfile ? <PasswordInput
     onChange={e => dispatch(addPassword(e.target.value))}
     value={passwordValue}
     name={'password'}
     placeholder={placeholder}
-    isIcon={true}
     error={false}
     errorText={'Ошибка'}
     size={'default'}
-  /> :         <Input
-    type={'password'}
-    placeholder={placeholder}
+    icon="EditIcon"
+  /> :         <PasswordInput
     onChange={e => dispatch(addPassword(e.target.value))}
-    icon= {iconP}
     value={passwordValue}
     name={'password'}
+    placeholder={placeholder}
     error={false}
-    ref={inputRef}
-    onIconClick={onIconClick}
     errorText={'Ошибка'}
     size={'default'}
-    {...(iconP === 'EditIcon' && {disabled: true})}
+
   />}
   </>
 

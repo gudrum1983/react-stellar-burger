@@ -73,20 +73,6 @@ export const getLogin = (pass, email) => {
   })
 };
 
-
-/*export const refreshToken = () => {
-  return fetch(`${BURGER_API_URL}/auth/token`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8",
-    },
-    body: JSON.stringify({
-      token: localStorage.getItem("refreshToken"),
-    }),
-  }).then(checkReponse);
-};*/
-
-
 export const getUserDataRefresh = () => {
   return fetchWithRefresh(endpoints.authUser, {
     method: 'GET',
@@ -96,6 +82,36 @@ export const getUserDataRefresh = () => {
     }
   })
 };
+
+export const getUserDataUpdateRefresh = (email, name, password) => {
+  return fetchWithRefresh(endpoints.authUser, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: localStorage.getItem('accessToken')
+    },
+    body: JSON.stringify({
+      email,
+      name,
+      password,
+    }),
+  })
+};
+
+
+export const getUserLogoutRefresh = () => {
+  return fetchWithRefresh(endpoints.authLogout, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+/*     authorization: localStorage.getItem('accessToken')*/
+    },
+    body: JSON.stringify({
+      token: localStorage.getItem("refreshToken"),
+    }),
+  })
+};
+
 
 
 export const getUser = () => {

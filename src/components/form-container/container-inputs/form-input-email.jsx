@@ -36,7 +36,7 @@ export function InputEmail({placeholder = "E-mail"}) {
       ref={inputRef}
       errorText={'Ошибка'}
       size={'default'}
-      isIcon={true}
+
     />}
     </>
 

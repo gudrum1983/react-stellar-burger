@@ -2,7 +2,6 @@ import React, {useMemo} from "react";
 import {navigateButton, typeInputs, typeLinksFooter} from "../utils/inputs";
 import {FormContainerNew} from "../components/form-container/form-container";
 import {useNavigate} from "react-router-dom";
-import {postApiRegister} from "../utils/newApiRegister";
 import {useDispatch, useSelector} from "react-redux";
 import {
   selectedEmail,
