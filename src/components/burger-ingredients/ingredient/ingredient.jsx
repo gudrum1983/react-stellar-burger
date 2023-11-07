@@ -21,11 +21,6 @@ export function Ingredient({currentItem}) {
   });
   const dispatch = useDispatch();
 
-  function test() {
-    console.log("test")
-  }
-
-
   function handleClick() {
     dispatch(setIngredientDetails(currentItem))
   }

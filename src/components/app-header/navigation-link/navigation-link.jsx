@@ -6,7 +6,6 @@ import classes from "./navigation-link.module.css";
 export function NavigationLink({to, icon, children}) {
 
   const params = useLocation();
-  console.log('AppParams', params)
   const isActive = params.pathname === to
 
 /*  console.log("tttt",icon.props.type)*/

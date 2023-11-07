@@ -2,29 +2,8 @@ import styles from "./app-header.module.css";
 import {Logo, BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import {NavigationLink} from "./navigation-link/navigation-link";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
-import {refreshToken} from "../../api/config";
-import {printParams, usePrintParams} from "../../utils/func";
 
 export function AppHeader() {
-
-  const navigate = useNavigate();
-
-  function refresh() {
-    refreshToken().then((res) => {
-      localStorage.setItem("refreshToken", res.refreshToken);
-      localStorage.setItem("accessToken", res.accessToken);})
-  }
-
-  function onClickProfile() {
-    navigate('/profile', {replace: false})
- /*   getUser1()
-      .then((res) => console.log('resprofile', res))*/
-
-  }
-
-  function onClickHome() {
-    navigate('/', {replace: false})
-  }
 
   const location = useLocation();
   const active = (to) => {
@@ -47,7 +26,7 @@ export function AppHeader() {
       <div className={`${styles.panel} ${classes.panel}`}>
         <nav className={styles.navigation}>
           <ul className={`${styles.links} text`}>
-            <li className={`${styles.flex_row} ${classes.link} cursor`} onClick={onClickHome}>
+            <li className={`${styles.flex_row} ${classes.link} cursor`}>
               <NavigationLink to={'/'} icon={<BurgerIcon type={active("/")}/>}>Конструктор</NavigationLink>
             </li>
             <li className={`${styles.flex_row} ${classes.link} cursor`}>
@@ -56,7 +35,7 @@ export function AppHeader() {
           </ul>
         </nav>
         <Logo className={styles.logo}/>
-        <div className={`${styles.flex_row} ${styles.profile} ${classes.link} cursor`} onClick={onClickProfile}>
+        <div className={`${styles.flex_row} ${styles.profile} ${classes.link} cursor`}>
           <NavigationLink to={'/profile'} icon={<ProfileIcon type={active("/profile")}/>}>Личный&nbsp;кабинет</NavigationLink>
         </div>
       </div>

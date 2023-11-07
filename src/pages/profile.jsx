@@ -1,54 +1,99 @@
-import React, {useMemo} from "react";
-import {navigateButton, typeButton, typeInputs, typeLinksFooter} from "../utils/inputs";
-import {FormContainerNew, FormContainerUser} from "../components/form-container/form-container";
-import {useLocation, useNavigate, useParams} from "react-router-dom";
-import {postApiRegister} from "../utils/newApiRegister";
+import React from "react";
+import {typeButton, typeInputs} from "../utils/inputs";
+import {FormContainerUser} from "../components/form-container/form-container";
+import {NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {checkUserAuth, getUser, register} from "../services/user/action";
-import {userData, userDataMail, userDataName} from "../services/user/selector";
-import {addEmail, addUser} from "../services/user-inputs/user-inputs-actions";
-import {usePrintParams} from "../utils/func";
-
+import {getUser} from "../services/user/action";
+import {userDataMail, userDataName} from "../services/user/selector";
+import {addEmail, addPassword, addUser} from "../services/user-inputs/user-inputs-actions";
+import {selectedEmail, selectedPassword, selectedUserName} from "../services/user-inputs/user-inputs-selector";
 
 export function Profile() {
   const dispatch = useDispatch();
   const nameValueTest = useSelector(userDataName)
   const emailValueTest = useSelector(userDataMail)
 
+  let restart = false
+function test() {
+  dispatch(getUser());
+  dispatch(addEmail(emailValueTest))
+  dispatch(addUser(nameValueTest))
+  dispatch(addPassword(""))
+}
+
+
   React.useEffect(() => {
-    dispatch(getUser());
-    dispatch(addEmail(nameValueTest))
-    dispatch(addUser(emailValueTest))
-  }, []);
+test()
+  }, [restart]);
 
-  const params = useLocation();
-  console.log('params',params)
+  const nameValueInput = useSelector(selectedUserName)
+  const mailValueInput = useSelector(selectedEmail)
+  const passwordValueInput = useSelector(selectedPassword)
 
-  const navigate = useNavigate();
-/*  const dispatch = useDispatch();
-  const email = useSelector(userDataMail)
-  const name = useSelector(userDataName)*/
- /* const pass = useSelector(selectedPassword)*/
+  let isEditName = nameValueTest !== nameValueInput
+  let isEditMail = emailValueTest !== mailValueInput
+  let isEditPassword = passwordValueInput !== ''
 
-/*  function onClick(evt) {
-    evt.preventDefault();
+  const isEdit = React.useMemo(() => {
+    return [isEditName, isEditMail, isEditPassword].includes(true)
+  }, [isEditName, isEditMail, isEditPassword])
 
-    /!*   navigate('/login', {replace: false});*!/
-    /!*     postApiRegister(name, pass, email);*!/
-    dispatch(register(name, pass, email));
-  }*/
+  console.log("isEdit", isEdit)
 
-/*  const registerFormHeader = "PROFILE"*/
-  const profileInputs = [typeInputs.name, typeInputs.profileLogin, typeInputs.password];
-  const profileButton = [typeButton.cancel, typeButton.save];
-/*  const registerFooterLinks = [typeLinksFooter.alreadyRegistered];*!/*/
+function handleReset(e) {
+    e.preventDefault()
+    console.log('клац')
+  test()
+/*  dispatch(getUser());
+  dispatch(addEmail(emailValueTest))
+  dispatch(addUser(nameValueTest))
+  dispatch(addPassword(""))*/
+   /* dispatch(register(name, pass, email))*/;
+}
 
+  function handleSubmit(e) {
+    e.preventDefault()
+    console.log('жбямк')
+
+  }
+
+
+  const profileInputs = [typeInputs.profileName, typeInputs.profileLogin, typeInputs.password];
+  const profileButton = isEdit ? [typeButton.cancel, typeButton.save] : []
 
   return (
-    <FormContainerUser
-      inputs={profileInputs}
-      button={profileButton}
-    />
+    <section className={"profileSection"}>
+      <div className={"profilePanel"}>
+        <ul className={"profileUl"}>
+          <li>
+            <NavLink className={`text text_type_main-medium text_color_inactive defaultNavLink`}
+                     to={"/profile"}
+                     end>Профиль</NavLink>
+          </li>
+          <li>
+            <NavLink className={`text text_type_main-medium text_color_inactive defaultNavLink`}
+                     to={"/profile/orders"}>История
+              заказов</NavLink>
+          </li>
+          <li>
+            <NavLink className={`text text_type_main-medium text_color_inactive defaultNavLink`}
+                     to={"/profile/exit"}>Выход</NavLink>
+          </li>
+        </ul>
+        <p className={`text text_type_main-small text_color_inactive pText`}>
+          В этом разделе вы можете изменить свои персональные данные
+        </p>
+
+      </div>
+      <FormContainerUser
+        inputs={profileInputs}
+        button={profileButton}
+        handleSubmit={handleSubmit}
+        handleReset={handleReset}
+      />
+    </section>
+
+
   )
 
 }

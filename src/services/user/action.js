@@ -28,7 +28,6 @@ export const login = (pass, email) => {
   return (dispatch) => {
     return getLogin(pass, email)
       .then((res) => {
-      console.log('actionUserLogin', res)
       localStorage.setItem("accessToken", res.accessToken);
       localStorage.setItem("refreshToken", res.refreshToken);
       dispatch(setUser(res.user));
@@ -42,7 +41,6 @@ export const register = (name, pass, email) => {
   return (dispatch) => {
     return registerApi(name, pass, email)
       .then((res) => {
-      console.log('actionUserLogin', res)
       localStorage.setItem("accessToken", res.accessToken);
       localStorage.setItem("refreshToken", res.refreshToken);
       dispatch(setUser(res.user));

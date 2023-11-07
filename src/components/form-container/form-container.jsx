@@ -7,11 +7,11 @@ import {ContainerLink} from "./container-link/container-link";
 import {typeInputs, typeLinksFooter} from "../../utils/inputs";
 
 
-export function FormContainerUser({inputs, button}) {
+export function FormContainerUser({inputs, button, handleSubmit, handleReset}) {
 
   return (
-    <section className={`${styles.sectionClass}`}>
-      <form>
+    <section className={`${styles.sectionClassUser}`}>
+      <form onSubmit={handleSubmit} onReset={handleReset}>
         <fieldset className={styles.fieldset}>
           <div className={`${styles.placeItems}`}>
             {[...inputs]}

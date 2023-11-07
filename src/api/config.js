@@ -22,7 +22,6 @@ const checkSuccess = (res) => {
   if (res && res.success) {
     return res;
   }
-  console.log('configCheckSuccess', res)
   return Promise.reject(`Ответ не success: ${res}`);
 };
 
@@ -155,7 +154,6 @@ export const fetchWithRefresh = async (endpoint, options) => {
 /*    console.log('fetchWithRefreshRes',res)*/
     return await checkReponse1(res);
   } catch (err) {
-    console.log("err-message", err.message)
     if (err.message === "jwt expired") {
       const refreshData = await refreshToken(); //обновляем токен
       if (!refreshData.success) {

@@ -13,6 +13,16 @@
   align-items: center;
 }
 
+.sectionClassUser{
+  margin: 120px 60px auto ;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
 .placeItems{
   padding: 24px 0;
   display: flex;

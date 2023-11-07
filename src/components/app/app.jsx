@@ -99,6 +99,8 @@ export default function App() {
           <Route path="/reset-password" element={<OnlyUnAuth component={<ResetPassword/>} />} />
           <Route path="/profile" element={<OnlyAuth component={<Profile/>} />} />
           <Route path="/feed" element={<OnlyAuth component={<FeedOrders/>} />} />
+          <Route path="/profile/orders" element={<OnlyAuth component={<Profile/>} />} />
+          <Route path="/profile/exit" element={<OnlyAuth component={<Profile/>} />} />
 
 
       {orderNumber && modal(<OrderDetails/>)}
