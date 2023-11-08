@@ -1,9 +1,36 @@
 import styles from "./ingredient-details.module.css";
 import {useSelector} from "react-redux";
 import {ingredientDetails} from "../../../services/ingredient-details/ingredient-details-selector";
+import {useLocation, useParams} from "react-router-dom";
+import {
+  burgerIngredients,
+  burgerIngredientsArray,
+  burgerIngredientsID
+} from "../../../services/burger-ingredients/burger-ingredients-selector";
 
-export  function IngredientDetails() {
-  const {proteins, calories, fat, carbohydrates, name, image_large} = useSelector(ingredientDetails)
+export function IngredientDetails() {
+
+  const params = useParams()
+  const location = useLocation()
+  console.log(location)
+  console.log(params)
+  const testParam = params.id
+  const background = location.state && location.state.background;
+
+  const test = useSelector(burgerIngredientsArray)
+
+  /*  function isPrime(element) {
+  element._id ===
+      return element > 1;
+    }
+   console.log([4, 6, 8, 12].find(isPrime));*/
+  /*  const ctest = test.ingredients.find(item => item._id == testParam);*/
+
+  const ctest = test.find(item => item._id == testParam);
+
+
+  console.log('ctest', ctest)
+  const {proteins, calories, fat, carbohydrates, name, image_large} = ctest
   const energyValue = (text, value) => {
     return (
       <li className={styles.column}>
@@ -13,8 +40,13 @@ export  function IngredientDetails() {
     )
   }
 
+  const testContainer = background ? "" : "container"
+
+
+
   return (
-    <div className={`${styles.modalContainer} pb-5`}>
+    <div className={`${styles.modalContainer} ${testContainer} pb-5`}>
+      {!background && <p className="text text_type_main-large">Детали ингредиента</p>}
       <img src={image_large} alt={name} className="mb-4"></img>
       <p className={`${styles.title} text text_type_main-medium mb-8`}>{name}</p>
       <ul className={`${styles.row}`}>

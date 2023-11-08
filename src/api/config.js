@@ -3,18 +3,20 @@ export const BASE_URL = "https://norma.nomoreparties.space/api/";
 const endpoints = {
   ingredients: "ingredients",
   orders: "orders",
-  authRegister:"auth/register",
-  authLogin:"auth/login",
-  authLogout:"auth/logout",
-  authToken:"auth/token",
-  authUser:"auth/user",
+  authRegister: "auth/register",
+  authLogin: "auth/login",
+  authLogout: "auth/logout",
+  authToken: "auth/token",
+  authUser: "auth/user",
+  passwordForgot: "password-reset",
+  passwordReset: "password-reset/reset",
 }
 
 const checkResponse = (res) => {
   if (res.ok) {
     return res.json();
   }
-/*  console.log('configCheckResponse', res)*/
+  /*  console.log('configCheckResponse', res)*/
   return Promise.reject(`Ошибка ${res.status}`);
 };
 
@@ -55,7 +57,32 @@ export const getRegister = (name, pass, email) => {
       "email": email,
       "password": pass,
       "name": name
-    } )
+    })
+  })
+};
+
+export const getForgot = (email) => {
+  return request(endpoints.passwordForgot, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      "email": email,
+    })
+  })
+};
+
+export const getReset = (password, token) => {
+  return request(endpoints.passwordReset, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      password,
+      token,
+    })
   })
 };
 
@@ -69,7 +96,7 @@ export const getLogin = (pass, email) => {
     body: JSON.stringify({
       "email": email,
       "password": pass,
-    } )
+    })
   })
 };
 
@@ -104,14 +131,13 @@ export const getUserLogoutRefresh = () => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-/*     authorization: localStorage.getItem('accessToken')*/
+      /*     authorization: localStorage.getItem('accessToken')*/
     },
     body: JSON.stringify({
       token: localStorage.getItem("refreshToken"),
     }),
   })
 };
-
 
 
 export const getUser = () => {
@@ -130,7 +156,7 @@ export const refreshToken = () => {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
-/*      authorization: localStorage.getItem('accessToken')*/
+      /*      authorization: localStorage.getItem('accessToken')*/
     },
     body: JSON.stringify({
       token: localStorage.getItem("refreshToken"),
@@ -167,7 +193,7 @@ const checkReponse1 = (res) => {
 export const fetchWithRefresh = async (endpoint, options) => {
   try {
     const res = await fetch(`${BASE_URL}${endpoint}`, options);
-/*    console.log('fetchWithRefreshRes',res)*/
+    /*    console.log('fetchWithRefreshRes',res)*/
     return await checkReponse1(res);
   } catch (err) {
     if (err.message === "jwt expired") {

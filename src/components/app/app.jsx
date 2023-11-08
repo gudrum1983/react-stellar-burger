@@ -1,7 +1,7 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import styles from "./app.module.css";
-import {BrowserRouter, Routes, Route, useParams, useLocation} from "react-router-dom";
+import {BrowserRouter, Routes, Route, useParams, useLocation, useNavigate} from "react-router-dom";
 import { OrderConstructor} from "../../pages/order-constructor";
 
 import {AppHeader} from '../app-header/app-header'
@@ -48,6 +48,15 @@ export default function App() {
   const showIngredientDetails = useSelector(ingredientDetails)
   const {ingredients, isLoading, hasError} = useSelector(burgerIngredients);
 
+  const location = useLocation()
+  const navigate = useNavigate()
+  const background = location.state && location.state.background;
+
+  const handleModalClose = () => {
+    // Возвращаемся к предыдущему пути при закрытии модалки
+    navigate(-1);
+  };
+
   function handleCloseModal() {
     if (showIngredientDetails) {
       dispatch(clearIngredientDetails())
@@ -62,6 +71,13 @@ export default function App() {
         {content}
       </Modal>)
   }
+
+/*  function modalIng(content, header = "") {
+    return (
+      <Modal onClose={handleModalClose} header={header}>
+        {content}
+      </Modal>)
+  }*/
 
   const handleDrop = (ingredient) => {
     if (ingredient.type === "bun") {
@@ -88,11 +104,12 @@ export default function App() {
   return (
     <div className={`${styles.app}`}>
 
-      <BrowserRouter>
+
         <AppHeader/>
-        <Routes>
+        <Routes location={background || location}>
 
           <Route path="/" element={<OrderConstructor handleDrop={handleDrop} />} />
+          <Route path="/ingredients/:id" element={<IngredientDetails />} />
           <Route path="/login" element={<OnlyUnAuth component={<Login/>} />} />
           <Route path="/register" element={<OnlyUnAuth component={<Register/>} />} />
           <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPassword/>} />} />
@@ -108,10 +125,21 @@ export default function App() {
         Наш краторный хмель пожрал антарианский долгоносик, попробуйте сформировать заказ позже, Милорд...
       </p>, "Ошибка")}
       {orderRequest && modal('',"Загрузка Милорд...")}
-      {showIngredientDetails && modal(<IngredientDetails
-        ingredient={showIngredientDetails}/>, "Детали ингредиента")}
+{/*      {showIngredientDetails && modal(<IngredientDetails
+        ingredient={showIngredientDetails}/>, "Детали ингредиента")}*/}
         </Routes>
-      </BrowserRouter>
+
+        {background &&
+          <Routes>
+            <Route path="/ingredients/:id" element={
+              <Modal onClose={handleModalClose} header={"Детали ингредиента"}>
+                <IngredientDetails />
+              </Modal>}/>
+            </Routes>}
+
+
+
+
     </div>
 
   )

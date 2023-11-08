@@ -13,7 +13,7 @@ export const typeInputs = {
   passwordNew: <InputPassword placeholder="Введите новый пароль" key='passwordNew' name='passwordNew'/>,
   checkedCode: <InputText placeholder="Введите код из письма" key='checkedCode' name='checkedCode'/>,
   name: <InputName placeholder="Имя" key='name' name='name'/>,
-  emailResetPassword: <InputText placeholder="Укажите e-mail" key='emailResetPassword' name='emailResetPassword'/>,
+  emailResetPassword: <InputEmail placeholder="Укажите e-mail" key='emailResetPassword' name='emailResetPassword'/>,
   profileName: <InputName placeholder="Имя" key='name' name='name' disabled={true}/>,
   profileLogin: <InputEmail placeholder="Логин" key='email' name='email'/>,
   profilePassword: <InputPassword placeholder="Пароль" key='passwordProfile' name='passwordProfile' disabled={true}/>,

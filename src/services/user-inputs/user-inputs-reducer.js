@@ -2,7 +2,8 @@ import {
   USER_NAME,
   PASSWORD,
   EMAIL,
-  NEW_PASSWORD
+  NEW_PASSWORD,
+  CHECKED_TOKEN
 } from "./user-inputs-actions";
 
 const initialState = {
@@ -34,6 +35,11 @@ export function userInputsReducer(state = initialState, action) {
       return {
         ...state,
         email: action.payload
+      };
+    case CHECKED_TOKEN:
+      return {
+        ...state,
+        checkedCode: action.payload
       };
     default: {
       return state;

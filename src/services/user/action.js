@@ -1,5 +1,5 @@
 import {api, loginApi, registerApi} from "../../utils/api";
-import {getLogin, getUserDataRefresh, getUserDataUpdateRefresh, getUserLogoutRefresh} from "../../api/config";
+import {getLogin, getForgot, getUserDataRefresh, getUserDataUpdateRefresh, getUserLogoutRefresh} from "../../api/config";
 
 export const SET_AUTH_CHECKED = "SET_AUTH_CHECKED";
 export const SET_USER = "SET_USER";
@@ -70,6 +70,21 @@ export const register = (name, pass, email) => {
       dispatch(setUser(res.user));
       dispatch(setAuthChecked(true));
     })
+      .catch((err) => console.log(err));
+
+  };
+};
+
+export const forgotPassword = (email) => {
+  return (dispatch) => {
+    return getForgot(email)
+      .then((res) => {
+        console.log(res)
+/*        localStorage.setItem("accessToken", res.accessToken);
+        localStorage.setItem("refreshToken", res.refreshToken);
+        dispatch(setUser(res.user));
+        dispatch(setAuthChecked(true));*/
+      })
       .catch((err) => console.log(err));
 
   };

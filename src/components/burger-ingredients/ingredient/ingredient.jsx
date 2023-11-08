@@ -6,8 +6,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {setIngredientDetails} from "../../../services/ingredient-details/ingredient-details-actions";
 import {useDrag} from "react-dnd";
 import {selectCount} from "../../../services/burger-constructor/burger-constructor-selector";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 
 export function Ingredient({currentItem}) {
+
+/*  const navigate = useNavigate()*/
+
+  const location = useLocation()
+  const id = currentItem._id
 
   const [{isDrag, cursor}, dragRef] = useDrag({
     type: "burgerConstructor",
@@ -19,27 +25,31 @@ export function Ingredient({currentItem}) {
     }),
 
   });
-  const dispatch = useDispatch();
+/*  const dispatch = useDispatch();*/
 
-  function handleClick() {
+/*  function handleClick() {
     dispatch(setIngredientDetails(currentItem))
-  }
+    navigate(`/ingrediets/${id}`, {replace: false, state: {bac: "value"}})
+  }*/
 
- const count = useSelector(selectCount(currentItem._id, currentItem.type))
+  const count = useSelector(selectCount(currentItem._id, currentItem.type))
   const canDraggabble = (currentItem?.type !== "bun") ? true : !(count)
 
   return (
-    <li className={`${styles.card}`} {...(canDraggabble && {ref: dragRef, style:{cursor}})}  onClick={handleClick}>
-      <img className={styles.imgCard} alt={currentItem.name} src={currentItem.image}/>
-      <div className={`pt-1 pb-1 ${styles.price}`}>
-        <p className="text text_type_digits-default pr-2">{currentItem.price}</p>
-        <CurrencyIcon type="primary"/>
-      </div>
-      <div className={styles.cardName}>
-        <p className="text text_type_main-default">{currentItem.name}</p>
-      </div>
-      {(count > 0) ? <Counter count={count} size="default"/> : null}
-    </li>
+
+    <Link key={id} to={`/ingredients/${id}`} state={{background: location}}>
+      <li className={`${styles.card}`} {...(canDraggabble && {ref: dragRef, style: {cursor}})}>
+        <img className={styles.imgCard} alt={currentItem.name} src={currentItem.image}/>
+        <div className={`pt-1 pb-1 ${styles.price}`}>
+          <p className="text text_type_digits-default pr-2">{currentItem.price}</p>
+          <CurrencyIcon type="primary"/>
+        </div>
+        <div className={styles.cardName}>
+          <p className="text text_type_main-default">{currentItem.name}</p>
+        </div>
+        {(count > 0) ? <Counter count={count} size="default"/> : null}
+      </li>
+    </Link>
   )
 }
 
