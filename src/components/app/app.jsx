@@ -18,9 +18,6 @@ import {orderDetails} from "../../services/order-details/order-details-selectors
 
 import {burgerIngredients} from "../../services/burger-ingredients/burger-ingredients-selector";
 
-import {clearIngredientDetails} from "../../services/ingredient-details/ingredient-details-actions";
-import {ingredientDetails} from "../../services/ingredient-details/ingredient-details-selector";
-
 import { checkUserAuth } from "../../services/user/user-action";
 import { OnlyAuth, OnlyUnAuth } from "../hoc/protected-route";
 import {Register} from "../../pages/register";
@@ -46,7 +43,7 @@ export default function App() {
 
 
   const {orderNumber, orderRequest ,orderFailed} = useSelector(orderDetails)
-  const showIngredientDetails = useSelector(ingredientDetails)
+
   const {ingredients, isLoading, hasError} = useSelector(burgerIngredients);
 
   const location = useLocation()
@@ -59,9 +56,7 @@ export default function App() {
   };
 
   function handleCloseModal() {
-    if (showIngredientDetails) {
-      dispatch(clearIngredientDetails())
-    } else {
+    if (orderNumber) {
       dispatch(clearOrderDetails())
     }
   }

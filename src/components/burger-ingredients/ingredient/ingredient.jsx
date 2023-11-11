@@ -3,14 +3,11 @@ import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-com
 import React from "react";
 import {ingredientPropType} from "../../../utils/prop-types";
 import {useDispatch, useSelector} from "react-redux";
-import {setIngredientDetails} from "../../../services/ingredient-details/ingredient-details-actions";
 import {useDrag} from "react-dnd";
 import {selectCount} from "../../../services/burger-constructor/burger-constructor-selector";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 
 export function Ingredient({currentItem}) {
-
-/*  const navigate = useNavigate()*/
 
   const location = useLocation()
   const id = currentItem._id
@@ -25,12 +22,6 @@ export function Ingredient({currentItem}) {
     }),
 
   });
-/*  const dispatch = useDispatch();*/
-
-/*  function handleClick() {
-    dispatch(setIngredientDetails(currentItem))
-    navigate(`/ingrediets/${id}`, {replace: false, state: {bac: "value"}})
-  }*/
 
   const count = useSelector(selectCount(currentItem._id, currentItem.type))
   const canDraggabble = (currentItem?.type !== "bun") ? true : !(count)

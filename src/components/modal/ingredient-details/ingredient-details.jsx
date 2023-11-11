@@ -1,12 +1,9 @@
 import styles from "./ingredient-details.module.css";
 import {useSelector} from "react-redux";
-import {ingredientDetails} from "../../../services/ingredient-details/ingredient-details-selector";
 import {useLocation, useParams} from "react-router-dom";
 import {
-  burgerIngredients,
   burgerIngredientsArray,
-  burgerIngredientsID
-} from "../../../services/burger-ingredients/burger-ingredients-selector";
+  } from "../../../services/burger-ingredients/burger-ingredients-selector";
 
 export function IngredientDetails() {
 
@@ -19,15 +16,7 @@ export function IngredientDetails() {
 
   const test = useSelector(burgerIngredientsArray)
 
-  /*  function isPrime(element) {
-  element._id ===
-      return element > 1;
-    }
-   console.log([4, 6, 8, 12].find(isPrime));*/
-  /*  const ctest = test.ingredients.find(item => item._id == testParam);*/
-
   const ctest = test.find(item => item._id == testParam);
-
 
   console.log('ctest', ctest)
   const {proteins, calories, fat, carbohydrates, name, image_large} = ctest

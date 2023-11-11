@@ -1,5 +1,4 @@
-import {Link, NavLink, Outlet} from "react-router-dom";
-import {FormContainerUser} from "../form-container/form-container";
+import {NavLink, Outlet} from "react-router-dom";
 import React from "react";
 import {logout} from "../../services/user/user-action";
 import {useDispatch} from "react-redux";
@@ -13,7 +12,6 @@ export const ProfileLayout = () => {
     console.log("click", "click")
     dispatch(logout());
   }
-
 
   return (
     <section className={"profileSection"}>
@@ -37,14 +35,8 @@ export const ProfileLayout = () => {
         <p className={`text text_type_main-small text_color_inactive pText`}>
           В этом разделе вы можете изменить свои персональные данные
         </p>
-
       </div>
-
       <Outlet/>
-
     </section>
-
-
   )
-
 }
