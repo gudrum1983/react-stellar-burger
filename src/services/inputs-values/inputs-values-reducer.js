@@ -2,19 +2,17 @@ import {
   USER_NAME,
   PASSWORD,
   EMAIL,
-  NEW_PASSWORD,
   CHECKED_TOKEN
-} from "./user-inputs-actions";
+} from "./inputs-values-actions";
 
 const initialState = {
   userName: '',
   password: '',
   email: '',
-  checkedCode:'',
+  checkedCode: '',
 };
 
-
-export function userInputsReducer(state = initialState, action) {
+export function inputsValuesReducer(state = initialState, action) {
   switch (action.type) {
     case USER_NAME:
       return {
@@ -27,11 +25,6 @@ export function userInputsReducer(state = initialState, action) {
         password: action.payload
       };
     case EMAIL:
-      return {
-        ...state,
-        email: action.payload
-      };
-    case NEW_PASSWORD:
       return {
         ...state,
         email: action.payload

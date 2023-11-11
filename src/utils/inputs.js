@@ -1,17 +1,16 @@
-import {InputText} from "../components/form-container/container-inputs/container-input-text";
 import React from "react";
-import {InputPassword} from "../components/form-container/container-inputs/form-input-new-password";
+import {InputPassword} from "../components/form-container/inputs/input-password";
 import {ContainerLink} from "../components/form-container/container-link/container-link";
 import {Button} from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "../components/form-container/form-container.module.css";
-import {InputName} from "../components/form-container/container-inputs/form-input-name";
-import {InputEmail} from "../components/form-container/container-inputs/form-input-email";
+import {InputName} from "../components/form-container/inputs/input-name";
+import {InputEmail} from "../components/form-container/inputs/input-email";
+import {InputCode} from "../components/form-container/inputs/input-code";
 
 export const typeInputs = {
   email: <InputEmail placeholder="E-mail" key='email' name='email'/>,
   password: <InputPassword placeholder="Пароль" key='password' name='password'/>,
   passwordNew: <InputPassword placeholder="Введите новый пароль" key='passwordNew' name='passwordNew'/>,
-  checkedCode: <InputText placeholder="Введите код из письма" key='checkedCode' name='checkedCode'/>,
+  checkedCode: <InputCode placeholder="Введите код из письма" key='checkedCode' name='checkedCode'/>,
   name: <InputName placeholder="Имя" key='name' name='name'/>,
   emailResetPassword: <InputEmail placeholder="Укажите e-mail" key='emailResetPassword' name='emailResetPassword'/>,
   profileName: <InputName placeholder="Имя" key='name' name='name' disabled={true}/>,

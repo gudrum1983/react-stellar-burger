@@ -1,33 +1,3 @@
-// В проектной работе эта функция будет обращаться к серверу
-// и обновлять токены если они уже устарели.
-import {getLogin, getRegister} from "../api/config";
-
-const getUser = () =>
-
-  new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve({
-        user: {},
-      });
-    }, 1000);
-  });
-
-export const registerApi = (name, pass, email) => getRegister(name, pass, email);
-
-const logout = () =>
-  new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve();
-    }, 1000);
-  });  
-
-export const configApi = {
-  getUser,
-  logout,
-};
-
-
-
 export const BASE_URL = "https://norma.nomoreparties.space/api/";
 
 export const ENDPOINTS = {
@@ -41,3 +11,22 @@ export const ENDPOINTS = {
   passwordForgot: "password-reset",
   passwordReset: "password-reset/reset",
 }
+const checkResponse = (res) => {
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject(`Ошибка ${res.status}`);
+};
+
+const checkSuccess = (res) => {
+  if (res && res.success) {
+    return res;
+  }
+  return Promise.reject(`Ответ не success: ${res}`);
+};
+
+export const request = (endpoint, options) => {
+  return (fetch(`${BASE_URL}${endpoint}`, options)
+    .then(checkResponse)
+    .then(checkSuccess));
+};

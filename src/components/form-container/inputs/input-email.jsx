@@ -1,17 +1,16 @@
 import {useDispatch, useSelector} from "react-redux";
-import {selectedEmail} from "../../../services/user-inputs/user-inputs-selector";
+import {inputsValuesEmail} from "../../../services/inputs-values/inputs-values-selector";
 import React from "react";
 import {EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {addEmail} from "../../../services/user-inputs/user-inputs-actions";
+import {addEmail} from "../../../services/inputs-values/inputs-values-actions";
 import {optionalString} from "../../../utils/prop-types";
-import {userDataMail, userDataName} from "../../../services/user/selector";
-import {useLocation, useParams} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 
 export function InputEmail({placeholder = "E-mail"}) {
 
   const location = useLocation()
   const isProfile = location.pathname === "/profile"
-  const emailValue = useSelector(selectedEmail)
+  const emailValue = useSelector(inputsValuesEmail)
   const dispatch = useDispatch();
   const inputRef = React.useRef(null)
 

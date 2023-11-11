@@ -2,16 +2,16 @@ import React from "react";
 import {FormContainerNew} from "../components/form-container/form-container";
 import {navigateButton, typeInputs, typeLinksFooter} from "../utils/inputs";
 import {useDispatch, useSelector} from "react-redux";
-import {login} from "../services/user/action";
-import {selectedEmail, selectedPassword} from "../services/user-inputs/user-inputs-selector";
+import {login} from "../services/user/user-action";
+import {inputsValuesEmail, inputsValuesPassword} from "../services/inputs-values/inputs-values-selector";
 import {useNavigation} from "react-router-dom";
 
 
 export function Login() {
 
   const dispatch = useDispatch();
-  const email = useSelector(selectedEmail)
-  const pass = useSelector(selectedPassword)
+  const email = useSelector(inputsValuesEmail)
+  const pass = useSelector(inputsValuesPassword)
   const handleSubmit = (evt) => {
     evt.preventDefault();
     dispatch(login(pass, email));

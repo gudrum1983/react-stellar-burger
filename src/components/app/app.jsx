@@ -21,7 +21,7 @@ import {burgerIngredients} from "../../services/burger-ingredients/burger-ingred
 import {clearIngredientDetails} from "../../services/ingredient-details/ingredient-details-actions";
 import {ingredientDetails} from "../../services/ingredient-details/ingredient-details-selector";
 
-import { checkUserAuth } from "../../services/user/action";
+import { checkUserAuth } from "../../services/user/user-action";
 import { OnlyAuth, OnlyUnAuth } from "../hoc/protected-route";
 import {Register} from "../../pages/register";
 import {Login} from "../../pages/login";
@@ -73,13 +73,6 @@ export default function App() {
       </Modal>)
   }
 
-/*  function modalIng(content, header = "") {
-    return (
-      <Modal onClose={handleModalClose} header={header}>
-        {content}
-      </Modal>)
-  }*/
-
   const handleDrop = (ingredient) => {
     if (ingredient.type === "bun") {
       dispatch(chooseBun(ingredient))
@@ -98,14 +91,8 @@ export default function App() {
     }
   }
 
-
-
-
-
-
   return (
     <div className={`${styles.app}`}>
-
 
         <AppHeader/>
         <Routes location={background || location}>
@@ -127,19 +114,13 @@ export default function App() {
             <Route path="exit" element={<OnlyAuth component={<Profile/>} />} />
           </Route>
 
-
-
           <Route path="/feed" element={<OnlyAuth component={<FeedOrders/>} />} />
-
-
 
       {orderNumber && modal(<OrderDetails/>)}
       {orderFailed && modal(<p className="text text_type_main-medium">
         Наш краторный хмель пожрал антарианский долгоносик, попробуйте сформировать заказ позже, Милорд...
       </p>, "Ошибка")}
       {orderRequest && modal('',"Загрузка Милорд...")}
-{/*      {showIngredientDetails && modal(<IngredientDetails
-        ingredient={showIngredientDetails}/>, "Детали ингредиента")}*/}
         </Routes>
 
         {background &&
@@ -149,9 +130,6 @@ export default function App() {
                 <IngredientDetails />
               </Modal>}/>
             </Routes>}
-
-
-
 
     </div>
 

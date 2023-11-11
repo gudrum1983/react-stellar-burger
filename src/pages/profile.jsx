@@ -1,21 +1,19 @@
 import React from "react";
 import {typeButton, typeInputs} from "../utils/inputs";
 import {FormContainerUser} from "../components/form-container/form-container";
-import {NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {getUser, getUserLogout, getUserUpdate} from "../services/user/action";
-import {userDataMail, userDataName} from "../services/user/selector";
-import {addEmail, addPassword, addUser} from "../services/user-inputs/user-inputs-actions";
-import {selectedEmail, selectedPassword, selectedUserName} from "../services/user-inputs/user-inputs-selector";
+import {getUser, logout, updateUser} from "../services/user/user-action";
+import {userMail, userName} from "../services/user/user-selector";
+import {addEmail, addPassword, addUser} from "../services/inputs-values/inputs-values-actions";
+import {inputsValuesEmail, inputsValuesPassword, inputsValuesUserName} from "../services/inputs-values/inputs-values-selector";
 
 export function Profile() {
+
   const dispatch = useDispatch();
-  const nameValueTest = useSelector(userDataName)
-  const emailValueTest = useSelector(userDataMail)
+  const nameValueTest = useSelector(userName)
+  const emailValueTest = useSelector(userMail)
 
-  let restart = false
-
-  function test() {
+  function setValue() {
     dispatch(getUser());
     dispatch(addEmail(emailValueTest))
     dispatch(addUser(nameValueTest))
@@ -24,12 +22,12 @@ export function Profile() {
 
 
   React.useEffect(() => {
-    test()
+    setValue()
   }, [nameValueTest, emailValueTest]);
 
-  const nameValueInput = useSelector(selectedUserName)
-  const mailValueInput = useSelector(selectedEmail)
-  const passwordValueInput = useSelector(selectedPassword)
+  const nameValueInput = useSelector(inputsValuesUserName)
+  const mailValueInput = useSelector(inputsValuesEmail)
+  const passwordValueInput = useSelector(inputsValuesPassword)
 
   let isEditName = nameValueTest !== nameValueInput
   let isEditMail = emailValueTest !== mailValueInput
@@ -45,15 +43,13 @@ export function Profile() {
     e.preventDefault()
     dispatch(getUser())
     console.log("isEdit", isEdit)
-
-    /*    test()*/
   }
 
   function handleSubmit(e) {
     e.preventDefault()
     dispatch(getUser());
     if (isEdit) {
-      dispatch(getUserUpdate(mailValueInput, nameValueInput, passwordValueInput));
+      dispatch(updateUser(mailValueInput, nameValueInput, passwordValueInput));
       dispatch(addEmail(emailValueTest))
       dispatch(addUser(nameValueTest))
       dispatch(addPassword(""))
@@ -64,7 +60,7 @@ export function Profile() {
   function handleClick(e) {
     e.preventDefault()
     console.log("click","click")
-    dispatch(getUserLogout());
+    dispatch(logout());
 
   }
 
@@ -79,42 +75,4 @@ export function Profile() {
         handleReset={handleReset}
       />
   )
-
-
-
-/*  return (
-    <section className={"profileSection"}>
-      <div className={"profilePanel"}>
-        <ul className={"profileUl"}>
-          <li>
-            <NavLink className={`text text_type_main-medium text_color_inactive defaultNavLink`}
-                     to={"/profile"}
-                     end>Профиль</NavLink>
-          </li>
-          <li>
-            <NavLink className={`text text_type_main-medium text_color_inactive defaultNavLink`}
-                     to={"/profile/orders"}>История
-              заказов</NavLink>
-          </li>
-          <li>
-            <NavLink className={`text text_type_main-medium text_color_inactive defaultNavLink`}
-                     to={"/login"} onClick={handleClick}>Выход</NavLink>
-          </li>
-        </ul>
-        <p className={`text text_type_main-small text_color_inactive pText`}>
-          В этом разделе вы можете изменить свои персональные данные
-        </p>
-
-      </div>
-      <FormContainerUser
-        inputs={profileInputs}
-        button={profileButton}
-        handleSubmit={handleSubmit}
-        handleReset={handleReset}
-      />
-    </section>
-
-
-  )*/
-
 }

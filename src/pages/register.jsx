@@ -4,20 +4,20 @@ import {FormContainerNew} from "../components/form-container/form-container";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {
-  selectedEmail,
-  selectedPassword,
-  selectedUserName,
-} from "../services/user-inputs/user-inputs-selector";
-import {register} from "../services/user/action";
+  inputsValuesEmail,
+  inputsValuesPassword,
+  inputsValuesUserName,
+} from "../services/inputs-values/inputs-values-selector";
+import {register} from "../services/user/user-action";
 
 
 export function Register() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const email = useSelector(selectedEmail)
-  const name = useSelector(selectedUserName)
-  const pass = useSelector(selectedPassword)
+  const email = useSelector(inputsValuesEmail)
+  const name = useSelector(inputsValuesUserName)
+  const pass = useSelector(inputsValuesPassword)
 
   function handleSubmit(evt) {
     debugger

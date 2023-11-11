@@ -2,29 +2,26 @@ import React from "react";
 import {navigateButton, typeInputs, typeLinksFooter} from "../utils/inputs";
 import {FormContainerNew} from "../components/form-container/form-container";
 import {Navigate, useNavigate} from "react-router-dom";
-import {forgotPassword, resetPassword} from "../services/user/action";
-import {getReset} from "../api/config";
-import {useDispatch, useSelector} from "react-redux";
-import {selectedCode, selectedEmail, selectedPassword} from "../services/user-inputs/user-inputs-selector";
-
+import {useSelector} from "react-redux";
+import {inputsValuesVerificationCode, inputsValuesPassword} from "../services/inputs-values/inputs-values-selector";
+import {getReset} from "../api/password-config";
 
 export function ResetPassword() {
 
   const navigate = useNavigate();
-  const password = useSelector(selectedPassword)
-  const code = useSelector(selectedCode)
-  const dispatch = useDispatch();
-/*  function onClick() {
-    navigate('/', {replace: false});
-  }*/
-
+  const password = useSelector(inputsValuesPassword)
+  const code = useSelector(inputsValuesVerificationCode)
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    dispatch(resetPassword(password, code));
+    getReset(password, code)
+      .then((res) => {
+        console.log(res)
+        localStorage.removeItem("forgotConfirmed");
+      })
+      .catch((err) => console.log(err));
     navigate('/register', {replace: true});
   }
-
 
   const resetPasswordFormHeader = "Восстановление пароля"
   const resetPasswordInputs = [typeInputs.passwordNew, typeInputs.checkedCode];
@@ -33,7 +30,9 @@ export function ResetPassword() {
 
 
   const forgotConfirmed = localStorage.getItem("forgotConfirmed");
-  if (!forgotConfirmed) { return <Navigate to="/login"  replace={true}/>;}
+  if (!forgotConfirmed) {
+    return <Navigate to="/login" replace={true}/>;
+  }
 
   return (
     <FormContainerNew header={resetPasswordFormHeader} inputs={resetPasswordInputs} button={resetPasswordButton}

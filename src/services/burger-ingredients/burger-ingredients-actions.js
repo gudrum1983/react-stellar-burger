@@ -1,4 +1,4 @@
-import {getIngredients} from "../../api/config";
+import {getIngredients} from "../../api/burger-ingredients";
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
@@ -36,5 +36,3 @@ export function loadBurgerIngredients() {
       })
   };
 }
-
-

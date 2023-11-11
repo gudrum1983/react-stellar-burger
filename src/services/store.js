@@ -3,8 +3,8 @@ import {burgerConstructorReducer} from "./burger-constructor/burger-constructor-
 import {ingredientDetailsReducer} from "./ingredient-details/ingredient-details-reducer";
 import {orderDetailsReducer} from "./order-details/order-details-reducer";
 import {burgerIngredientsReducer} from "./burger-ingredients/burger-ingredients-reducer";
-import {userInputsReducer} from "./user-inputs/user-inputs-reducer";
-import {userDataReducer} from "./user/user";
+import {inputsValuesReducer} from "./inputs-values/inputs-values-reducer";
+import {userDataReducer} from "./user/user-reducer";
 
 
 export const store = configureStore(({
@@ -12,8 +12,8 @@ export const store = configureStore(({
     chooseIngredients: burgerConstructorReducer,
     ingredientDetails: ingredientDetailsReducer,
     orderDetails: orderDetailsReducer,
-    burgerIngredients:burgerIngredientsReducer,
-    userInputs: userInputsReducer,
-    userData: userDataReducer,
+    burgerIngredients: burgerIngredientsReducer,
+    inputsValues: inputsValuesReducer,
+    user: userDataReducer,
   }
 }));

@@ -1,11 +1,5 @@
 import React from "react";
 import styles from "./form-container.module.css";
-import {Button} from '@ya.praktikum/react-developer-burger-ui-components'
-import {InputText} from "./container-inputs/container-input-text";
-import {InputPassword} from "./container-inputs/container-input-password";
-import {ContainerLink} from "./container-link/container-link";
-import {typeInputs, typeLinksFooter} from "../../utils/inputs";
-
 
 export function FormContainerUser({inputs, button, handleSubmit, handleReset}) {
 

@@ -1,7 +1,7 @@
 import {Link, NavLink, Outlet} from "react-router-dom";
 import {FormContainerUser} from "../form-container/form-container";
 import React from "react";
-import {getUserLogout} from "../../services/user/action";
+import {logout} from "../../services/user/user-action";
 import {useDispatch} from "react-redux";
 
 export const ProfileLayout = () => {
@@ -11,7 +11,7 @@ export const ProfileLayout = () => {
   function handleClick(e) {
     e.preventDefault()
     console.log("click", "click")
-    dispatch(getUserLogout());
+    dispatch(logout());
   }
 
 
