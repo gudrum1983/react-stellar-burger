@@ -2,7 +2,7 @@ import React from "react";
 import {navigateButton, typeInputs, typeLinksFooter} from "../utils/inputs";
 import {FormContainerNew} from "../components/form-container/form-container";
 import {useNavigate} from "react-router-dom";
-import {forgotPassword} from "../services/user/action";
+import {forgotPassword, resetPassword} from "../services/user/action";
 import {getReset} from "../api/config";
 import {useDispatch, useSelector} from "react-redux";
 import {selectedCode, selectedEmail, selectedPassword} from "../services/user-inputs/user-inputs-selector";
@@ -21,7 +21,7 @@ export function ResetPassword() {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    dispatch(getReset(password, code));
+    dispatch(resetPassword(password, code));
 /*    navigate('/reset-password', {replace: false});*/
   }
 

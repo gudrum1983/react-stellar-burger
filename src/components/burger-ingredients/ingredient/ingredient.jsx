@@ -37,8 +37,9 @@ export function Ingredient({currentItem}) {
 
   return (
 
-    <Link key={id} to={`/ingredients/${id}`} state={{background: location}}>
-      <li className={`${styles.card}`} {...(canDraggabble && {ref: dragRef, style: {cursor}})}>
+
+      <li key={id} className={`${styles.card}`} {...(canDraggabble && {ref: dragRef, style: {cursor}})}>
+        <Link  className={`${styles.nonlink}`} to={`/ingredients/${id}`} state={{background: location}}>
         <img className={styles.imgCard} alt={currentItem.name} src={currentItem.image}/>
         <div className={`pt-1 pb-1 ${styles.price}`}>
           <p className="text text_type_digits-default pr-2">{currentItem.price}</p>
@@ -48,8 +49,9 @@ export function Ingredient({currentItem}) {
           <p className="text text_type_main-default">{currentItem.name}</p>
         </div>
         {(count > 0) ? <Counter count={count} size="default"/> : null}
+        </Link>
       </li>
-    </Link>
+
   )
 }
 

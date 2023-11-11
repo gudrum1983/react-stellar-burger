@@ -1,5 +1,12 @@
 import {api, loginApi, registerApi} from "../../utils/api";
-import {getLogin, getForgot, getUserDataRefresh, getUserDataUpdateRefresh, getUserLogoutRefresh} from "../../api/config";
+import {
+  getLogin,
+  getForgot,
+  getUserDataRefresh,
+  getUserDataUpdateRefresh,
+  getUserLogoutRefresh,
+  getReset
+} from "../../api/config";
 
 export const SET_AUTH_CHECKED = "SET_AUTH_CHECKED";
 export const SET_USER = "SET_USER";
@@ -80,7 +87,7 @@ export const forgotPassword = (email) => {
     return getForgot(email)
       .then((res) => {
         console.log(res)
-/*        localStorage.setItem("accessToken", res.accessToken);
+/*      localStorage.setItem("accessToken", res.accessToken);
         localStorage.setItem("refreshToken", res.refreshToken);
         dispatch(setUser(res.user));
         dispatch(setAuthChecked(true));*/
@@ -90,6 +97,20 @@ export const forgotPassword = (email) => {
   };
 };
 
+export const resetPassword = (password, code) => {
+  return (dispatch) => {
+    return getReset(password, code)
+      .then((res) => {
+        console.log(res)
+        /*        localStorage.setItem("accessToken", res.accessToken);
+                localStorage.setItem("refreshToken", res.refreshToken);
+                dispatch(setUser(res.user));
+                dispatch(setAuthChecked(true));*/
+      })
+      .catch((err) => console.log(err));
+
+  };
+};
 
 
 export const checkUserAuth = () => {
