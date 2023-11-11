@@ -1,12 +1,9 @@
-import {api, loginApi, registerApi} from "../../utils/api";
+import {configApi, registerApi} from "../../utils/config-api";
 import {
-  getLogin,
   getForgot,
-  getUserDataRefresh,
-  getUserDataUpdateRefresh,
-  getUserLogoutRefresh,
-  getReset
+  getReset, getRegister
 } from "../../api/config";
+import {getLogin, getUserDataWithRefresh, getUserDataUpdateWithRefresh, getUserLogoutRefresh, } from "../../api/auth-user";
 
 export const SET_AUTH_CHECKED = "SET_AUTH_CHECKED";
 export const SET_USER = "SET_USER";
@@ -23,17 +20,16 @@ export const setUser = (user) => ({
 
 export const getUser = () => {
   return (dispatch) => {
-    return getUserDataRefresh()
+    return getUserDataWithRefresh()
       .then((res) => {
-
         dispatch(setUser(res.user));
-    });
+      });
   };
 };
 
 export const getUserUpdate = (email, name, password) => {
   return (dispatch) => {
-    return getUserDataUpdateRefresh(email, name, password)
+    return getUserDataUpdateWithRefresh(email, name, password)
       .then((res) => {
         console.log("resUpd", res)
         dispatch(setUser(res.user));
@@ -54,29 +50,29 @@ export const getUserLogout = () => {
 };
 
 
-
 export const login = (pass, email) => {
   return (dispatch) => {
     return getLogin(pass, email)
       .then((res) => {
-      localStorage.setItem("accessToken", res.accessToken);
-      localStorage.setItem("refreshToken", res.refreshToken);
-      dispatch(setUser(res.user));
-      dispatch(setAuthChecked(true));
-    })
-      .catch((err) => console.log('actionUserLoginErr',err));;
+        localStorage.setItem("accessToken", res.accessToken);
+        localStorage.setItem("refreshToken", res.refreshToken);
+        dispatch(setUser(res.user));
+        dispatch(setAuthChecked(true));
+      })
+      .catch((err) => console.log('actionUserLoginErr', err));
+    ;
   };
 };
 
 export const register = (name, pass, email) => {
   return (dispatch) => {
-    return registerApi(name, pass, email)
+    return getRegister(name, pass, email)
       .then((res) => {
-      localStorage.setItem("accessToken", res.accessToken);
-      localStorage.setItem("refreshToken", res.refreshToken);
-      dispatch(setUser(res.user));
-      dispatch(setAuthChecked(true));
-    })
+        localStorage.setItem("accessToken", res.accessToken);
+        localStorage.setItem("refreshToken", res.refreshToken);
+        dispatch(setUser(res.user));
+        dispatch(setAuthChecked(true));
+      })
       .catch((err) => console.log(err));
 
   };
@@ -87,10 +83,7 @@ export const forgotPassword = (email) => {
     return getForgot(email)
       .then((res) => {
         console.log(res)
-/*      localStorage.setItem("accessToken", res.accessToken);
-        localStorage.setItem("refreshToken", res.refreshToken);
-        dispatch(setUser(res.user));
-        dispatch(setAuthChecked(true));*/
+        localStorage.setItem("forgotConfirmed", true);
       })
       .catch((err) => console.log(err));
 
@@ -102,37 +95,31 @@ export const resetPassword = (password, code) => {
     return getReset(password, code)
       .then((res) => {
         console.log(res)
-        /*        localStorage.setItem("accessToken", res.accessToken);
-                localStorage.setItem("refreshToken", res.refreshToken);
-                dispatch(setUser(res.user));
-                dispatch(setAuthChecked(true));*/
+        localStorage.removeItem("forgotConfirmed");
       })
       .catch((err) => console.log(err));
-
   };
 };
 
-
 export const checkUserAuth = () => {
-    return (dispatch) => {
-        if (localStorage.getItem("accessToken")) {
-            dispatch(getUser())
-              .catch(() => {
-                  localStorage.removeItem("accessToken");
-                  localStorage.removeItem("refreshToken");
-                  dispatch(setUser(null));
-               })
-              .finally(() => dispatch(setAuthChecked(true)));
-        } else {
-            dispatch(setAuthChecked(true));
-        }
-    };
+  return (dispatch) => {
+    if (localStorage.getItem("accessToken")) {
+      dispatch(getUser())
+        .catch(() => {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          dispatch(setUser(null));
+        })
+        .finally(() => dispatch(setAuthChecked(true)));
+    } else {
+      dispatch(setAuthChecked(true));
+    }
+  };
 };
-
 
 export const logout = () => {
   return (dispatch) => {
-    return api.logout().then(() => {
+    return configApi.logout().then(() => {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
       dispatch(setUser(null));

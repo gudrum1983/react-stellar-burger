@@ -1,24 +1,14 @@
-export const BASE_URL = "https://norma.nomoreparties.space/api/";
-
-const endpoints = {
-  ingredients: "ingredients",
-  orders: "orders",
-  authRegister: "auth/register",
-  authLogin: "auth/login",
-  authLogout: "auth/logout",
-  authToken: "auth/token",
-  authUser: "auth/user",
-  passwordForgot: "password-reset",
-  passwordReset: "password-reset/reset",
-}
+import {BASE_URL, ENDPOINTS} from "../utils/config-api";
 
 const checkResponse = (res) => {
   if (res.ok) {
     return res.json();
   }
-  /*  console.log('configCheckResponse', res)*/
   return Promise.reject(`Ошибка ${res.status}`);
 };
+
+
+
 
 const checkSuccess = (res) => {
   if (res && res.success) {
@@ -27,16 +17,17 @@ const checkSuccess = (res) => {
   return Promise.reject(`Ответ не success: ${res}`);
 };
 
-const request = (endpoint, options) => {
+export const request = (endpoint, options) => {
   return (fetch(`${BASE_URL}${endpoint}`, options)
     .then(checkResponse)
     .then(checkSuccess));
 };
 
-export const getIngredients = () => request(endpoints.ingredients);
+
+export const getIngredients = () => request(ENDPOINTS.ingredients);
 
 export const getOrderDetailsRequest = (ingredientsOrder) => {
-  return request(endpoints.orders, {
+  return request(ENDPOINTS.orders, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -48,7 +39,7 @@ export const getOrderDetailsRequest = (ingredientsOrder) => {
 };
 
 export const getRegister = (name, pass, email) => {
-  return request(endpoints.authRegister, {
+  return request(ENDPOINTS.authRegister, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -62,7 +53,7 @@ export const getRegister = (name, pass, email) => {
 };
 
 export const getForgot = (email) => {
-  return request(endpoints.passwordForgot, {
+  return request(ENDPOINTS.passwordForgot, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -74,7 +65,7 @@ export const getForgot = (email) => {
 };
 
 export const getReset = (password, token) => {
-  return request(endpoints.passwordReset, {
+  return request(ENDPOINTS.passwordReset, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -87,8 +78,8 @@ export const getReset = (password, token) => {
 };
 
 
-export const getLogin = (pass, email) => {
-  return request(endpoints.authLogin, {
+/*export const getLogin = (pass, email) => {
+  return request(ENDPOINTS.authLogin, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -98,20 +89,20 @@ export const getLogin = (pass, email) => {
       "password": pass,
     })
   })
-};
+};*/
 
-export const getUserDataRefresh = () => {
-  return fetchWithRefresh(endpoints.authUser, {
+/*export const getUserDataRefresh = () => {
+  return fetchWithRefresh(ENDPOINTS.authUser, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       authorization: localStorage.getItem('accessToken')
     }
   })
-};
+};*/
 
-export const getUserDataUpdateRefresh = (email, name, password) => {
-  return fetchWithRefresh(endpoints.authUser, {
+/*export const getUserDataUpdateRefresh = (email, name, password) => {
+  return fetchWithRefresh(ENDPOINTS.authUser, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -123,78 +114,52 @@ export const getUserDataUpdateRefresh = (email, name, password) => {
       password,
     }),
   })
-};
+};*/
 
 
-export const getUserLogoutRefresh = () => {
-  return fetchWithRefresh(endpoints.authLogout, {
+/*export const getUserLogoutRefresh = () => {
+  return fetchWithRefresh(ENDPOINTS.authLogout, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      /*     authorization: localStorage.getItem('accessToken')*/
+      /!*     authorization: localStorage.getItem('accessToken')*!/
     },
     body: JSON.stringify({
       token: localStorage.getItem("refreshToken"),
     }),
   })
-};
+};*/
 
 
-export const getUser = () => {
-  return request(endpoints.authUser, {
+/*export const getUser = () => {
+  return request(ENDPOINTS.authUser, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       authorization: localStorage.getItem('accessToken')
     }
   })
-};
+};*/
 
 
+/*
 export const refreshToken = () => {
-  return request(endpoints.authToken, {
+  return request(ENDPOINTS.authToken, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
-      /*      authorization: localStorage.getItem('accessToken')*/
     },
     body: JSON.stringify({
       token: localStorage.getItem("refreshToken"),
     }),
-  });
-};
-
-export const fetchWithRefresh1 = async (url, options) => {
-  try {
-    const res = await fetch(url, options);
-    return await checkResponse(res);
-  } catch (err) {
-    if (err.message === "jwt expired") {
-      const refreshData = await refreshToken(); //обновляем токен
-      if (!refreshData.success) {
-        return Promise.reject(refreshData);
-      }
-      localStorage.setItem("refreshToken", refreshData.refreshToken);
-      localStorage.setItem("accessToken", refreshData.accessToken);
-      options.headers.authorization = refreshData.accessToken;
-      const res = await fetch(url, options); //повторяем запрос
-      return await checkResponse(res);
-    } else {
-      return Promise.reject(err);
-    }
-  }
-};
-
-const checkReponse1 = (res) => {
-  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+  }).then(checkResponseWithRefresh);
 };
 
 
 export const fetchWithRefresh = async (endpoint, options) => {
   try {
     const res = await fetch(`${BASE_URL}${endpoint}`, options);
-    /*    console.log('fetchWithRefreshRes',res)*/
-    return await checkReponse1(res);
+    return await checkResponseWithRefresh(res);
   } catch (err) {
     if (err.message === "jwt expired") {
       const refreshData = await refreshToken(); //обновляем токен
@@ -205,9 +170,9 @@ export const fetchWithRefresh = async (endpoint, options) => {
       localStorage.setItem("accessToken", refreshData.accessToken);
       options.headers.authorization = refreshData.accessToken;
       const res = await fetch(`${BASE_URL}${endpoint}`, options); //повторяем запрос
-      return await checkResponse(res);
+      return await checkResponseWithRefresh(res);
     } else {
       return Promise.reject(err);
     }
   }
-};
+};*/

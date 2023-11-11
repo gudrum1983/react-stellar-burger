@@ -60,12 +60,6 @@ export function Profile() {
     }
 
 
-
-    /*    dispatch(addEmail(emailValueTest))
-        dispatch(addUser(nameValueTest))
-        dispatch(addPassword(""))*/
-
-
   }
   function handleClick(e) {
     e.preventDefault()
@@ -78,6 +72,17 @@ export function Profile() {
   const profileButton = isEdit ? [typeButton.cancel, typeButton.save] : []
 
   return (
+      <FormContainerUser
+        inputs={profileInputs}
+        button={profileButton}
+        handleSubmit={handleSubmit}
+        handleReset={handleReset}
+      />
+  )
+
+
+
+/*  return (
     <section className={"profileSection"}>
       <div className={"profilePanel"}>
         <ul className={"profileUl"}>
@@ -110,6 +115,6 @@ export function Profile() {
     </section>
 
 
-  )
+  )*/
 
 }

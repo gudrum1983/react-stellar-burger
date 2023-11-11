@@ -14,8 +14,6 @@ const getUser = () =>
 
 export const registerApi = (name, pass, email) => getRegister(name, pass, email);
 
-/*export const loginApi = (pass, email) => getLogin(pass, email);*/
-
 const logout = () =>
   new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -23,7 +21,23 @@ const logout = () =>
     }, 1000);
   });  
 
-export const api = {
+export const configApi = {
   getUser,
   logout,
 };
+
+
+
+export const BASE_URL = "https://norma.nomoreparties.space/api/";
+
+export const ENDPOINTS = {
+  ingredients: "ingredients",
+  orders: "orders",
+  authRegister: "auth/register",
+  authLogin: "auth/login",
+  authLogout: "auth/logout",
+  authToken: "auth/token",
+  authUser: "auth/user",
+  passwordForgot: "password-reset",
+  passwordReset: "password-reset/reset",
+}

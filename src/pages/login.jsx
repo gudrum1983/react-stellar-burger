@@ -4,6 +4,7 @@ import {navigateButton, typeInputs, typeLinksFooter} from "../utils/inputs";
 import {useDispatch, useSelector} from "react-redux";
 import {login} from "../services/user/action";
 import {selectedEmail, selectedPassword} from "../services/user-inputs/user-inputs-selector";
+import {useNavigation} from "react-router-dom";
 
 
 export function Login() {
@@ -16,10 +17,13 @@ export function Login() {
     dispatch(login(pass, email));
   }
 
+
   const loginFormHeader = "Вход"
   const loginInputs = [typeInputs.email, typeInputs.password];
   const loginButton = navigateButton({label: "Войти"});
   const loginFooterLinks = [typeLinksFooter.newUser, typeLinksFooter.forgotPassword];
+
+
 
   return (
     <FormContainerNew

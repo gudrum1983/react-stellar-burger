@@ -1,7 +1,7 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import styles from "./app.module.css";
-import {BrowserRouter, Routes, Route, useParams, useLocation, useNavigate} from "react-router-dom";
+import {BrowserRouter, Routes, Route, useParams, useLocation, useNavigate, useNavigation} from "react-router-dom";
 import { OrderConstructor} from "../../pages/order-constructor";
 
 import {AppHeader} from '../app-header/app-header'
@@ -22,13 +22,14 @@ import {clearIngredientDetails} from "../../services/ingredient-details/ingredie
 import {ingredientDetails} from "../../services/ingredient-details/ingredient-details-selector";
 
 import { checkUserAuth } from "../../services/user/action";
-import { OnlyAuth, OnlyUnAuth } from "./protected-route";
+import { OnlyAuth, OnlyUnAuth } from "../hoc/protected-route";
 import {Register} from "../../pages/register";
 import {Login} from "../../pages/login";
 import {ForgotPassword} from "../../pages/forgot-password";
 import {ResetPassword} from "../../pages/reset-password";
 import {Profile} from "../../pages/profile";
 import {FeedOrders} from "../../pages/feedOrders";
+import {ProfileLayout} from "../profile-layout/profile-layout";
 
 export default function App() {
 
@@ -101,6 +102,7 @@ export default function App() {
 
 
 
+
   return (
     <div className={`${styles.app}`}>
 
@@ -110,14 +112,25 @@ export default function App() {
 
           <Route path="/" element={<OrderConstructor handleDrop={handleDrop} />} />
           <Route path="/ingredients/:id" element={<IngredientDetails />} />
+
+          {/*OnlyUnAuth*/}
           <Route path="/login" element={<OnlyUnAuth component={<Login/>} />} />
           <Route path="/register" element={<OnlyUnAuth component={<Register/>} />} />
           <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPassword/>} />} />
           <Route path="/reset-password" element={<OnlyUnAuth component={<ResetPassword/>} />} />
-          <Route path="/profile" element={<OnlyAuth component={<Profile/>} />} />
+
+          {/*OnlyAuth*/}
+          <Route path="/profile" element={<OnlyAuth component={<ProfileLayout/>} />} >
+
+            <Route index element={<Profile/>}/>
+            <Route path="orders" element={<OnlyAuth component={<Profile/>} />} />
+            <Route path="exit" element={<OnlyAuth component={<Profile/>} />} />
+          </Route>
+
+
+
           <Route path="/feed" element={<OnlyAuth component={<FeedOrders/>} />} />
-          <Route path="/profile/orders" element={<OnlyAuth component={<Profile/>} />} />
-          <Route path="/profile/exit" element={<OnlyAuth component={<Profile/>} />} />
+
 
 
       {orderNumber && modal(<OrderDetails/>)}
