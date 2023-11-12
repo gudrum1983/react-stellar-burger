@@ -1,23 +1,21 @@
 import React from "react";
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
-import styles from "../components/app/app.module.css";
 import {BurgerConstructor} from "../components/burger-constructor/burger-constructor";
 import {BurgerIngredients} from "../components/burger-ingredients/burger-ingredients";
 
-
-export function OrderConstructor({handleDrop}) {
+export function Home() {
 
   return (
-    <main className={styles.main}>
+    <div className={'flex-row'}>
       <DndProvider backend={HTML5Backend}>
-        <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
+        <section className={'pl-5 pr-5 half-home'}>
           <BurgerIngredients/>
         </section>
-        <section className={`pl-5 pr-5 ${styles.sectionClass}`}>
-          <BurgerConstructor onDropHandler={handleDrop}/>
+        <section className={'pl-5 pr-5 half-home'}>
+          <BurgerConstructor/>
         </section>
       </DndProvider>
-    </main>
+    </div>
   )
 }

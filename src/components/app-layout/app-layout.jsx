@@ -3,7 +3,6 @@ import {Logo, BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-devel
 import {NavigationLink} from "../navigation-link/navigation-link";
 import {Link, Outlet, useLocation} from "react-router-dom";
 import React from "react";
-
 export function AppLayout() {
 
   const location = useLocation();

@@ -5,32 +5,26 @@ import {ingredientPropType} from "../../../utils/prop-types";
 import {useSelector} from "react-redux";
 import {useDrag} from "react-dnd";
 import {selectCount} from "../../../services/burger-constructor/burger-constructor-selector";
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 
 export function Ingredient({currentItem}) {
 
   const location = useLocation()
   const id = currentItem._id
 
-  const [{isDrag, cursor}, dragRef] = useDrag({
+  const [, dragRef] = useDrag({
     type: "burgerConstructor",
     item: currentItem,
-
-    collect: monitor => ({
-      isDrag: monitor.isDragging(),
-      cursor: monitor.isDragging() ? 'grabbing' : 'grab'
-    }),
-
   });
 
   const count = useSelector(selectCount(currentItem._id, currentItem.type))
   const canDraggabble = (currentItem?.type !== "bun") ? true : !(count)
+  const cursorStyle = !canDraggabble ? 'cursor_type_noGrab' : ''
 
   return (
 
-
-      <li key={id} className={`${styles.card}`} {...(canDraggabble && {ref: dragRef, style: {cursor}})}>
-        <Link  className={`${styles.nonlink}`} to={`/ingredients/${id}`} state={{background: location}}>
+    <li key={id} className={`${styles.card}`} {...(canDraggabble && {ref: dragRef})}>
+      <Link className={`${styles.nonlink} ${cursorStyle}`} to={`/ingredients/${id}`} state={{background: location}}>
         <img className={styles.imgCard} alt={currentItem.name} src={currentItem.image}/>
         <div className={`pt-1 pb-1 ${styles.price}`}>
           <p className="text text_type_digits-default pr-2">{currentItem.price}</p>
@@ -40,8 +34,8 @@ export function Ingredient({currentItem}) {
           <p className="text text_type_main-default">{currentItem.name}</p>
         </div>
         {(count > 0) ? <Counter count={count} size="default"/> : null}
-        </Link>
-      </li>
+      </Link>
+    </li>
 
   )
 }

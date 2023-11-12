@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import styles from "./modal.module.css";
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {ModalOverlay} from "./modal-overlay/modal-overlay";
-import {optionalNodeElement, optionalFunc, optionalString} from "../../utils/prop-types";
+import {nodeElementPropType, optionalFunc, stringPropType} from "../../utils/prop-types";
 
 export function Modal({children, header, onClose}) {
 
@@ -26,7 +26,7 @@ export function Modal({children, header, onClose}) {
 }
 
 Modal.propTypes = {
-  children: optionalNodeElement,
-  header: optionalString,
+  children: nodeElementPropType,
+  header: stringPropType,
   onClose: optionalFunc,
 };

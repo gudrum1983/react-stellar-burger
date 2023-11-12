@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {addPassword} from "../../../services/inputs-values/inputs-values-actions";
 import {PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {inputsValuesPassword} from "../../../services/inputs-values/inputs-values-selector";
-import {optionalString} from "../../../utils/prop-types";
+import {stringPropType} from "../../../utils/prop-types";
 import {useLocation} from "react-router-dom";
 
 export function InputPassword({placeholder = 'Пароль', disabled = false}) {
@@ -39,5 +39,5 @@ export function InputPassword({placeholder = 'Пароль', disabled = false}) 
 }
 
 InputPassword.propTypes = {
-  placeholder: optionalString,
+  placeholder: stringPropType,
 };

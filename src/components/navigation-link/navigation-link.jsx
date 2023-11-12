@@ -1,5 +1,5 @@
 import React from "react";
-import {optionalNodeElement, optionalString} from "../../utils/prop-types";
+import {nodeElementPropType, stringPropType} from "../../utils/prop-types";
 import {Link} from "react-router-dom";
 import classes from "./navigation-link.module.css";
 
@@ -21,7 +21,7 @@ export function NavigationLink({to, icon, label}) {
 }
 
 NavigationLink.propTypes = {
-  icon: optionalNodeElement,
-  label: optionalString,
-  to: optionalString,
+  icon: nodeElementPropType,
+  label: stringPropType,
+  to: stringPropType,
 };

@@ -8,9 +8,18 @@ import {useDrop} from "react-dnd";
 import {useDispatch, useSelector} from "react-redux";
 import {getOrderDetails} from "../../services/order-details/order-details-actions";
 import {selectBurgerConstructor} from "../../services/burger-constructor/burger-constructor-selector";
-import {optionalFunc} from "../../utils/prop-types";
+import {addFilling, chooseBun} from "../../services/burger-constructor/burger-constructor-actions";
 
-export function BurgerConstructor({onDropHandler}) {
+export function BurgerConstructor() {
+  const dispatch = useDispatch();
+
+  const onDropHandler = (ingredient) => {
+    if (ingredient.type === "bun") {
+      dispatch(chooseBun(ingredient))
+    } else {
+      dispatch(addFilling(ingredient))
+    }
+  };
 
   const [{isHover, isCanD}, dropTarget] = useDrop({
     accept: "burgerConstructor",
@@ -25,12 +34,11 @@ export function BurgerConstructor({onDropHandler}) {
 
   const borderColor = isHover ? stylesConstr.borderLightgreen : (isCanD ? stylesConstr.borderLightgreen2 : stylesConstr.borderTransparent);
 
-  const dispatch = useDispatch();
+
   const selectedIngredients = useSelector(selectBurgerConstructor)
   const bun = selectedIngredients.bun
     , {name, image, price, _id} = {...bun}
     , other = selectedIngredients.other;
-
 
   function getListIdIngredients() {
     const idBun = [_id];
@@ -79,9 +87,4 @@ export function BurgerConstructor({onDropHandler}) {
       </div>
     </div>
   )
-    ;
 }
-
-BurgerConstructor.propTypes = {
-  onDropHandler: optionalFunc,
-};

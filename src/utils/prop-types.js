@@ -15,15 +15,15 @@ export const ingredientPropType = PropTypes.shape({
   __v: PropTypes.number.isRequired,
 });
 
-export const optionalNodeElement = PropTypes.node.isRequired;
-export const optionalNum = PropTypes.number.isRequired;
-export const optionalString = PropTypes.string.isRequired;
+export const nodeElementPropType = PropTypes.node.isRequired;
+export const numPropType = PropTypes.number.isRequired;
+export const stringPropType = PropTypes.string.isRequired;
 export const optionalArray = PropTypes.array.isRequired;
 export const optionalObject = PropTypes.object.isRequired;
 export const optionalFunc = PropTypes.func.isRequired;
-export const optionalArrayOfIngredients = PropTypes.arrayOf(ingredientPropType).isRequired;
+export const arrayOfIngredientsPropType = PropTypes.arrayOf(ingredientPropType).isRequired;
 export const selectedOtherIngredientsPropType = PropTypes.arrayOf(PropTypes.shape({
-  numberIngredient: optionalString,
+  numberIngredient: stringPropType,
   ingredient: ingredientPropType,
 }))
 
@@ -32,7 +32,7 @@ export const selectedIngredientsPropType = PropTypes.shape({
   other: selectedOtherIngredientsPropType,
 })
 
-export const otherIngredient = PropTypes.shape({
+export const otherIngredientPropType = PropTypes.shape({
   bun: ingredientPropType,
   other: selectedOtherIngredientsPropType,
 })

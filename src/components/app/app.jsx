@@ -2,7 +2,7 @@ import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import styles from "./app.module.css";
 import {Routes, Route, useLocation, useNavigate} from "react-router-dom";
-import {OrderConstructor} from "../../pages/order-constructor";
+import {Home} from "../../pages/home";
 import {AppLayout} from '../app-layout/app-layout'
 import {Modal} from "../modal/modal";
 import {OrderDetails} from "../modal/order-details/order-details";
@@ -32,9 +32,6 @@ export default function App() {
     dispatch(loadBurgerIngredients())
   }, []);
 
-  /*  React.useEffect(() => {
-      dispatch(loadBurgerIngredients())
-    }, [])*/
   const {orderNumber, orderRequest, orderFailed} = useSelector(orderDetails)
   const {ingredients, isLoading, hasError} = useSelector(burgerIngredients);
   const location = useLocation()
@@ -57,13 +54,13 @@ export default function App() {
     </Modal>)
   }
 
-  const handleDrop = (ingredient) => {
+/*  const handleDrop = (ingredient) => {
     if (ingredient.type === "bun") {
       dispatch(chooseBun(ingredient))
     } else {
       dispatch(addFilling(ingredient))
     }
-  };
+  };*/
 
   if (isLoading) {
     return <div className={`text text_type_main-default`}>Загрузка...</div>
@@ -77,10 +74,9 @@ export default function App() {
 
   return (<div className={`${styles.app}`}>
 
-      {/*      <AppHeader/>*/}
       <Routes location={background || location}>
         <Route path="/" element={<AppLayout/>}>
-          <Route index element={<OrderConstructor handleDrop={handleDrop}/>}/>
+          <Route index element={<Home/>}/>
           <Route path="/ingredients/:id" element={<IngredientDetails/>}/>
 
           {/*OnlyUnAuth*/}

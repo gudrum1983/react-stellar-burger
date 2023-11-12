@@ -4,6 +4,7 @@
   justify-content: center;
   background: #1c1c21;
   width: 100%;
+  max-height: 88px;
 }
 
 .panel {
@@ -53,12 +54,12 @@
 
 .main {
   margin: 0;
-  padding: 40px 0 0;
+  padding: 40px 0 60px;
   width: 100%;
   max-width: 1280px;
   box-sizing: border-box;
   height: 100%;
-  max-height: calc(100% - (52px + 88px));
+  max-height: calc(100% - 88px);
   display: flex;
   flex-direction: row;
 }

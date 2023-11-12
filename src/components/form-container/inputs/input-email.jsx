@@ -3,7 +3,7 @@ import {inputsValuesEmail} from "../../../services/inputs-values/inputs-values-s
 import React from "react";
 import {EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {addEmail} from "../../../services/inputs-values/inputs-values-actions";
-import {optionalString} from "../../../utils/prop-types";
+import {stringPropType} from "../../../utils/prop-types";
 import {useLocation} from "react-router-dom";
 
 export function InputEmail({placeholder = "E-mail"}) {
@@ -43,5 +43,5 @@ export function InputEmail({placeholder = "E-mail"}) {
 }
 
 InputEmail.propTypes = {
-  placeholder: optionalString,
+  placeholder: stringPropType,
 };

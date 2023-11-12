@@ -1,6 +1,6 @@
 import styles from "./ingredients-type-list.module.css";
 import React from "react";
-import {optionalArrayOfIngredients, optionalString} from "../../../utils/prop-types";
+import {arrayOfIngredientsPropType, stringPropType} from "../../../utils/prop-types";
 import {Ingredient} from "../ingredient/ingredient";
 
 
@@ -18,7 +18,7 @@ export const IngredientsTypeList = React.forwardRef(({name, data, id}, ref) =>  
 });
 
 IngredientsTypeList.propTypes = {
-  name: optionalString,
-  data: optionalArrayOfIngredients,
-  id: optionalString,
+  name: stringPropType,
+  data: arrayOfIngredientsPropType,
+  id: stringPropType,
 };

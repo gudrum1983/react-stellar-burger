@@ -2,7 +2,7 @@ import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {addUser} from "../../../services/inputs-values/inputs-values-actions";
 import {EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {optionalString} from "../../../utils/prop-types";
+import {stringPropType} from "../../../utils/prop-types";
 import {inputsValuesUserName} from "../../../services/inputs-values/inputs-values-selector";
 import {useLocation} from "react-router-dom";
 
@@ -41,5 +41,5 @@ export function InputName({placeholder = 'Имя'}) {
 }
 
 InputName.propTypes = {
-  placeholder: optionalString,
+  placeholder: stringPropType,
 };
