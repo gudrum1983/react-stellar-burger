@@ -1,5 +1,5 @@
 import React from "react";
-
+//Заглушка
 export function Feed() {
 
   const container = {

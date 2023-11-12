@@ -7,22 +7,21 @@ import {InputEmail} from "../components/form-container/inputs/input-email";
 import {InputCode} from "../components/form-container/inputs/input-code";
 
 export const typeInputs = {
-  email: <InputEmail placeholder="E-mail" key='email' name='email'/>,
-  password: <InputPassword placeholder="Пароль" key='password' name='password'/>,
-  passwordNew: <InputPassword placeholder="Введите новый пароль" key='passwordNew' name='passwordNew'/>,
-  checkedCode: <InputCode placeholder="Введите код из письма" key='checkedCode' name='checkedCode'/>,
-  name: <InputName placeholder="Имя" key='name' name='name'/>,
+  email: <InputEmail placeholder="E-mail"/>,
+  profileLogin: <InputEmail placeholder="Логин"/>,
   emailResetPassword: <InputEmail placeholder="Укажите e-mail" key='emailResetPassword' name='emailResetPassword'/>,
-  profileName: <InputName placeholder="Имя" key='name' name='name' disabled={true}/>,
-  profileLogin: <InputEmail placeholder="Логин" key='email' name='email'/>,
-  profilePassword: <InputPassword placeholder="Пароль" key='passwordProfile' name='passwordProfile' disabled={true}/>,
+  checkedCode: <InputCode placeholder="Введите код из письма"/>,
+  name: <InputName placeholder="Имя"/>,
+  password: <InputPassword placeholder="Пароль"/>,
+  passwordNew: <InputPassword placeholder="Введите новый пароль"/>,
+
 }
 
 export const typeLinksFooter = {
-  alreadyRegistered: <ContainerLink textP="Уже зарегистрированы?" textL="Войти" to='/login' key='alreadyRegistered'/>,
-  rememberPassword: <ContainerLink textP="Вспомнили пароль?" textL="Войти" to='/login' key='rememberPassword'/>,
-  forgotPassword: <ContainerLink textP="Забыли пароль?" textL="Забыли пароль?" to='/forgot-password' key='forgotPassword'/>,
-  newUser:<ContainerLink textP="Вы — новый пользователь?" textL="Зарегистрироваться" to='/register' key='newUser'/>,
+  alreadyRegistered: <ContainerLink textDescription="Уже зарегистрированы?" textLink="Войти" to='/login' key='alreadyRegistered'/>,
+  rememberPassword: <ContainerLink textDescription="Вспомнили пароль?" textLink="Войти" to='/login' key='rememberPassword'/>,
+  forgotPassword: <ContainerLink textDescription="Забыли пароль?" textLink="Забыли пароль?" to='/forgot-password' key='forgotPassword'/>,
+  newUser:<ContainerLink textDescription="Вы — новый пользователь?" textLink="Зарегистрироваться" to='/register' key='newUser'/>,
 }
 
 export const navigateButton = ({onClick, label}) => {

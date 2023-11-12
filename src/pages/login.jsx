@@ -1,11 +1,9 @@
 import React from "react";
-import {FormContainerNew} from "../components/form-container/form-container";
+import {FormContainer} from "../components/form-container/form-container";
 import {navigateButton, typeInputs, typeLinksFooter} from "../utils/inputs";
 import {useDispatch, useSelector} from "react-redux";
 import {login} from "../services/user/user-action";
 import {inputsValuesEmail, inputsValuesPassword} from "../services/inputs-values/inputs-values-selector";
-import {useNavigation} from "react-router-dom";
-
 
 export function Login() {
 
@@ -17,16 +15,13 @@ export function Login() {
     dispatch(login(pass, email));
   }
 
-
   const loginFormHeader = "Вход"
   const loginInputs = [typeInputs.email, typeInputs.password];
   const loginButton = navigateButton({label: "Войти"});
   const loginFooterLinks = [typeLinksFooter.newUser, typeLinksFooter.forgotPassword];
 
-
-
   return (
-    <FormContainerNew
+    <FormContainer
       header={loginFormHeader}
       inputs={loginInputs}
       button={loginButton}

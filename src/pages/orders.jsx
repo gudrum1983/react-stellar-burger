@@ -1,6 +1,7 @@
 import React from "react";
 
-export function HistoryOrders() {
+//Заглушка
+export function Orders() {
 
   const container = {
     display: 'flex',

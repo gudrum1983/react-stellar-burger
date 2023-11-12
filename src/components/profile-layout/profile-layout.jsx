@@ -2,6 +2,7 @@ import {NavLink, Outlet} from "react-router-dom";
 import React from "react";
 import {logout} from "../../services/user/user-action";
 import {useDispatch} from "react-redux";
+import style from "./profile-layout.module.css"
 
 export const ProfileLayout = () => {
 
@@ -9,34 +10,33 @@ export const ProfileLayout = () => {
 
   function handleClick(e) {
     e.preventDefault()
-    console.log("click", "click")
     dispatch(logout());
   }
 
   return (
-    <section className={"profileSection"}>
-      <div className={"profilePanel"}>
-        <ul className={"profileUl"}>
+    <div className={style.profile}>
+      <nav className={style.navigation}>
+        <ul className={style.links}>
           <li>
-            <NavLink className={`text text_type_main-medium text_color_inactive defaultNavLink`}
+            <NavLink className={`text text_type_main-medium text_color_inactive ${style.link}`}
                      to={"/profile"}
                      end>Профиль</NavLink>
           </li>
           <li>
-            <NavLink className={`text text_type_main-medium text_color_inactive defaultNavLink`}
+            <NavLink className={`text text_type_main-medium text_color_inactive ${style.link}`}
                      to={"/profile/orders"}>История
               заказов</NavLink>
           </li>
           <li>
-            <NavLink className={`text text_type_main-medium text_color_inactive defaultNavLink`}
+            <NavLink className={`text text_type_main-medium text_color_inactive ${style.link}`}
                      to={"/login"} onClick={handleClick}>Выход</NavLink>
           </li>
         </ul>
-        <p className={`text text_type_main-small text_color_inactive pText`}>
+        <p className={`pt-20 text text_type_main-small text_color_inactive description`}>
           В этом разделе вы можете изменить свои персональные данные
         </p>
-      </div>
+      </nav>
       <Outlet/>
-    </section>
+    </div>
   )
 }

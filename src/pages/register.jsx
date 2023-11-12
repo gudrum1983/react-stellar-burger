@@ -1,7 +1,6 @@
-import React, {useMemo} from "react";
+import React from "react";
 import {navigateButton, typeInputs, typeLinksFooter} from "../utils/inputs";
-import {FormContainerNew} from "../components/form-container/form-container";
-import {useNavigate} from "react-router-dom";
+import {FormContainer} from "../components/form-container/form-container";
 import {useDispatch, useSelector} from "react-redux";
 import {
   inputsValuesEmail,
@@ -13,7 +12,6 @@ import {register} from "../services/user/user-action";
 
 export function Register() {
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const email = useSelector(inputsValuesEmail)
   const name = useSelector(inputsValuesUserName)
@@ -22,9 +20,6 @@ export function Register() {
   function handleSubmit(evt) {
     debugger
     evt.preventDefault();
-
-    /*   navigate('/login', {replace: false});*/
-    /*     postApiRegister(name, pass, email);*/
     dispatch(register(name, pass, email));
   }
 
@@ -34,7 +29,7 @@ export function Register() {
   const registerFooterLinks = [typeLinksFooter.alreadyRegistered];
 
   return (
-    <FormContainerNew
+    <FormContainer
       header={registerFormHeader}
       inputs={registerInputs}
       button={registerButton}

@@ -1,6 +1,6 @@
 import React from "react";
 import {navigateButton, typeInputs, typeLinksFooter} from "../utils/inputs";
-import {FormContainerNew} from "../components/form-container/form-container";
+import {FormContainer} from "../components/form-container/form-container";
 import {Navigate, useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {inputsValuesVerificationCode, inputsValuesPassword} from "../services/inputs-values/inputs-values-selector";
@@ -35,7 +35,7 @@ export function ResetPassword() {
   }
 
   return (
-    <FormContainerNew header={resetPasswordFormHeader} inputs={resetPasswordInputs} button={resetPasswordButton}
-                      links={resetPasswordFooterLinks} handleSubmit={handleSubmit}/>
+    <FormContainer header={resetPasswordFormHeader} inputs={resetPasswordInputs} button={resetPasswordButton}
+                   links={resetPasswordFooterLinks} handleSubmit={handleSubmit}/>
   )
 }

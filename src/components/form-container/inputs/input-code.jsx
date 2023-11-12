@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {addCheckedToken} from "../../../services/inputs-values/inputs-values-actions";
 import {inputsValuesVerificationCode} from "../../../services/inputs-values/inputs-values-selector";
 
-export function InputCode({placeholder}) {
+export function InputCode() {
 
   const value = useSelector(inputsValuesVerificationCode)
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ export function InputCode({placeholder}) {
   return (
     <Input
       type={'text'}
-      placeholder={placeholder}
+      placeholder={"Введите код из письма"}
       onChange={e => dispatch(addCheckedToken(e.target.value))}
       value={value}
       name={'name'}

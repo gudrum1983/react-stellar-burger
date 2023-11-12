@@ -8,7 +8,6 @@ import {Modal} from "../modal/modal";
 import {OrderDetails} from "../modal/order-details/order-details";
 import {IngredientDetails} from "../modal/ingredient-details/ingredient-details";
 import {loadBurgerIngredients} from "../../services/burger-ingredients/burger-ingredients-actions";
-import {addFilling, chooseBun} from "../../services/burger-constructor/burger-constructor-actions";
 import {clearOrderDetails} from "../../services/order-details/order-details-actions";
 import {orderDetails} from "../../services/order-details/order-details-selectors";
 import {burgerIngredients} from "../../services/burger-ingredients/burger-ingredients-selector";
@@ -21,7 +20,7 @@ import {ResetPassword} from "../../pages/reset-password";
 import {Profile} from "../../pages/profile";
 import {Feed} from "../../pages/feed";
 import {ProfileLayout} from "../profile-layout/profile-layout";
-import {HistoryOrders} from "../profile-layout/history-orders";
+import {Orders} from "../../pages/orders";
 
 export default function App() {
 
@@ -54,14 +53,6 @@ export default function App() {
     </Modal>)
   }
 
-/*  const handleDrop = (ingredient) => {
-    if (ingredient.type === "bun") {
-      dispatch(chooseBun(ingredient))
-    } else {
-      dispatch(addFilling(ingredient))
-    }
-  };*/
-
   if (isLoading) {
     return <div className={`text text_type_main-default`}>Загрузка...</div>
   } else {
@@ -87,10 +78,8 @@ export default function App() {
 
           {/*OnlyAuth*/}
           <Route path="profile" element={<OnlyAuth component={<ProfileLayout/>}/>}>
-
             <Route index element={<Profile/>}/>
-            <Route path="orders" element={<OnlyAuth component={<HistoryOrders/>}/>}/>
-            <Route path="exit" element={<OnlyAuth component={<Profile/>}/>}/>
+            <Route path="orders" element={<Orders/>}/>
           </Route>
 
           <Route path="/feed" element={<OnlyAuth component={<Feed/>}/>}/>

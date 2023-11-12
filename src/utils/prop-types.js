@@ -17,10 +17,15 @@ export const ingredientPropType = PropTypes.shape({
 
 export const nodeElementPropType = PropTypes.node.isRequired;
 export const numPropType = PropTypes.number.isRequired;
+export const booleanPropType = PropTypes.bool.isRequired;
 export const stringPropType = PropTypes.string.isRequired;
 export const optionalArray = PropTypes.array.isRequired;
 export const optionalObject = PropTypes.object.isRequired;
-export const optionalFunc = PropTypes.func.isRequired;
+
+export const stringOptional = PropTypes.string;
+export const arrayOfNode = PropTypes.arrayOf(nodeElementPropType);
+export const functionOptional = PropTypes.func;
+export const functionPropType = PropTypes.func.isRequired;
 export const arrayOfIngredientsPropType = PropTypes.arrayOf(ingredientPropType).isRequired;
 export const selectedOtherIngredientsPropType = PropTypes.arrayOf(PropTypes.shape({
   numberIngredient: stringPropType,

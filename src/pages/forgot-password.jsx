@@ -1,6 +1,6 @@
 import React from "react";
 import {navigateButton, typeInputs, typeLinksFooter} from "../utils/inputs";
-import {FormContainerNew} from "../components/form-container/form-container";
+import {FormContainer} from "../components/form-container/form-container";
 import {useNavigate} from "react-router-dom";
 
 import {useSelector} from "react-redux";
@@ -29,7 +29,7 @@ export function ForgotPassword() {
   const forgotPasswordFooterLinks = [typeLinksFooter.rememberPassword];
 
   return (
-    <FormContainerNew header={forgotPasswordFormHeader} inputs={forgotPasswordInputs} button={forgotPasswordButton}
-                      links={forgotPasswordFooterLinks} handleSubmit={handleSubmit}/>
+    <FormContainer header={forgotPasswordFormHeader} inputs={forgotPasswordInputs} button={forgotPasswordButton}
+                   links={forgotPasswordFooterLinks} handleSubmit={handleSubmit}/>
   )
 }

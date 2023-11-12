@@ -1,8 +1,8 @@
 import React from "react";
 import {typeButton, typeInputs} from "../utils/inputs";
-import {FormContainerUser} from "../components/form-container/form-container";
+import {FormContainer} from "../components/form-container/form-container";
 import {useDispatch, useSelector} from "react-redux";
-import {getUser, logout, updateUser} from "../services/user/user-action";
+import {getUser, updateUser} from "../services/user/user-action";
 import {userMail, userName} from "../services/user/user-selector";
 import {addEmail, addPassword, addUser} from "../services/inputs-values/inputs-values-actions";
 import {inputsValuesEmail, inputsValuesPassword, inputsValuesUserName} from "../services/inputs-values/inputs-values-selector";
@@ -19,7 +19,6 @@ export function Profile() {
     dispatch(addUser(nameValueTest))
     dispatch(addPassword(""))
   }
-
 
   React.useEffect(() => {
     setValue()
@@ -54,21 +53,13 @@ export function Profile() {
       dispatch(addUser(nameValueTest))
       dispatch(addPassword(""))
     }
-
-
-  }
-  function handleClick(e) {
-    e.preventDefault()
-    console.log("click","click")
-    dispatch(logout());
-
   }
 
   const profileInputs = [typeInputs.profileName, typeInputs.profileLogin, typeInputs.password];
   const profileButton = isEdit ? [typeButton.cancel, typeButton.save] : []
 
   return (
-      <FormContainerUser
+      <FormContainer
         inputs={profileInputs}
         button={profileButton}
         handleSubmit={handleSubmit}
