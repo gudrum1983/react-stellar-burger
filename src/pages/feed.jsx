@@ -1,6 +1,6 @@
 import React from "react";
 
-export function HistoryOrders() {
+export function Feed() {
 
   const container = {
     display: 'flex',
@@ -13,7 +13,7 @@ export function HistoryOrders() {
   return (
     <div style={container}>
       <p className="text text_type_main-medium">
-        История заказов
+        Лента заказов
       </p>
     </div>
   )

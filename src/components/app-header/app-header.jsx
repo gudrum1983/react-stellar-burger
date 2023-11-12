@@ -1,29 +1,30 @@
 import styles from "./app-header.module.css";
 import {Logo, BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import {NavigationLink} from "./navigation-link/navigation-link";
-import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 
 export function AppHeader() {
 
   const location = useLocation();
   const active = (to) => {
-    return to === location.pathname
-    ? "primary"
-      : "secondary"
-
+    if (to === "/profile") {
+      return (location.pathname.indexOf(to) === 0) //проверяем что строка находится именно в начале pathname
+        ? "primary"
+        : "secondary"
+    } else {
+      return to === location.pathname
+        ? "primary"
+        : "secondary"
+    }
   }
-
-
-
 
   const classes = {
     link: "pl-5 pr-5 pb-4 pt-4",
-    panel: "pt-4 pb-4",
   }
 
   return (
     <header className={styles.header}>
-      <div className={`${styles.panel} ${classes.panel}`}>
+      <div className={styles.panel}>
         <nav className={styles.navigation}>
           <ul className={`${styles.links} text`}>
             <li className={`${styles.flex_row} ${classes.link} cursor`}>
@@ -36,7 +37,8 @@ export function AppHeader() {
         </nav>
         <Logo className={styles.logo}/>
         <div className={`${styles.flex_row} ${styles.profile} ${classes.link} cursor`}>
-          <NavigationLink to={'/profile'} icon={<ProfileIcon type={active("/profile")}/>}>Личный&nbsp;кабинет</NavigationLink>
+          <NavigationLink to={'/profile'}
+                          icon={<ProfileIcon type={active1("/profile")}/>}>Личный&nbsp;кабинет</NavigationLink>
         </div>
       </div>
     </header>
