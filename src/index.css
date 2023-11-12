@@ -10,6 +10,12 @@ body {
   transition: opacity 0.5s;
 }
 
+.cursorLogo {
+  cursor: pointer;
+/*  opacity: 1;
+  transition: opacity 0.5s;*/
+}
+
 .cursor_type_nresize {
   cursor: n-resize
 }

@@ -1,21 +1,50 @@
+import styles from "./app-layout.module.css";
+import {Logo, BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components'
+import {NavigationLink} from "../navigation-link/navigation-link";
+import {Link, Outlet, useLocation} from "react-router-dom";
 import React from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {useLocation, useNavigate, Outlet} from "react-router-dom";
-import {AppHeader} from '../app-header/app-header'
-import {Modal} from "../modal/modal";
-import {loadBurgerIngredients} from "../../services/burger-ingredients/burger-ingredients-actions";
-import {addFilling, chooseBun} from "../../services/burger-constructor/burger-constructor-actions";
-import {clearOrderDetails} from "../../services/order-details/order-details-actions";
-import {orderDetails} from "../../services/order-details/order-details-selectors";
-import {burgerIngredients} from "../../services/burger-ingredients/burger-ingredients-selector";
-import {checkUserAuth} from "../../services/user/user-action";
-
 
 export function AppLayout() {
+
+  const location = useLocation();
+  const active = (to) => {
+    if (to === "/profile") {
+      return (location.pathname.indexOf(to) === 0) //проверяем что строка "/profile" находится именно в начале pathname
+        ? "primary"
+        : "secondary"
+    } else {
+      return to === location.pathname
+        ? "primary"
+        : "secondary"
+    }
+  }
+
   return (
     <>
-      <AppHeader/>
-      <Outlet/>
+      <header className={styles.header}>
+          <nav className={styles.panel}>
+            <ul className={`${styles.links} text`}>
+              <li className={`${styles.link_home} cursor`}>
+                <NavigationLink to={'/'} icon={<BurgerIcon type={active("/")}/>} label={'Конструктор'}/>
+              </li>
+              <li className={`${styles.link_feed} cursor`}>
+                <NavigationLink to={'/feed'}
+                                icon={<ListIcon type={active("/feed")}/>} label={'Лента заказов'}/>
+              </li>
+              <li className={`${styles.link_logo} cursorLogo`}>
+                <Link to={'/'}><Logo/></Link>
+              </li>
+              <li className={`${styles.link_profile} cursor`}>
+                <NavigationLink to={'/profile'}
+                                icon={<ProfileIcon type={active("/profile")}/>} label={'Личный кабинет'}/>
+              </li>
+            </ul>
+          </nav>
+      </header>
+
+      <main className={styles.main}>
+        <Outlet/>
+      </main>
     </>
-  )
+  );
 }

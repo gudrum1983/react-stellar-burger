@@ -15,7 +15,7 @@ export const ingredientPropType = PropTypes.shape({
   __v: PropTypes.number.isRequired,
 });
 
-export const nodePropType = PropTypes.node.isRequired;
+export const optionalNodeElement = PropTypes.node.isRequired;
 export const optionalNum = PropTypes.number.isRequired;
 export const optionalString = PropTypes.string.isRequired;
 export const optionalArray = PropTypes.array.isRequired;

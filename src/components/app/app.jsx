@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import styles from "./app.module.css";
 import {Routes, Route, useLocation, useNavigate} from "react-router-dom";
 import {OrderConstructor} from "../../pages/order-constructor";
-import {AppHeader} from '../app-header/app-header'
+import {AppLayout} from '../app-layout/app-layout'
 import {Modal} from "../modal/modal";
 import {OrderDetails} from "../modal/order-details/order-details";
 import {IngredientDetails} from "../modal/ingredient-details/ingredient-details";
@@ -22,7 +22,6 @@ import {Profile} from "../../pages/profile";
 import {Feed} from "../../pages/feed";
 import {ProfileLayout} from "../profile-layout/profile-layout";
 import {HistoryOrders} from "../profile-layout/history-orders";
-import {AppLayout} from "../app-layout/app-layout";
 
 export default function App() {
 

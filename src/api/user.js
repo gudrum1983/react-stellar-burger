@@ -73,3 +73,4 @@ export const authApi = {
   getUser,
   register
 };
+
