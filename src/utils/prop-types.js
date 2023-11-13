@@ -18,6 +18,7 @@ export const ingredientPropType = PropTypes.shape({
 export const nodeElementPropType = PropTypes.node.isRequired;
 export const numPropType = PropTypes.number.isRequired;
 export const booleanPropType = PropTypes.bool.isRequired;
+export const booleanOptional = PropTypes.bool;
 export const stringPropType = PropTypes.string.isRequired;
 export const optionalArray = PropTypes.array.isRequired;
 export const optionalObject = PropTypes.object.isRequired;
@@ -40,4 +41,9 @@ export const selectedIngredientsPropType = PropTypes.shape({
 export const otherIngredientPropType = PropTypes.shape({
   bun: ingredientPropType,
   other: selectedOtherIngredientsPropType,
+})
+
+export const imputPropType = PropTypes.shape({
+  placeholder: stringOptional,
+  isEdit: booleanPropType,
 })

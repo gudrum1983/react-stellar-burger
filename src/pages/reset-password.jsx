@@ -24,7 +24,7 @@ export function ResetPassword() {
   }
 
   const resetPasswordFormHeader = "Восстановление пароля"
-  const resetPasswordInputs = [typeInputs.passwordNew, typeInputs.checkedCode];
+  const resetPasswordInputs = [typeInputs.passwordReset, typeInputs.checkedCode];
   const resetPasswordButton = navigateButton({label: "Сохранить"});
   const resetPasswordFooterLinks = [typeLinksFooter.rememberPassword];
 

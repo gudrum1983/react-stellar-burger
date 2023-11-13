@@ -55,7 +55,7 @@ export function Profile() {
     }
   }
 
-  const profileInputs = [typeInputs.profileName, typeInputs.profileLogin, typeInputs.password];
+  const profileInputs = [typeInputs.nameProfile, typeInputs.emailProfile, typeInputs.password];
   const profileButton = isEdit ? [typeButton.cancel, typeButton.save] : []
 
   return (

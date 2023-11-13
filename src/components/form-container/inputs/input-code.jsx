@@ -8,19 +8,13 @@ export function InputCode() {
 
   const value = useSelector(inputsValuesVerificationCode)
   const dispatch = useDispatch();
-  const inputRef = React.useRef(null)
 
   return (
     <Input
-      type={'text'}
       placeholder={"Введите код из письма"}
       onChange={e => dispatch(addCheckedToken(e.target.value))}
       value={value}
-      name={'name'}
-      error={false}
-      ref={inputRef}
-      errorText={'Ошибка'}
-      size={'default'}
+      name={'token'}
     />
   )
 }

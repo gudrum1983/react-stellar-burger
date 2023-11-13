@@ -3,41 +3,25 @@ import {useDispatch, useSelector} from "react-redux";
 import {addPassword} from "../../../services/inputs-values/inputs-values-actions";
 import {PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {inputsValuesPassword} from "../../../services/inputs-values/inputs-values-selector";
-import {stringPropType} from "../../../utils/prop-types";
-import {useLocation} from "react-router-dom";
+import {booleanOptional, stringOptional} from "../../../utils/prop-types";
 
-export function InputPassword({placeholder = 'Пароль', disabled = false}) {
+export function InputPassword({placeholder, isEdit = false}) {
 
   const passwordValue = useSelector(inputsValuesPassword)
   const dispatch = useDispatch();
-  const location = useLocation()
-  const isProfile = location.pathname === "/profile"
 
   return (
-    <>  {isProfile ? <PasswordInput
+    <PasswordInput
       onChange={e => dispatch(addPassword(e.target.value))}
       value={passwordValue}
       name={'password'}
-      placeholder={placeholder}
-      error={false}
-      errorText={'Ошибка'}
-      size={'default'}
-      icon="EditIcon"
-    /> : <PasswordInput
-      onChange={e => dispatch(addPassword(e.target.value))}
-      value={passwordValue}
-      name={'password'}
-      placeholder={placeholder}
-      error={false}
-      errorText={'Ошибка'}
-      size={'default'}
-
-    />}
-    </>
-
+      {...(placeholder && {placeholder: placeholder})}
+      {...(isEdit && {icon: "EditIcon"})}
+    />
   )
 }
 
 InputPassword.propTypes = {
-  placeholder: stringPropType,
+  placeholder: stringOptional,
+  isEdit: booleanOptional,
 };

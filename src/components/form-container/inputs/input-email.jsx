@@ -3,30 +3,27 @@ import {inputsValuesEmail} from "../../../services/inputs-values/inputs-values-s
 import React from "react";
 import {EmailInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {addEmail} from "../../../services/inputs-values/inputs-values-actions";
-import {useLocation} from "react-router-dom";
+import {booleanOptional, stringOptional} from "../../../utils/prop-types";
 
-export function InputEmail() {
 
-  const location = useLocation()
-  const isProfile = location.pathname === "/profile"
-  const isForgot = location.pathname === "/forgot-password"
+export function InputEmail({placeholder, isEdit = false}) {
 
   const emailValue = useSelector(inputsValuesEmail)
   const dispatch = useDispatch();
 
-  function onChange(e) {
-    dispatch(addEmail(e.target.value))
-  }
-
-
   return (
     <EmailInput
-      onChange={onChange}
+      onChange={e => dispatch(addEmail(e.target.value))}
       value={emailValue}
       name={'email'}
-      isIcon={false}
-      {...(isForgot && {placeholder: "Укажите e-mail", isIcon: false})}
-      {...(isProfile && {placeholder: "Логин", isIcon: true})}
+      isIcon={isEdit}
+      {...(placeholder && {placeholder: placeholder})}
+
     />
   )
 }
+
+InputEmail.propTypes = {
+  placeholder: stringOptional,
+  isEdit: booleanOptional,
+};

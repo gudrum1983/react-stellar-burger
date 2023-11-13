@@ -7,13 +7,19 @@ import {InputEmail} from "../components/form-container/inputs/input-email";
 import {InputCode} from "../components/form-container/inputs/input-code";
 
 export const typeInputs = {
-  email: <InputEmail placeholder="E-mail"/>,
-  profileLogin: <InputEmail placeholder="Логин"/>,
-  emailResetPassword: <InputEmail placeholder="Укажите e-mail" key='emailResetPassword' name='emailResetPassword'/>,
-  checkedCode: <InputCode placeholder="Введите код из письма"/>,
+  email: <InputEmail/>,
+  emailProfile: <InputEmail placeholder="Логин" isEdit={true}/>,
+  emailForgot: <InputEmail placeholder="Укажите e-mail"/>,
+
+  checkedCode: <InputCode/>,
+
   name: <InputName placeholder="Имя"/>,
-  password: <InputPassword placeholder="Пароль"/>,
-  passwordNew: <InputPassword placeholder="Введите новый пароль"/>,
+  nameProfile: <InputName isEdit={true}/>,
+
+
+  password: <InputPassword/>,
+  passwordProfile: <InputPassword isEdit={true}/>,
+  passwordReset: <InputPassword placeholder="Введите новый пароль"/>,
 
 }
 

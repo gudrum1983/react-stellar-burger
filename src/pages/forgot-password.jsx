@@ -24,7 +24,7 @@ export function ForgotPassword() {
   }
 
   const forgotPasswordFormHeader = "Восстановление пароля"
-  const forgotPasswordInputs = [typeInputs.emailResetPassword];
+  const forgotPasswordInputs = [typeInputs.emailForgot];
   const forgotPasswordButton = navigateButton({label: "Восстановить"});
   const forgotPasswordFooterLinks = [typeLinksFooter.rememberPassword];
 
