@@ -22,45 +22,46 @@ export function InputName({placeholder = 'Имя', isEdit = false}) {
   }
 
   return (
-    <Input
-      type={'text'}
-      onChange={e => dispatch(addUser(e.target.value))}
-      value={nameValue}
-      name={'name'}
-      isIcon={isEdit}
-      placeholder={placeholder}
-      ref={inputRef}
-      {...(isEdit && {icon: "EditIcon", onIconClick:onIconClick})}
-
-    />
+    <div className="input_container">
+      <Input
+        type={'text'}
+        onChange={e => dispatch(addUser(e.target.value))}
+        value={nameValue}
+        name={'name'}
+        isIcon={isEdit}
+        placeholder={placeholder}
+        ref={inputRef}
+        {...(isEdit && {icon: "EditIcon", onIconClick: onIconClick})}
+      />
+    </div>
   )
 
 
-/*
-  return (
-    <>  {isProfile ? <EmailInput
-      type={'text'}
-      onChange={e => dispatch(addUser(e.target.value))}
-      value={nameValue}
-      name={'name'}
-      placeholder={placeholder}
-      isIcon={true}
-      error={false}
-      errorText={'Ошибка'}
-      size={'default'}
-    /> : <Input
-      type={'text'}
-      placeholder={placeholder}
-      onChange={e => dispatch(addUser(e.target.value))}
-      value={nameValue}
-      name={'name'}
-      error={false}
-      ref={inputRef}
-      errorText={'Ошибка'}
-      size={'default'}
-    />}
-    </>
-  )*/
+  /*
+    return (
+      <>  {isProfile ? <EmailInput
+        type={'text'}
+        onChange={e => dispatch(addUser(e.target.value))}
+        value={nameValue}
+        name={'name'}
+        placeholder={placeholder}
+        isIcon={true}
+        error={false}
+        errorText={'Ошибка'}
+        size={'default'}
+      /> : <Input
+        type={'text'}
+        placeholder={placeholder}
+        onChange={e => dispatch(addUser(e.target.value))}
+        value={nameValue}
+        name={'name'}
+        error={false}
+        ref={inputRef}
+        errorText={'Ошибка'}
+        size={'default'}
+      />}
+      </>
+    )*/
 }
 
 InputName.propTypes = {

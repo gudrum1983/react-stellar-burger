@@ -12,14 +12,16 @@ export function InputEmail({placeholder, isEdit = false}) {
   const dispatch = useDispatch();
 
   return (
-    <EmailInput
-      onChange={e => dispatch(addEmail(e.target.value))}
-      value={emailValue}
-      name={'email'}
-      isIcon={isEdit}
-      {...(placeholder && {placeholder: placeholder})}
+    <div className="input_container">
+      <EmailInput
+        onChange={e => dispatch(addEmail(e.target.value))}
+        value={emailValue}
+        name={'email'}
+        isIcon={isEdit}
+        {...(placeholder && {placeholder: placeholder})}
 
-    />
+      />
+    </div>
   )
 }
 

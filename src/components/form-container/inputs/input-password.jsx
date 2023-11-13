@@ -11,13 +11,16 @@ export function InputPassword({placeholder, isEdit = false}) {
   const dispatch = useDispatch();
 
   return (
-    <PasswordInput
-      onChange={e => dispatch(addPassword(e.target.value))}
-      value={passwordValue}
-      name={'password'}
-      {...(placeholder && {placeholder: placeholder})}
-      {...(isEdit && {icon: "EditIcon"})}
-    />
+    <div className="input_container">
+      <PasswordInput
+        onChange={e => dispatch(addPassword(e.target.value))}
+        value={passwordValue}
+        name={'password'}
+        {...(placeholder && {placeholder: placeholder})}
+        {...(isEdit && {icon: "EditIcon"})}
+      />
+    </div>
+
   )
 }
 

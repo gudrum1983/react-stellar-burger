@@ -24,7 +24,7 @@
 .placeItems{
   padding: 24px 0;
   display: flex;
-  gap: 24px;
+/*  gap: 24px;*/
   flex-direction: column;
   justify-content: space-around;
 }

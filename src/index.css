@@ -1,8 +1,21 @@
+@import-normalize; /* bring in normalize.css styles */
 
+/* rest of app styles */
 
 body {
   margin: 0;
   padding: 0;
+}
+
+.input_container {
+  position: relative;
+  padding-bottom: 24px;
+}
+
+.input__error{
+  margin: 0 0 0 24px;
+  padding: 0;
+  position: absolute;
 }
 
 /*не забыть подключить курсоры*/

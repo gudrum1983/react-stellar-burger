@@ -10,11 +10,13 @@ export function InputCode() {
   const dispatch = useDispatch();
 
   return (
-    <Input
-      placeholder={"Введите код из письма"}
-      onChange={e => dispatch(addCheckedToken(e.target.value))}
-      value={value}
-      name={'token'}
-    />
+    <div className="input_container">
+      <Input
+        placeholder={"Введите код из письма"}
+        onChange={e => dispatch(addCheckedToken(e.target.value))}
+        value={value}
+        name={'token'}
+      />
+    </div>
   )
 }

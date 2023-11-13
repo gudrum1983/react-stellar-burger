@@ -22,7 +22,7 @@ export function AppLayout() {
     <>
       <header className={styles.header}>
           <nav className={styles.panel}>
-            <ul className={`${styles.links} text`}>
+            <ul className={`${styles.links}`}>
               <li className={`${styles.link_home} cursor`}>
                 <NavigationLink to={'/'} icon={<BurgerIcon type={active("/")}/>} label={'Конструктор'}/>
               </li>
