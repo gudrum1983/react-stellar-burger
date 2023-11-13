@@ -1,5 +1,5 @@
 import React from "react";
-import {navigateButton, typeInputs, typeLinksFooter} from "../utils/inputs";
+import {createButton, typeInputs, typeLinksFooter} from "../utils/inputs";
 import {FormContainer} from "../components/form-container/form-container";
 import {useNavigate} from "react-router-dom";
 
@@ -25,7 +25,7 @@ export function ForgotPassword() {
 
   const forgotPasswordFormHeader = "Восстановление пароля"
   const forgotPasswordInputs = [typeInputs.emailForgot];
-  const forgotPasswordButton = navigateButton({label: "Восстановить"});
+  const forgotPasswordButton = [createButton( {label:"Восстановить", key:"restore"})];
   const forgotPasswordFooterLinks = [typeLinksFooter.rememberPassword];
 
   return (

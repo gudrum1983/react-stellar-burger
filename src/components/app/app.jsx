@@ -5,11 +5,8 @@ import {Routes, Route, useLocation, useNavigate} from "react-router-dom";
 import {Home} from "../../pages/home";
 import {AppLayout} from '../app-layout/app-layout'
 import {Modal} from "../modal/modal";
-import {OrderDetails} from "../modal/order-details/order-details";
-import {IngredientDetails} from "../modal/ingredient-details/ingredient-details";
+import {IngredientDetails} from "../ingredient-details/ingredient-details";
 import {loadBurgerIngredients} from "../../services/burger-ingredients/burger-ingredients-actions";
-import {clearOrderDetails} from "../../services/order-details/order-details-actions";
-import {orderDetails} from "../../services/order-details/order-details-selectors";
 import {burgerIngredients} from "../../services/burger-ingredients/burger-ingredients-selector";
 import {checkUserAuth} from "../../services/user/user-action";
 import {OnlyAuth, OnlyUnAuth} from "../hoc/protected-route";
@@ -21,6 +18,7 @@ import {Profile} from "../../pages/profile";
 import {Feed} from "../../pages/feed";
 import {ProfileLayout} from "../profile-layout/profile-layout";
 import {Orders} from "../../pages/orders";
+import {NotFound404} from "../../pages/NotFound404";
 
 export default function App() {
 
@@ -31,7 +29,6 @@ export default function App() {
     dispatch(loadBurgerIngredients())
   }, []);
 
-  const {orderNumber, orderRequest, orderFailed} = useSelector(orderDetails)
   const {ingredients, isLoading, hasError} = useSelector(burgerIngredients);
   const location = useLocation()
   const navigate = useNavigate()
@@ -41,17 +38,6 @@ export default function App() {
     navigate(-1);     // Возвращаемся к предыдущему пути при закрытии модалки
   };
 
-  function handleCloseModal() {
-    if (orderNumber) {
-      dispatch(clearOrderDetails())
-    }
-  }
-
-  function modal(content, header = "") {
-    return (<Modal onClose={handleCloseModal} header={header}>
-      {content}
-    </Modal>)
-  }
 
   if (isLoading) {
     return <div className={`text text_type_main-default`}>Загрузка...</div>
@@ -70,6 +56,7 @@ export default function App() {
           <Route index element={<Home/>}/>
           <Route path="/ingredients/:id" element={<IngredientDetails/>}/>
 
+
           {/*OnlyUnAuth*/}
           <Route path="login" element={<OnlyUnAuth component={<Login/>}/>}/>
           <Route path="register" element={<OnlyUnAuth component={<Register/>}/>}/>
@@ -81,16 +68,11 @@ export default function App() {
             <Route index element={<Profile/>}/>
             <Route path="orders" element={<Orders/>}/>
           </Route>
-
           <Route path="/feed" element={<OnlyAuth component={<Feed/>}/>}/>
 
         </Route>
 
-        {orderNumber && modal(<OrderDetails/>)}
-        {orderFailed && modal(<p className="text text_type_main-medium">
-          Наш краторный хмель пожрал антарианский долгоносик, попробуйте сформировать заказ позже, Милорд...
-        </p>, "Ошибка")}
-        {orderRequest && modal('', "Загрузка Милорд...")}
+        <Route path="*" element={<NotFound404/>}/>
       </Routes>
 
       {background && <Routes>

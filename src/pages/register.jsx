@@ -1,5 +1,5 @@
 import React from "react";
-import {navigateButton, typeInputs, typeLinksFooter} from "../utils/inputs";
+import {createButton, typeInputs, typeLinksFooter} from "../utils/inputs";
 import {FormContainer} from "../components/form-container/form-container";
 import {useDispatch, useSelector} from "react-redux";
 import {
@@ -25,7 +25,7 @@ export function Register() {
 
   const registerFormHeader = "Регистрация"
   const registerInputs = [typeInputs.name, typeInputs.email, typeInputs.password];
-  const registerButton = navigateButton({label: "Зарегистрироваться"});
+  const registerButton = [createButton( {label:"Зарегистрироваться", key:"register"})];
   const registerFooterLinks = [typeLinksFooter.alreadyRegistered];
 
   return (

@@ -18,12 +18,12 @@ export function Ingredient({currentItem}) {
   });
 
   const count = useSelector(selectCount(currentItem._id, currentItem.type))
-  const canDraggabble = (currentItem?.type !== "bun") ? true : !(count)
-  const cursorStyle = !canDraggabble ? 'cursor_type_noGrab' : ''
+  const canDraggable = (currentItem?.type !== "bun") ? true : !(count)
+  const cursorStyle = !canDraggable ? 'cursor_type_noGrab' : ''
 
   return (
 
-    <li key={id} className={`${styles.card}`} {...(canDraggabble && {ref: dragRef})}>
+    <li key={id} className={`${styles.card}`} {...(canDraggable && {ref: dragRef})}>
       <Link className={`${styles.nonlink} ${cursorStyle}`} to={`/ingredients/${id}`} state={{background: location}}>
         <img className={styles.imgCard} alt={currentItem.name} src={currentItem.image}/>
         <div className={`pt-1 pb-1 ${styles.price}`}>

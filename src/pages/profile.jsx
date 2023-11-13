@@ -1,5 +1,5 @@
 import React from "react";
-import {typeButton, typeInputs} from "../utils/inputs";
+import {profileButtons, typeInputs} from "../utils/inputs";
 import {FormContainer} from "../components/form-container/form-container";
 import {useDispatch, useSelector} from "react-redux";
 import {getUser, updateUser} from "../services/user/user-action";
@@ -55,13 +55,14 @@ export function Profile() {
     }
   }
 
-  const profileInputs = [typeInputs.nameProfile, typeInputs.emailProfile, typeInputs.password];
-  const profileButton = isEdit ? [typeButton.cancel, typeButton.save] : []
+  const profileInputs = [typeInputs.nameProfile, typeInputs.emailProfile, typeInputs.passwordProfile];
+/*  const profileButton = isEdit ? [profileButton.cancel, profileButton.save] : []*/
 
   return (
       <FormContainer
         inputs={profileInputs}
-        button={profileButton}
+        {...(isEdit && {button: profileButtons})}
+/*        button={profileButton}*/
         handleSubmit={handleSubmit}
         handleReset={handleReset}
       />

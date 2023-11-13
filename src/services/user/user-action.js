@@ -2,6 +2,8 @@ import {authApi} from "../../api/user";
 
 export const SET_AUTH_CHECKED = "SET_AUTH_CHECKED";
 export const SET_USER = "SET_USER";
+export const CLEAR_USER = "CLEAR_USER";
+
 
 export const setAuthChecked = (value) => ({
   type: SET_AUTH_CHECKED,
@@ -12,6 +14,11 @@ export const setUser = (user) => ({
   type: SET_USER,
   payload: user,
 });
+
+export const clearUser = () => ({
+  type: CLEAR_USER,
+});
+
 
 export const getUser = () => {
   return (dispatch) => {
@@ -36,10 +43,9 @@ export const logout = () => {
   return (dispatch) => {
     return authApi.logout()
       .then((res) => {
-        console.log("resLogout", res)
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
-        dispatch(setUser(null));
+        dispatch(clearUser());
       });
   };
 };

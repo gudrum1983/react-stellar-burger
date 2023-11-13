@@ -3,23 +3,19 @@ import {useSelector} from "react-redux";
 import {useLocation, useParams} from "react-router-dom";
 import {
   burgerIngredientsArray,
-  } from "../../../services/burger-ingredients/burger-ingredients-selector";
+} from "../../services/burger-ingredients/burger-ingredients-selector";
 
 export function IngredientDetails() {
 
   const params = useParams()
   const location = useLocation()
-  console.log(location)
-  console.log(params)
-  const testParam = params.id
+  const idCurrentItem = params.id
   const background = location.state && location.state.background;
 
-  const test = useSelector(burgerIngredientsArray)
+  const ingredients = useSelector(burgerIngredientsArray)
 
-  const ctest = test.find(item => item._id == testParam);
-
-  console.log('ctest', ctest)
-  const {proteins, calories, fat, carbohydrates, name, image_large} = ctest
+  const currentIngredient = ingredients.find(item => item._id === idCurrentItem);
+  const {proteins, calories, fat, carbohydrates, name, image_large} = currentIngredient
   const energyValue = (text, value) => {
     return (
       <li className={styles.column}>
@@ -30,8 +26,6 @@ export function IngredientDetails() {
   }
 
   const testContainer = background ? "" : "container"
-
-
 
   return (
     <div className={`${styles.modalContainer} ${testContainer} pb-5`}>

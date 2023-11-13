@@ -17,17 +17,17 @@ export const ProfileLayout = () => {
     <div className={style.profile}>
       <nav className={style.navigation}>
         <ul className={style.links}>
-          <li>
+          <li key="profile">
             <NavLink className={`text text_type_main-medium text_color_inactive ${style.link}`}
-                     to={"/profile"}
+                     to="/profile"
                      end>Профиль</NavLink>
           </li>
-          <li>
+          <li key="orders">
             <NavLink className={`text text_type_main-medium text_color_inactive ${style.link}`}
                      to={"/profile/orders"}>История
               заказов</NavLink>
           </li>
-          <li>
+          <li key="logout">
             <NavLink className={`text text_type_main-medium text_color_inactive ${style.link}`}
                      to={"/login"} onClick={handleClick}>Выход</NavLink>
           </li>

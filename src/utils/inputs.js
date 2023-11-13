@@ -7,20 +7,18 @@ import {InputEmail} from "../components/form-container/inputs/input-email";
 import {InputCode} from "../components/form-container/inputs/input-code";
 
 export const typeInputs = {
-  email: <InputEmail/>,
-  emailProfile: <InputEmail placeholder="Логин" isEdit={true}/>,
-  emailForgot: <InputEmail placeholder="Укажите e-mail"/>,
+  email: <InputEmail key="email"/>,
+  emailProfile: <InputEmail placeholder="Логин" isEdit={true} key="email"/>,
+  emailForgot: <InputEmail placeholder="Укажите e-mail" key="email"/>,
 
-  checkedCode: <InputCode/>,
+  checkedCode: <InputCode key="token"/>,
 
-  name: <InputName placeholder="Имя"/>,
-  nameProfile: <InputName isEdit={true}/>,
+  name: <InputName placeholder="Имя" key="name"/>,
+  nameProfile: <InputName isEdit={true} key="name"/>,
 
-
-  password: <InputPassword/>,
-  passwordProfile: <InputPassword isEdit={true}/>,
-  passwordReset: <InputPassword placeholder="Введите новый пароль"/>,
-
+  password: <InputPassword key="password"/>,
+  passwordProfile: <InputPassword isEdit={true} key="password"/>,
+  passwordReset: <InputPassword placeholder="Введите новый пароль" key="password"/>,
 }
 
 export const typeLinksFooter = {
@@ -30,11 +28,11 @@ export const typeLinksFooter = {
   newUser:<ContainerLink textDescription="Вы — новый пользователь?" textLink="Зарегистрироваться" to='/register' key='newUser'/>,
 }
 
-export const navigateButton = ({onClick, label}) => {
-  return <Button htmlType="submit" type="primary" size="medium" children={label} onClick={onClick}/>
+export const createButton = ({label, key}) => {
+  return <Button htmlType="submit" type="primary" size="medium" children={label} key={key}/>
 }
 
-export const typeButton = {
-  save: <Button htmlType="submit" type="primary" size="medium" children="Сохранить" key='save'/>,
-  cancel: <Button htmlType="reset" type="secondary" size="medium" children="Отмена" key='cancel'/>
-}
+export const profileButtons = [
+  <Button htmlType="reset" type="secondary" size="medium" children="Отмена" key='cancel'/>,
+  <Button htmlType="submit" type="primary" size="medium" children="Сохранить" key='save'/>
+]

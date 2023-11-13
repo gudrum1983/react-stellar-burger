@@ -1,6 +1,6 @@
 import React from "react";
 import {FormContainer} from "../components/form-container/form-container";
-import {navigateButton, typeInputs, typeLinksFooter} from "../utils/inputs";
+import {createButton, typeInputs, typeLinksFooter} from "../utils/inputs";
 import {useDispatch, useSelector} from "react-redux";
 import {login} from "../services/user/user-action";
 import {inputsValuesEmail, inputsValuesPassword} from "../services/inputs-values/inputs-values-selector";
@@ -17,7 +17,7 @@ export function Login() {
 
   const loginFormHeader = "Вход"
   const loginInputs = [typeInputs.email, typeInputs.password];
-  const loginButton = navigateButton({label: "Войти"});
+  const loginButton = [createButton( {label:"Войти", key:"login"})];
   const loginFooterLinks = [typeLinksFooter.newUser, typeLinksFooter.forgotPassword];
 
   return (

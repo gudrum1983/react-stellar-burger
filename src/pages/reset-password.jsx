@@ -1,5 +1,5 @@
 import React from "react";
-import {navigateButton, typeInputs, typeLinksFooter} from "../utils/inputs";
+import {createButton, typeInputs, typeLinksFooter} from "../utils/inputs";
 import {FormContainer} from "../components/form-container/form-container";
 import {Navigate, useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
@@ -25,7 +25,7 @@ export function ResetPassword() {
 
   const resetPasswordFormHeader = "Восстановление пароля"
   const resetPasswordInputs = [typeInputs.passwordReset, typeInputs.checkedCode];
-  const resetPasswordButton = navigateButton({label: "Сохранить"});
+  const resetPasswordButton = [createButton( {label:"Сохранить", key:"save"})];
   const resetPasswordFooterLinks = [typeLinksFooter.rememberPassword];
 
 

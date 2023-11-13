@@ -9,10 +9,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {getOrderDetails} from "../../services/order-details/order-details-actions";
 import {selectBurgerConstructor} from "../../services/burger-constructor/burger-constructor-selector";
 import {addFilling, chooseBun} from "../../services/burger-constructor/burger-constructor-actions";
+import {useLocation, useNavigate} from "react-router-dom";
+import {userAuth} from "../../services/user/user-selector";
 
 export function BurgerConstructor() {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate()
   const onDropHandler = (ingredient) => {
     if (ingredient.type === "bun") {
       dispatch(chooseBun(ingredient))
@@ -33,7 +35,7 @@ export function BurgerConstructor() {
   });
 
   const borderColor = isHover ? stylesConstr.borderLightgreen : (isCanD ? stylesConstr.borderLightgreen2 : stylesConstr.borderTransparent);
-
+  const isAuthChecked = useSelector(userAuth)
 
   const selectedIngredients = useSelector(selectBurgerConstructor)
   const bun = selectedIngredients.bun
@@ -47,8 +49,14 @@ export function BurgerConstructor() {
   }
 
   function handleSubmitOrder() {
-    const ingredientsOrder = getListIdIngredients();
-    dispatch(getOrderDetails(ingredientsOrder))
+    if (isAuthChecked) {
+      debugger
+      navigate("/login", {replace: false});
+    } else {
+      const ingredientsOrder = getListIdIngredients();
+      dispatch(getOrderDetails(ingredientsOrder))
+    }
+
   }
 
   return (

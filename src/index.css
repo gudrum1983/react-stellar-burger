@@ -24,6 +24,24 @@ body {
   opacity: 1;
   transition: opacity 0.5s;
 }
+.not-found{
+  width: 100vw;
+  height: 100vh;
+  background-color: #B5FF3D;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.image-not {
+  width: 652px;
+  height: 398px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url("../src/images/404.svg");
+}
+
 
 .cursorLogo {
   cursor: pointer;
@@ -108,8 +126,9 @@ text-decoration: none;
   opacity: 0.6;
 }
 
-.test {
-  background-color: rgba(127, 255, 212, 0.6);
+.text {
+text-decoration: none;
+
 }
 
 .flex-row{

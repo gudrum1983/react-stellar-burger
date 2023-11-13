@@ -1,4 +1,4 @@
-import { SET_AUTH_CHECKED, SET_USER } from './user-action';
+import { SET_AUTH_CHECKED, SET_USER, CLEAR_USER } from './user-action';
 
 const initialState = {
     user: null,
@@ -16,6 +16,10 @@ export const userDataReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload
+      }
+    case CLEAR_USER:
+      return {
+        initialState
       }
     default:
       return state;    
