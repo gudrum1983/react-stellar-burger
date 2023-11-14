@@ -1,4 +1,5 @@
 import {authApi} from "../../api/user";
+import {openErrorModal} from "../error-modal/error-modal-action";
 
 export const SET_AUTH_CHECKED = "SET_AUTH_CHECKED";
 export const SET_USER = "SET_USER";
@@ -59,7 +60,7 @@ export const login = (pass, email) => {
         dispatch(setUser(res.user));
         dispatch(setAuthChecked(true));
       })
-      .catch((err) => console.log('actionUserLoginErr', err));
+      .catch((err) => dispatch(openErrorModal("Перепроверьте логин и пароль, Милорд... Пользователь с такими логином и паролем не найден.")));
   };
 };
 
@@ -72,7 +73,7 @@ export const register = (name, pass, email) => {
         dispatch(setUser(res.user));
         dispatch(setAuthChecked(true));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => dispatch(openErrorModal("Перепроверьте данные, Милорд... Данные введены не корректно или такой пользователь уже существуетю")));
   };
 };
 

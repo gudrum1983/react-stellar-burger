@@ -4,6 +4,7 @@ import {orderDetailsReducer} from "./order-details/order-details-reducer";
 import {burgerIngredientsReducer} from "./burger-ingredients/burger-ingredients-reducer";
 import {inputsValuesReducer} from "./inputs-values/inputs-values-reducer";
 import {userDataReducer} from "./user/user-reducer";
+import {errorModalReducer} from "./error-modal/error-modal-reducer";
 
 
 export const store = configureStore(({
@@ -13,5 +14,6 @@ export const store = configureStore(({
     burgerIngredients: burgerIngredientsReducer,
     inputsValues: inputsValuesReducer,
     user: userDataReducer,
+    errorModal: errorModalReducer,
   }
 }));

@@ -7,7 +7,7 @@ import {InputEmail} from "../components/form-container/inputs/input-email";
 import {InputCode} from "../components/form-container/inputs/input-code";
 
 export const typeInputs = {
-  email: <InputEmail key="email"/>,
+  email: <InputEmail key="email" />,
   emailProfile: <InputEmail placeholder="Логин" isEdit={true} key="email"/>,
   emailForgot: <InputEmail placeholder="Укажите e-mail" key="email"/>,
 

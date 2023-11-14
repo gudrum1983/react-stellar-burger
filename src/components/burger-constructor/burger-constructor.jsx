@@ -9,8 +9,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {getOrderDetails} from "../../services/order-details/order-details-actions";
 import {selectBurgerConstructor} from "../../services/burger-constructor/burger-constructor-selector";
 import {addFilling, chooseBun} from "../../services/burger-constructor/burger-constructor-actions";
-import {useLocation, useNavigate} from "react-router-dom";
-import {userAuth} from "../../services/user/user-selector";
+import {useNavigate} from "react-router-dom";
+import {userAuth, user} from "../../services/user/user-selector";
 
 export function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -36,6 +36,7 @@ export function BurgerConstructor() {
 
   const borderColor = isHover ? stylesConstr.borderLightgreen : (isCanD ? stylesConstr.borderLightgreen2 : stylesConstr.borderTransparent);
   const isAuthChecked = useSelector(userAuth)
+  const isUser = useSelector(user)
 
   const selectedIngredients = useSelector(selectBurgerConstructor)
   const bun = selectedIngredients.bun
@@ -49,7 +50,7 @@ export function BurgerConstructor() {
   }
 
   function handleSubmitOrder() {
-    if (isAuthChecked) {
+    if (isAuthChecked && !isUser) {
       debugger
       navigate("/login", {replace: false});
     } else {

@@ -12,6 +12,7 @@ export const ENDPOINTS = {
   passwordReset: "password-reset/reset",
 }
 const checkResponse = (res) => {
+/*  console.log("checkResponse", res)*/
   if (res.ok) {
     return res.json();
   }
@@ -19,6 +20,7 @@ const checkResponse = (res) => {
 };
 
 const checkSuccess = (res) => {
+/*  console.log("checkSuccess", res)*/
   if (res && res.success) {
     return res;
   }

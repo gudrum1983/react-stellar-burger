@@ -14,11 +14,13 @@ export function Home() {
   const dispatch = useDispatch();
 
   const {orderNumber, orderRequest, orderFailed} = useSelector(orderDetails)
+
   function handleCloseModal() {
     if (orderNumber) {
       dispatch(clearOrderDetails())
     }
   }
+
   function modal(content, header = "") {
     return (<Modal onClose={handleCloseModal} header={header}>
       {content}
@@ -41,6 +43,7 @@ export function Home() {
         Наш краторный хмель пожрал антарианский долгоносик, попробуйте сформировать заказ позже, Милорд...
       </p>, "Ошибка")}
       {orderRequest && modal('', "Загрузка Милорд...")}
+
     </div>
   )
 }

@@ -11,9 +11,6 @@ export function InputPassword({placeholder, isEdit = false}) {
   const passwordValue = useSelector(inputsValuesPassword)
   const dispatch = useDispatch();
 
-
-  console.log({isEdit})
-
   return (
     <div className="input_container">
       <PasswordInput
@@ -22,6 +19,7 @@ export function InputPassword({placeholder, isEdit = false}) {
         name={'password'}
         {...(placeholder && {placeholder: placeholder})}
         {...(isEdit && {icon:"EditIcon"})}
+
       />
     </div>
   )

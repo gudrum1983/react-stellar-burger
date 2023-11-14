@@ -22,7 +22,13 @@ export function InputName({placeholder = 'Имя', isEdit = false}) {
     setDisable(!disabled)
   }
 
+  const onBlur = () => {
+    setDisable(!disabled)
+  }
+
+
   return (
+
     <div className="input_container">
       <Input
         type={'text'}
@@ -30,12 +36,14 @@ export function InputName({placeholder = 'Имя', isEdit = false}) {
         value={nameValue}
         name={'name'}
         placeholder={placeholder}
+        onFocus
         ref={inputRef}
         disabled={disabled}
-        {...(isEdit && {icon: "EditIcon", onIconClick: onIconClick})}
+        {...(isEdit && {icon: "EditIcon", onIconClick: onIconClick, onBlur: onBlur,})}
       />
     </div>
   )
+
 }
 
 InputName.propTypes = {

@@ -8,6 +8,9 @@ import {
   inputsValuesUserName,
 } from "../services/inputs-values/inputs-values-selector";
 import {register} from "../services/user/user-action";
+import {errorModalText, isOpenErrorModal} from "../services/error-modal/error-modal-selector";
+import {closeErrorModal, openErrorModal} from "../services/error-modal/error-modal-action";
+import {Modal} from "../components/modal/modal";
 
 
 export function Register() {
@@ -16,11 +19,17 @@ export function Register() {
   const email = useSelector(inputsValuesEmail)
   const name = useSelector(inputsValuesUserName)
   const pass = useSelector(inputsValuesPassword)
-
+  const openErrModal = useSelector(isOpenErrorModal)
+  const textErrorModal = useSelector(errorModalText)
   function handleSubmit(evt) {
-    debugger
     evt.preventDefault();
-    dispatch(register(name, pass, email));
+    const target = evt.target
+    const isError = !!target.querySelector(".input_status_error")
+    if (!isError) {
+      dispatch(register(name, pass, email));
+    } else {
+      dispatch(openErrorModal("Перепроверьте данные, Милорд... Они введены не корректно."));
+    }
   }
 
   const registerFormHeader = "Регистрация"
@@ -28,15 +37,30 @@ export function Register() {
   const registerButton = [createButton( {label:"Зарегистрироваться", key:"register"})];
   const registerFooterLinks = [typeLinksFooter.alreadyRegistered];
 
+  const handleErrorModalClose = () => {
+    dispatch(closeErrorModal());
+  };
+
   return (
-    <FormContainer
-      header={registerFormHeader}
-      inputs={registerInputs}
-      button={registerButton}
-      links={registerFooterLinks}
-      name='formRegister'
-      handleSubmit={handleSubmit}
-    />
+    <>
+      <FormContainer
+        header={registerFormHeader}
+        inputs={registerInputs}
+        button={registerButton}
+        links={registerFooterLinks}
+        name='formRegister'
+        handleSubmit={handleSubmit}
+      />
+      {openErrModal &&
+        <Modal onClose={handleErrorModalClose} header={"Ошибка"}>
+          <p className="text text_type_main-medium">
+            {textErrorModal}
+          </p>
+        </Modal>}
+    </>
+
+
+
   )
 }
 

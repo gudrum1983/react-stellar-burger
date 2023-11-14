@@ -18,7 +18,7 @@ import {Profile} from "../../pages/profile";
 import {Feed} from "../../pages/feed";
 import {ProfileLayout} from "../profile-layout/profile-layout";
 import {Orders} from "../../pages/orders";
-import {NotFound404} from "../../pages/NotFound404";
+import {NotFound} from "../../pages/not-found";
 
 export default function App() {
 
@@ -72,7 +72,7 @@ export default function App() {
 
         </Route>
 
-        <Route path="*" element={<NotFound404/>}/>
+        <Route path="*" element={<NotFound/>}/>
       </Routes>
 
       {background && <Routes>

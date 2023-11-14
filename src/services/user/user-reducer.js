@@ -19,7 +19,8 @@ export const userDataReducer = (state = initialState, action) => {
       }
     case CLEAR_USER:
       return {
-        initialState
+        ...state,
+        user: null,
       }
     default:
       return state;    

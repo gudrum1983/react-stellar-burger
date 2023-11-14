@@ -40,8 +40,7 @@ export function Profile() {
 
   function handleReset(e) {
     e.preventDefault()
-    dispatch(getUser())
-    console.log("isEdit", isEdit)
+    setValue()
   }
 
   function handleSubmit(e) {
@@ -49,20 +48,18 @@ export function Profile() {
     dispatch(getUser());
     if (isEdit) {
       dispatch(updateUser(mailValueInput, nameValueInput, passwordValueInput));
-      dispatch(addEmail(emailValueTest))
-      dispatch(addUser(nameValueTest))
-      dispatch(addPassword(""))
     }
+    dispatch(addEmail(emailValueTest))
+    dispatch(addUser(nameValueTest))
+    dispatch(addPassword(""))
   }
 
   const profileInputs = [typeInputs.nameProfile, typeInputs.emailProfile, typeInputs.passwordProfile];
-/*  const profileButton = isEdit ? [profileButton.cancel, profileButton.save] : []*/
 
   return (
       <FormContainer
         inputs={profileInputs}
         {...(isEdit && {button: profileButtons})}
-/*        button={profileButton}*/
         handleSubmit={handleSubmit}
         handleReset={handleReset}
       />
