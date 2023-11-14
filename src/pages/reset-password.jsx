@@ -23,24 +23,16 @@ export function ResetPassword() {
     evt.preventDefault();
     if (!isError) {
       getReset(password, code)
-        .then((res) => {
+        .then(() => {
           localStorage.removeItem("forgotConfirmed");
           dispatch(addPassword(''))
           dispatch(addCheckedToken(''))
           navigate('/register', {replace: true});
         })
-        .catch((err) => dispatch(openErrorModal("Что-то пошло не так, Милорд... Проверьте данные или попробуйте позже.")))
+        .catch(() => dispatch(openErrorModal("Что-то пошло не так, Милорд... Проверьте данные или попробуйте позже.")))
     } else {
       dispatch(openErrorModal("Перепроверьте данные, Милорд... Они введены не корректно."));
     }
-
-/*    getReset(password, code)
-      .then((res) => {
-        console.log(res)
-        localStorage.removeItem("forgotConfirmed");
-      })
-      .catch((err) => console.log(err));
-    navigate('/register', {replace: true});*/
   }
 
   const resetPasswordFormHeader = "Восстановление пароля"

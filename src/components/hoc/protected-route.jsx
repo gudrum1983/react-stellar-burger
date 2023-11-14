@@ -9,9 +9,7 @@ const ProtectedRouteElement = ({onlyUnAuth = false, component}) => {
   const user = useSelector((store) => store.user.user);
   const location = useLocation();
 
-  console.log(isAuthChecked)
 
-  
   if (!isAuthChecked) {
     // Запрос еще выполняется
     // Выводим прелоадер в ПР

@@ -36,8 +36,6 @@ export function Profile() {
     return [isEditName, isEditMail, isEditPassword].includes(true)
   }, [isEditName, isEditMail, isEditPassword])
 
-  console.log("isEdit", isEdit)
-
   function handleReset(e) {
     e.preventDefault()
     setValue()

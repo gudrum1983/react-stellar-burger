@@ -17,7 +17,6 @@ export function Login() {
   const handleSubmit = (evt) => {
     const target = evt.target
     const isError = !!target.querySelector(".input_status_error")
-    console.log({isError})
     evt.preventDefault();
     if (!isError) {
       dispatch(login(pass, email));

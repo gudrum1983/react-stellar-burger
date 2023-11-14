@@ -34,7 +34,6 @@ export const updateUser = (email, name, password) => {
   return (dispatch) => {
     return authApi.updateUser(email, name, password)
       .then((res) => {
-        console.log("resUpd", res)
         dispatch(setUser(res.user));
       });
   };
@@ -43,7 +42,7 @@ export const updateUser = (email, name, password) => {
 export const logout = () => {
   return (dispatch) => {
     return authApi.logout()
-      .then((res) => {
+      .then(() => {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
         dispatch(clearUser());
@@ -60,7 +59,7 @@ export const login = (pass, email) => {
         dispatch(setUser(res.user));
         dispatch(setAuthChecked(true));
       })
-      .catch((err) => dispatch(openErrorModal("Перепроверьте логин и пароль, Милорд... Пользователь с такими логином и паролем не найден.")));
+      .catch(() => dispatch(openErrorModal("Перепроверьте логин и пароль, Милорд... Пользователь с такими логином и паролем не найден.")));
   };
 };
 
@@ -73,7 +72,7 @@ export const register = (name, pass, email) => {
         dispatch(setUser(res.user));
         dispatch(setAuthChecked(true));
       })
-      .catch((err) => dispatch(openErrorModal("Перепроверьте данные, Милорд... Данные введены не корректно или такой пользователь уже существуетю")));
+      .catch(() => dispatch(openErrorModal("Перепроверьте данные, Милорд... Данные введены не корректно или такой пользователь уже существуетю")));
   };
 };
 

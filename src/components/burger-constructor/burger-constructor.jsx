@@ -51,7 +51,6 @@ export function BurgerConstructor() {
 
   function handleSubmitOrder() {
     if (isAuthChecked && !isUser) {
-      debugger
       navigate("/login", {replace: false});
     } else {
       const ingredientsOrder = getListIdIngredients();
