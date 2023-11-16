@@ -41,11 +41,11 @@ export function Login() {
     <>
       <FormContainer
         header={loginFormHeader}
-        inputs={loginInputs}
         button={loginButton}
         links={loginFooterLinks}
-        handleSubmit={handleSubmit}
-      />
+        handleSubmit={handleSubmit}>
+        {loginInputs}
+      </FormContainer>
       {openErrModal &&
         <Modal onClose={handleErrorModalClose} header={"Ошибка"}>
           <p className="text text_type_main-medium">

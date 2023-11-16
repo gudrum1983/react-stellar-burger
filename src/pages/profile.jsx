@@ -56,10 +56,10 @@ export function Profile() {
 
   return (
       <FormContainer
-        inputs={profileInputs}
         {...(isEdit && {button: profileButtons})}
         handleSubmit={handleSubmit}
-        handleReset={handleReset}
-      />
+        handleReset={handleReset}>
+        {profileInputs}
+      </FormContainer>
   )
 }

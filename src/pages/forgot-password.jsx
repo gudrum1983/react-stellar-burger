@@ -26,11 +26,11 @@ export function ForgotPassword() {
 
     if (!isError) {
       getForgot(email)
-        .then((res) => {
+        .then(() => {
           localStorage.setItem("forgotConfirmed", true);
           navigate('/reset-password', {replace: false});
         })
-        .catch((err) => dispatch(openErrorModal("Что-то пошло не так, Милорд... Попробуйте позже.")))
+        .catch(() => dispatch(openErrorModal("Что-то пошло не так, Милорд... Попробуйте позже.")))
     } else {
       dispatch(openErrorModal("Перепроверьте e-mail, Милорд... Он введён не корректно."));
     }
@@ -48,8 +48,10 @@ export function ForgotPassword() {
 
   return (
     <>
-      <FormContainer header={forgotPasswordFormHeader} inputs={forgotPasswordInputs} button={forgotPasswordButton}
-                     links={forgotPasswordFooterLinks} handleSubmit={handleSubmit}/>
+      <FormContainer header={forgotPasswordFormHeader} button={forgotPasswordButton}
+                     links={forgotPasswordFooterLinks} handleSubmit={handleSubmit}>
+        {forgotPasswordInputs}
+      </FormContainer>
       {openErrModal &&
         <Modal onClose={handleErrorModalClose} header={"Ошибка"}>
           <p className="text text_type_main-medium">

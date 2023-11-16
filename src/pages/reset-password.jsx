@@ -17,6 +17,7 @@ export function ResetPassword() {
   const code = useSelector(inputsValuesVerificationCode)
   const textErrorModal = useSelector(errorModalText)
   const openErrModal = useSelector(isOpenErrorModal)
+
   function handleSubmit(evt) {
     const target = evt.target
     const isError = !!target.querySelector(".input_status_error")
@@ -37,7 +38,7 @@ export function ResetPassword() {
 
   const resetPasswordFormHeader = "Восстановление пароля"
   const resetPasswordInputs = [typeInputs.passwordReset, typeInputs.checkedCode];
-  const resetPasswordButton = [createButton( {label:"Сохранить", key:"save"})];
+  const resetPasswordButton = [createButton({label: "Сохранить", key: "save"})];
   const resetPasswordFooterLinks = [typeLinksFooter.rememberPassword];
 
 
@@ -53,8 +54,10 @@ export function ResetPassword() {
 
   return (
     <>
-      <FormContainer header={resetPasswordFormHeader} inputs={resetPasswordInputs} button={resetPasswordButton}
-                     links={resetPasswordFooterLinks} handleSubmit={handleSubmit}/>
+      <FormContainer header={resetPasswordFormHeader} button={resetPasswordButton}
+                     links={resetPasswordFooterLinks} handleSubmit={handleSubmit}>
+        {resetPasswordInputs}
+      </FormContainer>
       {openErrModal &&
         <Modal onClose={handleErrorModalClose} header={"Ошибка"}>
           <p className="text text_type_main-medium">

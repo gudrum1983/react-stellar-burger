@@ -114,7 +114,13 @@ text-decoration: none;
   margin: 0 auto ;
 }
 
-
+.mock-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
 
 /*.profileUl{
   list-style: none;

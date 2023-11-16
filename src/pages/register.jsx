@@ -45,12 +45,12 @@ export function Register() {
     <>
       <FormContainer
         header={registerFormHeader}
-        inputs={registerInputs}
         button={registerButton}
         links={registerFooterLinks}
         name='formRegister'
-        handleSubmit={handleSubmit}
-      />
+        handleSubmit={handleSubmit}>
+        {registerInputs}
+      </FormContainer>
       {openErrModal &&
         <Modal onClose={handleErrorModalClose} header={"Ошибка"}>
           <p className="text text_type_main-medium">

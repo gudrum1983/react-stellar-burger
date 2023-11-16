@@ -8,7 +8,7 @@ import {
   stringOptional
 } from "../../utils/prop-types";
 
-export function FormContainer({header= null, inputs, links = null, button, handleSubmit, handleReset = null}) {
+export function FormContainer({header= null, links = null, button, handleSubmit, handleReset = null, children}) {
 
   const location = useLocation()
   const containerClass = location.pathname === "/profile"
@@ -25,7 +25,7 @@ export function FormContainer({header= null, inputs, links = null, button, handl
       <form onSubmit={handleSubmit} {...(handleReset && {onReset:handleReset})}>
         <fieldset className={styles.fieldset}>
           <div className={`${styles.placeItems}` }>
-            {inputs}
+            {children}
           </div>
           <div className={`${styles.buttonExtra}`}>
             {button}
@@ -43,7 +43,7 @@ export function FormContainer({header= null, inputs, links = null, button, handl
 
 FormContainer.propTypes = {
   header: stringOptional,
-  inputs: arrayNodeElementOptional,
+  children: arrayNodeElementOptional,
   links: arrayNodeElementOptional,
   button: arrayNodeElementOptional,
   handleSubmit: functionPropType,
