@@ -1,21 +1,12 @@
 import React from "react";
+import {FeedHistory} from "../components/feed-orders-profile/feed-orders-profile";
 
 //Заглушка
 export function Orders() {
 
-  const container = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100%',
-    width: '100%',
-  }
-
   return (
-    <div style={container}>
-      <p className="text text_type_main-medium">
-        История заказов
-      </p>
-    </div>
+
+      <FeedHistory/>
+
   )
 }
