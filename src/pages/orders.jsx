@@ -5,8 +5,13 @@ import {FeedHistory} from "../components/feed-orders-profile/feed-orders-profile
 export function Orders() {
 
   return (
+<div className='feedHistoryOrders'
+>
+  <FeedHistory/>
 
-      <FeedHistory/>
+
+</div>
+
 
   )
 }

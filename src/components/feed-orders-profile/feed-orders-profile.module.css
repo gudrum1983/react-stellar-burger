@@ -30,7 +30,6 @@
   display: flex;
   height: 100%;
   width: 100%;
-  max-width: calc(100% - 410px);
   flex-direction: column;
   gap: 24px;
   overflow-y: scroll;

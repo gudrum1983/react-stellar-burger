@@ -35,7 +35,10 @@ export const ProfileLayout = () => {
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </nav>
-      <Outlet/>
+      <div className='profileOutlet'>
+        <Outlet/>
+      </div>
+
     </div>
   )
 }

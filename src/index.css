@@ -1,5 +1,3 @@
-@import-normalize; /* bring in normalize.css styles */
-
 /* rest of app styles */
 
 body {
@@ -94,6 +92,22 @@ body {
   color: inherit;
 }
 
+.feedOrders {
+  width: 100%;
+  max-width: 600px;
+  display: inline-flex;
+  padding: 0 0 40px 8px;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.profileOutlet{
+  width: 100%;
+  max-width: calc(100% - 410px);
+}
+
+
 /*.defaultNavLink{
   display: flex;
   line-height: 64px;
@@ -114,6 +128,9 @@ text-decoration: none;
   margin: 0 auto ;
 }
 
+.feedHistoryOrders{
+  height: 100%;
+}
 
 
 /*.profileUl{

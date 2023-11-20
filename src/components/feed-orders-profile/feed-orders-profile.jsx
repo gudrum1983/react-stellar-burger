@@ -4,13 +4,20 @@ import React from "react";
 import {feedOrders} from "../../utils/data";
 import {useSelector} from "react-redux";
 import {burgerIngredientsArray} from "../../services/burger-ingredients/burger-ingredients-selector";
+import {useLocation} from "react-router-dom";
 
 
 export function FeedHistory() {
+  let isFeed = false
+  const location = useLocation();
+  console.log({location})
+  if (location.pathname === "/feed") {
+    isFeed = true
+  }
   return (
     <div className={`${styles.containerFeed} custom-scroll`}>
       {feedOrders.map((item) => (
-        <CardOrderFeedHistory item={item} key={item.numberOrder}></CardOrderFeedHistory>
+        <CardOrderFeedHistory item={item} key={item.numberOrder} isFeed={isFeed}></CardOrderFeedHistory>
       ))}
     </div>
   )
@@ -18,8 +25,7 @@ export function FeedHistory() {
 }
 
 
-export function CardOrderFeedHistory({item}) {
-
+export function CardOrderFeedHistory({item, isFeed}) {
 
   return (
     <div className={styles.cardOrder}>
@@ -28,12 +34,12 @@ export function CardOrderFeedHistory({item}) {
         className="text text_type_main-default text_color_inactive">{item.orderDate}</p>
       </div>
       <div>
-        <p className="text text_type_main-medium pb-2">
+        <p className="text text_type_main-medium">
           {item.nameOrder}
         </p>
-        <p className="text text_type_main-default">
+        {isFeed && <p className="text text_type_main-default pt-2">
           {item.orderStatus}
-        </p>
+        </p>}
       </div>
       <div className={styles.orderComponentsAndPrice}>
         <div className={styles.orderComponents}>
