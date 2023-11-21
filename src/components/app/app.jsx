@@ -19,6 +19,7 @@ import {Feed} from "../../pages/feed";
 import {ProfileLayout} from "../profile-layout/profile-layout";
 import {Orders} from "../../pages/orders";
 import {NotFound} from "../../pages/not-found";
+import {DetailsCardOrder} from "../feed-orders-profile/feed-orders-profile";
 
 export default function App() {
 
@@ -31,8 +32,10 @@ export default function App() {
 
   const {ingredients, isLoading, hasError} = useSelector(burgerIngredients);
   const location = useLocation()
+
   const navigate = useNavigate()
   const background = location.state && location.state.background;
+
 
   const handleModalClose = () => {
     navigate(-1);     // Возвращаемся к предыдущему пути при закрытии модалки
@@ -69,6 +72,8 @@ export default function App() {
             <Route path="orders" element={<Orders/>}/>
           </Route>
           <Route path="/feed" element={<OnlyAuth component={<Feed/>}/>}/>
+          <Route path="/feed/:id" element={<DetailsCardOrder/>}/>
+          <Route path="/profile/orders/:id" element={<OnlyAuth component={<DetailsCardOrder/>}/>}/>
 
         </Route>
 
@@ -80,6 +85,18 @@ export default function App() {
           <IngredientDetails/>
         </Modal>}/>
       </Routes>}
+
+      {background && <Routes>
+        <Route path="/feed/:id" element={<Modal onClose={handleModalClose} header={"need = params.id"}>
+          <DetailsCardOrder/>
+        </Modal>}/>
+      </Routes>}
+      {background && <Routes>
+        <Route path="/profile/orders/:id" element={<Modal onClose={handleModalClose} header={"need = params.id"}>
+          <DetailsCardOrder/>
+        </Modal>}/>
+      </Routes>}
+
 
     </div>
 

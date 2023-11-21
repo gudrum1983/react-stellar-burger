@@ -221,7 +221,7 @@ export const order1 = {
     '643d69a5c3f7b9001cfa0943', '643d69a5c3f7b9001cfa0945',
     '643d69a5c3f7b9001cfa0947', '643d69a5c3f7b9001cfa0949'],
   nameOrder: 'Death Star Starship Main бургер',
-  orderDate: 'Сегодня, 16:00 i-GMT+3',
+  orderDate: "2023-11-20T20:13:23.657Z",
   orderPrice: 480,
   orderStatus: 'создан',
 }
@@ -231,7 +231,7 @@ export const order3 = {
   componentsOrder: ['643d69a5c3f7b9001cfa093d', '643d69a5c3f7b9001cfa093e',
     '643d69a5c3f7b9001cfa0940', '643d69a5c3f7b9001cfa0941',],
   nameOrder: 'Supernova Infinity бургер',
-  orderDate: 'Вчера, 13:00 i-GMT+3',
+  orderDate: "2023-11-21T10:13:23.657Z",
   orderPrice: 560,
   orderStatus: 'создан',
 }
@@ -243,7 +243,7 @@ export const order2 = {
     '643d69a5c3f7b9001cfa0943', '643d69a5c3f7b9001cfa0945',
     '643d69a5c3f7b9001cfa0943', '643d69a5c3f7b9001cfa0943'],
   nameOrder: 'Black Hole Singularity острый бургер',
-  orderDate: 'Вчера, 13:00 i-GMT+3',
+  orderDate: "2023-11-20T10:13:23.657Z",
   orderPrice: 560,
   orderStatus: 'выполнено',
 }

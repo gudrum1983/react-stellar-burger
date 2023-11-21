@@ -1,11 +1,11 @@
-import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./feed-orders-profile.module.css";
 import React from "react";
-import {feedOrders} from "../../utils/data";
+import {feedOrders, order1, order2, order3} from "../../utils/data";
 import {useSelector} from "react-redux";
 import {burgerIngredientsArray} from "../../services/burger-ingredients/burger-ingredients-selector";
-import {useLocation} from "react-router-dom";
-
+import {Link, useLocation, useParams} from "react-router-dom";
+import styless from "../../components/burger-ingredients/ingredient/ingredient.module.css";
 
 export function FeedHistory() {
   let isFeed = false
@@ -27,25 +27,29 @@ export function FeedHistory() {
 
 export function CardOrderFeedHistory({item, isFeed}) {
 
+  const location = useLocation()
+
   return (
-    <div className={styles.cardOrder}>
+    <Link className={`${styless.nonlink} ${styles.cardOrder}`} to={item.numberOrder} state={{background: location}}>
       <div className={styles.orderId}>
-        <p className="text text_type_digits-default">#{item.numberOrder}</p><p
-        className="text text_type_main-default text_color_inactive">{item.orderDate}</p>
+        <p className="text text_type_digits-default">#{item.numberOrder}</p>
+        <p className="text text_type_main-default text_color_inactive"><FormattedDate date={new Date(item.orderDate)} /> i-GMT+3</p>
+
       </div>
       <div>
         <p className="text text_type_main-medium">
           {item.nameOrder}
         </p>
-        {isFeed && <p className="text text_type_main-default pt-2">
+        {!isFeed && <p className="text text_type_main-default pt-2">
           {item.orderStatus}
         </p>}
       </div>
       <div className={styles.orderComponentsAndPrice}>
-        <div className={styles.orderComponents}>
+        <div className={`${styles.orderComponents} ${styles.relative}`}>
           {item.componentsOrder.map((itemIng, index, arrayIng) => {
             if (index < 6) {
-              return (<ImgIng index={index} itemIng={itemIng} {...(index === 5 && arrayIng.length > 6 && {count: arrayIng.length - 5})}></ImgIng>)
+              return (<ImgIng index={index}
+                              itemIng={itemIng} {...(index === 5 && arrayIng.length > 6 && {count: arrayIng.length - 5})}></ImgIng>)
             }
           })}
         </div>
@@ -54,7 +58,7 @@ export function CardOrderFeedHistory({item, isFeed}) {
           <CurrencyIcon type="primary"/>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
 
@@ -63,7 +67,7 @@ export function ImgIng({itemIng, index, count = null}) {
   const ingredients = useSelector(burgerIngredientsArray)
 
   const marginLeft = index * 48
-  const postIndex = 10 - index
+  const postIndex = 6 - index
   const image_mobile_find = (idIng) => {
     const currentIngredient = ingredients.find((itemIng) => (itemIng._id === idIng));
     return currentIngredient.image_mobile
@@ -72,7 +76,7 @@ export function ImgIng({itemIng, index, count = null}) {
   return (
     <Button
       style={{left: marginLeft, zIndex: postIndex}}
-      htmlType="button" type="primary" extraClass={styles.buttonCardSmall}
+      htmlType="button" type="primary" extraClass={`${styles.buttonCardSmall} ${styles.absolute}`}
       index={index} key={`${index}_${itemIng}`}>
 
       <div className={styles.imgCardSmall} style={{backgroundImage: `url(${image_mobile_find(itemIng)})`}}>
@@ -86,38 +90,92 @@ export function ImgIng({itemIng, index, count = null}) {
 }
 
 
-/*
-export function CardOrderInfoFullPage() {
+export function DetailsCardOrder() {
+
+  const params = useParams()
+  const location = useLocation()
+  const idCurrentItem = params.id
+   const background = location.state && location.state.background;
+
+  const item = [order1, order2, order3].find(order => order.numberOrder === idCurrentItem)
+
+  /*  const currentIngredient = ingredients.find(item => item._id === idCurrentItem);
+    const {proteins, calories, fat, carbohydrates, name, image_large} = currentIngredient*/
+const styleCard = background ? styles.cardOrder3 : styles.cardOrder2
 
   return (
-    <div className={styles.cardOrder}>
-      <div className={styles.orderIdNumber}>#034533</div>
-      <div className={styles.burgerName}>Black Hole Singularity острый бургер</div>
-      <div className={styles.orderStatus}>Выполнен</div>
-      <div className={styles.orderIngredients}>
-        <div className={styles.orderIngredientsHeader}>Состав:</div>
-        <div className={styles.orderIngredientsItemFullPage}>
-          <Button htmlType="button" type="primary"  extraClass={styles.buttonCardSmall}>
-            <div className={styles.imgCardSmall} style={{backgroundImage:`url(${ingredientsItem.image_mobile})`}}/>
-          </Button>
+    <div className={styleCard}>
+      {!background && <p className="text text_type_digits-default mlr-auto mb-10 ">#{item.numberOrder}</p>}
+
+      <div className="mb-15">
+        <p className="text text_type_main-medium mb-3">
+          {item.nameOrder}
+        </p>
+        <p className="text text_type_main-default">
+          {item.orderStatus}
+        </p>
+      </div>
+      <p className="text text_type_main-medium mb-6">
+        Состав:
+      </p>
+      <ItemsIng componentsOrder={item.componentsOrder}/>
+      <div className={`${styles.orderId} pt-10`}>
+
+
+        <p className="text text_type_main-default text_color_inactive"><FormattedDate date={new Date(item.orderDate)} /> i-GMT+3</p>
+
+{/*        <p
+          className="text text_type_main-default text_color_inactive">{item.orderDate}</p>*/}
+        <div className={styles.orderPrice}>
+          <div className={`${styles.orderTextPrice} text text_type_digits-default pr-2`}>{888}</div>
+          <CurrencyIcon type="primary"/>
         </div>
-        <div className={orderPrice}>
-          <div className={orderTextPrice}></div>
-          <div className={orderIconPrice}></div>
-        </div>
-      </div>
-
-
-      <div className={orderId}>
-        <div className={orderIdNumber}>#034535</div>
-        <div className={orderTimeStamp}>Сегодня, 16:20 i-GMT+3</div>
-      </div>
-      <div>
-
 
       </div>
-
-
     </div>
   )
-}*/
+}
+
+
+export function ItemsIng({componentsOrder}) {
+
+  return (
+    <div className={`${styles.containerFeed2} custom-scroll`}>
+      {componentsOrder.map((item, index) => (
+        <ItemIng idIng={item} index={index}/>
+      ))}
+    </div>
+  )
+
+}
+
+export function ItemIng({idIng, index}) {
+
+  const ingredients = useSelector(burgerIngredientsArray)
+  const currentIngredient = ingredients.find((itemIng) => (itemIng._id === idIng))
+  const {image_mobile, name, price} = currentIngredient
+
+
+  return (
+    <div className={styles.rowIng}>
+      <Button
+        htmlType="button" type="primary" extraClass={styles.buttonCardSmall}
+        key={`${index}_${idIng}`}>
+
+        <div className={styles.imgCardSmall} style={{backgroundImage: `url(${image_mobile})`}}>
+        </div>
+
+      </Button>
+      <p
+        className="text text_type_main-default">{name}</p>
+      <div className={styles.orderPrice2}>
+        <div className={`${styles.orderTextPrice} text text_type_digits-default pr-2`}>{price}</div>
+        <CurrencyIcon type="primary"/>
+      </div>
+
+    </div>
+
+
+  )
+
+}
