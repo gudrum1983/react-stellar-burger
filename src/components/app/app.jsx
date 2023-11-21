@@ -22,7 +22,11 @@ import {NotFound} from "../../pages/not-found";
 import {DetailsCardOrder} from "../feed-orders-profile/feed-orders-profile";
 import {WebsocketStatus} from "../../utils/constants";
 import {connectFeedOrders, disconnectFeedOrders} from "../../services/feed-orders/feed-orders-actions";
-import {URL_WS_ALL} from "../../utils/data";
+import {URL_WS_ALL, URL_WS_OWNER} from "../../utils/data";
+import {
+  connectFeedOrdersProfile,
+  disconnectFeedOrdersProfile
+} from "../../services/feed-orders-profile/feed-orders-actions";
 
 export default function App() {
 
@@ -44,14 +48,19 @@ export default function App() {
 
   const isDisconnected = status !== WebsocketStatus.ONLINE
   const connect = () => dispatch(connectFeedOrders(URL_WS_ALL))
+  const connectPr = () => dispatch(connectFeedOrdersProfile(URL_WS_OWNER))
+
   const disconnect = () => dispatch(disconnectFeedOrders())
+  const disconnectPr = () => dispatch(disconnectFeedOrdersProfile())
 
 
 
   React.useEffect(() => {
     connect()
+    connectPr()
     return () => {
       disconnect()
+      disconnectPr()
     }
   }, []);
 

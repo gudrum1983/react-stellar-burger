@@ -13,6 +13,12 @@ export function Profile() {
   const nameValueTest = useSelector(userName)
   const emailValueTest = useSelector(userMail)
 
+
+
+
+
+
+
   function setValue() {
     dispatch(getUser());
     dispatch(addEmail(emailValueTest))

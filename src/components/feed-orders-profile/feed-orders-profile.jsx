@@ -9,19 +9,9 @@ import {WebsocketStatus} from "../../utils/constants";
 
 export function FeedHistory() {
 
-  const {status, data} = useSelector(store => store.feedOrders)
-  const isDisconnected = status !== WebsocketStatus.ONLINE
 
 
-  const orders = React.useMemo(
-    () =>
-     data?.orders,
-    [data]
-  );
 
-
-  console.log({orders})
-  console.log({isDisconnected})
 
 
   let isFeed = false
@@ -29,6 +19,18 @@ export function FeedHistory() {
   if (location.pathname === "/feed") {
     isFeed = true
   }
+
+  const {status, data} = useSelector(store => isFeed ? store.feedOrders : store.feedOrdersProfile)
+
+  const isDisconnected = status !== WebsocketStatus.ONLINE
+
+  const orders = React.useMemo(
+    () =>
+      data?.orders,
+    [data]
+  );
+  console.log({orders})
+  console.log({isDisconnected})
 
   if (!isDisconnected && orders) {
     return (
