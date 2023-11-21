@@ -2,8 +2,9 @@ import React from "react";
 import {FeedHistory} from "../components/feed-orders-profile/feed-orders-profile";
 import {Stats} from "../components/stats/stats";
 
-//Заглушка
 export function Feed() {
+
+
 
   return (
     <>

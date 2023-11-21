@@ -6,6 +6,7 @@ export const getOrderDetailsRequest = (ingredientsOrder) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      authorization: localStorage.getItem('accessToken')
     },
     body: JSON.stringify({
       ingredients: ingredientsOrder,

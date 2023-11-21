@@ -20,6 +20,9 @@ import {ProfileLayout} from "../profile-layout/profile-layout";
 import {Orders} from "../../pages/orders";
 import {NotFound} from "../../pages/not-found";
 import {DetailsCardOrder} from "../feed-orders-profile/feed-orders-profile";
+import {WebsocketStatus} from "../../utils/constants";
+import {connectFeedOrders, disconnectFeedOrders} from "../../services/feed-orders/feed-orders-actions";
+import {URL_WS_ALL} from "../../utils/data";
 
 export default function App() {
 
@@ -36,7 +39,24 @@ export default function App() {
   const navigate = useNavigate()
   const background = location.state && location.state.background;
 
+  const {status, data} = useSelector(store => store.feedOrders)
+/*  const {status, data, connectingError} = useSelector(store => store.feedOrders)*/
 
+  const isDisconnected = status !== WebsocketStatus.ONLINE
+  const connect = () => dispatch(connectFeedOrders(URL_WS_ALL))
+  const disconnect = () => dispatch(disconnectFeedOrders())
+
+
+
+  React.useEffect(() => {
+    connect()
+    return () => {
+      disconnect()
+    }
+  }, []);
+
+  console.log({data})
+  console.log({isDisconnected})
   const handleModalClose = () => {
     navigate(-1);     // Возвращаемся к предыдущему пути при закрытии модалки
   };

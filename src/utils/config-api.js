@@ -1,5 +1,8 @@
 export const BASE_URL = "https://norma.nomoreparties.space/api/";
 
+/*const accessToken = localStorage.getItem('accessToken')*/
+
+
 export const ENDPOINTS = {
   ingredients: "ingredients",
   orders: "orders",

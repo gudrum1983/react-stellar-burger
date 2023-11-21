@@ -1,52 +1,76 @@
 import {Button, CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./feed-orders-profile.module.css";
 import React from "react";
-import {feedOrders, order1, order2, order3} from "../../utils/data";
 import {useSelector} from "react-redux";
 import {burgerIngredientsArray} from "../../services/burger-ingredients/burger-ingredients-selector";
 import {Link, useLocation, useParams} from "react-router-dom";
 import styless from "../../components/burger-ingredients/ingredient/ingredient.module.css";
+import {WebsocketStatus} from "../../utils/constants";
 
 export function FeedHistory() {
+
+  const {status, data} = useSelector(store => store.feedOrders)
+  const isDisconnected = status !== WebsocketStatus.ONLINE
+
+
+  const orders = React.useMemo(
+    () =>
+     data?.orders,
+    [data]
+  );
+
+
+  console.log({orders})
+  console.log({isDisconnected})
+
+
   let isFeed = false
   const location = useLocation();
-  console.log({location})
   if (location.pathname === "/feed") {
     isFeed = true
   }
-  return (
-    <div className={`${styles.containerFeed} custom-scroll`}>
-      {feedOrders.map((item) => (
-        <CardOrderFeedHistory item={item} key={item.numberOrder} isFeed={isFeed}></CardOrderFeedHistory>
-      ))}
-    </div>
-  )
 
+  if (!isDisconnected && orders) {
+    return (
+      <div className={`${styles.containerFeed} custom-scroll`}>
+        {orders.map((item) => (
+          <CardOrderFeedHistory item={item} key={item._id} isFeed={isFeed}></CardOrderFeedHistory>
+        ))}
+      </div>
+    )
+  } else {
+    return (<p className="text text_type_main-medium">
+      Загрузка...
+    </p>)
+  }
 }
 
 
 export function CardOrderFeedHistory({item, isFeed}) {
 
-  const location = useLocation()
+  console.log({item})
 
+
+  const location = useLocation()
   return (
-    <Link className={`${styless.nonlink} ${styles.cardOrder}`} to={item.numberOrder} state={{background: location}}>
+    <Link className={`${styless.nonlink} ${styles.cardOrder}`} to={`${item.number}`} state={{background: location}}>
       <div className={styles.orderId}>
-        <p className="text text_type_digits-default">#{item.numberOrder}</p>
-        <p className="text text_type_main-default text_color_inactive"><FormattedDate date={new Date(item.orderDate)} /> i-GMT+3</p>
+        <p className="text text_type_digits-default">#{item.number}</p>
+        <p className="text text_type_main-default text_color_inactive"><FormattedDate
+          date={new Date(item.createdAt)}/> i-GMT+3</p>
 
       </div>
       <div>
         <p className="text text_type_main-medium">
-          {item.nameOrder}
+          {item.name}
         </p>
         {!isFeed && <p className="text text_type_main-default pt-2">
-          {item.orderStatus}
+          {item.status}
         </p>}
       </div>
       <div className={styles.orderComponentsAndPrice}>
         <div className={`${styles.orderComponents} ${styles.relative}`}>
-          {item.componentsOrder.map((itemIng, index, arrayIng) => {
+          {item.ingredients.map((itemIng, index, arrayIng) => {
             if (index < 6) {
               return (<ImgIng index={index}
                               itemIng={itemIng} {...(index === 5 && arrayIng.length > 6 && {count: arrayIng.length - 5})}></ImgIng>)
@@ -95,36 +119,43 @@ export function DetailsCardOrder() {
   const params = useParams()
   const location = useLocation()
   const idCurrentItem = params.id
-   const background = location.state && location.state.background;
+  const background = location.state && location.state.background;
 
-  const item = [order1, order2, order3].find(order => order.numberOrder === idCurrentItem)
+  const {data} = useSelector(store => store.feedOrders)
 
-  /*  const currentIngredient = ingredients.find(item => item._id === idCurrentItem);
-    const {proteins, calories, fat, carbohydrates, name, image_large} = currentIngredient*/
-const styleCard = background ? styles.cardOrder3 : styles.cardOrder2
+  console.log({data})
+const orders = data?.orders
+  console.log({orders})
+  console.log({idCurrentItem})
 
+
+
+  const item = orders.find(tet => tet.number === Number(idCurrentItem))
+  const styleCard = background ? styles.cardOrder3 : styles.cardOrder2
+  console.log({item})
   return (
     <div className={styleCard}>
-      {!background && <p className="text text_type_digits-default mlr-auto mb-10 ">#{item.numberOrder}</p>}
+      {!background && <p className="text text_type_digits-default mlr-auto mb-10 ">#{item.number}</p>}
 
       <div className="mb-15">
         <p className="text text_type_main-medium mb-3">
-          {item.nameOrder}
+          {item.name}
         </p>
         <p className="text text_type_main-default">
-          {item.orderStatus}
+          {item.status}
         </p>
       </div>
       <p className="text text_type_main-medium mb-6">
         Состав:
       </p>
-      <ItemsIng componentsOrder={item.componentsOrder}/>
+      <ItemsIng componentsOrder={item.ingredients}/>
       <div className={`${styles.orderId} pt-10`}>
 
 
-        <p className="text text_type_main-default text_color_inactive"><FormattedDate date={new Date(item.orderDate)} /> i-GMT+3</p>
+        <p className="text text_type_main-default text_color_inactive"><FormattedDate
+          date={new Date(item.createdAt)}/> i-GMT+3</p>
 
-{/*        <p
+        {/*        <p
           className="text text_type_main-default text_color_inactive">{item.orderDate}</p>*/}
         <div className={styles.orderPrice}>
           <div className={`${styles.orderTextPrice} text text_type_digits-default pr-2`}>{888}</div>

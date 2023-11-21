@@ -1,23 +1,29 @@
 import React from "react";
 import styles from "./stats.module.css"
-import {countOrders, ordersListAllready, ordersListProgress} from "../../utils/data";
+import {useSelector} from "react-redux";
+import {WebsocketStatus} from "../../utils/constants";
 
 export function Stats() {
+  const {status, data} = useSelector(store => store.feedOrders)
+  const isDisconnected = status !== WebsocketStatus.ONLINE
+  const ordersListAllready = (data?.orders) ? data.orders.filter(item => item.status === "done").map(item => item.number) : [0]
+  const ordersListProgress = (data?.orders) ? data.orders.filter(item => item.status !== "done").map(item => item.number) : [0]
+
 
 
   return (
     <div className={styles.stats}>
       <div className={styles.ordersBoard}>
-        <ListOrdersBoard header="Готовы:" items={ordersListAllready} done={true}/>
-        <ListOrdersBoard header="В работе:" items={ordersListProgress}/>
+        <ListOrdersBoard header="Готовы:" items={ordersListAllready} done={true} isDisconnected={isDisconnected}/>
+        <ListOrdersBoard header="В работе:" items={ordersListProgress} isDisconnected={isDisconnected}/>
 
       </div>
 
       <Completed header={"Выполнено за все время:"}>
-        {countOrders.all}
+        {(!isDisconnected && data?.total) ? `${data?.total}` : 0}
       </Completed>
       <Completed header={"Выполнено за сегодня:"}>
-        {countOrders.today}
+        {(!isDisconnected && data?.totalToday) ? `${data?.totalToday}` : 0}
       </Completed>
 
 
@@ -39,9 +45,9 @@ export function ListOrdersBoard({header, items, done= false}) {
       <p className="text text_type_main-medium">{header}
       </p>
       <div className={styleGrid}>
-        {items.map((item) => (
-          <p className={`text text_type_digits-default ${styleText}`} >{item}</p>
-        ))}
+        {items.map((item, index) => {if (index < 20) {
+          return (<p className={`text text_type_digits-default ${styleText}`} >{item}</p>)
+      } })}
 
       </div>
     </div>
@@ -57,20 +63,6 @@ export function Completed ({header, children}) {
     thousands: (Math.floor(children/1000) === 0) ? "" : `${Math.floor(children/1000)} `,
     hundreds: children%1000,
   }
-
-
-console.log("partNumber.millions", partNumber.millions)
-  console.log("partNumber.thousands", partNumber.thousands)
-  console.log("partNumber.hundreds", partNumber.hundreds)
-/*  const stringCount = String(children)
-
-
-
-  if (stringCount.length > 6) {
-
-  }*/
-
-
 
   return (
     <div>
