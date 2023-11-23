@@ -4,6 +4,7 @@ import {
   FEED_ORDERS_WS_ERROR,
   FEED_ORDERS_WS_MESSAGE,
   FEED_ORDERS_WS_OPEN,
+  FEED_ORDERS_WS_CLOSE
 } from "./feed-orders-actions";
 
 const initialState = {
@@ -33,6 +34,10 @@ export const reducerFeedOrders = (state = initialState, action) => {
       return{
         ...state,
         data: action.payload,
+      };
+    case FEED_ORDERS_WS_CLOSE:
+      return{
+        ...initialState
       };
     default:
       return state;

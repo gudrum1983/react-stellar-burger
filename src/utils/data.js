@@ -301,8 +301,8 @@ export const countOrders = {
 export const URL_WS_ALL = "wss://norma.nomoreparties.space/orders/all"
 
 
-const tok = localStorage.getItem("accessToken").slice(7)
-console.log({tok})
+const tok = localStorage.getItem("accessToken")?.slice(7) ?? ""
+
 export const URL_WS_OWNER = `wss://norma.nomoreparties.space/orders?token=${tok}`
 /*
 

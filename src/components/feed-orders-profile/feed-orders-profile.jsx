@@ -1,17 +1,14 @@
 import {Button, CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./feed-orders-profile.module.css";
-import React from "react";
-import {useSelector} from "react-redux";
+import React, {Fragment} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import {burgerIngredientsArray} from "../../services/burger-ingredients/burger-ingredients-selector";
-import {Link, useLocation, useParams} from "react-router-dom";
+import {Link, Navigate, useLocation, useParams} from "react-router-dom";
 import styless from "../../components/burger-ingredients/ingredient/ingredient.module.css";
 import {WebsocketStatus} from "../../utils/constants";
+import {openErrorModal} from "../../services/error-modal/error-modal-action";
 
 export function FeedHistory() {
-
-
-
-
 
 
   let isFeed = false
@@ -29,14 +26,14 @@ export function FeedHistory() {
       data?.orders,
     [data]
   );
-  console.log({orders})
-  console.log({isDisconnected})
 
   if (!isDisconnected && orders) {
     return (
       <div className={`${styles.containerFeed} custom-scroll`}>
         {orders.map((item) => (
-          <CardOrderFeedHistory item={item} key={item._id} isFeed={isFeed}></CardOrderFeedHistory>
+          <Fragment key={item._id} >
+          <CardOrderFeedHistory item={item} isFeed={isFeed}></CardOrderFeedHistory>
+          </Fragment>
         ))}
       </div>
     )
@@ -50,41 +47,42 @@ export function FeedHistory() {
 
 export function CardOrderFeedHistory({item, isFeed}) {
 
-  console.log({item})
-
-
   const location = useLocation()
   return (
-    <Link className={`${styless.nonlink} ${styles.cardOrder}`} to={`${item.number}`} state={{background: location}}>
-      <div className={styles.orderId}>
-        <p className="text text_type_digits-default">#{item.number}</p>
-        <p className="text text_type_main-default text_color_inactive"><FormattedDate
-          date={new Date(item.createdAt)}/> i-GMT+3</p>
 
-      </div>
-      <div>
-        <p className="text text_type_main-medium">
-          {item.name}
-        </p>
-        {!isFeed && <p className="text text_type_main-default pt-2">
-          {item.status}
-        </p>}
-      </div>
-      <div className={styles.orderComponentsAndPrice}>
-        <div className={`${styles.orderComponents} ${styles.relative}`}>
-          {item.ingredients.map((itemIng, index, arrayIng) => {
-            if (index < 6) {
-              return (<ImgIng index={index}
-                              itemIng={itemIng} {...(index === 5 && arrayIng.length > 6 && {count: arrayIng.length - 5})}></ImgIng>)
-            }
-          })}
+      <Link className={`${styless.nonlink} ${styles.cardOrder}`} to={`${item.number}`} state={{background: location}}>
+        <div className={styles.orderId}>
+          <p className="text text_type_digits-default">#{item.number}</p>
+          <p className="text text_type_main-default text_color_inactive"><FormattedDate
+            date={new Date(item.createdAt)}/> i-GMT+3</p>
+
         </div>
-        <div className={styles.orderPrice}>
-          <div className={`${styles.orderTextPrice} text text_type_digits-default pr-2`}>{888}</div>
-          <CurrencyIcon type="primary"/>
+        <div>
+          <p className="text text_type_main-medium">
+            {item.name}
+          </p>
+          {!isFeed && <p className="text text_type_main-default pt-2">
+            {item.status}
+          </p>}
         </div>
-      </div>
-    </Link>
+        <div className={styles.orderComponentsAndPrice}>
+          <div className={`${styles.orderComponents} ${styles.relative}`}>
+            {item.ingredients.map((itemIng, index, arrayIng) => {
+              if (index < 6) {
+                return (<ImgIng key={`${item.number}${index}`} index={index}
+                                itemIng={itemIng} {...(index === 5 && arrayIng.length > 6 && {count: arrayIng.length - 5})}></ImgIng>)
+              }
+            })}
+          </div>
+          <div className={styles.orderPrice}>
+            <div className={`${styles.orderTextPrice} text text_type_digits-default pr-2`}>{888}</div>
+            <CurrencyIcon type="primary"/>
+          </div>
+        </div>
+      </Link>
+
+
+
   )
 }
 
@@ -118,23 +116,59 @@ export function ImgIng({itemIng, index, count = null}) {
 
 export function DetailsCardOrder() {
 
+
+  const dispatch = useDispatch();
+
+
   const params = useParams()
   const location = useLocation()
+  const isFeed = (location.pathname.indexOf("/feed") === 0) //проверяем что строка "/profile" находится именно в начале pathname
+
+
+  /*  let isFeed = false
+    if (location.pathname === "/feed") {
+      isFeed = true
+    }*/
+
+
   const idCurrentItem = params.id
   const background = location.state && location.state.background;
 
-  const {data} = useSelector(store => store.feedOrders)
 
-  console.log({data})
-const orders = data?.orders
-  console.log({orders})
-  console.log({idCurrentItem})
+  const {status, data} = useSelector(store => isFeed ? store.feedOrders : store.feedOrdersProfile)
+
+  const isDisconnected = status !== WebsocketStatus.ONLINE
 
 
+  if (isDisconnected || !data) {
+    return (
+      <p className="text text_type_main-medium">
+        Загрузка...
+      </p>
+    )
 
+  }
+
+
+
+  const orders = data?.orders
   const item = orders.find(tet => tet.number === Number(idCurrentItem))
+
+  if (!item) {
+    if (isFeed) {
+      dispatch(openErrorModal(`Заказ с номером ${idCurrentItem} не найден, Милорд... Проверьте есть ли интересующий вас заказ в ленте заказов! `));
+      return <Navigate to={"/feed"}/>
+    } else {
+      dispatch(openErrorModal(`Заказ с номером ${idCurrentItem} не найден в вашем профиле, Милорд... Проверьте есть ли интересующий вас заказ в вашей истории заказов! `));
+      return <Navigate to={"/profile/orders"}/>
+    }
+
+
+
+
+  }
+
   const styleCard = background ? styles.cardOrder3 : styles.cardOrder2
-  console.log({item})
   return (
     <div className={styleCard}>
       {!background && <p className="text text_type_digits-default mlr-auto mb-10 ">#{item.number}</p>}
@@ -175,7 +209,10 @@ export function ItemsIng({componentsOrder}) {
   return (
     <div className={`${styles.containerFeed2} custom-scroll`}>
       {componentsOrder.map((item, index) => (
-        <ItemIng idIng={item} index={index}/>
+        <Fragment key={`${index}_${item}`}>
+          <ItemIng idIng={item} index={index}/>
+        </Fragment>
+
       ))}
     </div>
   )

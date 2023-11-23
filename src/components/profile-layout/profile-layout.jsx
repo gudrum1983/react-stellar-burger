@@ -1,12 +1,23 @@
 import {NavLink, Outlet} from "react-router-dom";
 import React from "react";
 import {logout} from "../../services/user/user-action";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import style from "./profile-layout.module.css"
+import {Modal} from "../modal/modal";
+import {closeErrorModal} from "../../services/error-modal/error-modal-action";
+import {errorModalText, isOpenErrorModal} from "../../services/error-modal/error-modal-selector";
 
 export const ProfileLayout = () => {
 
   const dispatch = useDispatch();
+
+  const handleErrorModalClose = () => {
+    dispatch(closeErrorModal());
+  };
+  const openErrModal = useSelector(isOpenErrorModal)
+  const textErrorModal = useSelector(errorModalText)
+
+
   function handleClick(e) {
     e.preventDefault()
     dispatch(logout());
@@ -38,6 +49,14 @@ export const ProfileLayout = () => {
       <div className='profileOutlet'>
         <Outlet/>
       </div>
+
+      {openErrModal &&
+        <Modal onClose={handleErrorModalClose} header={"Ошибка"}>
+          <p className="text text_type_main-medium">
+            {textErrorModal}
+          </p>
+        </Modal>}
+
 
     </div>
   )

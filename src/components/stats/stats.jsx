@@ -46,7 +46,7 @@ export function ListOrdersBoard({header, items, done= false}) {
       </p>
       <div className={styleGrid}>
         {items.map((item, index) => {if (index < 20) {
-          return (<p className={`text text_type_digits-default ${styleText}`} >{item}</p>)
+          return (<p key={item} className={`text text_type_digits-default ${styleText}`} >{item}</p>)
       } })}
 
       </div>
