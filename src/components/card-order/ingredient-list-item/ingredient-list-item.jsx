@@ -11,7 +11,7 @@ import {IngredientPreview} from "../ingredient-preview/ingredient-preview";
 
 export function IngredientListItem({idIng, index, count = null}) {
 
-/*  const mapIngredients = useSelector(burgerIngredientsMap)*/
+  const mapIngredients = useSelector(burgerIngredientsMap)
 
   const tek = count?.get(idIng)
   console.log({tek})
@@ -19,6 +19,9 @@ export function IngredientListItem({idIng, index, count = null}) {
 
   const ingredients = useSelector(burgerIngredientsArray)
   const currentIngredient = ingredients.find((element) => element._id === idIng)
+
+
+  const currentIngredient1 = tek
   const {name, price, image_mobile} = currentIngredient
 
   return (

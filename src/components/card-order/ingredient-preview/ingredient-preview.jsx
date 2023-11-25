@@ -15,10 +15,17 @@ export function IngredientPreview({image, itemIng, count = null}) {
   return (
 
     <div
-/*      style={{backgroundImage: `url(${image_mobile_find(itemIng)})`}}*/
+      /*      style={{backgroundImage: `url(${image_mobile_find(itemIng)})`}}*/
       style={{backgroundImage: `url(${image})`}}
       className={`${styles.rowIngNew}`}>
-      {count && <div className={styles.imgCardSmallFonNumber}>{`+${count}`}</div>}
+      {count && <div className={styles.imgCardSmallFonNumber}>
+        <p className="text text_type_main-default">
+          {`+${count}`}
+        </p>
+
+
+      </div>}
+
     </div>
 
   )
