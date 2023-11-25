@@ -7,40 +7,43 @@ import styless from "../card-order/card-order.module.css";
 import {IngredientsItems} from "../card-order/ingredients-items/ingredients-items";
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
+import {burgerIngredientsMap} from "../../services/burger-ingredients/burger-ingredients-selector";
 
 export function OrderInfo() {
+  /*  const [ingredients, setIngredients] = React.useState(null)*/
 
-/*  const test2 = useMatch({path: "/profile/orders/", end: false});*/
-
+  const [sum, setSum] = React.useState(0)
   const dispatch = useDispatch();
-
-
   const params = useParams()
   const location = useLocation()
   const isFeed = (location.pathname.indexOf("/feed") === 0) //проверяем что строка "/profile" находится именно в начале pathname
-
 
   const idCurrentItem = params.id
   const background = location.state && location.state.background;
 
 
   const {status, data} = useSelector(store => isFeed ? store.feedOrders : store.feedOrdersProfile)
+  const mapIngredients = useSelector(burgerIngredientsMap)
 
   const isDisconnected = status !== WebsocketStatus.ONLINE
 
 
-  if (isDisconnected || !data?.success) {
-    return (
-      <p className="text text_type_main-medium">
-        Загрузка...
-      </p>
-    )
-
-  }
-
-
   const orders = data?.orders
   const item = orders.find(tet => tet.number === Number(idCurrentItem))
+
+  React.useEffect(() => {
+    let newSum = sum
+
+    item.ingredients.forEach((ing) => {
+      if (mapIngredients.has(ing)) {
+        const {price} = mapIngredients.get(ing)
+        newSum = (newSum + price)
+      }
+    })
+
+    setSum(newSum)
+  }, [])
+
 
   if (!item) {
     if (isFeed) {
@@ -54,7 +57,19 @@ export function OrderInfo() {
 
   }
 
+
+  if (isDisconnected || !data?.success) {
+    return (
+      <p className="text text_type_main-medium">
+        Загрузка...
+      </p>
+    )
+
+  }
+
   const styleCard = background ? styles.cardOrder3 : styles.cardOrder2
+
+
   return (
     <div className={styleCard}>
       {!background && <p className="text text_type_digits-default mlr-auto mb-10 ">#{item.number}</p>}
@@ -77,7 +92,7 @@ export function OrderInfo() {
         <p className="text text_type_main-default text_color_inactive"><FormattedDate
           date={new Date(item.createdAt)}/> i-GMT+3</p>
         <div className={styless.orderPrice}>
-          <div className={`text text_type_digits-default pr-2`}>{888}</div>
+          <div className={`text text_type_digits-default pr-2`}>{sum}</div>
           <CurrencyIcon type="primary"/>
         </div>
 

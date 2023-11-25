@@ -1,5 +1,5 @@
 import React from "react";
-import {Orders} from "../components/feed-orders-profile/feed-orders-profile";
+import {Orders} from "../components/orders/orders";
 
 
 export function ProfileOrders() {

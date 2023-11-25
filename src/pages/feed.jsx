@@ -1,5 +1,5 @@
 import React from "react";
-import {Orders} from "../components/feed-orders-profile/feed-orders-profile";
+import {Orders} from "../components/orders/orders";
 import {Stats} from "../components/stats/stats";
 import {useDispatch, useSelector} from "react-redux";
 import {Modal} from "../components/modal/modal";

@@ -3,7 +3,7 @@ import {burgerIngredientsArray} from "../../../services/burger-ingredients/burge
 import styles from "./ingredient-preview.module.css";
 import React from "react";
 
-export function IngredientPreview({itemIng, count = null}) {
+export function IngredientPreview({image_mobile, itemIng, count = null}) {
 
   const ingredients = useSelector(burgerIngredientsArray)
 

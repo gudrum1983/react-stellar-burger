@@ -11,6 +11,8 @@ const initialState = {
   status: WebsocketStatus.OFFLINE,
   data: null,
   connectingError: null,
+  mapData: null,
+
 }
 
 export const reducerFeedOrdersProfile = (state = initialState, action) => {

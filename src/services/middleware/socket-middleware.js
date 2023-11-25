@@ -4,6 +4,10 @@ export const socketMiddleware = (wsActions) => {
   return store => {
     let socket = null;
 
+
+
+
+
     return next => action => {
       const {dispatch} = store;
       const {type} = action;
@@ -33,11 +37,15 @@ export const socketMiddleware = (wsActions) => {
         socket.onmessage = event => {
           const {data} = event;
           const parsedData = JSON.parse(data);
+/*          debugger*/
           if (data?.message === "Invalid or missing token") {
+/*            debugger*/
             console.log("получена ошибка", data)
             dispatch(getUser())
+          } else {
+            dispatch({type: onMessage, payload: parsedData});
           }
-          dispatch({type: onMessage, payload: parsedData});
+
         };
 
         socket.close = () => {

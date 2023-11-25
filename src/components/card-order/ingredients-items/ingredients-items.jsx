@@ -1,14 +1,46 @@
 import styles from "./ingredients-items.module.css";
-import React from "react";
+import React, {useState} from "react";
 import {IngredientListItem} from "../ingredient-list-item/ingredient-list-item";
+import {useSelector} from "react-redux";
+import {burgerIngredientsMap} from "../../../services/burger-ingredients/burger-ingredients-selector";
 
 export function IngredientsItems({componentsOrder}) {
+  const mapIngredients = useSelector(burgerIngredientsMap)
+  const [count, setCount] = useState()
+
+  React.useEffect(() => {
+    const map = new Map
+debugger
+    componentsOrder.forEach((ing) => {
+      if(map.has(ing)) {
+        const {count, ...value} = map.get(ing)
+
+        map.set(ing, {...value, count: count + 1} )}
+      else {
+        if (mapIngredients.has(ing)) {
+
+
+          map.set(ing, )
+        }
+      }
+    })
+  },[])
+
+
+
+  const checkItem = (item) => {
+    return mapIngredients.has(item)
+  }
+
+
 
   return (
     <ul className={`${styles.containerFeed2} nonList custom-scroll`}>
       {componentsOrder.map((item, index) => (
 
-          <IngredientListItem idIng={item} index={index}/>
+
+        checkItem && <IngredientListItem idIng={item} index={index} key={index}/>
+
 
       ))}
     </ul>
