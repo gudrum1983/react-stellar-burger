@@ -167,7 +167,27 @@ text-decoration: none;
   box-sizing: border-box;
 }
 
+.relative {
+  position: relative;
+}
 
+.absolute {
+  position: absolute;
+}
+
+.nonList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.test {
+  background: yellow;
+}
+
+.nonLink {
+  text-decoration: none;
+}
 
 /*  box-shadow: 0px 0px 16px 8px rgba(51, 51, 255, 0.25), 0px 0px 8px 8px rgba(51, 51, 255, 0.25);
   filter: drop-shadow(0px 4px 32px rgba(51, 51, 255, 0.5));*/

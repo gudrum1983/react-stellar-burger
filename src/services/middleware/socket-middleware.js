@@ -32,7 +32,6 @@ export const socketMiddleware = (wsActions) => {
 
         socket.onmessage = event => {
           const {data} = event;
-          debugger
           const parsedData = JSON.parse(data);
           if (data?.message === "Invalid or missing token") {
             console.log("получена ошибка", data)

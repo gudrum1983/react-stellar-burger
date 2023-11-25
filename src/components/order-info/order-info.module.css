@@ -1,0 +1,25 @@
+.cardOrder3 {
+  width: 100%;
+  max-width: 640px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  /*justify-content: center;*/
+  /*  align-items: center;*/
+  margin: 0 auto;
+  padding-top: 20px;
+
+}
+
+.cardOrder2 {
+  width: 100%;
+  max-width: 640px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  /*justify-content: center;*/
+  /*  align-items: center;*/
+  margin: 0 auto;
+  padding-top: 82px;
+
+}

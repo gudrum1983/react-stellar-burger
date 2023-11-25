@@ -65,11 +65,6 @@ export const store = configureStore(({
     feedOrdersProfile: reducerFeedOrdersProfile,
   },
   middleware: (getDefaultMiddelware) => {
-    return getDefaultMiddelware().concat(feedOrdersMiddleware, feedOrdersMiddlewareProfile)
+    return getDefaultMiddelware({serializableCheck: false}).concat(feedOrdersMiddleware, feedOrdersMiddlewareProfile)
   }
 }));
-
-
-/*  middleware: (getDefaultMiddelware) => {
-    return getDefaultMiddelware({serializableCheck:false}).concat(feedOrdersMiddleware)
-  }*/

@@ -7,7 +7,7 @@ import {userMail, userName} from "../services/user/user-selector";
 import {addEmail, addPassword, addUser} from "../services/inputs-values/inputs-values-actions";
 import {inputsValuesEmail, inputsValuesPassword, inputsValuesUserName} from "../services/inputs-values/inputs-values-selector";
 
-export function Profile() {
+export function ProfileEdit() {
 
   const dispatch = useDispatch();
   const nameValueTest = useSelector(userName)

@@ -1,0 +1,35 @@
+.rowIngNew {
+  width: 64px;
+  height: 64px;
+  position: relative;
+  margin: 10px;
+  box-sizing: border-box;
+  background: black 50% / 180% 100% no-repeat;
+  border-radius: 50%;
+}
+
+
+.rowIngNew:after {
+  width: 68px;
+  height: 68px;
+  content: "";
+  position: absolute;
+  box-sizing: border-box;
+  background-image: linear-gradient(63deg, #801AB2 0%, #4C4CFF 100%);
+  border-radius: 50%;
+  z-index: -4;
+  left: -2px;
+  top: -2px
+}
+
+.imgCardSmallFonNumber {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.6) 50% / 180% 100% no-repeat;
+}

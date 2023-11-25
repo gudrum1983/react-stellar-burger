@@ -1,0 +1,16 @@
+.rowIng {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 24px;
+}
+
+.orderPrice2 {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+}
+
+

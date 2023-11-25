@@ -4,6 +4,7 @@ const initialState = {
   isLoading: false,
   hasError: false,
   ingredients: [],
+  mapIngredients: {}
 };
 
 export const burgerIngredientsReducer = (state = initialState, action) => {
@@ -15,7 +16,7 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
       };
     }
     case GET_INGREDIENTS_SUCCESS: {
-      return { ...state, hasError: false, ingredients: action.ingredients, isLoading: false };
+      return { ...state, hasError: false, ingredients: action.ingredients, mapIngredients: action.mapIngredients, isLoading: false };
     }
     case GET_INGREDIENTS_FAILED: {
       return { ...state, hasError: true, isLoading: false };

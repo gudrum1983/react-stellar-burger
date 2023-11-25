@@ -14,12 +14,13 @@ import {Register} from "../../pages/register";
 import {Login} from "../../pages/login";
 import {ForgotPassword} from "../../pages/forgot-password";
 import {ResetPassword} from "../../pages/reset-password";
-import {Profile} from "../../pages/profile";
+import {ProfileEdit} from "../../pages/profile-edit";
 import {Feed} from "../../pages/feed";
 import {ProfileLayout} from "../profile-layout/profile-layout";
-import {Orders} from "../../pages/orders";
 import {NotFound} from "../../pages/not-found";
-import {DetailsCardOrder} from "../feed-orders-profile/feed-orders-profile";
+import {OrderInfo} from "../order-info/order-info";
+import {ProfileOrders} from "../../pages/profile-orders";
+
 
 export default function App() {
 
@@ -67,12 +68,12 @@ export default function App() {
 
           {/*OnlyAuth*/}
           <Route path="profile" element={<OnlyAuth component={<ProfileLayout/>}/>}>
-            <Route index element={<Profile/>}/>
-            <Route path="orders" element={<Orders/>}/>
+            <Route index element={<ProfileEdit/>}/>
+            <Route path="orders" element={<ProfileOrders/>}/>
           </Route>
           <Route path="/feed" element={<Feed/>}/>
-          <Route path="/feed/:id" element={<DetailsCardOrder/>}/>
-          <Route path="/profile/orders/:id" element={<OnlyAuth component={<DetailsCardOrder/>}/>}/>
+          <Route path="/feed/:id" element={<OrderInfo/>}/>
+          <Route path="/profile/orders/:id" element={<OnlyAuth component={<OrderInfo/>}/>}/>
 
         </Route>
 
@@ -87,12 +88,12 @@ export default function App() {
 
       {background && <Routes>
         <Route path="/feed/:id" element={<Modal onClose={handleModalClose} header={"need = params.id"}>
-          <DetailsCardOrder/>
+          <OrderInfo/>
         </Modal>}/>
       </Routes>}
       {background && <Routes>
         <Route path="/profile/orders/:id" element={<Modal onClose={handleModalClose} header={"need = params.id"}>
-          <DetailsCardOrder/>
+          <OrderInfo/>
         </Modal>}/>
       </Routes>}
 
