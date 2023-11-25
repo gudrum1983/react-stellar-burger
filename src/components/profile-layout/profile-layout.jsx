@@ -17,7 +17,6 @@ export const ProfileLayout = () => {
   const openErrModal = useSelector(isOpenErrorModal)
   const textErrorModal = useSelector(errorModalText)
 
-
   function handleClick(e) {
     e.preventDefault()
     dispatch(logout());

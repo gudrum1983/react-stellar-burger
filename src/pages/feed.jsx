@@ -6,12 +6,12 @@ import {Modal} from "../components/modal/modal";
 import {errorModalText, isOpenErrorModal} from "../services/error-modal/error-modal-selector";
 import {closeErrorModal} from "../services/error-modal/error-modal-action";
 
+
 export function Feed() {
 
   const dispatch = useDispatch();
   const openErrModal = useSelector(isOpenErrorModal)
   const textErrorModal = useSelector(errorModalText)
-
   const handleErrorModalClose = () => {
     dispatch(closeErrorModal());
   };

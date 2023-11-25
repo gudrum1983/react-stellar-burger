@@ -20,6 +20,7 @@ export function Login() {
     evt.preventDefault();
     if (!isError) {
       dispatch(login(pass, email));
+
     } else {
       dispatch(openErrorModal("Перепроверьте логин и пароль, Милорд... Они введены не корректно."));
     }

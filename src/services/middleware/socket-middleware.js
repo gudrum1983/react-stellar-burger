@@ -1,3 +1,5 @@
+import {getUser} from "../user/user-action";
+
 export const socketMiddleware = (wsActions) => {
   return store => {
     let socket = null;
@@ -24,17 +26,22 @@ export const socketMiddleware = (wsActions) => {
           dispatch({type: onOpen});
         };
 
-        socket.onerror = event => {
+        socket.onerror = () => {
           dispatch({type: onError, payload: "Error"});
         };
 
         socket.onmessage = event => {
           const {data} = event;
+          debugger
           const parsedData = JSON.parse(data);
+          if (data?.message === "Invalid or missing token") {
+            console.log("получена ошибка", data)
+            dispatch(getUser())
+          }
           dispatch({type: onMessage, payload: parsedData});
         };
 
-        socket.onclose = event => {
+        socket.close = () => {
           dispatch({type: onClose});
         };
 

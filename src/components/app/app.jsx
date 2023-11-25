@@ -20,37 +20,10 @@ import {ProfileLayout} from "../profile-layout/profile-layout";
 import {Orders} from "../../pages/orders";
 import {NotFound} from "../../pages/not-found";
 import {DetailsCardOrder} from "../feed-orders-profile/feed-orders-profile";
-import {connectFeedOrders, disconnectFeedOrders} from "../../services/feed-orders/feed-orders-actions";
-import {URL_WS_ALL, URL_WS_OWNER} from "../../utils/data";
-import {
-  connectFeedOrdersProfile,
-  disconnectFeedOrdersProfile
-} from "../../services/feed-orders-profile/feed-orders-actions";
 
 export default function App() {
 
   const dispatch = useDispatch();
-
-
-  const tok = localStorage.getItem("accessToken")?.slice(7) ?? ""
-    const connect = () => dispatch(connectFeedOrders(URL_WS_ALL))
-  const connectPr = () => dispatch(connectFeedOrdersProfile(URL_WS_OWNER))
-
-  const disconnect = () => dispatch(disconnectFeedOrders())
-  const disconnectPr = () => dispatch(disconnectFeedOrdersProfile())
-
-
-
-  React.useEffect(() => {
-    connect();
-    connectPr();
-    return () => {
-      disconnect()
-      disconnectPr()
-    }
-  }, [tok]);
-
-
 
   React.useEffect(() => {
     dispatch(checkUserAuth());
