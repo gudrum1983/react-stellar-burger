@@ -10,22 +10,22 @@ export function IngredientsItems({componentsOrder}) {
 
   React.useEffect(() => {
     const map = new Map
-debugger
     componentsOrder.forEach((ing) => {
-      if(map.has(ing)) {
+      if (map.has(ing)) {
         const {count, ...value} = map.get(ing)
 
-        map.set(ing, {...value, count: count + 1} )}
-      else {
+        map.set(ing, {...value, count: count + 1})
+      } else {
         if (mapIngredients.has(ing)) {
+        const {image_mobile, name, price} = mapIngredients.get(ing)
 
-
-          map.set(ing, )
+          map.set(ing,{image_mobile, name, price, count: 1})
         }
       }
     })
-  },[])
-
+    setCount(map)
+    console.log({count})
+  }, [])
 
 
   const checkItem = (item) => {
@@ -33,13 +33,12 @@ debugger
   }
 
 
-
   return (
     <ul className={`${styles.containerFeed2} nonList custom-scroll`}>
-      {componentsOrder.map((item, index) => (
+      {[...new Set(componentsOrder)].map((item, index) => (
 
 
-        checkItem && <IngredientListItem idIng={item} index={index} key={index}/>
+        checkItem && <IngredientListItem count={count} idIng={item} index={index} key={index}/>
 
 
       ))}

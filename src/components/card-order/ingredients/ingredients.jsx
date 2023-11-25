@@ -14,7 +14,7 @@ export function Ingredients({itemIng, index, count = null}) {
 
   return (
     <div style={{left: marginLeft, zIndex: postIndex}} className="absolute">
-      <IngredientPreview image_mobile={image_mobile} itemIng={itemIng} count={count}></IngredientPreview>
+      <IngredientPreview image={image_mobile} itemIng={itemIng} count={count}></IngredientPreview>
     </div>
   )
 

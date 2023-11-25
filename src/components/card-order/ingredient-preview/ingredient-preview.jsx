@@ -3,7 +3,7 @@ import {burgerIngredientsArray} from "../../../services/burger-ingredients/burge
 import styles from "./ingredient-preview.module.css";
 import React from "react";
 
-export function IngredientPreview({image_mobile, itemIng, count = null}) {
+export function IngredientPreview({image, itemIng, count = null}) {
 
   const ingredients = useSelector(burgerIngredientsArray)
 
@@ -15,7 +15,8 @@ export function IngredientPreview({image_mobile, itemIng, count = null}) {
   return (
 
     <div
-      style={{backgroundImage: `url(${image_mobile_find(itemIng)})`}}
+/*      style={{backgroundImage: `url(${image_mobile_find(itemIng)})`}}*/
+      style={{backgroundImage: `url(${image})`}}
       className={`${styles.rowIngNew}`}>
       {count && <div className={styles.imgCardSmallFonNumber}>{`+${count}`}</div>}
     </div>
