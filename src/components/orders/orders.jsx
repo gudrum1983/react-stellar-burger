@@ -1,5 +1,5 @@
 import styles from "./orders.module.css";
-import React, {Fragment} from "react";
+import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useMatch} from "react-router-dom";
 import {WebsocketStatus} from "../../utils/constants";
@@ -7,37 +7,28 @@ import {
   connectFeedOrdersProfile,
   disconnectFeedOrdersProfile
 } from "../../services/feed-orders-profile/feed-orders-actions";
-import {URL_WS_ALL, URL_WS_OWNER} from "../../utils/data";
-import {connectFeedOrders, disconnectFeedOrders} from "../../services/feed-orders/feed-orders-actions";
+import { URL_WS_OWNER} from "../../utils/data";
 import {CardOrder} from "../card-order/card-order";
 
 
 export function Orders() {
 
   const dispatch = useDispatch();
-  const connect = () => dispatch(connectFeedOrders(URL_WS_ALL))
-  const connectPr = () => dispatch(connectFeedOrdersProfile(URL_WS_OWNER))
-  const disconnect = () => dispatch(disconnectFeedOrders())
-  const disconnectPr = () => dispatch(disconnectFeedOrdersProfile())
+/*  const connectPr = () => dispatch(connectFeedOrdersProfile(URL_WS_OWNER))*/
+/*  const disconnectPr = () => dispatch(disconnectFeedOrdersProfile())*/
 
   const isProfile = useMatch({path: "/profile/orders", end: false});
-  const isFeed = useMatch({path: "feed", end: false});
 
-  React.useEffect(() => {
+ /* React.useEffect(() => {
     if (isProfile) {
       connectPr();
       return () => {
         disconnectPr()
       }
-    } else if (isFeed) {
-      connect();
-      return () => {
-        disconnect()
-      }
     }
-  }, []);
+  }, []);*/
 
-  const {status, data} = useSelector(store => isFeed ? store.feedOrders : store.feedOrdersProfile)
+  const {status, data} = useSelector(store => isProfile ? store.feedOrdersProfile : store.feedOrders )
 
   const isDisconnected = status !== WebsocketStatus.ONLINE
 
@@ -50,9 +41,7 @@ export function Orders() {
     return (
       <ul className={`${styles.containerFeed} nonList custom-scroll`}>
         {orders.map((item) => (
-
-            <CardOrder item={item} key={item._id}></CardOrder>
-
+            <CardOrder order={item} key={item._id}></CardOrder>
         ))}
       </ul>
     )

@@ -32,7 +32,7 @@ export function IngredientsItems({componentsOrder}) {
     return mapIngredients.has(item)
   }
 
-
+  console.log({count})
   return (
     <ul className={`${styles.containerFeed2} nonList custom-scroll`}>
       {[...new Set(componentsOrder)].map((item, index) => (

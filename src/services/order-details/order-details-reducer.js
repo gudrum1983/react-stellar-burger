@@ -1,9 +1,16 @@
-import {CLEAR_ORDER, GET_ORDER_FAILED, GET_ORDER_REQUEST, GET_ORDER_SUCCESS,} from "./order-details-actions";
+import {
+  CLEAR_ORDER,
+  GET_ORDER_FAILED,
+  GET_ORDER_REQUEST,
+  GET_ORDER_SUCCESS,
+  GET_INFO_ORDER
+} from "./order-details-actions";
 
 const initialState = {
   orderNumber: null,
   orderRequest: false,
   orderFailed: false,
+  infoOrder: null,
 };
 
 export const orderDetailsReducer = (state = initialState, action) => {
@@ -15,10 +22,13 @@ export const orderDetailsReducer = (state = initialState, action) => {
       };
     }
     case GET_ORDER_SUCCESS: {
-      return { ...state, orderFailed: false, orderNumber: action.payload, orderRequest: false };
+      return {...state, orderFailed: false, orderNumber: action.payload, orderRequest: false};
     }
     case GET_ORDER_FAILED: {
-      return { ...state, orderFailed: true, orderNumber: false };
+      return {...state, orderFailed: true, orderNumber: false};
+    }
+    case GET_INFO_ORDER: {
+      return {...state, infoOrder: action.payload};
     }
     case CLEAR_ORDER: {
       return initialState;

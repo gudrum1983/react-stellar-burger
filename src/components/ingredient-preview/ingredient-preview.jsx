@@ -3,12 +3,12 @@ import {burgerIngredientsArray} from "../../services/burger-ingredients/burger-i
 import styles from "./ingredient-preview.module.css";
 import React from "react";
 
-export function IngredientPreview({image, itemIng, count = null}) {
+export function IngredientPreview({image, ingredient, count = null}) {
 
   const ingredients = useSelector(burgerIngredientsArray)
 
-  function image_mobile_find(idIng) {
-    const currentIngredient = ingredients.find((itemIng) => (itemIng._id === idIng));
+  function image_mobile_find(ingredient) {
+    const currentIngredient = ingredients.find((itemIng) => (itemIng._id === ingredient));
     return currentIngredient.image_mobile
   }
 

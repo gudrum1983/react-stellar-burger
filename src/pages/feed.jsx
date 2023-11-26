@@ -5,16 +5,28 @@ import {useDispatch, useSelector} from "react-redux";
 import {Modal} from "../components/modal/modal";
 import {errorModalText, isOpenErrorModal} from "../services/error-modal/error-modal-selector";
 import {closeErrorModal} from "../services/error-modal/error-modal-action";
-
+import {connectFeedOrders, disconnectFeedOrders} from "../services/feed-orders/feed-orders-actions";
+import {URL_WS_ALL} from "../utils/data";
 
 export function Feed() {
 
   const dispatch = useDispatch();
   const openErrModal = useSelector(isOpenErrorModal)
   const textErrorModal = useSelector(errorModalText)
+
+  const connect = () => dispatch(connectFeedOrders(URL_WS_ALL))
+  const disconnect = () => dispatch(disconnectFeedOrders())
+
   const handleErrorModalClose = () => {
     dispatch(closeErrorModal());
   };
+
+  React.useEffect(() => {
+    connect();
+    return () => {
+      disconnect()
+    }
+  }, []);
 
   return (
     <>
@@ -32,6 +44,5 @@ export function Feed() {
           </p>
         </Modal>}
     </>
-
   )
 }

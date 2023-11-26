@@ -10,6 +10,9 @@ import {IngredientPreview} from "../../ingredient-preview/ingredient-preview";
 
 
 export function IngredientListItem({idIng, index, count = null}) {
+if(!idIng) {
+  return null
+}
 
   const mapIngredients = useSelector(burgerIngredientsMap)
 
