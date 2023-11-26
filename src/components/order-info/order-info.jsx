@@ -5,9 +5,10 @@ import {openErrorModal} from "../../services/error-modal/error-modal-action";
 import styles from "./order-info.module.css";
 import styless from "../card-order/card-order.module.css";
 import {IngredientsItems} from "../card-order/ingredients-items/ingredients-items";
-import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
+import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import {burgerIngredientsMap} from "../../services/burger-ingredients/burger-ingredients-selector";
+import {digitsSmall, displaySmall, formattedData, textDefault} from "../../utils/inputs";
 
 export function OrderInfo() {
   /*  const [ingredients, setIngredients] = React.useState(null)*/
@@ -72,27 +73,36 @@ export function OrderInfo() {
 
   return (
     <div className={styleCard}>
+{/*
       {!background && <p className="text text_type_digits-default mlr-auto mb-10 ">#{item.number}</p>}
+*/}
+      {!background && digitsSmall({value: `#${item.number}`})}
 
       <div className="mb-15">
-        <p className="text text_type_main-medium mb-3">
+
+        {displaySmall({value:item.name, extraClass: 'mb-3'})}
+        {textDefault({value:item.status})}
+{/*        <p className="text text_type_main-medium mb-3">
           {item.name}
-        </p>
-        <p className="text text_type_main-default">
+        </p>*/}
+{/*        <p className="text text_type_main-default">
           {item.status}
-        </p>
+        </p>*/}
       </div>
-      <p className="text text_type_main-medium mb-6">
+      {displaySmall({value:'Состав:', extraClass: 'mb-6'})}
+{/*      <p className="text text_type_main-medium mb-6">
         Состав:
-      </p>
+      </p>*/}
       <IngredientsItems componentsOrder={item.ingredients}/>
       <div className={`${styless.orderId} pt-10`}>
 
-
-        <p className="text text_type_main-default text_color_inactive"><FormattedDate
-          date={new Date(item.createdAt)}/> i-GMT+3</p>
+        {formattedData({value: item.createdAt, addText: " i-GMT+3"})}
+{/*        <p className="text text_type_main-default text_color_inactive"><FormattedDate
+          date={new Date(item.createdAt)}/> i-GMT+3</p>*/}
         <div className={styless.orderPrice}>
-          <div className={`text text_type_digits-default pr-2`}>{sum}</div>
+          {digitsSmall({value: sum, extraClass:'pr-2'})}
+
+{/*          <div className={`text text_type_digits-default pr-2`}>{sum}</div>*/}
           <CurrencyIcon type="primary"/>
         </div>
 

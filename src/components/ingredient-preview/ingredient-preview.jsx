@@ -1,5 +1,5 @@
 import {useSelector} from "react-redux";
-import {burgerIngredientsArray} from "../../../services/burger-ingredients/burger-ingredients-selector";
+import {burgerIngredientsArray} from "../../services/burger-ingredients/burger-ingredients-selector";
 import styles from "./ingredient-preview.module.css";
 import React from "react";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import {IngredientPreview} from "../ingredient-preview/ingredient-preview";
+import {IngredientPreview} from "../../ingredient-preview/ingredient-preview";
 import {useSelector} from "react-redux";
 import {burgerIngredientsMap} from "../../../services/burger-ingredients/burger-ingredients-selector";
 

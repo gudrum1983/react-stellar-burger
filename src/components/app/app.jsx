@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import styles from "./app.module.css";
 import {Routes, Route, useLocation, useNavigate} from "react-router-dom";
 import {Home} from "../../pages/home";
-import {AppLayout} from '../app-layout/app-layout'
+import {AppLayout} from '../../pages/app-layout'
 import {Modal} from "../modal/modal";
 import {IngredientDetails} from "../ingredient-details/ingredient-details";
 import {loadBurgerIngredients} from "../../services/burger-ingredients/burger-ingredients-actions";
@@ -16,7 +16,7 @@ import {ForgotPassword} from "../../pages/forgot-password";
 import {ResetPassword} from "../../pages/reset-password";
 import {ProfileEdit} from "../../pages/profile-edit";
 import {Feed} from "../../pages/feed";
-import {ProfileLayout} from "../profile-layout/profile-layout";
+import {ProfileLayout} from "../../pages/profile-layout";
 import {NotFound} from "../../pages/not-found";
 import {OrderInfo} from "../order-info/order-info";
 import {ProfileOrders} from "../../pages/profile-orders";

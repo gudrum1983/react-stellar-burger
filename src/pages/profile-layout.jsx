@@ -1,11 +1,10 @@
 import {NavLink, Outlet} from "react-router-dom";
 import React from "react";
-import {logout} from "../../services/user/user-action";
+import {logout} from "../services/user/user-action";
 import {useDispatch, useSelector} from "react-redux";
-import style from "./profile-layout.module.css"
-import {Modal} from "../modal/modal";
-import {closeErrorModal} from "../../services/error-modal/error-modal-action";
-import {errorModalText, isOpenErrorModal} from "../../services/error-modal/error-modal-selector";
+import {Modal} from "../components/modal/modal";
+import {closeErrorModal} from "../services/error-modal/error-modal-action";
+import {errorModalText, isOpenErrorModal} from "../services/error-modal/error-modal-selector";
 
 export const ProfileLayout = () => {
 
@@ -23,21 +22,21 @@ export const ProfileLayout = () => {
   }
 
   return (
-    <div className={style.profile}>
-      <nav className={style.navigation}>
-        <ul className={style.links}>
+    <div className="profile">
+      <nav className="navigation">
+        <ul className="links">
           <li key="profile">
-            <NavLink className={`text text_type_main-medium text_color_inactive ${style.link} cursor`}
+            <NavLink className={`text text_type_main-medium text_color_inactive link cursor`}
                      to="/profile"
                      end>Профиль</NavLink>
           </li>
           <li key="orders">
-            <NavLink className={`text text_type_main-medium text_color_inactive ${style.link} cursor`}
+            <NavLink className={`text text_type_main-medium text_color_inactive link cursor`}
                      to={"/profile/orders"}>История
               заказов</NavLink>
           </li>
           <li key="logout">
-            <button className={`text text_type_main-medium text_color_inactive ${style.link} cursor`}
+            <button className={`text text_type_main-medium text_color_inactive link cursor`}
                      onClick={handleClick}>Выход</button>
           </li>
         </ul>

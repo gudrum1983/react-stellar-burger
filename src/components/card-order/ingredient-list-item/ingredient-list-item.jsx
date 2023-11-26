@@ -6,7 +6,7 @@ import {
 import styles from "./ingredient-list-item.module.css";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
-import {IngredientPreview} from "../ingredient-preview/ingredient-preview";
+import {IngredientPreview} from "../../ingredient-preview/ingredient-preview";
 
 
 export function IngredientListItem({idIng, index, count = null}) {

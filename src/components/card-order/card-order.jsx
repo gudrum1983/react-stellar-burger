@@ -1,11 +1,11 @@
 import {Link, useLocation, useMatch} from "react-router-dom";
-import styless from "../burger-ingredients/ingredient/ingredient.module.css";
 import styles from "./card-order.module.css";
-import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
+import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Ingredients} from "./ingredients/ingredients";
 import React from "react";
 import {useSelector} from "react-redux";
 import {burgerIngredientsMap} from "../../services/burger-ingredients/burger-ingredients-selector";
+import {digitsSmall, formattedData} from "../../utils/inputs";
 
 export function CardOrder({item}) {
 
@@ -14,27 +14,28 @@ export function CardOrder({item}) {
 
   React.useEffect(() => {
     let newSum = sum
-
     item.ingredients.forEach((ing) => {
       if (mapIngredients.has(ing)) {
         const {price} = mapIngredients.get(ing)
         newSum = (newSum + price)
       }
     })
-
     setSum(newSum)
   }, [])
 
 
   const isFeed = useMatch({path: "feed", end: false});
   const location = useLocation()
+
   return (
     <li>
-      <Link className={`${styless.nonlink} ${styles.cardOrder}`} to={`${item.number}`} state={{background: location}}>
+      <Link className={`nonlink ${styles.cardOrder}`} to={`${item.number}`} state={{background: location}}>
         <div className={styles.orderId}>
-          <p className="text text_type_digits-default">#{item.number}</p>
-          <p className="text text_type_main-default text_color_inactive"><FormattedDate
-            date={new Date(item.createdAt)}/> i-GMT+3</p>
+          {digitsSmall({value: `#${item.number}`})}
+{/*          <p className="text text_type_digits-default">#{item.number}</p>*/}
+          {formattedData({value: item.createdAt, addText: " i-GMT+3"})}
+{/*          <p className="text text_type_main-default text_color_inactive"><FormattedDate
+            date={new Date(item.createdAt)}/> i-GMT+3</p>*/}
 
         </div>
         <div>
