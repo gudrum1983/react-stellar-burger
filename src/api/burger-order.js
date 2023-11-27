@@ -1,8 +1,7 @@
-import {BASE_URL, ENDPOINTS} from "../utils/config-api";
+import {ENDPOINTS} from "../utils/config-api";
 import {request} from "../utils/config-api";
-import {fetchWithRefresh} from "./refresh-token";
 
-export const getOrderDetailsRequest = (ingredientsOrder) => {
+export const getOrderDetailsReady = (ingredientsOrder) => {
   return request(ENDPOINTS.orders, {
     method: 'POST',
     headers: {
@@ -15,16 +14,7 @@ export const getOrderDetailsRequest = (ingredientsOrder) => {
   })
 };
 
-/*export const getInfoOrderDetailsRequest = (number) => {
-debugger
-   return (fetch(`${BASE_URL}${ENDPOINTS.orders}/${number}`)
-      .then((res)=> {console.log(res)}))
-
-
-/!*  return request(`${ENDPOINTS.orders}/${number}`)*!/
-};*/
-
-export const getInfoOrderDetailsRequest = (number) => {
+export const getOrderDetailsInfo = (number) => {
   return request(`${ENDPOINTS.orders}/${number}`, {
     method: 'GET',
     headers: {

@@ -288,6 +288,18 @@ text-decoration: none;
   flex-direction: row;
 }
 
+.orderId {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.orderPrice {
+  display: flex;
+  flex-direction: row;
+}
+
+
 .nonlink {
   text-decoration: none;
   color: inherit;

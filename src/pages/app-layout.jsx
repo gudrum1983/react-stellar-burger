@@ -1,14 +1,20 @@
 import {Logo, BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import {NavigationLink} from "../components/navigation-link/navigation-link";
-import {Link, Outlet, useLocation} from "react-router-dom";
+import {Link, Outlet, useLocation, useMatch} from "react-router-dom";
 import React from "react";
 export function AppLayout() {
 
 
   const location = useLocation();
+  const isProfile = useMatch({path: "/profile", end: false})
+
+
+
+
   const active = (to) => {
     if (to === "/profile") {
-      return (location.pathname.indexOf(to) === 0) //проверяем что строка "/profile" находится именно в начале pathname
+/*      return (location.pathname.indexOf(to) === 0) //проверяем что строка "/profile" находится именно в начале pathname*/
+      return (isProfile) //проверяем что строка "/profile" находится именно в начале pathname
         ? "primary"
         : "secondary"
     } else {

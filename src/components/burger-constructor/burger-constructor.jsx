@@ -6,7 +6,7 @@ import {TotalPrice} from "./total-price/total-price";
 import styles from "./constructor-list/constructor-list.module.css";
 import {useDrop} from "react-dnd";
 import {useDispatch, useSelector} from "react-redux";
-import {getOrderDetails} from "../../services/order-details/order-details-actions";
+import {getReadyOrderDetails} from "../../services/order-details/order-details-actions";
 import {selectBurgerConstructor} from "../../services/burger-constructor/burger-constructor-selector";
 import {addFilling, chooseBun} from "../../services/burger-constructor/burger-constructor-actions";
 import {useNavigate} from "react-router-dom";
@@ -54,7 +54,7 @@ export function BurgerConstructor() {
       navigate("/login", {replace: false});
     } else {
       const ingredientsOrder = getListIdIngredients();
-      dispatch(getOrderDetails(ingredientsOrder))
+      dispatch(getReadyOrderDetails(ingredientsOrder))
     }
 
   }

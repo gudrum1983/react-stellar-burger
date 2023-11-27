@@ -16,7 +16,7 @@ export function CardOrder({order}) {
   return (
     <li>
       <Link className={`nonlink ${styles.cardOrder}`} to={`${number}`} state={{background: location}}>
-        <div className={styles.orderId}>
+        <div className="orderId">
           {digitsSmall({value: `#${number}`})}
           {formattedData({value: createdAt, addText: " i-GMT+3"})}
         </div>
@@ -33,7 +33,7 @@ export function CardOrder({order}) {
               }
             })}
           </div>
-          <div className={styles.orderPrice}>
+          <div className="orderPrice">
             {digitsSmall({value: sum, extraClass: 'pr-2'})}
             <CurrencyIcon type="primary"/>
           </div>
