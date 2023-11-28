@@ -3,15 +3,14 @@ import styles from "./card-order.module.css";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Ingredients} from "./ingredients/ingredients";
 import React from "react";
-import useSum from "../../hooks/useSum";
 import {digitsSmall, displaySmall, formattedData, textDefault} from "../../utils/text-elements";
+import {OrderPrice} from "../order-price/order-price";
 
 export function CardOrder({order}) {
 
   const isFeed = useMatch({path: "feed", end: false});
   const location = useLocation()
   const {ingredients,number, name, status, createdAt } = order
-  const sum = useSum(ingredients)
 
   const numberToString = number.toString()
 
@@ -37,10 +36,7 @@ export function CardOrder({order}) {
               }
             })}
           </div>
-          <div className="orderPrice">
-            {digitsSmall({value: sum, extraClass: 'pr-2'})}
-            <CurrencyIcon type="primary"/>
-          </div>
+          <OrderPrice ingredients={ingredients}/>
         </div>
       </Link>
     </li>

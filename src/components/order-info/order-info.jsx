@@ -10,6 +10,8 @@ import {orderDetails} from "../../services/order-details/order-details-selectors
 import {clearOrderDetails, getInfoOrderDetails} from "../../services/order-details/order-details-actions";
 import {digitsSmall, displaySmall, formattedData, textDefault} from "../../utils/text-elements";
 import {openErrorModal} from "../../services/error-modal/error-modal-action";
+import {burgerIngredientsMap} from "../../services/burger-ingredients/burger-ingredients-selector";
+import {OrderPrice} from "../order-price/order-price";
 
 
 export function OrderInfo() {
@@ -81,7 +83,12 @@ export function OrderInfo() {
   }
 
   const styleCard = background ? styles.cardOrder3 : styles.cardOrder2
-  const sum = "4589"
+/*  const sum = "4589"*/
+
+
+
+
+
 
 
 
@@ -103,10 +110,7 @@ export function OrderInfo() {
         <IngredientsItems componentsOrder={order.ingredients}/>
         <div className="orderId pt-10">
           {formattedData({value: order.createdAt, addText: " i-GMT+3"})}
-          <div className="orderPrice">
-            {digitsSmall({value: sum, extraClass: 'pr-2'})}
-            <CurrencyIcon type="primary"/>
-          </div>
+          <OrderPrice ingredients={order.ingredients}/>
         </div>
       </div>
     )

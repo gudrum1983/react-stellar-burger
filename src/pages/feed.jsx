@@ -14,9 +14,6 @@ export function Feed() {
   const openErrModal = useSelector(isOpenErrorModal)
   const textErrorModal = useSelector(errorModalText)
 
-/*  const connect = () => dispatch(connectFeedOrders(URL_WS_ALL))
-  const disconnect = () => dispatch(disconnectFeedOrders())*/
-
   const handleErrorModalClose = () => {
     dispatch(closeErrorModal());
   };
