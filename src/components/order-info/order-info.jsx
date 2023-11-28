@@ -3,148 +3,144 @@ import {useDispatch, useSelector} from "react-redux";
 import styles from "./order-info.module.css";
 import {IngredientsItems} from "./ingredients-items/ingredients-items";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import React from "react";
-
-import {digitsSmall, displaySmall, formattedData, textDefault} from "../../utils/inputs";
+import React, {useState} from "react";
 import {WebsocketStatus} from "../../utils/constants";
-import {connectFeedOrders, disconnectFeedOrders} from "../../services/feed-orders/feed-orders-actions";
-import {URL_WS_ALL, URL_WS_OWNER} from "../../utils/data";
-import {
-  connectFeedOrdersProfile,
-  disconnectFeedOrdersProfile
-} from "../../services/feed-orders-profile/feed-orders-actions";
+import {connectFeed, connectProfile, disconnectFeed, disconnectProfile,} from "../../utils/data";
 import {burgerIngredientsMap} from "../../services/burger-ingredients/burger-ingredients-selector";
-import {
-  orderDetails,
-  orderDetailsRequest
-} from "../../services/order-details/order-details-selectors";
+import {orderDetails, orderDetailsInfo,} from "../../services/order-details/order-details-selectors";
 import {clearOrderDetails, getInfoOrderDetails} from "../../services/order-details/order-details-actions";
+import {digitsSmall, displaySmall, formattedData, textDefault} from "../../utils/text-elements";
 
 
 export function OrderInfo() {
 
+  //todo Исправить или понять как исправить ошибку "No routes matched location"
 
   const dispatch = useDispatch();
+
   const params = useParams()
-  const location = useLocation()
-  const isFeed = useMatch({path: "feed/:id"});
-  /*
-    const isFeed = (location.pathname.indexOf("/feed") === 0) //проверяем что строка "/profile" находится именно в начале pathname
-  */
-  console.log({isFeed})
-  const {status, data} = useSelector(store => isFeed ? store.feedOrders : store.feedOrdersProfile)
-  const {orderRequest, orderFailed, order} = useSelector(orderDetails)
-  const number = order?.number
   const idCurrentItem = params.id
+
+  const location = useLocation()
   const background = location.state && location.state.background;
+
+  const isFeed = useMatch({path: "/feed", end: false});
+  const isProfile = useMatch({path: "/profile", end: false});
+
+  const {status} = useSelector(store => isFeed ? store.feedOrders : store.feedOrdersProfile)
   const isDisconnected = status !== WebsocketStatus.ONLINE
 
-  const connect = () => dispatch(connectFeedOrders(URL_WS_ALL))
-  const connectPr = () => dispatch(connectFeedOrdersProfile(URL_WS_OWNER))
-  const disconnect = () => dispatch(disconnectFeedOrders())
-  const disconnectPr = () => dispatch(disconnectFeedOrdersProfile())
+  const {orderRequest, orderFailed} = useSelector(orderDetails)
+
 
   React.useEffect(() => {
     if (isFeed && isDisconnected) {
-      connect();
+      dispatch(connectFeed());
       return () => {
-        disconnect()
+        dispatch(disconnectFeed())
       }
-    } else if (!isFeed && isDisconnected) {
-      connectPr();
+    } else if (isProfile && isDisconnected) {
+      dispatch(connectProfile());
       return () => {
-        disconnectPr()
+        dispatch(disconnectProfile());
       }
     }
   }, []);
 
-  console.log({data, order})
+  const order = useSelector(store => {
 
-  const test1 = data?.orders?.find(order => order.number === Number(idCurrentItem))
+    let order = store.feedOrders.data?.find(order => order.number === idCurrentItem)
+    if (order) {
+      return order;
+    }
 
-  const test2 = order
+    order = store.feedOrdersProfile.data?.find(order => order.number.toString() === idCurrentItem)
+    if (order) {
+      return order;
+    }
 
-  const infoOrderDetails = test1 ? test1 : test2
+    return store.orderDetails.order
 
-  const item = infoOrderDetails
+  })
 
-
-  const sum = 589666
-  const mapIngredients = useSelector(burgerIngredientsMap)
-
-  /*  const orders = data?.orders
-    const item = orders?.find(tet => tet.number === Number(idCurrentItem))*/
-
-  /*  React.useEffect(() => {
-      let newSum = sum
-  if (!!item?.ingredients) {
-      item.ingredients.forEach((ing) => {
-        if (mapIngredients.has(ing)) {
-          const {price} = mapIngredients.get(ing)
-          newSum = (newSum + price)
+  /*  const infoOrderDetails = React.useMemo(() => {
+        if (!!data?.orders) {
+          return data.orders.find(order => order.number.toString() === idCurrentItem)
+        } else {
+          return null
         }
-      })}
-
-      setSum(newSum)
-    }, [])*/
+      }, [data]
+    )*/
 
 
   React.useEffect(() => {
-    if (!infoOrderDetails) {
+    if (!order) {
       dispatch(getInfoOrderDetails(idCurrentItem))
+      return () => {
+        dispatch(clearOrderDetails())
+      }
     }
-
-    return () => {
-      dispatch(clearOrderDetails())
-    }
-
 
   }, [])
 
 
-  /*  if (!item) {
-      if (isFeed) {
-        dispatch(openErrorModal(`Заказ с номером ${idCurrentItem} не найден, Милорд... Проверьте есть ли интересующий вас заказ в ленте заказов! `));
-        return <Navigate to={"/feed"}/>
-      } else {
-        dispatch(openErrorModal(`Заказ с номером ${idCurrentItem} не найден в вашем профиле, Милорд... Проверьте есть ли интересующий вас заказ в вашей истории заказов! `));
-        return <Navigate to={"/profile/orders"}/>
-      }
+  if (isDisconnected) {
 
-
-    }*/
-
-
-  if (isDisconnected || !data?.success) {
     return (
-      <p className="text text_type_main-medium">
-        Загрузка...
-      </p>
-    )
 
+      <>
+        {displaySmall({value: "Загрузка --- isDisconnected...",})}
+      </>
+    )
   }
 
-  const styleCard = background ? styles.cardOrder3 : styles.cardOrder2
+  if (orderRequest) {
 
-  return (
-    <>
-      {item &&<div className={styleCard}>
-        {!background && digitsSmall({value: `#${item.number}`})}
+    return (
+
+      <>
+        {displaySmall({value: "Загрузка orderRequest",})}
+      </>
+    )
+  }
+
+
+  if (!orderRequest || !order) {
+
+
+    console.log()
+
+    return (
+
+      <>
+        {displaySmall({value: "!orderRequest || !order",})}
+      </>
+    )
+  }
+
+
+  const styleCard = background ? styles.cardOrder3 : styles.cardOrder2
+  const sum = "4589"
+
+
+  if (order) {
+    return (
+      <div className={styleCard}>
+        {!background && digitsSmall({value: `#${order.number}`})}
         <div className="mb-15">
-          {displaySmall({value: item.name, extraClass: 'mb-3'})}
-          {textDefault({value: item.status})}
+          {displaySmall({value: order.name, extraClass: 'mb-3'})}
+          {textDefault({value: order.status})}
         </div>
         {displaySmall({value: 'Состав:', extraClass: 'mb-6'})}
-        <IngredientsItems componentsOrder={item.ingredients}/>
+        <IngredientsItems componentsOrder={order.ingredients}/>
         <div className="orderId pt-10">
-          {formattedData({value: item.createdAt, addText: " i-GMT+3"})}
+          {formattedData({value: order.createdAt, addText: " i-GMT+3"})}
           <div className="orderPrice">
             {digitsSmall({value: sum, extraClass: 'pr-2'})}
             <CurrencyIcon type="primary"/>
           </div>
         </div>
-      </div> }
-    </>
-
-  )
+      </div>
+    )
+  }
 }

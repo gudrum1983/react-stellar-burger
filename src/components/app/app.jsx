@@ -84,6 +84,7 @@ export default function App() {
         <Route path="/ingredients/:id" element={<Modal onClose={handleModalClose} header={"Детали ингредиента"}>
           <IngredientDetails/>
         </Modal>}/>
+
       </Routes>}
 
       {background && <Routes>

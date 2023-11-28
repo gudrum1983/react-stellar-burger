@@ -1,3 +1,9 @@
+import {connectFeedOrders, disconnectFeedOrders} from "../services/feed-orders/feed-orders-actions";
+import {
+  connectFeedOrdersProfile,
+  disconnectFeedOrdersProfile
+} from "../services/feed-orders-profile/feed-orders-actions";
+
 export const ingredientsData = [
   {
     _id: '643d69a5c3f7b9001cfa093c',
@@ -305,3 +311,8 @@ const tok = localStorage.getItem("accessToken")?.slice(7) ?? ""
 
 export const URL_WS_OWNER = `wss://norma.nomoreparties.space/orders?token=${tok}`
 
+
+export const connectFeed = () => connectFeedOrders(URL_WS_ALL)
+export const connectProfile = () => connectFeedOrdersProfile(URL_WS_OWNER)
+export const disconnectFeed = () => disconnectFeedOrders()
+export const disconnectProfile = () => disconnectFeedOrdersProfile()

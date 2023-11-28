@@ -3,8 +3,8 @@ import styles from "./card-order.module.css";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Ingredients} from "./ingredients/ingredients";
 import React from "react";
-import {digitsSmall, displaySmall, formattedData, textDefault} from "../../utils/inputs";
 import useSum from "../../hooks/useSum";
+import {digitsSmall, displaySmall, formattedData, textDefault} from "../../utils/text-elements";
 
 export function CardOrder({order}) {
 
@@ -13,9 +13,13 @@ export function CardOrder({order}) {
   const {ingredients,number, name, status, createdAt } = order
   const sum = useSum(ingredients)
 
+  const numberToString = number.toString()
+
+
+
   return (
     <li>
-      <Link className={`nonlink ${styles.cardOrder}`} to={`${number}`} state={{background: location}}>
+      <Link className={`nonlink ${styles.cardOrder}`} to={numberToString} state={{background: location}}>
         <div className="orderId">
           {digitsSmall({value: `#${number}`})}
           {formattedData({value: createdAt, addText: " i-GMT+3"})}

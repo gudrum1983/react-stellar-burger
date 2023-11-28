@@ -1,12 +1,12 @@
 import React from "react";
 import {Orders} from "../components/orders/orders";
 import {Stats} from "../components/stats/stats";
-import {useDispatch, useSelector} from "react-redux";
+import {connect, useDispatch, useSelector} from "react-redux";
 import {Modal} from "../components/modal/modal";
 import {errorModalText, isOpenErrorModal} from "../services/error-modal/error-modal-selector";
 import {closeErrorModal} from "../services/error-modal/error-modal-action";
 import {connectFeedOrders, disconnectFeedOrders} from "../services/feed-orders/feed-orders-actions";
-import {URL_WS_ALL} from "../utils/data";
+import {connectFeed, disconnect, disconnectFeed, disconnectProfile, URL_WS_ALL} from "../utils/data";
 
 export function Feed() {
 
@@ -14,17 +14,17 @@ export function Feed() {
   const openErrModal = useSelector(isOpenErrorModal)
   const textErrorModal = useSelector(errorModalText)
 
-  const connect = () => dispatch(connectFeedOrders(URL_WS_ALL))
-  const disconnect = () => dispatch(disconnectFeedOrders())
+/*  const connect = () => dispatch(connectFeedOrders(URL_WS_ALL))
+  const disconnect = () => dispatch(disconnectFeedOrders())*/
 
   const handleErrorModalClose = () => {
     dispatch(closeErrorModal());
   };
 
   React.useEffect(() => {
-    connect();
+    dispatch(connectFeed());
     return () => {
-      disconnect()
+      dispatch(disconnectFeed());
     }
   }, []);
 
