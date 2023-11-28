@@ -1,15 +1,15 @@
-import {useLocation, useMatch, useParams} from "react-router-dom";
+import {Navigate, useLocation, useMatch, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import styles from "./order-info.module.css";
 import {IngredientsItems} from "./ingredients-items/ingredients-items";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import React, {useState} from "react";
+import React from "react";
 import {WebsocketStatus} from "../../utils/constants";
 import {connectFeed, connectProfile, disconnectFeed, disconnectProfile,} from "../../utils/data";
-import {burgerIngredientsMap} from "../../services/burger-ingredients/burger-ingredients-selector";
-import {orderDetails, orderDetailsInfo,} from "../../services/order-details/order-details-selectors";
+import {orderDetails} from "../../services/order-details/order-details-selectors";
 import {clearOrderDetails, getInfoOrderDetails} from "../../services/order-details/order-details-actions";
 import {digitsSmall, displaySmall, formattedData, textDefault} from "../../utils/text-elements";
+import {openErrorModal} from "../../services/error-modal/error-modal-action";
 
 
 export function OrderInfo() {
@@ -27,11 +27,10 @@ export function OrderInfo() {
   const isFeed = useMatch({path: "/feed", end: false});
   const isProfile = useMatch({path: "/profile", end: false});
 
-  const {status} = useSelector(store => isFeed ? store.feedOrders : store.feedOrdersProfile)
+  const {status, data} = useSelector(store => isFeed ? store.feedOrders : store.feedOrdersProfile)
   const isDisconnected = status !== WebsocketStatus.ONLINE
 
-  const {orderRequest, orderFailed} = useSelector(orderDetails)
-
+  const {orderRequest, orderFailed, order: orderRest} = useSelector(orderDetails)
 
   React.useEffect(() => {
     if (isFeed && isDisconnected) {
@@ -47,31 +46,21 @@ export function OrderInfo() {
     }
   }, []);
 
-  const order = useSelector(store => {
+  const order = React.useMemo(() => {
 
-    let order = store.feedOrders.data?.find(order => order.number === idCurrentItem)
-    if (order) {
-      return order;
+    let findOrderWS = null
+    let findOrderRest = null
+
+    if (data?.success) {
+      findOrderWS = data.orders.find((itemOrder) => itemOrder.number === Number(idCurrentItem))
     }
 
-    order = store.feedOrdersProfile.data?.find(order => order.number.toString() === idCurrentItem)
-    if (order) {
-      return order;
+    if(orderRest) {
+      findOrderRest = orderRest
     }
 
-    return store.orderDetails.order
-
-  })
-
-  /*  const infoOrderDetails = React.useMemo(() => {
-        if (!!data?.orders) {
-          return data.orders.find(order => order.number.toString() === idCurrentItem)
-        } else {
-          return null
-        }
-      }, [data]
-    )*/
-
+    return findOrderWS ? findOrderWS : findOrderRest
+  }, [data, orderRest])
 
   React.useEffect(() => {
     if (!order) {
@@ -80,50 +69,29 @@ export function OrderInfo() {
         dispatch(clearOrderDetails())
       }
     }
-
   }, [])
 
 
-  if (isDisconnected) {
-
+  if (isDisconnected || orderRequest) {
     return (
-
       <>
         {displaySmall({value: "Загрузка --- isDisconnected...",})}
       </>
     )
   }
 
-  if (orderRequest) {
-
-    return (
-
-      <>
-        {displaySmall({value: "Загрузка orderRequest",})}
-      </>
-    )
-  }
-
-
-  if (!orderRequest || !order) {
-
-
-    console.log()
-
-    return (
-
-      <>
-        {displaySmall({value: "!orderRequest || !order",})}
-      </>
-    )
-  }
-
-
   const styleCard = background ? styles.cardOrder3 : styles.cardOrder2
   const sum = "4589"
 
 
-  if (order) {
+
+  if (orderFailed) {
+      dispatch(openErrorModal(`Заказ с номером ${idCurrentItem} не найден, Милорд...! `));
+      return <Navigate to={"/profile/orders"}/>
+    }
+
+
+  if (order || orderRest) {
     return (
       <div className={styleCard}>
         {!background && digitsSmall({value: `#${order.number}`})}
