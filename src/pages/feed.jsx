@@ -1,12 +1,11 @@
 import React from "react";
 import {Orders} from "../components/orders/orders";
 import {Stats} from "../components/stats/stats";
-import {connect, useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import {Modal} from "../components/modal/modal";
 import {errorModalText, isOpenErrorModal} from "../services/error-modal/error-modal-selector";
 import {closeErrorModal} from "../services/error-modal/error-modal-action";
-import {connectFeedOrders, disconnectFeedOrders} from "../services/feed-orders/feed-orders-actions";
-import {connectFeed, disconnect, disconnectFeed, disconnectProfile, URL_WS_ALL} from "../utils/data";
+import {connectFeed, disconnectFeed} from "../utils/data";
 
 export function Feed() {
 

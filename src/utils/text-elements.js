@@ -22,7 +22,6 @@ const digitsSize = {
   large: "type_digits-large",
 }
 
-
 //Digits
 export const digitsSmall = ({value, extraClass = ''}) =>
   <p className={`text ${digitsSize.default} ${extraClass}`}>{value}</p>

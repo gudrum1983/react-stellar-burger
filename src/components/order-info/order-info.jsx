@@ -2,7 +2,6 @@ import {Navigate, useLocation, useMatch, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import styles from "./order-info.module.css";
 import {IngredientsItems} from "./ingredients-items/ingredients-items";
-import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import {WebsocketStatus} from "../../utils/constants";
 import {connectFeed, connectProfile, disconnectFeed, disconnectProfile,} from "../../utils/data";
@@ -10,7 +9,6 @@ import {orderDetails} from "../../services/order-details/order-details-selectors
 import {clearOrderDetails, getInfoOrderDetails} from "../../services/order-details/order-details-actions";
 import {digitsSmall, displaySmall, formattedData, textDefault} from "../../utils/text-elements";
 import {openErrorModal} from "../../services/error-modal/error-modal-action";
-import {burgerIngredientsMap} from "../../services/burger-ingredients/burger-ingredients-selector";
 import {OrderPrice} from "../order-price/order-price";
 
 
@@ -83,20 +81,11 @@ export function OrderInfo() {
   }
 
   const styleCard = background ? styles.cardOrder3 : styles.cardOrder2
-/*  const sum = "4589"*/
-
-
-
-
-
-
-
 
   if (orderFailed) {
       dispatch(openErrorModal(`Заказ с номером ${idCurrentItem} не найден, Милорд...! `));
       return <Navigate to={"/profile/orders"}/>
     }
-
 
   if (order || orderRest) {
     return (
@@ -104,7 +93,7 @@ export function OrderInfo() {
         {!background && digitsSmall({value: `#${order.number}`})}
         <div className="mb-15">
           {displaySmall({value: order.name, extraClass: 'mb-3'})}
-          {textDefault({value: order.status})}
+          {textDefault({value: (order.status === "done" ? "Готово" :  "B работе")})}
         </div>
         {displaySmall({value: 'Состав:', extraClass: 'mb-6'})}
         <IngredientsItems componentsOrder={order.ingredients}/>

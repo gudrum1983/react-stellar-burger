@@ -1,6 +1,5 @@
 import {Link, useLocation, useMatch} from "react-router-dom";
 import styles from "./card-order.module.css";
-import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Ingredients} from "./ingredients/ingredients";
 import React from "react";
 import {digitsSmall, displaySmall, formattedData, textDefault} from "../../utils/text-elements";
@@ -25,7 +24,7 @@ export function CardOrder({order}) {
         </div>
         <div>
           {displaySmall({value: name})}
-          {!isFeed && textDefault({value: status, extraClass: 'pt-2'})}
+          {!isFeed && textDefault({value: (status === "done" ? "Готово" :  "B работе"), extraClass: 'pt-2'})}
         </div>
         <div className={styles.orderComponentsAndPrice}>
           <div className={`${styles.orderComponents} relative`}>

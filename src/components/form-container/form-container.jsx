@@ -8,7 +8,15 @@ import {
   stringOptional
 } from "../../utils/prop-types";
 
-export function FormContainer({header= null, inputs, links = null, button, handleSubmit, handleReset = null}) {
+export const FormContainer = React.forwardRef(({
+                                                 children,
+                                                 header = null,
+                                                 inputs,
+                                                 links = null,
+                                                 button,
+                                                 handleSubmit,
+                                                 handleReset = null
+                                               }, ref) => {
 
   const location = useLocation()
   const containerClass = location.pathname === "/profile"
@@ -22,10 +30,11 @@ export function FormContainer({header= null, inputs, links = null, button, handl
         {header}
       </p>}
 
-      <form onSubmit={handleSubmit} {...(handleReset && {onReset:handleReset})}>
+      <form ref={ref} onSubmit={handleSubmit} {...(handleReset && {onReset: handleReset})}>
         <fieldset className={styles.fieldset}>
-          <div className={`${styles.placeItems}` }>
+          <div className={`${styles.placeItems}`}>
             {inputs}
+            {children}
           </div>
           <div className={`${styles.buttonExtra}`}>
             {button}
@@ -39,7 +48,7 @@ export function FormContainer({header= null, inputs, links = null, button, handl
 
     </div>
   )
-}
+})
 
 FormContainer.propTypes = {
   header: stringOptional,
