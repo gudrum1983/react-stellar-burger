@@ -1,21 +1,22 @@
 import React from "react";
 import {nodeOptional, stringOptional} from "../../../utils/prop-types";
-import {TEXT_COLORS, TEXT_SIZES} from "../../../utils/text-elements";
+import {DIGITS_SIZES, TEXT_COLORS} from "../../../utils/text-elements";
+
 
 /**
  * Возвращает текстовый элемент с классами
  * @param {string} size - размер шрифта, соответствует названиям из figma (MOBILE_TEXT, DESKTOP_TEXT, DISPLAY_SMALL, DISPLAY_LARGE)
  * @param {string} color - выбор цвета (ERROR, PRIMARY, ACCENT, SUCCESS, INACTIVE)
  * @param {string} extraClass - дополнительный класс
- * @param {string} children - текст
+ * @param {number} children - текст
  */
-export const Text = ({
-                       children, size = TEXT_SIZES.DESKTOP_TEXT,
-                       extraClass = '', color = TEXT_COLORS.PRIMARY
-                     }) =>
+export const Digits = ({
+                         children, size = DIGITS_SIZES.DIGITS_SMALL,
+                         extraClass = '', color = TEXT_COLORS.PRIMARY
+                       }) =>
   <p className={`text ${size} ${color} ${extraClass} `}>{children}</p>
 
-Text.propTypes = {
+Digits.propTypes = {
   children: nodeOptional,
   size: stringOptional,
   extraClass: stringOptional,

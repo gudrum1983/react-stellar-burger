@@ -1,81 +1,57 @@
 import React from "react";
 import {FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 
-const textColors = {
-  error: "text_color_error",
-  primary: "text_color_primary",
-  accent: "text_color_accent",
-  success: "text_color_success",
-  inactive: "text_color_inactive",
+//__DIGITS_SMALL__ - default,
+//__DIGITS_MEDIUM__ - medium,
+//__DIGITS_LARGE__ - large,
+export const DIGITS_SIZES = {
+  DIGITS_SMALL: "text_type_digits-default",
+  DIGITS_MEDIUM: "text_type_digits-medium",
+  DIGITS_LARGE: "text_type_digits-large",
 }
 
-const textSize = {
-  small: "text_type_main-small",
-  default: "text_type_main-default",
-  medium: "text_type_main-medium",
-  large: "text_type_main-large",
+//цвет для текста и цифр
+export const TEXT_COLORS = {
+  ERROR: "text_color_error",
+  PRIMARY: "text_color_primary",
+  ACCENT: "text_color_accent",
+  SUCCESS: "text_color_success",
+  INACTIVE: "text_color_inactive",
 }
 
-const digitsSize = {
-  default: "text_type_digits-default",
-  medium: "text_type_digits-medium",
-  large: "type_digits-large",
+//__MOBILE_TEXT__ - small
+//__DESKTOP_TEXT__ - default,
+//__DISPLAY_SMALL__ - medium,
+//__DISPLAY_LARGE__ - large,
+export const TEXT_SIZES = {
+  MOBILE_TEXT: "text_type_main-small",
+  DESKTOP_TEXT: "text_type_main-default",
+  DISPLAY_SMALL: "text_type_main-medium",
+  DISPLAY_LARGE: "text_type_main-large",
 }
-
-//Digits
-export const digitsSmall = ({value, extraClass = ''}) =>
-  <p className={`text ${digitsSize.default} ${extraClass}`}>{value}</p>
-
-//Text
-
-/**
- * Возвращает текстовый элемент с классами text text_type_main-small
- * @param {string} value - текст
- * @param {string} color - выбор цвета (error, primary, accent, success, inactive)
- * @param {string} extraClass - дополнительный класс
- */
-export const text = ({value, extraClass = '', color = 'primary'}) =>
-  <p className={`text ${textSize.small} ${textColors[color]} ${extraClass}`}>{value}</p>
-
-/**
- * Возвращает текстовый элемент с классами text text_type_main-default
- * @param {string} value - текст
- * @param {string} color - выбор цвета (error, primary, accent, success, inactive)
- * @param {string} extraClass - дополнительный класс
- */
-export const textDefault = ({value, extraClass = '', color = 'primary'}) =>
-  <p className={`text ${textSize.default} ${textColors[color]} ${extraClass} `}>{value}</p>
-
-/**
- * Возвращает текстовый элемент с классами text text_type_main-medium
- * @param {string} value - текст
- * @param {string} color - выбор цвета (error, primary, accent, success, inactive)
- * @param {string} extraClass - дополнительный класс
- */
-export const displaySmall = ({value, extraClass = '', color = 'primary'}) =>
-  <p className={`text ${textSize.medium} ${textColors[color]} ${extraClass}`}>{value}</p>
-
-/**
- * Возвращает текстовый элемент с классами text text_type_main-large
- * @param {string} value - текст
- * @param {string} color - выбор цвета (error, primary, accent, success, inactive)
- * @param {string} extraClass - дополнительный класс
- */
-export const displayLarge = ({value, extraClass = '', color = 'primary'}) =>
-  <p className={`text ${textSize.large} ${textColors[color]} ${extraClass}`}>{value}</p>
-
-
-
-
-
-//Date
 
 /**
  * Возвращает отформатированную дату текстовый элемент с классами text text_type_main-default
  * @param {string} value - текст
- * @param {string} extraClass - дополнительный класс
  */
-export const formattedData = ({value, addText}) =>
-  <p className='text text_type_main-default text_color_inactive'>
-    <FormattedDate date={new Date(value)}/>{addText}
+export const DateWithTimezone = ({value }) => {
+
+  const orderDate = new Date(value)
+  const timezoneOffset = orderDate.getTimezoneOffset()
+  const differenceTimezone = timezoneOffset / -60
+  const simbol = (differenceTimezone > -1) ? "+" : ""
+
+  const orderTime = new Date(
+    orderDate.getFullYear(),
+    orderDate.getMonth(),
+    orderDate.getDate() ,
+    orderDate.getHours(),
+    orderDate.getMinutes() - 1,
+    0,
+  )
+
+
+  return <p className='text text_type_main-default text_color_inactive'>
+    <FormattedDate date={orderTime}/> i-GMT{simbol}{differenceTimezone}
   </p>
+}

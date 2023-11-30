@@ -1,1 +1,0 @@
-export const feedOrdersSelector = store => store.feedOrders.data

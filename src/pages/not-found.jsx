@@ -1,7 +1,9 @@
 import React from "react";
 import {useNavigate} from "react-router-dom";
 import {Button} from "@ya.praktikum/react-developer-burger-ui-components";
-import {displayLarge} from "../utils/text-elements";
+
+import {TEXT_SIZES} from "../utils/text-elements";
+import {Text} from "../components/typography/text/text";
 
 
 export function NotFound() {
@@ -12,7 +14,7 @@ export function NotFound() {
 
   return (
     <div className="not-found">
-      {displayLarge({value: "страница 404"})}
+      <Text size={TEXT_SIZES.DISPLAY_LARGE}>страница 404</Text>
       <div className="image-not">
         <Button htmlType={"button"} type="primary" size="medium" children={"ДОМОЙ"} key={"home"} onClick={onClick}/>
       </div>

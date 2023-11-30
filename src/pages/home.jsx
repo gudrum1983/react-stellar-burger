@@ -12,7 +12,9 @@ import {
   orderDetailsInfo,
   orderDetailsRequest
 } from "../services/order-details/order-details-selectors";
-import {displaySmall} from "../utils/text-elements";
+
+import {TEXT_SIZES} from "../utils/text-elements";
+import {Text} from "../components/typography/text/text";
 
 export function Home() {
 
@@ -46,8 +48,9 @@ export function Home() {
       </DndProvider>
 
       {number && modal(<OrderDetails/>)}
-      {orderFailed && modal(displaySmall({value: "Наш краторный хмель пожрал антарианский долгоносик," +
-        " попробуйте сформировать заказ позже, Милорд..."})
+      {orderFailed && modal(
+        <Text size={TEXT_SIZES.DISPLAY_SMALL} >Наш краторный хмель пожрал антарианский долгоносик,
+           попробуйте сформировать заказ позже, Милорд...</Text>
         , "Ошибка")}
       {orderRequest && modal('', "Загрузка Милорд...")}
 
