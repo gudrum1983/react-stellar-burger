@@ -7,16 +7,18 @@ import {OrderDetails} from "../components/modal/order-details/order-details";
 import {Modal} from "../components/modal/modal";
 import {clearOrderDetails} from "../services/order-details/order-details-actions";
 import {useDispatch, useSelector} from "react-redux";
-import {orderDetails} from "../services/order-details/order-details-selectors";
+import {orderDetailsFailed, orderDetailsInfo, orderDetailsRequest} from "../services/order-details/order-details-selectors";
 
 export function Home() {
 
   const dispatch = useDispatch();
-
-  const {orderNumber, orderRequest, orderFailed} = useSelector(orderDetails)
+  const orderRequest = useSelector(orderDetailsRequest)
+  const orderFailed = useSelector(orderDetailsFailed)
+  const order = useSelector(orderDetailsInfo)
+  const number = order?.number
 
   function handleCloseModal() {
-    if (orderNumber) {
+    if (number) {
       dispatch(clearOrderDetails())
     }
   }
@@ -38,7 +40,7 @@ export function Home() {
         </section>
       </DndProvider>
 
-      {orderNumber && modal(<OrderDetails/>)}
+      {number && modal(<OrderDetails/>)}
       {orderFailed && modal(<p className="text text_type_main-medium">
         Наш краторный хмель пожрал антарианский долгоносик, попробуйте сформировать заказ позже, Милорд...
       </p>, "Ошибка")}

@@ -1,25 +1,24 @@
 import React from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {addPassword} from "../../../services/inputs-values/inputs-values-actions";
 import {PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {inputsValuesPassword} from "../../../services/inputs-values/inputs-values-selector";
-import {booleanOptional, stringOptional} from "../../../utils/prop-types";
+import {booleanOptional, functionOptional, stringOptional} from "../../../utils/prop-types";
 
 
-export function InputPassword({placeholder, isEdit = false}) {
-
-  const passwordValue = useSelector(inputsValuesPassword)
-  const dispatch = useDispatch();
+export function InputPassword({placeholder,
+                                value,
+                                isEdit = false,
+                                onChange,
+                                clearError = false}) {
+const text = !!value ? value : ''
 
   return (
     <div className="input_container">
-      <PasswordInput
-        onChange={e => dispatch(addPassword(e.target.value))}
-        value={passwordValue}
-        name={'password'}
-        {...(placeholder && {placeholder: placeholder})}
-        {...(isEdit && {icon:"EditIcon"})}
-
+      <PasswordInput autoComplete="off"
+                     onChange={onChange}
+                     value={text}
+                     name={'password'}
+                     {...(placeholder && {placeholder: placeholder})}
+                     {...(clearError && {error: false, errorText: ""})}
+                     {...(isEdit && {icon: "EditIcon"})}
       />
     </div>
   )
@@ -27,5 +26,7 @@ export function InputPassword({placeholder, isEdit = false}) {
 
 InputPassword.propTypes = {
   placeholder: stringOptional,
-  isEdit: booleanOptional
+  value: stringOptional,
+  isEdit: booleanOptional,
+  onChange: functionOptional,
 };

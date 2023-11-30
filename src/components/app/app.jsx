@@ -52,8 +52,9 @@ export default function App() {
     }
   }
 
-  return (<div className={`${styles.app}`}>
+  return (
 
+    <div className={`${styles.app}`}>
       <Routes location={background || location}>
         <Route path="/" element={<AppLayout/>}>
           <Route index element={<Home/>}/>
@@ -70,7 +71,9 @@ export default function App() {
           <Route path="profile" element={<OnlyAuth component={<ProfileLayout/>}/>}>
             <Route index element={<ProfileEdit/>}/>
             <Route path="orders" element={<ProfileOrders/>}/>
+            
           </Route>
+
           <Route path="/feed" element={<Feed/>}/>
           <Route path="/feed/:id" element={<OrderInfo/>}/>
           <Route path="/profile/orders/:id" element={<OnlyAuth component={<OrderInfo/>}/>}/>
@@ -81,18 +84,13 @@ export default function App() {
       </Routes>
 
       {background && <Routes>
-        <Route path="/ingredients/:id" element={<Modal onClose={handleModalClose} header={"Детали ингредиента"}>
+        <Route path="ingredients/:id" element={<Modal onClose={handleModalClose} header={"Детали ингредиента"}>
           <IngredientDetails/>
         </Modal>}/>
       </Routes>}
 
       {background && <Routes>
         <Route path="/feed/:id" element={<Modal onClose={handleModalClose} header={"need = params.id"}>
-          <OrderInfo/>
-        </Modal>}/>
-      </Routes>}
-      {background && <Routes>
-        <Route path="/profile/orders/:id" element={<Modal onClose={handleModalClose} header={"need = params.id"}>
           <OrderInfo/>
         </Modal>}/>
       </Routes>}

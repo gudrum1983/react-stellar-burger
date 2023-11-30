@@ -1,14 +1,19 @@
 import {Logo, BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import {NavigationLink} from "../components/navigation-link/navigation-link";
-import {Link, Outlet, useLocation} from "react-router-dom";
+import {Link, Outlet, useLocation, useMatch} from "react-router-dom";
 import React from "react";
+import {useSelector} from "react-redux";
+import {userName} from "../services/user/user-selector";
 export function AppLayout() {
 
-
   const location = useLocation();
+  const isProfile = useMatch({path: "/profile", end: false})
+
+  const nameUser = useSelector(userName)
+
   const active = (to) => {
     if (to === "/profile") {
-      return (location.pathname.indexOf(to) === 0) //проверяем что строка "/profile" находится именно в начале pathname
+      return (isProfile)
         ? "primary"
         : "secondary"
     } else {
@@ -20,7 +25,7 @@ export function AppLayout() {
 
   return (
     <>
-      <header className="header">
+      <header className="header relative">
           <nav className="panel">
             <ul className="links1">
               <li className="link_home cursor">
@@ -30,12 +35,12 @@ export function AppLayout() {
                 <NavigationLink to={'/feed'}
                                 icon={<ListIcon type={active("/feed")}/>} label={'Лента заказов'}/>
               </li>
-              <li className="link_logo cursorLogo">
+              <li className="link_logo cursorLogo absolute">
                 <Link to={'/'}><Logo/></Link>
               </li>
               <li className="link_profile cursor">
                 <NavigationLink to={'/profile'}
-                                icon={<ProfileIcon type={active("/profile")}/>} label={'Личный кабинет'}/>
+                                icon={<ProfileIcon type={active("/profile")}/>} label={nameUser || 'Личный кабинет'}/>
               </li>
             </ul>
           </nav>

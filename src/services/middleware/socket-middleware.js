@@ -1,13 +1,8 @@
-import {getUser} from "../user/user-action";
+import {authApi} from "../../api/user";
 
 export const socketMiddleware = (wsActions) => {
   return store => {
     let socket = null;
-
-
-
-
-
     return next => action => {
       const {dispatch} = store;
       const {type} = action;
@@ -22,7 +17,7 @@ export const socketMiddleware = (wsActions) => {
         wsDisconnect,
       } = wsActions;
       if (type === wsConnect) {
-        socket = new WebSocket(action.payload); // Ваш код здесь
+        socket = new WebSocket(action.payload);
         dispatch({type: wsConnecting})
       }
       if (socket) {
@@ -37,11 +32,9 @@ export const socketMiddleware = (wsActions) => {
         socket.onmessage = event => {
           const {data} = event;
           const parsedData = JSON.parse(data);
-/*          debugger*/
-          if (data?.message === "Invalid or missing token") {
-/*            debugger*/
-            console.log("получена ошибка", data)
-            dispatch(getUser())
+          if (parsedData?.message === "Invalid or missing token") {
+            console.log("получена ошибка", parsedData)
+            dispatch(authApi.getUser())
           } else {
             dispatch({type: onMessage, payload: parsedData});
           }

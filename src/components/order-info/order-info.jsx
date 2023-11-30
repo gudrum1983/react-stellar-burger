@@ -1,121 +1,107 @@
-import {Navigate, useLocation, useParams} from "react-router-dom";
+import {Navigate, useLocation, useMatch, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-
 import styles from "./order-info.module.css";
-import styless from "../card-order/card-order.module.css";
 import {IngredientsItems} from "./ingredients-items/ingredients-items";
-import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import React, {useState} from "react";
-
-import {digitsSmall, displaySmall, formattedData, textDefault} from "../../utils/inputs";
-import useSum from "../../hooks/useSum";
-
-import {closeErrorModal, openErrorModal} from "../../services/error-modal/error-modal-action";
+import React from "react";
 import {WebsocketStatus} from "../../utils/constants";
-import {connectFeedOrders, disconnectFeedOrders} from "../../services/feed-orders/feed-orders-actions";
-import {URL_WS_ALL, URL_WS_OWNER} from "../../utils/data";
-import {
-  connectFeedOrdersProfile,
-  disconnectFeedOrdersProfile
-} from "../../services/feed-orders-profile/feed-orders-actions";
-import {burgerIngredientsMap} from "../../services/burger-ingredients/burger-ingredients-selector";
+import {connectFeed, connectProfile, disconnectFeed, disconnectProfile,} from "../../utils/data";
+import {orderDetails} from "../../services/order-details/order-details-selectors";
+import {clearOrderDetails, getInfoOrderDetails} from "../../services/order-details/order-details-actions";
+import {digitsSmall, displaySmall, formattedData, textDefault} from "../../utils/text-elements";
+import {openErrorModal} from "../../services/error-modal/error-modal-action";
+import {OrderPrice} from "../order-price/order-price";
 
 
 export function OrderInfo() {
 
-  const {order, setOrder} = useState()
+  //todo Исправить или понять как исправить ошибку "No routes matched location"
+
   const dispatch = useDispatch();
+
   const params = useParams()
-  const location = useLocation()
-  const isFeed = (location.pathname.indexOf("/feed") === 0) //проверяем что строка "/profile" находится именно в начале pathname
-  const {status, data} = useSelector(store => isFeed ? store.feedOrders : store.feedOrdersProfile)
   const idCurrentItem = params.id
+
+  const location = useLocation()
   const background = location.state && location.state.background;
+
+  const isFeed = useMatch({path: "/feed", end: false});
+  const isProfile = useMatch({path: "/profile", end: false});
+
+  const {status, data} = useSelector(store => isFeed ? store.feedOrders : store.feedOrdersProfile)
   const isDisconnected = status !== WebsocketStatus.ONLINE
 
-  const connect = () => dispatch(connectFeedOrders(URL_WS_ALL))
-  const connectPr = () => dispatch(connectFeedOrdersProfile(URL_WS_OWNER))
-  const disconnect = () => dispatch(disconnectFeedOrders())
-  const disconnectPr = () => dispatch(disconnectFeedOrdersProfile())
+  const {orderRequest, orderFailed, order: orderRest} = useSelector(orderDetails)
 
   React.useEffect(() => {
     if (isFeed && isDisconnected) {
-      connect();
+      dispatch(connectFeed());
       return () => {
-        disconnect()
+        dispatch(disconnectFeed())
       }
-    } else if (!isFeed && isDisconnected) {
-      connectPr();
+    } else if (isProfile && isDisconnected) {
+      dispatch(connectProfile());
       return () => {
-        disconnectPr()
+        dispatch(disconnectProfile());
       }
     }
-
-
   }, []);
 
+  const order = React.useMemo(() => {
 
-  const [sum, setSum] = React.useState(0)
-/*  const {status, data} = useSelector(store => isFeed ? store.feedOrders : store.feedOrdersProfile)*/
-  const mapIngredients = useSelector(burgerIngredientsMap)
+    let findOrderWS = null
+    let findOrderRest = null
 
-  const orders = data?.orders
-  const item = orders?.find(tet => tet.number === Number(idCurrentItem))
+    if (data?.success) {
+      findOrderWS = data.orders.find((itemOrder) => itemOrder.number === Number(idCurrentItem))
+    }
+
+    if(orderRest) {
+      findOrderRest = orderRest
+    }
+
+    return findOrderWS ? findOrderWS : findOrderRest
+  }, [data, orderRest])
 
   React.useEffect(() => {
-    let newSum = sum
-if (!!item?.ingredients) {
-    item.ingredients.forEach((ing) => {
-      if (mapIngredients.has(ing)) {
-        const {price} = mapIngredients.get(ing)
-        newSum = (newSum + price)
+    if (!order) {
+      dispatch(getInfoOrderDetails(idCurrentItem))
+      return () => {
+        dispatch(clearOrderDetails())
       }
-    })}
-
-    setSum(newSum)
+    }
   }, [])
 
 
-  if (!item) {
-    if (isFeed) {
-      dispatch(openErrorModal(`Заказ с номером ${idCurrentItem} не найден, Милорд... Проверьте есть ли интересующий вас заказ в ленте заказов! `));
-      return <Navigate to={"/feed"}/>
-    } else {
-      dispatch(openErrorModal(`Заказ с номером ${idCurrentItem} не найден в вашем профиле, Милорд... Проверьте есть ли интересующий вас заказ в вашей истории заказов! `));
-      return <Navigate to={"/profile/orders"}/>
-    }
-
-
-  }
-
-
-  if (isDisconnected || !data?.success) {
+  if (isDisconnected || orderRequest) {
     return (
-      <p className="text text_type_main-medium">
-        Загрузка...
-      </p>
+      <>
+        {displaySmall({value: "Загрузка --- isDisconnected...",})}
+      </>
     )
-
   }
 
   const styleCard = background ? styles.cardOrder3 : styles.cardOrder2
 
-  return (
-    <div className={styleCard}>
-      {!background && digitsSmall({value: `#${item.number}`})}
-      <div className="mb-15">
-        {displaySmall({value: item.name, extraClass: 'mb-3'})}
-        {textDefault({value: item.status})}
-      </div>
-      {displaySmall({value: 'Состав:', extraClass: 'mb-6'})}
-      <IngredientsItems componentsOrder={item.ingredients}/>
-      <div className={`${styless.orderId} pt-10`}>
-        {formattedData({value: item.createdAt, addText: " i-GMT+3"})}
-        <div className={styless.orderPrice}>
-          {digitsSmall({value: sum, extraClass: 'pr-2'})}
-          <CurrencyIcon type="primary"/>
+  if (orderFailed) {
+      dispatch(openErrorModal(`Заказ с номером ${idCurrentItem} не найден, Милорд...! `));
+      return <Navigate to={"/profile/orders"}/>
+    }
+
+  if (order || orderRest) {
+    return (
+      <div className={styleCard}>
+        {!background && digitsSmall({value: `#${order.number}`})}
+        <div className="mb-15">
+          {displaySmall({value: order.name, extraClass: 'mb-3'})}
+          {textDefault({value: (order.status === "done" ? "Готово" :  "B работе")})}
+        </div>
+        {displaySmall({value: 'Состав:', extraClass: 'mb-6'})}
+        <IngredientsItems componentsOrder={order.ingredients}/>
+        <div className="orderId pt-10">
+          {formattedData({value: order.createdAt, addText: " i-GMT+3"})}
+          <OrderPrice ingredients={order.ingredients}/>
         </div>
       </div>
-    </div>
-  )
+    )
+  }
 }

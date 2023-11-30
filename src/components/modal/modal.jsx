@@ -8,6 +8,7 @@ import {nodeElementPropType, functionPropType, stringPropType} from "../../utils
 import {useParams} from "react-router-dom";
 
 export function Modal({children, header, onClose}) {
+
   const params = useParams()
   let newHeader = null
 
@@ -15,10 +16,6 @@ export function Modal({children, header, onClose}) {
 
     newHeader = `# ${params.id}`
   }
-
-
-
-
 
 
   return ReactDOM.createPortal(

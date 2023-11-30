@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./stats.module.css"
 import {useSelector} from "react-redux";
 import {WebsocketStatus} from "../../utils/constants";
+import {Completed} from "./count-completed/count-completed";
 
 export function Stats() {
   const {status, data} = useSelector(store => store.feedOrders)
@@ -56,20 +57,3 @@ export function ListOrdersBoard({header, items, done= false}) {
   )
 }
 
-export function Completed ({header, children}) {
-
-  const partNumber = {
-    millions: (Math.floor(children/1000000) === 0) ? "" : `${Math.floor(children/1000000)} `,
-    thousands: (Math.floor(children/1000) === 0) ? "" : `${Math.floor(children/1000)} `,
-    hundreds: children%1000,
-  }
-
-  return (
-    <div>
-      <p className="text text_type_main-medium">{header}</p>
-      <p className={`${styles.shadow} text text_type_digits-large`}>{partNumber.millions}{partNumber.thousands}{partNumber.hundreds}</p>
-    </div>
-
-
-  )
-}

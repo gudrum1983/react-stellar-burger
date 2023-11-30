@@ -10,17 +10,22 @@ import {IngredientPreview} from "../../ingredient-preview/ingredient-preview";
 
 
 export function IngredientListItem({idIng, index, count = null}) {
-if(!idIng) {
-  return null
-}
-
-  const mapIngredients = useSelector(burgerIngredientsMap)
-
-  const tek = count?.get(idIng)
-  console.log({tek})
 
 
   const ingredients = useSelector(burgerIngredientsArray)
+  const mapIngredients = useSelector(burgerIngredientsMap)
+
+  if (!idIng) {
+    return null
+  }
+
+
+
+  const tek = count?.get(idIng)
+/*  console.log({tek})*/
+
+
+
   const currentIngredient = ingredients.find((element) => element._id === idIng)
 
 
@@ -29,13 +34,13 @@ if(!idIng) {
 
   return (
     <li key={index} className={styles.rowIng}>
-        <IngredientPreview image={image_mobile} itemIng={index} index={index}/>
-        <p
-          className="text text_type_main-default">{name}</p>
-        <div className={styles.orderPrice2}>
-          <div className={"text text_type_digits-default pr-2"}>{`${tek?.count} x ${price}`}</div>
-          <CurrencyIcon type="primary"/>
-        </div>
+      <IngredientPreview image={image_mobile} itemIng={index} index={index}/>
+      <p
+        className="text text_type_main-default">{name}</p>
+      <div className={styles.orderPrice2}>
+        <div className={"text text_type_digits-default pr-2"}>{`${tek?.count} x ${price}`}</div>
+        <CurrencyIcon type="primary"/>
+      </div>
     </li>
   )
 }

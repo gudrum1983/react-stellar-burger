@@ -1,17 +1,11 @@
-import {booleanOptional, stringOptional} from "../../../utils/prop-types";
+import {booleanOptional, functionOptional, stringOptional} from "../../../utils/prop-types";
 import React from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {addUser} from "../../../services/inputs-values/inputs-values-actions";
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 
-import {inputsValuesUserName} from "../../../services/inputs-values/inputs-values-selector";
+export function InputName({placeholder = 'Имя', value, isEdit = false, onChange}) {
 
-export function InputName({placeholder = 'Имя', isEdit = false}) {
-
-  const nameValue = useSelector(inputsValuesUserName)
-  const dispatch = useDispatch();
   const inputRef = React.useRef(null)
-  const [disabled, setDisable] = React.useState(null)
+  const [disabled, setDisable] = React.useState(false)
 
   React.useEffect(() => {
     setDisable(isEdit);
@@ -26,14 +20,15 @@ export function InputName({placeholder = 'Имя', isEdit = false}) {
     setDisable(!disabled)
   }
 
+const text = !!value ? value : ''
 
   return (
 
     <div className="input_container">
       <Input
         type={'text'}
-        onChange={e => dispatch(addUser(e.target.value))}
-        value={nameValue}
+        onChange={onChange}
+        value={text}
         name={'name'}
         placeholder={placeholder}
         onFocus
@@ -48,5 +43,7 @@ export function InputName({placeholder = 'Имя', isEdit = false}) {
 
 InputName.propTypes = {
   placeholder: stringOptional,
+  value: stringOptional,
   isEdit: booleanOptional,
+  onChange: functionOptional,
 };

@@ -1,65 +1,96 @@
-import React from "react";
-import {profileButtons, typeInputs} from "../utils/inputs";
+import React, {useState} from "react";
+import {profileButtons} from "../utils/inputs";
 import {FormContainer} from "../components/form-container/form-container";
 import {useDispatch, useSelector} from "react-redux";
 import {getUser, updateUser} from "../services/user/user-action";
 import {userMail, userName} from "../services/user/user-selector";
-import {addEmail, addPassword, addUser} from "../services/inputs-values/inputs-values-actions";
-import {inputsValuesEmail, inputsValuesPassword, inputsValuesUserName} from "../services/inputs-values/inputs-values-selector";
+import {InputEmail} from "../components/form-container/inputs/input-email";
+import {InputName} from "../components/form-container/inputs/input-name";
+import {InputPassword} from "../components/form-container/inputs/input-password";
+import {useForm} from "../hooks/useForm";
 
 export function ProfileEdit() {
+
+  const [clearError, setClearError] = useState(false)
 
   const dispatch = useDispatch();
   const nameValueTest = useSelector(userName)
   const emailValueTest = useSelector(userMail)
 
-  function setValue() {
-    dispatch(getUser());
-    dispatch(addEmail(emailValueTest))
-    dispatch(addUser(nameValueTest))
-    dispatch(addPassword(""))
+  const formElement = React.createRef()
+
+  const formInputs = {
+    passwordInput: '',
+    nameInput: nameValueTest,
+    emailInput: emailValueTest,
   }
 
-  React.useEffect(() => {
-    setValue()
-  }, [nameValueTest, emailValueTest]);
+  const {fields, handleSubmit, handleReset} = useForm(formInputs);
 
-  const nameValueInput = useSelector(inputsValuesUserName)
-  const mailValueInput = useSelector(inputsValuesEmail)
-  const passwordValueInput = useSelector(inputsValuesPassword)
+  const {passwordInput, nameInput, emailInput} = fields;
 
-  let isEditName = nameValueTest !== nameValueInput
-  let isEditMail = emailValueTest !== mailValueInput
-  let isEditPassword = passwordValueInput !== ''
+  function onChange(field) {
+    return field.setState
+  }
+
+  function setValue() {
+    dispatch(getUser());
+  }
+
+  const isEditName = nameValueTest !== nameInput.value
+  const isEditMail = emailValueTest !== emailInput.value
+  const isEditPassword = passwordInput.value !== ''
 
   const isEdit = React.useMemo(() => {
     return [isEditName, isEditMail, isEditPassword].includes(true)
   }, [isEditName, isEditMail, isEditPassword])
 
-  function handleReset(e) {
-    e.preventDefault()
+
+  React.useEffect(() => {
     setValue()
+
+  }, [nameValueTest, emailValueTest]);
+
+
+ React.useEffect(() => {
+
+    if (clearError && !isEdit) {
+
+    } else {
+      setClearError(false)
+    }
+
+  }, [isEdit]);
+
+
+  function onReset() {
+    setClearError(true)
   }
 
-  function handleSubmit(e) {
-    e.preventDefault()
+  function onSubmit({values: {passwordInput, nameInput, emailInput}}) {
+
     dispatch(getUser());
     if (isEdit) {
-      dispatch(updateUser(mailValueInput, nameValueInput, passwordValueInput));
+      dispatch(updateUser(emailInput, nameInput, passwordInput));
     }
-    dispatch(addEmail(emailValueTest))
-    dispatch(addUser(nameValueTest))
-    dispatch(addPassword(""))
+
   }
 
-  const profileInputs = [typeInputs.nameProfile, typeInputs.emailProfile, typeInputs.passwordProfile];
-
   return (
-      <FormContainer
-        inputs={profileInputs}
-        {...(isEdit && {button: profileButtons})}
-        handleSubmit={handleSubmit}
-        handleReset={handleReset}
-      />
+    <FormContainer {...(isEdit && {button: profileButtons})}
+                   handleSubmit={handleSubmit(onSubmit)}
+                   handleReset={handleReset(onReset)}
+                   ref={formElement}
+    >
+
+      <InputName isEdit={true} key="name"
+                 value={nameInput.value}
+                 onChange={onChange(nameInput)}/>
+      <InputEmail placeholder="Логин" value={emailInput.value} key="email" isEdit={true}
+
+                  onChange={onChange(emailInput)}  {...(!isEditMail && {clearError: true})}/>
+      <InputPassword isEdit={true} key="password" value={passwordInput.value}
+                     onChange={onChange(passwordInput)} {...(clearError && !!passwordInput && {clearError: true})}/>
+    </FormContainer>
   )
 }

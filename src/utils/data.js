@@ -1,3 +1,9 @@
+import {connectFeedOrders, disconnectFeedOrders} from "../services/feed-orders/feed-orders-actions";
+import {
+  connectFeedOrdersProfile,
+  disconnectFeedOrdersProfile
+} from "../services/feed-orders-profile/feed-orders-actions";
+
 export const ingredientsData = [
   {
     _id: '643d69a5c3f7b9001cfa093c',
@@ -213,95 +219,9 @@ export const ingredientsData = [
 ]
 
 
-export const order1 = {
-  numberOrder: "034533",
-  componentsOrder: ['643d69a5c3f7b9001cfa093c', '643d69a5c3f7b9001cfa093e',
-    '643d69a5c3f7b9001cfa0940', '643d69a5c3f7b9001cfa0941',
-    '643d69a5c3f7b9001cfa0943', '643d69a5c3f7b9001cfa0945',
-    '643d69a5c3f7b9001cfa0947', '643d69a5c3f7b9001cfa0949'],
-  nameOrder: 'Death Star Starship Main бургер',
-  orderDate: "2023-11-20T20:13:23.657Z",
-  orderPrice: 480,
-  orderStatus: 'создан',
-}
-
-export const order3 = {
-  numberOrder: '034534',
-  componentsOrder: ['643d69a5c3f7b9001cfa093d', '643d69a5c3f7b9001cfa093e',
-    '643d69a5c3f7b9001cfa0940', '643d69a5c3f7b9001cfa0941',],
-  nameOrder: 'Supernova Infinity бургер',
-  orderDate: "2023-11-21T10:13:23.657Z",
-  orderPrice: 560,
-  orderStatus: 'создан',
-}
-
-export const order2 = {
-  numberOrder: "034537",
-  componentsOrder: ['643d69a5c3f7b9001cfa093d', '643d69a5c3f7b9001cfa093e',
-    '643d69a5c3f7b9001cfa0940', '643d69a5c3f7b9001cfa0948',
-    '643d69a5c3f7b9001cfa0943', '643d69a5c3f7b9001cfa0945',
-    '643d69a5c3f7b9001cfa0943', '643d69a5c3f7b9001cfa0943'],
-  nameOrder: 'Black Hole Singularity острый бургер',
-  orderDate: "2023-11-20T10:13:23.657Z",
-  orderPrice: 560,
-  orderStatus: 'выполнено',
-}
-
-
-export const feedOrders = [
-  order1, order2, order3, order2, order3, order1, order1, order3
-]
-
-
-export const ordersListAllready = [
-  "034533",
-  "034536",
-  "034539",
-  "034542",
-  "034545",
-  "034548",
-  "034551",
-  /* "034554",
-   "034557",
-   "034560",
-   "034563",
-   "034566",
-   "034569",
-   "034572",
-   "034575",
-   "034578",
-   "034581",
-   "034584",*/
-]
-export const ordersListProgress = [
-  "034534",
-  "034535",
-  "034537",
-  "034538",
-  "034540",
-  "034541",
-  "034543",
-  "034544",
-  "034546",
-  "034547",
-  "034549",
-  "034550",
-  "034552",
-  "034553",
-  "034555",
-  "034556",
-]
-
-export const countOrders = {
-  all: 29563,
-  today: 256
-}
-
-
 export const URL_WS_ALL = "wss://norma.nomoreparties.space/orders/all"
-
-
-const tok = localStorage.getItem("accessToken")?.slice(7) ?? ""
-
-export const URL_WS_OWNER = `wss://norma.nomoreparties.space/orders?token=${tok}`
-
+export const URL_WS_OWNER = `wss://norma.nomoreparties.space/orders?token=`
+export const connectFeed = () => connectFeedOrders(URL_WS_ALL)
+export const connectProfile = (token) => connectFeedOrdersProfile(`${URL_WS_OWNER}${token}`)
+export const disconnectFeed = () => disconnectFeedOrders()
+export const disconnectProfile = () => disconnectFeedOrdersProfile()

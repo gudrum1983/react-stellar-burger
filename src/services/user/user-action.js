@@ -31,6 +31,7 @@ export const getUser = () => {
 };
 
 export const updateUser = (email, name, password) => {
+  debugger
   return (dispatch) => {
     return authApi.updateUser(email, name, password)
       .then((res) => {
@@ -64,6 +65,7 @@ export const login = (pass, email) => {
 };
 
 export const register = (name, pass, email) => {
+  debugger
   return (dispatch) => {
     return authApi.register(name, pass, email)
       .then((res) => {
