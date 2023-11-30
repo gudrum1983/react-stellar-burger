@@ -7,7 +7,12 @@ import {OrderDetails} from "../components/modal/order-details/order-details";
 import {Modal} from "../components/modal/modal";
 import {clearOrderDetails} from "../services/order-details/order-details-actions";
 import {useDispatch, useSelector} from "react-redux";
-import {orderDetailsFailed, orderDetailsInfo, orderDetailsRequest} from "../services/order-details/order-details-selectors";
+import {
+  orderDetailsFailed,
+  orderDetailsInfo,
+  orderDetailsRequest
+} from "../services/order-details/order-details-selectors";
+import {displaySmall} from "../utils/text-elements";
 
 export function Home() {
 
@@ -41,9 +46,9 @@ export function Home() {
       </DndProvider>
 
       {number && modal(<OrderDetails/>)}
-      {orderFailed && modal(<p className="text text_type_main-medium">
-        Наш краторный хмель пожрал антарианский долгоносик, попробуйте сформировать заказ позже, Милорд...
-      </p>, "Ошибка")}
+      {orderFailed && modal(displaySmall({value: "Наш краторный хмель пожрал антарианский долгоносик," +
+        " попробуйте сформировать заказ позже, Милорд..."})
+        , "Ошибка")}
       {orderRequest && modal('', "Загрузка Милорд...")}
 
     </div>

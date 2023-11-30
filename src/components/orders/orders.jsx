@@ -4,6 +4,7 @@ import {useSelector} from "react-redux";
 import {useMatch} from "react-router-dom";
 import {WebsocketStatus} from "../../utils/constants";
 import {CardOrder} from "../card-order/card-order";
+import {TEXT_SIZE, TypographyText} from "../typography/text/text";
 
 
 export function Orders() {
@@ -33,9 +34,11 @@ export function Orders() {
       </ul>
     )
   } else {
-    return (<p className="text text_type_main-medium">
-      Загрузка...
-    </p>)
+    return (
+      <TypographyText size={TEXT_SIZE.DISPLAY_SMALL} >
+        Загрузка...
+        <TypographyText size={TEXT_SIZE.D}></TypographyText>
+      </TypographyText>)
   }
 }
 

@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./stats.module.css"
 import {useSelector} from "react-redux";
 import {WebsocketStatus} from "../../utils/constants";
-import {Completed} from "./count-completed/count-completed";
+import {CountCompleted} from "./count-completed/count-completed";
 
 export function Stats() {
   const {status, data} = useSelector(store => store.feedOrders)
@@ -20,12 +20,12 @@ export function Stats() {
 
       </div>
 
-      <Completed header={"Выполнено за все время:"}>
+      <CountCompleted header={"Выполнено за все время:"}>
         {(!isDisconnected && data?.total) ? `${data?.total}` : 0}
-      </Completed>
-      <Completed header={"Выполнено за сегодня:"}>
+      </CountCompleted>
+      <CountCompleted header={"Выполнено за сегодня:"}>
         {(!isDisconnected && data?.totalToday) ? `${data?.totalToday}` : 0}
-      </Completed>
+      </CountCompleted>
 
 
     </div>

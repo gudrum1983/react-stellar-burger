@@ -5,6 +5,7 @@ import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
 import {IngredientsTypeList} from "./ingredients-type-list/ingredients-type-list";
 import {useSelector} from "react-redux";
 import {burgerIngredients} from "../../services/burger-ingredients/burger-ingredients-selector";
+import {displayLarge} from "../../utils/text-elements";
 
 export function BurgerIngredients() {
 
@@ -63,7 +64,7 @@ export function BurgerIngredients() {
 
   return (
     <>
-      <p className="text text_type_main-large mb-5 pt-10">Соберите&nbsp;бургер</p>
+      {displayLarge({value: "Соберите бургер", extraClass: "mb-5 pt-10"})}
       <ul ref={tabsRef} className={`pb-10 ${styles.tab} nonList`}>
         <li>
           <a href="#buns" className="nonLink cursor">

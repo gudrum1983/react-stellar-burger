@@ -6,6 +6,7 @@ import {Modal} from "../components/modal/modal";
 import {errorModalText, isOpenErrorModal} from "../services/error-modal/error-modal-selector";
 import {closeErrorModal} from "../services/error-modal/error-modal-action";
 import {connectFeed, disconnectFeed} from "../utils/data";
+import {displayLarge, displaySmall} from "../utils/text-elements";
 
 export function Feed() {
 
@@ -27,7 +28,7 @@ export function Feed() {
   return (
     <>
       <section className={'pl-5 pr-5 half-home'}>
-        <p className="text text_type_main-large pb-5">Лента заказов</p>
+        {displayLarge({value: "Лента заказов", extraClass:"pb-5"})}
         <Orders/>
       </section>
       <section className={'pl-5 pr-5 pt-15 half-home'}>
@@ -35,9 +36,7 @@ export function Feed() {
       </section>
       {openErrModal &&
         <Modal onClose={handleErrorModalClose} header={"Ошибка"}>
-          <p className="text text_type_main-medium">
-            {textErrorModal}
-          </p>
+          {displaySmall({value: textErrorModal})}
         </Modal>}
     </>
   )

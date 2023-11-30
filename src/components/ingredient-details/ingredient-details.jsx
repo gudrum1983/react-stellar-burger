@@ -4,6 +4,7 @@ import {useLocation, useParams} from "react-router-dom";
 import {
   burgerIngredientsArray,
 } from "../../services/burger-ingredients/burger-ingredients-selector";
+import {displayLarge} from "../../utils/text-elements";
 
 export function IngredientDetails() {
 
@@ -29,7 +30,7 @@ export function IngredientDetails() {
 
   return (
     <div className={`${styles.modalContainer} ${testContainer} pb-5`}>
-      {!background && <p className="text text_type_main-large">Детали ингредиента</p>}
+      {!background && displayLarge({value: "Детали ингредиента"})}
       <img src={image_large} alt={name} className="mb-4"></img>
       <p className={`${styles.title} text text_type_main-medium mb-8`}>{name}</p>
       <ul className={`${styles.row}`}>

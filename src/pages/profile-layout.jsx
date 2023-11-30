@@ -5,6 +5,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {Modal} from "../components/modal/modal";
 import {closeErrorModal} from "../services/error-modal/error-modal-action";
 import {errorModalText, isOpenErrorModal} from "../services/error-modal/error-modal-selector";
+import {displaySmall} from "../utils/text-elements";
+import {TEXT_COLOR, TEXT_SIZE, TypographyText} from "../components/typography/text/text";
 
 export const ProfileLayout = () => {
 
@@ -37,9 +39,15 @@ export const ProfileLayout = () => {
           </li>
           <li key="logout">
             <button className={`text text_type_main-medium text_color_inactive link cursor`}
-                     onClick={handleClick}>Выход</button>
+                    onClick={handleClick}>Выход
+            </button>
           </li>
         </ul>
+        <TypographyText size={TEXT_SIZE.DESKTOP_TEXT} extraClass="description pt-20" color={TEXT_COLOR.INACTIVE}>В этом
+          разделе вы можете изменить свои персональные данные
+        </TypographyText>
+
+        {/*        {displaySmall({value:"В этом разделе вы можете изменить свои персональные данные", extraClass:"description pt-20", color: "inactive"})}*/}
         <p className={`pt-20 text text_type_main-small text_color_inactive description`}>
           В этом разделе вы можете изменить свои персональные данные
         </p>
@@ -50,9 +58,7 @@ export const ProfileLayout = () => {
 
       {openErrModal &&
         <Modal onClose={handleErrorModalClose} header={"Ошибка"}>
-          <p className="text text_type_main-medium">
-            {textErrorModal}
-          </p>
+          {displaySmall({value: textErrorModal})}
         </Modal>}
 
 

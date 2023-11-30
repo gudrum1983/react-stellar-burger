@@ -26,18 +26,16 @@ const digitsSize = {
 export const digitsSmall = ({value, extraClass = ''}) =>
   <p className={`text ${digitsSize.default} ${extraClass}`}>{value}</p>
 
-
 //Text
 
 /**
- * Возвращает текстовый элемент с классами text text_type_main-medium
+ * Возвращает текстовый элемент с классами text text_type_main-small
  * @param {string} value - текст
  * @param {string} color - выбор цвета (error, primary, accent, success, inactive)
  * @param {string} extraClass - дополнительный класс
  */
-export const displaySmall = ({value, extraClass = '', color = 'primary'}) =>
-  <p className={`text ${textSize.medium} ${textColors[color]} ${extraClass}`}>{value}</p>
-
+export const text = ({value, extraClass = '', color = 'primary'}) =>
+  <p className={`text ${textSize.small} ${textColors[color]} ${extraClass}`}>{value}</p>
 
 /**
  * Возвращает текстовый элемент с классами text text_type_main-default
@@ -48,6 +46,29 @@ export const displaySmall = ({value, extraClass = '', color = 'primary'}) =>
 export const textDefault = ({value, extraClass = '', color = 'primary'}) =>
   <p className={`text ${textSize.default} ${textColors[color]} ${extraClass} `}>{value}</p>
 
+/**
+ * Возвращает текстовый элемент с классами text text_type_main-medium
+ * @param {string} value - текст
+ * @param {string} color - выбор цвета (error, primary, accent, success, inactive)
+ * @param {string} extraClass - дополнительный класс
+ */
+export const displaySmall = ({value, extraClass = '', color = 'primary'}) =>
+  <p className={`text ${textSize.medium} ${textColors[color]} ${extraClass}`}>{value}</p>
+
+/**
+ * Возвращает текстовый элемент с классами text text_type_main-large
+ * @param {string} value - текст
+ * @param {string} color - выбор цвета (error, primary, accent, success, inactive)
+ * @param {string} extraClass - дополнительный класс
+ */
+export const displayLarge = ({value, extraClass = '', color = 'primary'}) =>
+  <p className={`text ${textSize.large} ${textColors[color]} ${extraClass}`}>{value}</p>
+
+
+
+
+
+//Date
 
 /**
  * Возвращает отформатированную дату текстовый элемент с классами text text_type_main-default

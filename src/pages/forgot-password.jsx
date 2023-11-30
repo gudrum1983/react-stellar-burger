@@ -9,6 +9,7 @@ import {closeErrorModal, openErrorModal} from "../services/error-modal/error-mod
 import {errorModalText, isOpenErrorModal} from "../services/error-modal/error-modal-selector";
 import {InputEmail} from "../components/form-container/inputs/input-email";
 import {useForm} from "../hooks/useForm";
+import {displaySmall} from "../utils/text-elements";
 
 
 export function ForgotPassword() {
@@ -62,9 +63,7 @@ export function ForgotPassword() {
 
       {openErrModal &&
         <Modal onClose={handleErrorModalClose} header={"Ошибка"}>
-          <p className="text text_type_main-medium">
-            {textErrorModal}
-          </p>
+          {displaySmall({value: textErrorModal})}
         </Modal>}
     </>
 
