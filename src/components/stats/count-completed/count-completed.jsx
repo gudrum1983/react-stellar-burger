@@ -1,13 +1,11 @@
-import styles from "../stats.module.css";
+import styles from "./count-completed.module.css";
 import React, {useMemo} from "react";
-import {
-  numPropType,
-  stringPropType
-} from "../../../utils/prop-types";
+import {numPropType, stringPropType} from "../../../utils/prop-types";
+import {DIGITS_SIZES, TEXT_SIZES} from "../../../utils/text-elements";
+import {Text} from "../../typography/text/text";
+import {Digits} from "../../typography/digits/digits";
 
-
-//todo начать от сюда и до заката
-export function Completed({header, children}) {
+export function CountCompleted({header, children}) {
 
   const partNumber = useMemo(() => {
     return {
@@ -19,16 +17,15 @@ export function Completed({header, children}) {
 
   return (
     <div>
-      <p className="text text_type_main-medium">{header}</p>
-      <p
-        className={`${styles.shadow} text text_type_digits-large`}>{partNumber.millions}{partNumber.thousands}{partNumber.hundreds}</p>
+      <Text size={TEXT_SIZES.DISPLAY_SMALL}>{header}</Text>
+      <Digits size={DIGITS_SIZES.DIGITS_LARGE} extraClass={styles.shadow}>
+        {partNumber.millions}{partNumber.thousands}{partNumber.hundreds}
+      </Digits>
     </div>
-
-
   )
 }
 
-Completed.propTypes = {
+CountCompleted.propTypes = {
   header: stringPropType,
   children: numPropType,
 };

@@ -7,14 +7,17 @@ import {WebsocketStatus} from "../../utils/constants";
 import {connectFeed, connectProfile, disconnectFeed, disconnectProfile,} from "../../utils/data";
 import {orderDetails} from "../../services/order-details/order-details-selectors";
 import {clearOrderDetails, getInfoOrderDetails} from "../../services/order-details/order-details-actions";
-import {digitsSmall, displaySmall, formattedData, textDefault} from "../../utils/text-elements";
+import {DateWithTimezone, DIGITS_SIZES, TEXT_COLORS, TEXT_SIZES} from "../../utils/text-elements";
 import {openErrorModal} from "../../services/error-modal/error-modal-action";
 import {OrderPrice} from "../order-price/order-price";
+import {Text} from "../typography/text/text";
+import {Digits} from "../typography/digits/digits";
+import {FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 
-
+/**
+ * карточка с деталями заказа OrderInfo
+ */
 export function OrderInfo() {
-
-  //todo Исправить или понять как исправить ошибку "No routes matched location"
 
   const dispatch = useDispatch();
 
@@ -55,7 +58,7 @@ export function OrderInfo() {
       findOrderWS = data.orders.find((itemOrder) => itemOrder.number === Number(idCurrentItem))
     }
 
-    if(orderRest) {
+    if (orderRest) {
       findOrderRest = orderRest
     }
 
@@ -74,31 +77,36 @@ export function OrderInfo() {
 
   if (isDisconnected || orderRequest) {
     return (
-      <>
-        {displaySmall({value: "Загрузка --- isDisconnected...",})}
-      </>
+      <Text size={TEXT_SIZES.DISPLAY_SMALL}>Загрузка --- isDisconnected...</Text>
     )
   }
 
   const styleCard = background ? styles.cardOrder3 : styles.cardOrder2
 
   if (orderFailed) {
-      dispatch(openErrorModal(`Заказ с номером ${idCurrentItem} не найден, Милорд...! `));
-      return <Navigate to={"/profile/orders"}/>
-    }
+    dispatch(openErrorModal(`Заказ с номером ${idCurrentItem} не найден, Милорд...! `));
+    return <Navigate to={"/profile/orders"}/>
+  }
 
   if (order || orderRest) {
     return (
       <div className={styleCard}>
-        {!background && digitsSmall({value: `#${order.number}`})}
+        {!background && <Digits size={DIGITS_SIZES.DIGITS_SMALL}># {order.number}</Digits>}
+
         <div className="mb-15">
-          {displaySmall({value: order.name, extraClass: 'mb-3'})}
-          {textDefault({value: (order.status === "done" ? "Готово" :  "B работе")})}
+          <Text size={TEXT_SIZES.DISPLAY_SMALL} extraClass='mb-3'>{order.name}</Text>
+          {(order.status === "done")
+            ? <Text size={TEXT_SIZES.DESKTOP_TEXT} color={TEXT_COLORS.SUCCESS}>Выполнен</Text>
+            : <Text size={TEXT_SIZES.DESKTOP_TEXT}>"B работе"</Text>
+          }
+
         </div>
-        {displaySmall({value: 'Состав:', extraClass: 'mb-6'})}
+        <Text size={TEXT_SIZES.DISPLAY_SMALL} extraClass='mb-6'>Состав</Text>
         <IngredientsItems componentsOrder={order.ingredients}/>
         <div className="orderId pt-10">
-          {formattedData({value: order.createdAt, addText: " i-GMT+3"})}
+          {DateWithTimezone({value: order.createdAt})}
+          <FormattedDate date={new Date(order.createdAt)}
+                         className={`text ${TEXT_SIZES.DESKTOP_TEXT} ${TEXT_COLORS.INACTIVE} withTimezone`}/>
           <OrderPrice ingredients={order.ingredients}/>
         </div>
       </div>

@@ -20,16 +20,26 @@ export const numPropType = PropTypes.number.isRequired;
 export const booleanPropType = PropTypes.bool.isRequired;
 export const booleanOptional = PropTypes.bool;
 export const stringPropType = PropTypes.string.isRequired;
+export const objectPropType = PropTypes.object.isRequired;
 export const arrayNodeElementOptional = PropTypes.arrayOf(nodeElementPropType);
 
 export const stringOptional = PropTypes.string;
 export const functionOptional = PropTypes.func;
+export const arrayStringOptional = PropTypes.arrayOf(stringOptional);
+export const arrayOptional = PropTypes.array;
+
+export const numOptional = PropTypes.number;
+export const mapOptional = PropTypes.instanceOf(Map);
+
 export const functionPropType = PropTypes.func.isRequired;
 export const arrayOfIngredientsPropType = PropTypes.arrayOf(ingredientPropType).isRequired;
 export const selectedOtherIngredientsPropType = PropTypes.arrayOf(PropTypes.shape({
   numberIngredient: stringPropType,
   ingredient: ingredientPropType,
 }))
+
+export const nodeOptional = PropTypes.node;
+
 
 export const selectedIngredientsPropType = PropTypes.shape({
   bun: ingredientPropType,
@@ -40,6 +50,9 @@ export const otherIngredientPropType = PropTypes.shape({
   bun: ingredientPropType,
   other: selectedOtherIngredientsPropType,
 })
+
+export const stringOrArrayOptional = stringOptional || arrayOptional;
+
 
 /*
 export const imputPropType = PropTypes.shape({

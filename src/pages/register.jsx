@@ -11,6 +11,9 @@ import {InputPassword} from "../components/form-container/inputs/input-password"
 import {InputEmail} from "../components/form-container/inputs/input-email";
 import {InputName} from "../components/form-container/inputs/input-name";
 
+import {TEXT_SIZES} from "../utils/text-elements";
+import {Text} from "../components/typography/text/text";
+
 
 export function Register() {
 
@@ -72,9 +75,7 @@ export function Register() {
         </FormContainer>
         {openErrModal &&
           <Modal onClose={handleErrorModalClose} header={"Ошибка"}>
-            <p className="text text_type_main-medium">
-              {textErrorModal}
-            </p>
+            <Text size={TEXT_SIZES.DISPLAY_SMALL}>{textErrorModal}</Text>
           </Modal>}
       </>
     )

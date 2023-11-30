@@ -3,6 +3,7 @@ import {authApi} from "../../api/user";
 export const socketMiddleware = (wsActions) => {
   return store => {
     let socket = null;
+    let isDisconnect = false
     return next => action => {
       const {dispatch} = store;
       const {type} = action;
@@ -42,7 +43,12 @@ export const socketMiddleware = (wsActions) => {
         };
 
         socket.close = () => {
-          dispatch({type: onClose});
+          if (isDisconnect){
+            dispatch({type: onClose});
+          } else {
+            socket = new WebSocket(action.payload);
+            dispatch({type: wsConnecting})
+          }
         };
 
         if (wsSendMessage && type === wsSendMessage) {
@@ -50,6 +56,7 @@ export const socketMiddleware = (wsActions) => {
         }
 
         if (type === wsDisconnect) {
+          isDisconnect = true
           socket.close();
           socket = null;
         }

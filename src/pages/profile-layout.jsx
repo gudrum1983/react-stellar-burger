@@ -6,6 +6,9 @@ import {Modal} from "../components/modal/modal";
 import {closeErrorModal} from "../services/error-modal/error-modal-action";
 import {errorModalText, isOpenErrorModal} from "../services/error-modal/error-modal-selector";
 
+import {TEXT_COLORS, TEXT_SIZES} from "../utils/text-elements";
+import {Text} from "../components/typography/text/text";
+
 export const ProfileLayout = () => {
 
   const dispatch = useDispatch();
@@ -37,12 +40,13 @@ export const ProfileLayout = () => {
           </li>
           <li key="logout">
             <button className={`text text_type_main-medium text_color_inactive link cursor`}
-                     onClick={handleClick}>Выход</button>
+                    onClick={handleClick}>Выход
+            </button>
           </li>
         </ul>
-        <p className={`pt-20 text text_type_main-small text_color_inactive description`}>
+        <Text size={TEXT_SIZES.DESKTOP_TEXT} extraClass="description pt-20" color={TEXT_COLORS.INACTIVE}>
           В этом разделе вы можете изменить свои персональные данные
-        </p>
+        </Text>
       </nav>
       <div className='profileOutlet'>
         <Outlet/>
@@ -50,9 +54,7 @@ export const ProfileLayout = () => {
 
       {openErrModal &&
         <Modal onClose={handleErrorModalClose} header={"Ошибка"}>
-          <p className="text text_type_main-medium">
-            {textErrorModal}
-          </p>
+          <Text size={TEXT_SIZES.DISPLAY_SMALL}>{textErrorModal}</Text>
         </Modal>}
 
 

@@ -2,29 +2,29 @@ import styles from "./orders.module.css";
 import React from "react";
 import {useSelector} from "react-redux";
 import {useMatch} from "react-router-dom";
-import {WebsocketStatus} from "../../utils/constants";
 import {CardOrder} from "../card-order/card-order";
-
+import {selectorProfileOrdersData} from "../../services/feed-orders-profile/feed-orders-selector";
+import {selectorFeedOrdersData} from "../../services/feed-orders/selector-feed-orders";
 
 export function Orders() {
 
   const isProfile = useMatch({path: "/profile/orders", end: false});
 
-  const {status, data} = useSelector(store => isProfile ? store.feedOrdersProfile : store.feedOrders)
+  const dataProfile = useSelector(selectorProfileOrdersData)
+  const dataFeed = useSelector(selectorFeedOrdersData)
 
-  const isDisconnected = status !== WebsocketStatus.ONLINE
+  const data = isProfile ? dataProfile : dataFeed
 
   const orders = React.useMemo(() => {
       let feedOrders = null
-    if (data?.orders){
-      feedOrders = data.orders
-      return !!isProfile ? feedOrders.toReversed() : feedOrders
-    }
+      if (data?.orders) {
+        feedOrders = data.orders
+        return !!isProfile ? feedOrders.toReversed() : feedOrders
+      }
     },
     [data]
   );
-
-  if (!isDisconnected && orders) {
+  {
     return (
       <ul className={`${styles.containerFeed} nonList custom-scroll`}>
         {orders.map((item) => (
@@ -32,11 +32,6 @@ export function Orders() {
         ))}
       </ul>
     )
-  } else {
-    return (<p className="text text_type_main-medium">
-      Загрузка...
-    </p>)
   }
+
 }
-
-

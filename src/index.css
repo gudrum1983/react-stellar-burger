@@ -236,6 +236,11 @@ text-decoration: none;
   max-width: 1280px;
 }
 
+.withTimezone::after{
+  content: " i-GMT+3";
+}
+
+
 /*.links1 {
   padding: 0;
   margin: 0;

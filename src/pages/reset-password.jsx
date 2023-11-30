@@ -11,6 +11,9 @@ import {InputPassword} from "../components/form-container/inputs/input-password"
 import {InputCode} from "../components/form-container/inputs/input-code";
 import {useForm} from "../hooks/useForm";
 
+import {TEXT_SIZES} from "../utils/text-elements";
+import {Text} from "../components/typography/text/text";
+
 export function ResetPassword() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -74,9 +77,7 @@ export function ResetPassword() {
 
       {openErrModal &&
         <Modal onClose={handleErrorModalClose} header={"Ошибка"}>
-          <p className="text text_type_main-medium">
-            {textErrorModal}
-          </p>
+          <Text size={TEXT_SIZES.DISPLAY_SMALL}>{textErrorModal}</Text>
         </Modal>}
     </>
 

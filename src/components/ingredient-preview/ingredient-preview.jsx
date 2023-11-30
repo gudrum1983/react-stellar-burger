@@ -1,37 +1,29 @@
-import {useSelector} from "react-redux";
-import {burgerIngredientsArray} from "../../services/burger-ingredients/burger-ingredients-selector";
 import styles from "./ingredient-preview.module.css";
 import React from "react";
+import {string} from "prop-types";
+import {numOptional, stringOptional} from "../../utils/prop-types";
 
-export function IngredientPreview({image, ingredient, count = null}) {
+/**
+ * Иконка с ингредиентом
+ * @param {string} image - строка адреса картинки
+ * @param {number} count - счетчик для остальных ингредиентов
+ */
+export function IngredientPreview({image, count = 0}) {
 
-  const ingredients = useSelector(burgerIngredientsArray)
-
-  function image_mobile_find(ingredient) {
-    const currentIngredient = ingredients.find((itemIng) => (itemIng._id === ingredient));
-    return currentIngredient.image_mobile
-  }
+  const text = String(count)
 
   return (
-
-    <div
-      /*      style={{backgroundImage: `url(${image_mobile_find(itemIng)})`}}*/
-      style={{backgroundImage: `url(${image})`}}
-/*      className={`${styles.rowIngNew}`}>*/
-
-
-
-      className={`${styles.box}`}>
-      {count && <div className={styles.imgCardSmallFonNumber}>
+    <div style={{backgroundImage: `url(${image})`}} className={`${styles.box}`}>
+      {!!count && <div className={styles.imgCardSmallFonNumber}>
         <p className="text text_type_main-default">
-          {`+${count}`}
+          +{text}
         </p>
-
-
       </div>}
-
     </div>
-
   )
-
 }
+
+IngredientPreview.propTypes = {
+  image: stringOptional,
+  count: numOptional,
+};

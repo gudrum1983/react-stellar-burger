@@ -10,6 +10,9 @@ import {errorModalText, isOpenErrorModal} from "../services/error-modal/error-mo
 import {InputEmail} from "../components/form-container/inputs/input-email";
 import {useForm} from "../hooks/useForm";
 
+import {TEXT_SIZES} from "../utils/text-elements";
+import {Text} from "../components/typography/text/text";
+
 
 export function ForgotPassword() {
   const dispatch = useDispatch();
@@ -28,7 +31,6 @@ export function ForgotPassword() {
 
     const target = formElement.current
     const isError = !!target.querySelector(".input_status_error")
-
     if (!isError) {
       getForgot(emailInput)
         .then(() => {
@@ -62,12 +64,8 @@ export function ForgotPassword() {
 
       {openErrModal &&
         <Modal onClose={handleErrorModalClose} header={"Ошибка"}>
-          <p className="text text_type_main-medium">
-            {textErrorModal}
-          </p>
+          <Text size={TEXT_SIZES.DISPLAY_SMALL}>{textErrorModal}</Text>
         </Modal>}
     </>
-
-
   )
 }
