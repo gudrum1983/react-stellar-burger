@@ -268,14 +268,14 @@ text-decoration: none;
 }
 
 
-.link1 {
+.link {
   padding: 16px 20px;
   width: fit-content;
   display: flex;
   flex-direction: row;
 }
 
-.link_home {
+/*.link_home {
   composes: link1;
   grid-area: linkHome;
 }
@@ -288,13 +288,15 @@ text-decoration: none;
 .link_logo {
   justify-self: center;
   grid-area: logo;
-}
+}*/
 
 .link_profile {
-  composes: link1;
+  padding: 16px 20px;
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
   justify-self: end;
   margin-left: auto;
-  grid-area: linkProfile;
 }
 
 .main {

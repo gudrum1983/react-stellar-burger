@@ -29,14 +29,14 @@ export function AppLayout() {
       <header className="header relative">
           <nav className="panel">
             <ul className="links1">
-              <li className="link_home cursor">
+              <li className="link cursor">
                 <NavigationLink to={pagePath.home} icon={<BurgerIcon type={active(pagePath.home)}/>} label={'Конструктор'}/>
               </li>
-              <li className="link_feed cursor">
+              <li className="link cursor">
                 <NavigationLink to={pagePath.feed}
                                 icon={<ListIcon type={active(pagePath.feed)}/>} label={'Лента заказов'}/>
               </li>
-              <li className="link_logo cursorLogo absolute">
+              <li className="cursorLogo absolute">
                 <Link to={pagePath.home}><Logo/></Link>
               </li>
               <li className="link_profile cursor">
