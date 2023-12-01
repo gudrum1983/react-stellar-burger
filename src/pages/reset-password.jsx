@@ -1,5 +1,5 @@
 import React from "react";
-import {createButton, typeLinksFooter} from "../utils/inputs";
+import {createButton, typeLinksFooter} from "../utils/form-items";
 import {FormContainer} from "../components/form-container/form-container";
 import {Navigate, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
@@ -11,7 +11,7 @@ import {InputPassword} from "../components/form-container/inputs/input-password"
 import {InputCode} from "../components/form-container/inputs/input-code";
 import {useForm} from "../hooks/useForm";
 
-import {TEXT_SIZES} from "../utils/text-elements";
+import {pagePath, sizesText} from "../utils/constants";
 import {Text} from "../components/typography/text/text";
 
 export function ResetPassword() {
@@ -57,7 +57,7 @@ export function ResetPassword() {
 
   const forgotConfirmed = localStorage.getItem("forgotConfirmed");
   if (!forgotConfirmed) {
-    return <Navigate to="/login" replace={true}/>;
+    return <Navigate to={pagePath.login} replace={true}/>;
   }
   if (!!fields) {
   return (
@@ -77,7 +77,7 @@ export function ResetPassword() {
 
       {openErrModal &&
         <Modal onClose={handleErrorModalClose} header={"Ошибка"}>
-          <Text size={TEXT_SIZES.DISPLAY_SMALL}>{textErrorModal}</Text>
+          <Text size={sizesText.displaySmall}>{textErrorModal}</Text>
         </Modal>}
     </>
 

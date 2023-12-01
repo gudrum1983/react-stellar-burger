@@ -3,21 +3,27 @@ import {useDispatch, useSelector} from "react-redux";
 import styles from "./order-info.module.css";
 import {IngredientsItems} from "./ingredients-items/ingredients-items";
 import React from "react";
-import {WebsocketStatus} from "../../utils/constants";
-import {connectFeed, connectProfile, disconnectFeed, disconnectProfile,} from "../../utils/data";
+import {connectFeed, connectProfile, disconnectFeed, disconnectProfile, WebsocketStatus} from "../../utils/config-ws";
 import {orderDetails} from "../../services/order-details/order-details-selectors";
 import {clearOrderDetails, getInfoOrderDetails} from "../../services/order-details/order-details-actions";
-import {DateWithTimezone, DIGITS_SIZES, TEXT_COLORS, TEXT_SIZES} from "../../utils/text-elements";
+import {sizesDigits, colorsText, sizesText, pagePath} from "../../utils/constants";
 import {openErrorModal} from "../../services/error-modal/error-modal-action";
 import {OrderPrice} from "../order-price/order-price";
 import {Text} from "../typography/text/text";
 import {Digits} from "../typography/digits/digits";
-import {FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
+import {DateWithTimezone} from "../typography/date/date";
+import {
+  selectorProfileOrdersData,
+  selectorProfileOrdersStatus
+} from "../../services/feed-orders-profile/feed-orders-selector";
+import {selectorFeedOrdersData, selectorFeedOrdersStatus} from "../../services/feed-orders/selector-feed-orders";
+
 
 /**
  * карточка с деталями заказа OrderInfo
  */
 export function OrderInfo() {
+
 
   const dispatch = useDispatch();
 
@@ -27,10 +33,25 @@ export function OrderInfo() {
   const location = useLocation()
   const background = location.state && location.state.background;
 
-  const isFeed = useMatch({path: "/feed", end: false});
-  const isProfile = useMatch({path: "/profile", end: false});
+  const isFeed = useMatch({path: pagePath.feed, end: false});
+  const isProfile = useMatch({path: pagePath.profile, end: false});
 
-  const {status, data} = useSelector(store => isFeed ? store.feedOrders : store.feedOrdersProfile)
+
+  const dataFeedProfile = useSelector(selectorProfileOrdersData)
+  const statusFeedProfile = useSelector(selectorProfileOrdersStatus)
+  const dataFeed = useSelector(selectorFeedOrdersData)
+  const statusFeed = useSelector(selectorFeedOrdersStatus)
+
+  let data = dataFeedProfile
+  let status = statusFeedProfile
+
+
+  if (isFeed) {
+    data = dataFeed
+    status = statusFeed
+  }
+
+
   const isDisconnected = status !== WebsocketStatus.ONLINE
 
   const {orderRequest, orderFailed, order: orderRest} = useSelector(orderDetails)
@@ -77,7 +98,7 @@ export function OrderInfo() {
 
   if (isDisconnected || orderRequest) {
     return (
-      <Text size={TEXT_SIZES.DISPLAY_SMALL}>Загрузка --- isDisconnected...</Text>
+      <Text size={sizesText.displaySmall}>Загрузка...</Text>
     )
   }
 
@@ -85,28 +106,26 @@ export function OrderInfo() {
 
   if (orderFailed) {
     dispatch(openErrorModal(`Заказ с номером ${idCurrentItem} не найден, Милорд...! `));
-    return <Navigate to={"/profile/orders"}/>
+    return <Navigate to={pagePath.profileOrdersFull}/>
   }
 
   if (order || orderRest) {
     return (
       <div className={styleCard}>
-        {!background && <Digits size={DIGITS_SIZES.DIGITS_SMALL}># {order.number}</Digits>}
+        {!background && <Digits size={sizesDigits.small} extraClass={styles.header}># {order.number}</Digits>}
 
-        <div className="mb-15">
-          <Text size={TEXT_SIZES.DISPLAY_SMALL} extraClass='mb-3'>{order.name}</Text>
+        <div className="mb-15 ">
+          <Text size={sizesText.displaySmall} extraClass='mb-3'>{order.name}</Text>
           {(order.status === "done")
-            ? <Text size={TEXT_SIZES.DESKTOP_TEXT} color={TEXT_COLORS.SUCCESS}>Выполнен</Text>
-            : <Text size={TEXT_SIZES.DESKTOP_TEXT}>"B работе"</Text>
+            ? <Text size={sizesText.textDesktop} color={colorsText.success}>Выполнен</Text>
+            : <Text size={sizesText.textDesktop}>"B работе"</Text>
           }
 
         </div>
-        <Text size={TEXT_SIZES.DISPLAY_SMALL} extraClass='mb-6'>Состав</Text>
+        <Text size={sizesText.displaySmall} extraClass='mb-6'>Состав</Text>
         <IngredientsItems componentsOrder={order.ingredients}/>
         <div className="orderId pt-10">
           {DateWithTimezone({value: order.createdAt})}
-          <FormattedDate date={new Date(order.createdAt)}
-                         className={`text ${TEXT_SIZES.DESKTOP_TEXT} ${TEXT_COLORS.INACTIVE} withTimezone`}/>
           <OrderPrice ingredients={order.ingredients}/>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import {nodeOptional, stringOptional} from "../../../utils/prop-types";
-import {DIGITS_SIZES, TEXT_COLORS} from "../../../utils/text-elements";
+import {sizesDigits, colorsText} from "../../../utils/constants";
 
 
 /**
@@ -11,8 +11,8 @@ import {DIGITS_SIZES, TEXT_COLORS} from "../../../utils/text-elements";
  * @param {number} children - текст
  */
 export const Digits = ({
-                         children, size = DIGITS_SIZES.DIGITS_SMALL,
-                         extraClass = '', color = TEXT_COLORS.PRIMARY
+                         children, size = sizesDigits.small,
+                         extraClass = '', color = colorsText.primary
                        }) =>
   <p className={`text ${size} ${color} ${extraClass} `}>{children}</p>
 

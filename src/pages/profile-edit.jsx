@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {profileButtons} from "../utils/inputs";
+import React from "react";
+import {profileButtons} from "../utils/form-items";
 import {FormContainer} from "../components/form-container/form-container";
 import {useDispatch, useSelector} from "react-redux";
 import {getUser, updateUser} from "../services/user/user-action";
@@ -11,7 +11,7 @@ import {useForm} from "../hooks/useForm";
 
 export function ProfileEdit() {
 
-  const [clearError, setClearError] = useState(false)
+/*  const [clearError, setClearError] = useState(false)*/
 
   const dispatch = useDispatch();
   const nameValueTest = useSelector(userName)
@@ -52,7 +52,7 @@ export function ProfileEdit() {
   }, [nameValueTest, emailValueTest]);
 
 
- React.useEffect(() => {
+/* React.useEffect(() => {
 
     if (clearError && !isEdit) {
 
@@ -60,12 +60,12 @@ export function ProfileEdit() {
       setClearError(false)
     }
 
-  }, [isEdit]);
+  }, [isEdit]);*/
 
 
-  function onReset() {
+/*  function onReset() {
     setClearError(true)
-  }
+  }*/
 
   function onSubmit({values: {passwordInput, nameInput, emailInput}}) {
 
@@ -79,7 +79,7 @@ export function ProfileEdit() {
   return (
     <FormContainer {...(isEdit && {button: profileButtons})}
                    handleSubmit={handleSubmit(onSubmit)}
-                   handleReset={handleReset(onReset)}
+                   handleReset={handleReset()}
                    ref={formElement}
     >
 
@@ -90,7 +90,7 @@ export function ProfileEdit() {
 
                   onChange={onChange(emailInput)}  {...(!isEditMail && {clearError: true})}/>
       <InputPassword isEdit={true} key="password" value={passwordInput.value}
-                     onChange={onChange(passwordInput)} {...(clearError && !!passwordInput && {clearError: true})}/>
+                     onChange={onChange(passwordInput)} {...(!isEditPassword && {clearError: true})}/>
     </FormContainer>
   )
 }

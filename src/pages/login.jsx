@@ -1,6 +1,6 @@
 import React from "react";
 import {FormContainer} from "../components/form-container/form-container";
-import {createButton, typeLinksFooter} from "../utils/inputs";
+import {createButton, typeLinksFooter} from "../utils/form-items";
 import {useDispatch, useSelector} from "react-redux";
 import {login} from "../services/user/user-action";
 import {Modal} from "../components/modal/modal";
@@ -10,7 +10,7 @@ import {useForm} from "../hooks/useForm";
 import {InputEmail} from "../components/form-container/inputs/input-email";
 import {InputPassword} from "../components/form-container/inputs/input-password";
 
-import {TEXT_SIZES} from "../utils/text-elements";
+import {pagePath, sizesText} from "../utils/constants";
 import {Text} from "../components/typography/text/text";
 
 export function Login() {
@@ -51,7 +51,7 @@ export function Login() {
   };
 
   const header = "Вход"
-  const buttons = [createButton({label: "Войти", key: "login"})];
+  const buttons = [createButton({label: "Войти", key: pagePath.login})];
   const footerLinks = [typeLinksFooter.newUser, typeLinksFooter.forgotPassword];
   if (!!fields) {
   return (
@@ -67,7 +67,7 @@ export function Login() {
       </FormContainer>
       {openErrModal &&
         <Modal onClose={handleErrorModalClose} header={"Ошибка"}>
-          <Text size={TEXT_SIZES.DISPLAY_SMALL}>{textErrorModal}</Text>
+          <Text size={sizesText.displaySmall}>{textErrorModal}</Text>
         </Modal>}
     </>
   )

@@ -4,10 +4,11 @@ import {Link, Outlet, useLocation, useMatch} from "react-router-dom";
 import React from "react";
 import {useSelector} from "react-redux";
 import {userName} from "../services/user/user-selector";
+import {pagePath} from "../utils/constants";
 export function AppLayout() {
 
   const location = useLocation();
-  const isProfile = useMatch({path: "/profile", end: false})
+  const isProfile = useMatch({path: pagePath.profile, end: false})
 
   const nameUser = useSelector(userName)
 
@@ -29,18 +30,18 @@ export function AppLayout() {
           <nav className="panel">
             <ul className="links1">
               <li className="link_home cursor">
-                <NavigationLink to={'/'} icon={<BurgerIcon type={active("/")}/>} label={'Конструктор'}/>
+                <NavigationLink to={pagePath.home} icon={<BurgerIcon type={active(pagePath.home)}/>} label={'Конструктор'}/>
               </li>
               <li className="link_feed cursor">
-                <NavigationLink to={'/feed'}
-                                icon={<ListIcon type={active("/feed")}/>} label={'Лента заказов'}/>
+                <NavigationLink to={pagePath.feed}
+                                icon={<ListIcon type={active(pagePath.feed)}/>} label={'Лента заказов'}/>
               </li>
               <li className="link_logo cursorLogo absolute">
-                <Link to={'/'}><Logo/></Link>
+                <Link to={pagePath.home}><Logo/></Link>
               </li>
               <li className="link_profile cursor">
-                <NavigationLink to={'/profile'}
-                                icon={<ProfileIcon type={active("/profile")}/>} label={nameUser || 'Личный кабинет'}/>
+                <NavigationLink to={pagePath.profile}
+                                icon={<ProfileIcon type={active(pagePath.profile)}/>} label={nameUser || 'Личный кабинет'}/>
               </li>
             </ul>
           </nav>

@@ -37,12 +37,12 @@ export const useForm = (initialFields = {}) => {
     onSubmit({ values });
   }
 
-  const handleReset = (onReset) => (e) => {
+  const handleReset = () => (e) => {
     if (e && e.preventDefault) {
       e.preventDefault();
     }
     setState(form)
-    onReset()
+/*    onReset()*/
   }
 
   return {

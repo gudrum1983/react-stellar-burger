@@ -1,5 +1,6 @@
 import {useSelector} from "react-redux";
 import {Navigate, useLocation} from "react-router-dom";
+import {pagePath} from "../../utils/constants";
 
 const ProtectedRouteElement = ({onlyUnAuth = false, component}) => {
   // isAuthChecked это флаг, показывающий что проверка токена произведена
@@ -20,12 +21,12 @@ const ProtectedRouteElement = ({onlyUnAuth = false, component}) => {
   if (onlyUnAuth && user) {
     // Пользователь авторизован, но роут предназначен для неавторизованного пользователя
     // Делаем редирект на главную страницу или на тот адрес, что записан в location.state.from
-    const {from} = location.state || {from: {pathname: "/"}};
+    const {from} = location.state || {from: {pathname: pagePath.home}};
     return <Navigate to={from}/>;
   }
 
   if (!onlyUnAuth && !user) {
-    return <Navigate to="/login" state={{from: location}}/>;
+    return <Navigate to={pagePath.loginAbsolut} state={{from: location}}/>;
   }
 
   // !onlyUnAuth && user Пользователь авторизован и роут для авторизованного пользователя

@@ -1,4 +1,4 @@
-import {WebsocketStatus} from "../../utils/constants";
+import {WebsocketStatus} from "../../utils/config-ws";
 import {
   FEED_ORDERS_WS_CONNECTING,
   FEED_ORDERS_WS_ERROR,

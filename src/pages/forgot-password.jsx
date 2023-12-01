@@ -1,5 +1,5 @@
 import React from "react";
-import {createButton, typeLinksFooter} from "../utils/inputs";
+import {createButton, typeLinksFooter} from "../utils/form-items";
 import {FormContainer} from "../components/form-container/form-container";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
@@ -10,7 +10,7 @@ import {errorModalText, isOpenErrorModal} from "../services/error-modal/error-mo
 import {InputEmail} from "../components/form-container/inputs/input-email";
 import {useForm} from "../hooks/useForm";
 
-import {TEXT_SIZES} from "../utils/text-elements";
+import {sizesText} from "../utils/constants";
 import {Text} from "../components/typography/text/text";
 
 
@@ -64,7 +64,7 @@ export function ForgotPassword() {
 
       {openErrModal &&
         <Modal onClose={handleErrorModalClose} header={"Ошибка"}>
-          <Text size={TEXT_SIZES.DISPLAY_SMALL}>{textErrorModal}</Text>
+          <Text size={sizesText.displaySmall}>{textErrorModal}</Text>
         </Modal>}
     </>
   )

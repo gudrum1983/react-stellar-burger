@@ -7,7 +7,7 @@ import {ModalOverlay} from "./modal-overlay/modal-overlay";
 import {nodeElementPropType, functionPropType, stringPropType} from "../../utils/prop-types";
 import {useParams} from "react-router-dom";
 
-import {TEXT_SIZES} from "../../utils/text-elements";
+import {sizesText} from "../../utils/constants";
 import {Text} from "../typography/text/text";
 
 export function Modal({children, header, onClose}) {
@@ -28,7 +28,7 @@ export function Modal({children, header, onClose}) {
           <div className={styles.header}>
             {newHeader
               ? <p className="text text_type_digits-default">{newHeader}</p>
-              : <Text size={TEXT_SIZES.DISPLAY_LARGE}>{header}</Text>}
+              : <Text size={sizesText.displayLarge}>{header}</Text>}
 
             <button className={`${styles.buttonClose} cursor`} onClick={onClose}><CloseIcon type="primary"/></button>
           </div>

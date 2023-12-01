@@ -6,7 +6,7 @@ import {IngredientsTypeList} from "./ingredients-type-list/ingredients-type-list
 import {useSelector} from "react-redux";
 import {burgerIngredients} from "../../services/burger-ingredients/burger-ingredients-selector";
 
-import {TEXT_SIZES} from "../../utils/text-elements";
+import {sizesText} from "../../utils/constants";
 import {Text} from "../typography/text/text";
 
 
@@ -67,7 +67,7 @@ export function BurgerIngredients() {
 
   return (
     <>
-      <Text size={TEXT_SIZES.DISPLAY_LARGE} extraClass="mb-5 pt-10">Соберите бургер</Text>
+      <Text size={sizesText.displayLarge} extraClass="mb-5 pt-10">Соберите бургер</Text>
       <ul ref={tabsRef} className={`pb-10 ${styles.tab} nonList`}>
         <li>
           <a href="#buns" className="nonLink cursor">

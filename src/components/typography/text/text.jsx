@@ -1,6 +1,6 @@
 import React from "react";
 import {nodeOptional, stringOptional} from "../../../utils/prop-types";
-import {TEXT_COLORS, TEXT_SIZES} from "../../../utils/text-elements";
+import {colorsText, sizesText} from "../../../utils/constants";
 
 /**
  * Возвращает текстовый элемент с классами
@@ -10,8 +10,8 @@ import {TEXT_COLORS, TEXT_SIZES} from "../../../utils/text-elements";
  * @param {string} children - текст
  */
 export const Text = ({
-                       children, size = TEXT_SIZES.DESKTOP_TEXT,
-                       extraClass = '', color = TEXT_COLORS.PRIMARY
+                       children, size = sizesText.textDesktop,
+                       extraClass = '', color = colorsText.primary
                      }) =>
   <p className={`text ${size} ${color} ${extraClass} `}>{children}</p>
 

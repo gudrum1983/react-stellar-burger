@@ -1,7 +1,7 @@
 import styles from "./count-completed.module.css";
 import React, {useMemo} from "react";
 import {numPropType, stringPropType} from "../../../utils/prop-types";
-import {DIGITS_SIZES, TEXT_SIZES} from "../../../utils/text-elements";
+import {sizesDigits, sizesText} from "../../../utils/constants";
 import {Text} from "../../typography/text/text";
 import {Digits} from "../../typography/digits/digits";
 
@@ -17,8 +17,8 @@ export function CountCompleted({header, children}) {
 
   return (
     <div>
-      <Text size={TEXT_SIZES.DISPLAY_SMALL}>{header}</Text>
-      <Digits size={DIGITS_SIZES.DIGITS_LARGE} extraClass={styles.shadow}>
+      <Text size={sizesText.displaySmall}>{header}</Text>
+      <Digits size={sizesDigits.large} extraClass={styles.shadow}>
         {partNumber.millions}{partNumber.thousands}{partNumber.hundreds}
       </Digits>
     </div>

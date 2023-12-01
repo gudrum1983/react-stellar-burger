@@ -5,7 +5,7 @@ import {
   burgerIngredientsArray,
 } from "../../services/burger-ingredients/burger-ingredients-selector";
 import React from "react";
-import {TEXT_SIZES} from "../../utils/text-elements";
+import {sizesText} from "../../utils/constants";
 import {Text} from "../typography/text/text";
 
 
@@ -33,7 +33,7 @@ export function IngredientDetails() {
 
   return (
     <div className={`${styles.modalContainer} ${testContainer} pb-5`}>
-      {!background && <Text size={TEXT_SIZES.DISPLAY_LARGE}>Детали ингредиента</Text>}
+      {!background && <Text size={sizesText.displayLarge}>Детали ингредиента</Text>}
       <img src={image_large} alt={name} className="mb-4"></img>
       <p className={`${styles.title} text text_type_main-medium mb-8`}>{name}</p>
       <ul className={`${styles.row}`}>

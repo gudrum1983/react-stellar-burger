@@ -1,4 +1,4 @@
-import {DIGITS_SIZES} from "../../utils/text-elements";
+import {sizesDigits} from "../../utils/constants";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import {useSelector} from "react-redux";
@@ -24,7 +24,7 @@ export function OrderPrice({ingredients}) {
 
   return (
     <div className="orderPrice">
-      <Digits size={DIGITS_SIZES.DIGITS_SMALL} extraClass='pr-2'>{price}</Digits>
+      <Digits size={sizesDigits.small} extraClass='pr-2'>{price}</Digits>
       <CurrencyIcon type="primary"/>
     </div>)
 }

@@ -21,6 +21,8 @@ import {NotFound} from "../../pages/not-found";
 import {OrderInfo} from "../order-info/order-info";
 import {ProfileOrders} from "../../pages/profile-orders";
 
+import {pagePath} from "../../utils/constants";
+
 
 export default function App() {
 
@@ -56,45 +58,50 @@ export default function App() {
 
     <div className={`${styles.app}`}>
       <Routes location={background || location}>
-        <Route path="/" element={<AppLayout/>}>
+        <Route path={pagePath.home} element={<AppLayout/>}>
           <Route index element={<Home/>}/>
-          <Route path="/ingredients/:id" element={<IngredientDetails/>}/>
+          <Route path={pagePath.ingredientsInfo} element={<IngredientDetails/>}/>
 
 
           {/*OnlyUnAuth*/}
-          <Route path="login" element={<OnlyUnAuth component={<Login/>}/>}/>
-          <Route path="register" element={<OnlyUnAuth component={<Register/>}/>}/>
-          <Route path="forgot-password" element={<OnlyUnAuth component={<ForgotPassword/>}/>}/>
-          <Route path="reset-password" element={<OnlyUnAuth component={<ResetPassword/>}/>}/>
+          <Route path={pagePath.login} element={<OnlyUnAuth component={<Login/>}/>}/>
+          <Route path={pagePath.register} element={<OnlyUnAuth component={<Register/>}/>}/>
+          <Route path={pagePath.forgotPassword} element={<OnlyUnAuth component={<ForgotPassword/>}/>}/>
+          <Route path={pagePath.resetPassword} element={<OnlyUnAuth component={<ResetPassword/>}/>}/>
 
           {/*OnlyAuth*/}
-          <Route path="profile" element={<OnlyAuth component={<ProfileLayout/>}/>}>
+          <Route path={pagePath.profile} element={<OnlyAuth component={<ProfileLayout/>}/>}>
             <Route index element={<ProfileEdit/>}/>
-            <Route path="orders" element={<ProfileOrders/>}/>
+            <Route path={pagePath.profileOrdersShort} element={<ProfileOrders/>}/>
             
           </Route>
 
-          <Route path="/feed" element={<Feed/>}/>
-          <Route path="/feed/:id" element={<OrderInfo/>}/>
-          <Route path="/profile/orders/:id" element={<OnlyAuth component={<OrderInfo/>}/>}/>
+          <Route path={pagePath.feed} element={<Feed/>}/>
+          <Route path={pagePath.orderInfoFeed} element={<OrderInfo/>}/>
+          <Route path={pagePath.orderInfoProfile} element={<OnlyAuth component={<OrderInfo/>}/>}/>
 
         </Route>
 
-        <Route path="*" element={<NotFound/>}/>
+        <Route path={pagePath.otherPages} element={<NotFound/>}/>
       </Routes>
 
       {background && <Routes>
-        <Route path="ingredients/:id" element={<Modal onClose={handleModalClose} header={"Детали ингредиента"}>
+        <Route path={pagePath.ingredientsInfo} element={<Modal onClose={handleModalClose} header={"Детали ингредиента"}>
           <IngredientDetails/>
         </Modal>}/>
       </Routes>}
 
       {background && <Routes>
-        <Route path="/feed/:id" element={<Modal onClose={handleModalClose} header={"need = params.id"}>
+        <Route path={pagePath.orderInfoFeed} element={<Modal onClose={handleModalClose} header={"need = params.id"}>
           <OrderInfo/>
         </Modal>}/>
       </Routes>}
 
+      {background && <Routes>
+        <Route path={pagePath.orderInfoProfile} element={<Modal onClose={handleModalClose} header={"need = params.id"}>
+          <OrderInfo/>
+        </Modal>}/>
+      </Routes>}
 
     </div>
 

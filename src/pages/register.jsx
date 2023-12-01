@@ -1,5 +1,5 @@
 import React from "react";
-import {createButton, typeLinksFooter} from "../utils/inputs";
+import {createButton, typeLinksFooter} from "../utils/form-items";
 import {FormContainer} from "../components/form-container/form-container";
 import {useDispatch, useSelector} from "react-redux";
 import {register} from "../services/user/user-action";
@@ -11,7 +11,7 @@ import {InputPassword} from "../components/form-container/inputs/input-password"
 import {InputEmail} from "../components/form-container/inputs/input-email";
 import {InputName} from "../components/form-container/inputs/input-name";
 
-import {TEXT_SIZES} from "../utils/text-elements";
+import {sizesText} from "../utils/constants";
 import {Text} from "../components/typography/text/text";
 
 
@@ -40,7 +40,6 @@ export function Register() {
     const target = formElement.current
     const isError = !!target.querySelector(".input_status_error")
     if (!isError) {
-      debugger
       dispatch(register(nameInput, passwordInput, emailInput));
     } else {
       dispatch(openErrorModal("Перепроверьте данные, Милорд... Они введены не корректно."));
@@ -75,7 +74,7 @@ export function Register() {
         </FormContainer>
         {openErrModal &&
           <Modal onClose={handleErrorModalClose} header={"Ошибка"}>
-            <Text size={TEXT_SIZES.DISPLAY_SMALL}>{textErrorModal}</Text>
+            <Text size={sizesText.displaySmall}>{textErrorModal}</Text>
           </Modal>}
       </>
     )

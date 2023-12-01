@@ -2,11 +2,12 @@ import {Link, useLocation, useMatch} from "react-router-dom";
 import styles from "./card-order.module.css";
 import {Ingredients} from "./ingredients/ingredients";
 import React from "react";
-import {DIGITS_SIZES, DateWithTimezone, TEXT_COLORS, TEXT_SIZES} from "../../utils/text-elements";
+import {sizesDigits, colorsText, sizesText, pagePath} from "../../utils/constants";
 import {OrderPrice} from "../order-price/order-price";
 import {Text} from "../typography/text/text";
 import {Digits} from "../typography/digits/digits";
 import {objectPropType} from "../../utils/prop-types";
+import {DateWithTimezone} from "../typography/date/date";
 
 
 /**
@@ -15,7 +16,7 @@ import {objectPropType} from "../../utils/prop-types";
  */
 export function CardOrder({order}) {
 
-  const isFeed = useMatch({path: "feed", end: false});
+  const isFeed = useMatch({path: pagePath.feed, end: false});
   const location = useLocation()
   const {ingredients, number, name, status, createdAt} = order
 
@@ -25,14 +26,14 @@ export function CardOrder({order}) {
     <li>
       <Link className={`nonlink ${styles.cardOrder}`} to={numberToString} state={{background: location}}>
         <div className="orderId">
-          <Digits size={DIGITS_SIZES.DIGITS_SMALL}># {number}</Digits>
+          <Digits size={sizesDigits.small}># {number}</Digits>
           {DateWithTimezone({value: createdAt})}
         </div>
         <div>
-          <Text size={TEXT_SIZES.DISPLAY_SMALL}>{name}</Text>
+          <Text size={sizesText.displaySmall}>{name}</Text>
           {!isFeed && (status === "done") &&
-            <Text size={TEXT_SIZES.DESKTOP_TEXT} extraClass='pt-2' color={TEXT_COLORS.SUCCESS}>Выполнен</Text>}
-          {!isFeed && (status !== "done") && <Text size={TEXT_SIZES.DESKTOP_TEXT} extraClass='pt-2'>B работе</Text>}
+            <Text size={sizesText.textDesktop} extraClass='pt-2' color={colorsText.success}>Выполнен</Text>}
+          {!isFeed && (status !== "done") && <Text size={sizesText.textDesktop} extraClass='pt-2'>B работе</Text>}
         </div>
         <div className={styles.orderComponentsAndPrice}>
           <div className={`${styles.orderComponents} relative`}>

@@ -1,12 +1,11 @@
 import React from "react";
 import {Orders} from "../components/orders/orders";
-import {connectProfile, disconnectProfile} from "../utils/data";
 import {useDispatch, useSelector} from "react-redux";
 import {
   selectorProfileOrdersData,
   selectorProfileOrdersStatus
 } from "../services/feed-orders-profile/feed-orders-selector";
-import {WebsocketStatus} from "../utils/constants";
+import {connectProfile, disconnectProfile, WebsocketStatus} from "../utils/config-ws";
 import {Preloader} from "../components/preloader/preloader";
 
 export function ProfileOrders() {

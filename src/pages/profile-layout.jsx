@@ -6,7 +6,7 @@ import {Modal} from "../components/modal/modal";
 import {closeErrorModal} from "../services/error-modal/error-modal-action";
 import {errorModalText, isOpenErrorModal} from "../services/error-modal/error-modal-selector";
 
-import {TEXT_COLORS, TEXT_SIZES} from "../utils/text-elements";
+import {colorsText, pagePath, sizesText} from "../utils/constants";
 import {Text} from "../components/typography/text/text";
 
 export const ProfileLayout = () => {
@@ -30,12 +30,12 @@ export const ProfileLayout = () => {
         <ul className="links">
           <li key="profile">
             <NavLink className={`text text_type_main-medium text_color_inactive link cursor`}
-                     to="/profile"
+                     to={pagePath.profileFull}
                      end>Профиль</NavLink>
           </li>
           <li key="orders">
             <NavLink className={`text text_type_main-medium text_color_inactive link cursor`}
-                     to={"/profile/orders"}>История
+                     to={pagePath.profileOrdersShort}>История
               заказов</NavLink>
           </li>
           <li key="logout">
@@ -44,7 +44,7 @@ export const ProfileLayout = () => {
             </button>
           </li>
         </ul>
-        <Text size={TEXT_SIZES.DESKTOP_TEXT} extraClass="description pt-20" color={TEXT_COLORS.INACTIVE}>
+        <Text size={sizesText.textDesktop} extraClass="description pt-20" color={colorsText.inactive}>
           В этом разделе вы можете изменить свои персональные данные
         </Text>
       </nav>
@@ -54,7 +54,7 @@ export const ProfileLayout = () => {
 
       {openErrModal &&
         <Modal onClose={handleErrorModalClose} header={"Ошибка"}>
-          <Text size={TEXT_SIZES.DISPLAY_SMALL}>{textErrorModal}</Text>
+          <Text size={sizesText.displaySmall}>{textErrorModal}</Text>
         </Modal>}
 
 

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./stats.module.css"
 import {useSelector} from "react-redux";
-import {WebsocketStatus} from "../../utils/constants";
+import {WebsocketStatus} from "../../utils/config-ws";
 import {CountCompleted} from "./count-completed/count-completed";
 import {OrdersBoard} from "./orders-board/orders-board";
 import {selectorFeedOrdersData, selectorFeedOrdersStatus} from "../../services/feed-orders/selector-feed-orders";

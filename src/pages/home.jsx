@@ -13,7 +13,7 @@ import {
   orderDetailsRequest
 } from "../services/order-details/order-details-selectors";
 
-import {TEXT_SIZES} from "../utils/text-elements";
+import {sizesText} from "../utils/constants";
 import {Text} from "../components/typography/text/text";
 
 export function Home() {
@@ -49,7 +49,7 @@ export function Home() {
 
       {number && modal(<OrderDetails/>)}
       {orderFailed && modal(
-        <Text size={TEXT_SIZES.DISPLAY_SMALL} >Наш краторный хмель пожрал антарианский долгоносик,
+        <Text size={sizesText.displaySmall} >Наш краторный хмель пожрал антарианский долгоносик,
            попробуйте сформировать заказ позже, Милорд...</Text>
         , "Ошибка")}
       {orderRequest && modal('', "Загрузка Милорд...")}

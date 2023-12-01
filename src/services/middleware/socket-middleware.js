@@ -1,4 +1,4 @@
-import {authApi} from "../../api/user";
+import {getUser} from "../user/user-action";
 
 export const socketMiddleware = (wsActions) => {
   return store => {
@@ -35,7 +35,7 @@ export const socketMiddleware = (wsActions) => {
           const parsedData = JSON.parse(data);
           if (parsedData?.message === "Invalid or missing token") {
             console.log("получена ошибка", parsedData)
-            dispatch(authApi.getUser())
+            dispatch(getUser())
           } else {
             dispatch({type: onMessage, payload: parsedData});
           }

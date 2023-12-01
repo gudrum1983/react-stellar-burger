@@ -5,12 +5,11 @@ import { useDispatch, useSelector} from "react-redux";
 import {Modal} from "../components/modal/modal";
 import {errorModalText, isOpenErrorModal} from "../services/error-modal/error-modal-selector";
 import {closeErrorModal} from "../services/error-modal/error-modal-action";
-import {connectFeed, disconnectFeed} from "../utils/data";
 
-import {TEXT_SIZES} from "../utils/text-elements";
+import {sizesText} from "../utils/constants";
 import {Text} from "../components/typography/text/text";
 import {selectorFeedOrdersData, selectorFeedOrdersStatus} from "../services/feed-orders/selector-feed-orders";
-import {WebsocketStatus} from "../utils/constants";
+import {connectFeed, disconnectFeed, WebsocketStatus} from "../utils/config-ws";
 import {Preloader} from "../components/preloader/preloader";
 
 export function Feed() {
@@ -37,7 +36,7 @@ export function Feed() {
   if (!isDisconnected && data) {  return (
     <>
       <section className={'pl-5 pr-5 half-home'}>
-        <Text size={TEXT_SIZES.DISPLAY_LARGE} extraClass="pb-5">Лента заказов</Text>
+        <Text size={sizesText.displayLarge} extraClass="pb-5">Лента заказов</Text>
         <Orders/>
       </section>
       <section className={'pl-5 pr-5 pt-15 half-home'}>
@@ -45,7 +44,7 @@ export function Feed() {
       </section>
       {openErrModal &&
         <Modal onClose={handleErrorModalClose} header={"Ошибка"}>
-          <Text size={TEXT_SIZES.DISPLAY_SMALL}>{textErrorModal}</Text>
+          <Text size={sizesText.displaySmall}>{textErrorModal}</Text>
         </Modal>}
     </>
   )} else {
