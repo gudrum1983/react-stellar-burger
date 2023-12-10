@@ -10,8 +10,6 @@ import {useForm} from "../hooks/useForm";
 import {InputPassword} from "../components/form-container/inputs/input-password";
 import {InputEmail} from "../components/form-container/inputs/input-email";
 import {InputName} from "../components/form-container/inputs/input-name";
-
-import {sizesText} from "../utils/constants";
 import {Text} from "../components/typography/text/text";
 
 
@@ -74,13 +72,13 @@ export function Register() {
         </FormContainer>
         {openErrModal &&
           <Modal onClose={handleErrorModalClose} header={"Ошибка"}>
-            <Text size={sizesText.displaySmall}>{textErrorModal}</Text>
+            <Text>{textErrorModal}</Text>
           </Modal>}
       </>
     )
 
   } else {
-    <p>PFUHEPRF</p>
+    <p>Загрузка...</p>
   }
 
 

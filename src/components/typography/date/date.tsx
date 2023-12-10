@@ -1,14 +1,13 @@
 import {FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
-import React from "react";
-import {nodeOptional} from "../../../utils/prop-types";
+import React, {FC} from "react";
 import {Text} from "../text/text";
-import {colorsText, sizesText} from "../../../utils/constants";
+import {COLOR_INACTIVE, TPropsDate} from "../../../utils/types";
 
 /**
  * Возвращает отформатированную дату текстовый элемент с классами text text_type_main-default
- * @param {string} value - текст
+ * @param value - текст
  */
-export const DateWithTimezone = ({value}) => {
+export const DateWithTimezone: FC<TPropsDate> = ({value}) => {
 
   const orderDate = new Date(value)
   const timezoneOffset = orderDate.getTimezoneOffset()
@@ -26,13 +25,8 @@ export const DateWithTimezone = ({value}) => {
   )
 
   return (
-    <Text size={sizesText.textDesktop} color={colorsText.inactive}>
+    <Text color={COLOR_INACTIVE}>
       <FormattedDate date={orderTime}/> i-GMT{simbol}{differenceTimezone}
     </Text>
   )
-
 }
-
-DateWithTimezone.propTypes = {
-  value: nodeOptional,
-};
