@@ -16,7 +16,7 @@ export function NotFound() {
     <div className="not-found">
       <Text size={sizesText.displayLarge}>страница 404</Text>
       <div className="image-not">
-        <Button htmlType={"button"} type="primary" size="medium" children={"ДОМОЙ"} key={"home"} onClick={onClick}/>
+        <Button htmlType={"button"} type="primary" size="medium" onClick={onClick}>"ДОМОЙ"</Button>
       </div>
     </div>
   )
