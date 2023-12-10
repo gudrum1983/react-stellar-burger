@@ -8,9 +8,20 @@ import {useDrop} from "react-dnd";
 import {useDispatch, useSelector} from "react-redux";
 import {getOrderDetails} from "../../services/order-details/order-details-actions";
 import {selectBurgerConstructor} from "../../services/burger-constructor/burger-constructor-selector";
-import {optionalFunc} from "../../utils/prop-types";
+import {addFilling, chooseBun} from "../../services/burger-constructor/burger-constructor-actions";
+import {useNavigate} from "react-router-dom";
+import {userAuth, user} from "../../services/user/user-selector";
 
-export function BurgerConstructor({onDropHandler}) {
+export function BurgerConstructor() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const onDropHandler = (ingredient) => {
+    if (ingredient.type === "bun") {
+      dispatch(chooseBun(ingredient))
+    } else {
+      dispatch(addFilling(ingredient))
+    }
+  };
 
   const [{isHover, isCanD}, dropTarget] = useDrop({
     accept: "burgerConstructor",
@@ -24,13 +35,13 @@ export function BurgerConstructor({onDropHandler}) {
   });
 
   const borderColor = isHover ? stylesConstr.borderLightgreen : (isCanD ? stylesConstr.borderLightgreen2 : stylesConstr.borderTransparent);
+  const isAuthChecked = useSelector(userAuth)
+  const isUser = useSelector(user)
 
-  const dispatch = useDispatch();
   const selectedIngredients = useSelector(selectBurgerConstructor)
   const bun = selectedIngredients.bun
     , {name, image, price, _id} = {...bun}
     , other = selectedIngredients.other;
-
 
   function getListIdIngredients() {
     const idBun = [_id];
@@ -39,8 +50,13 @@ export function BurgerConstructor({onDropHandler}) {
   }
 
   function handleSubmitOrder() {
-    const ingredientsOrder = getListIdIngredients();
-    dispatch(getOrderDetails(ingredientsOrder))
+    if (isAuthChecked && !isUser) {
+      navigate("/login", {replace: false});
+    } else {
+      const ingredientsOrder = getListIdIngredients();
+      dispatch(getOrderDetails(ingredientsOrder))
+    }
+
   }
 
   return (
@@ -79,9 +95,4 @@ export function BurgerConstructor({onDropHandler}) {
       </div>
     </div>
   )
-    ;
 }
-
-BurgerConstructor.propTypes = {
-  onDropHandler: optionalFunc,
-};

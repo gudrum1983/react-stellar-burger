@@ -1,5 +1,5 @@
-import {getOrderDetailsRequest} from "../../api/config";
 import {clearBurgerConstructor} from "../burger-constructor/burger-constructor-actions";
+import {getOrderDetailsRequest} from "../../api/burger-order";
 
 export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST';
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';

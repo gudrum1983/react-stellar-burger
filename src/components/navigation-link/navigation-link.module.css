@@ -1,0 +1,10 @@
+.linkNav {
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  color: inherit;
+}
+
+.label {
+  white-space: nowrap;
+}

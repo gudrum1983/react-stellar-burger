@@ -1,0 +1,44 @@
+.buttonExtra {
+  width: fit-content;
+  margin-bottom: 80px;
+}
+
+.container{
+  margin: 288px auto auto ;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile_container{
+  margin: 80px 60px 0 ;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.placeItems{
+  padding: 24px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.placeLinks {
+  display: flex;
+  gap: 24px;
+  flex-direction: column;
+  align-items: center
+}
+
+.fieldset{
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
