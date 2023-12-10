@@ -1,5 +1,5 @@
 import {clearBurgerConstructor} from "../burger-constructor/burger-constructor-actions";
-import {getOrderDetailsRequest} from "../../api/burger-order";
+import {getOrderDetailsInfo, getOrderDetailsReady} from "../../api/burger-order";
 
 export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST';
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
@@ -10,8 +10,8 @@ export function orderDetailsRequest() {
   return {type: GET_ORDER_REQUEST};
 }
 
-export function orderDetailsSuccess(orderNumber) {
-  return {type: GET_ORDER_SUCCESS, payload: orderNumber};
+export function orderDetailsSuccess(order) {
+  return {type: GET_ORDER_SUCCESS, payload: order};
 }
 
 export function orderDetailsFailed() {
@@ -22,13 +22,26 @@ export function clearOrderDetails() {
   return {type: CLEAR_ORDER};
 }
 
-export function getOrderDetails(ingredientsOrder) {
+export function getReadyOrderDetails(ingredientsOrder) {
   return function (dispatch) {
     dispatch(orderDetailsRequest());
-    getOrderDetailsRequest(ingredientsOrder)
+    getOrderDetailsReady(ingredientsOrder)
       .then(res => {
-          dispatch(orderDetailsSuccess(res.order.number));
+          dispatch(orderDetailsSuccess(res.order));
           dispatch(clearBurgerConstructor());
+      })
+      .catch(() => {
+        dispatch(orderDetailsFailed());
+      })
+  };
+}
+
+export function getInfoOrderDetails(number) {
+  return function (dispatch) {
+    dispatch(orderDetailsRequest());
+    getOrderDetailsInfo(number)
+      .then(res => {
+        dispatch(orderDetailsSuccess(res.orders[0]));
       })
       .catch(() => {
         dispatch(orderDetailsFailed());

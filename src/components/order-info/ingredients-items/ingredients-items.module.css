@@ -1,0 +1,8 @@
+.containerFeed2 {
+  display: flex;
+  max-height: 312px;
+  width: 100%;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: scroll;
+}

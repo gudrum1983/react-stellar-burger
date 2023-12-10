@@ -1,0 +1,30 @@
+.containerFeed {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  gap: 24px;
+  overflow-y: scroll;
+}
+
+.imgCardSmall {
+  height: 60px;
+  width: 60px;
+  border-radius: 100px;
+  box-sizing: border-box;
+  background: black 50% / 180% 100% no-repeat;
+}
+
+.buttonCardSmall {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid inherit;
+  box-sizing: border-box;
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  border-radius: 100px;
+}

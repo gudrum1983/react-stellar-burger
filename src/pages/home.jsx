@@ -7,16 +7,25 @@ import {OrderDetails} from "../components/modal/order-details/order-details";
 import {Modal} from "../components/modal/modal";
 import {clearOrderDetails} from "../services/order-details/order-details-actions";
 import {useDispatch, useSelector} from "react-redux";
-import {orderDetails} from "../services/order-details/order-details-selectors";
+import {
+  orderDetailsFailed,
+  orderDetailsInfo,
+  orderDetailsRequest
+} from "../services/order-details/order-details-selectors";
+
+import {sizesText} from "../utils/constants";
+import {Text} from "../components/typography/text/text";
 
 export function Home() {
 
   const dispatch = useDispatch();
-
-  const {orderNumber, orderRequest, orderFailed} = useSelector(orderDetails)
+  const orderRequest = useSelector(orderDetailsRequest)
+  const orderFailed = useSelector(orderDetailsFailed)
+  const order = useSelector(orderDetailsInfo)
+  const number = order?.number
 
   function handleCloseModal() {
-    if (orderNumber) {
+    if (number) {
       dispatch(clearOrderDetails())
     }
   }
@@ -38,10 +47,11 @@ export function Home() {
         </section>
       </DndProvider>
 
-      {orderNumber && modal(<OrderDetails/>)}
-      {orderFailed && modal(<p className="text text_type_main-medium">
-        Наш краторный хмель пожрал антарианский долгоносик, попробуйте сформировать заказ позже, Милорд...
-      </p>, "Ошибка")}
+      {number && modal(<OrderDetails/>)}
+      {orderFailed && modal(
+        <Text size={sizesText.displaySmall} >Наш краторный хмель пожрал антарианский долгоносик,
+           попробуйте сформировать заказ позже, Милорд...</Text>
+        , "Ошибка")}
       {orderRequest && modal('', "Загрузка Милорд...")}
 
     </div>

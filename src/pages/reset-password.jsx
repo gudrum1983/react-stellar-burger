@@ -1,33 +1,44 @@
 import React from "react";
-import {createButton, typeInputs, typeLinksFooter} from "../utils/inputs";
+import {createButton, typeLinksFooter} from "../utils/form-items";
 import {FormContainer} from "../components/form-container/form-container";
 import {Navigate, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {inputsValuesVerificationCode, inputsValuesPassword} from "../services/inputs-values/inputs-values-selector";
 import {getReset} from "../api/password-config";
 import {errorModalText, isOpenErrorModal} from "../services/error-modal/error-modal-selector";
 import {closeErrorModal, openErrorModal} from "../services/error-modal/error-modal-action";
 import {Modal} from "../components/modal/modal";
-import {addCheckedToken, addPassword} from "../services/inputs-values/inputs-values-actions";
+import {InputPassword} from "../components/form-container/inputs/input-password";
+import {InputCode} from "../components/form-container/inputs/input-code";
+import {useForm} from "../hooks/useForm";
+
+import {pagePath, sizesText} from "../utils/constants";
+import {Text} from "../components/typography/text/text";
 
 export function ResetPassword() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const password = useSelector(inputsValuesPassword)
-  const code = useSelector(inputsValuesVerificationCode)
   const textErrorModal = useSelector(errorModalText)
   const openErrModal = useSelector(isOpenErrorModal)
 
-  function handleSubmit(evt) {
-    const target = evt.target
+
+  const formElement = React.createRef()
+
+  const formInputs = {
+    passwordInput: {},
+    codeInput: {},
+  }
+  const {fields, handleSubmit} = useForm(formInputs);
+  const {passwordInput, codeInput} = fields;
+
+  function onSubmit({values: {passwordInput, codeInput}}) {
+
+    const target = formElement.current
     const isError = !!target.querySelector(".input_status_error")
-    evt.preventDefault();
+
     if (!isError) {
-      getReset(password, code)
+      getReset(passwordInput, codeInput)
         .then(() => {
           localStorage.removeItem("forgotConfirmed");
-          dispatch(addPassword(''))
-          dispatch(addCheckedToken(''))
           navigate('/register', {replace: true});
         })
         .catch(() => dispatch(openErrorModal("Что-то пошло не так, Милорд... Проверьте данные или попробуйте позже.")))
@@ -36,35 +47,43 @@ export function ResetPassword() {
     }
   }
 
-  const resetPasswordFormHeader = "Восстановление пароля"
-  const resetPasswordInputs = [typeInputs.passwordReset, typeInputs.checkedCode];
-  const resetPasswordButton = [createButton({label: "Сохранить", key: "save"})];
-  const resetPasswordFooterLinks = [typeLinksFooter.rememberPassword];
-
-
-  const forgotConfirmed = localStorage.getItem("forgotConfirmed");
-  if (!forgotConfirmed) {
-    return <Navigate to="/login" replace={true}/>;
-  }
+  const header = "Восстановление пароля"
+  const buttons = [createButton({label: "Сохранить", key: "save"})];
+  const footerLinks = [typeLinksFooter.rememberPassword];
 
   const handleErrorModalClose = () => {
     dispatch(closeErrorModal());
   };
 
-
+  const forgotConfirmed = localStorage.getItem("forgotConfirmed");
+  if (!forgotConfirmed) {
+    return <Navigate to={pagePath.login} replace={true}/>;
+  }
+  if (!!fields) {
   return (
     <>
-      <FormContainer header={resetPasswordFormHeader} button={resetPasswordButton}
-                     links={resetPasswordFooterLinks} handleSubmit={handleSubmit}>
-        {resetPasswordInputs}
+      <FormContainer ref={formElement} header={header}
+                     button={buttons} links={footerLinks}
+                     handleSubmit={handleSubmit(onSubmit)}>
+
+        <InputPassword placeholder="Введите новый пароль"
+                       key="password" value={passwordInput.value}
+                       onChange={passwordInput.setState}/>
+
+        <InputCode key="token" value={codeInput.value}
+                   onChange={codeInput.setState}/>
+
       </FormContainer>
+
       {openErrModal &&
         <Modal onClose={handleErrorModalClose} header={"Ошибка"}>
-          <p className="text text_type_main-medium">
-            {textErrorModal}
-          </p>
+          <Text size={sizesText.displaySmall}>{textErrorModal}</Text>
         </Modal>}
     </>
 
   )
-}
+} else {
+  return (
+    <p>PFUHEPRF</p>
+  )
+}}

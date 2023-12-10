@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import styles from "./app.module.css";
 import {Routes, Route, useLocation, useNavigate} from "react-router-dom";
 import {Home} from "../../pages/home";
-import {AppLayout} from '../app-layout/app-layout'
+import {AppLayout} from '../../pages/app-layout'
 import {Modal} from "../modal/modal";
 import {IngredientDetails} from "../ingredient-details/ingredient-details";
 import {loadBurgerIngredients} from "../../services/burger-ingredients/burger-ingredients-actions";
@@ -14,11 +14,15 @@ import {Register} from "../../pages/register";
 import {Login} from "../../pages/login";
 import {ForgotPassword} from "../../pages/forgot-password";
 import {ResetPassword} from "../../pages/reset-password";
-import {Profile} from "../../pages/profile";
+import {ProfileEdit} from "../../pages/profile-edit";
 import {Feed} from "../../pages/feed";
-import {ProfileLayout} from "../profile-layout/profile-layout";
-import {Orders} from "../../pages/orders";
+import {ProfileLayout} from "../../pages/profile-layout";
 import {NotFound} from "../../pages/not-found";
+import {OrderInfo} from "../order-info/order-info";
+import {ProfileOrders} from "../../pages/profile-orders";
+
+import {pagePath} from "../../utils/constants";
+
 
 export default function App() {
 
@@ -31,6 +35,7 @@ export default function App() {
 
   const {ingredients, isLoading, hasError} = useSelector(burgerIngredients);
   const location = useLocation()
+
   const navigate = useNavigate()
   const background = location.state && location.state.background;
 
@@ -49,35 +54,52 @@ export default function App() {
     }
   }
 
-  return (<div className={`${styles.app}`}>
+  return (
 
+    <div className={`${styles.app}`}>
       <Routes location={background || location}>
-        <Route path="/" element={<AppLayout/>}>
+        <Route path={pagePath.home} element={<AppLayout/>}>
           <Route index element={<Home/>}/>
-          <Route path="/ingredients/:id" element={<IngredientDetails/>}/>
+          <Route path={pagePath.ingredientsInfo} element={<IngredientDetails/>}/>
 
 
           {/*OnlyUnAuth*/}
-          <Route path="login" element={<OnlyUnAuth component={<Login/>}/>}/>
-          <Route path="register" element={<OnlyUnAuth component={<Register/>}/>}/>
-          <Route path="forgot-password" element={<OnlyUnAuth component={<ForgotPassword/>}/>}/>
-          <Route path="reset-password" element={<OnlyUnAuth component={<ResetPassword/>}/>}/>
+          <Route path={pagePath.login} element={<OnlyUnAuth component={<Login/>}/>}/>
+          <Route path={pagePath.register} element={<OnlyUnAuth component={<Register/>}/>}/>
+          <Route path={pagePath.forgotPassword} element={<OnlyUnAuth component={<ForgotPassword/>}/>}/>
+          <Route path={pagePath.resetPassword} element={<OnlyUnAuth component={<ResetPassword/>}/>}/>
 
           {/*OnlyAuth*/}
-          <Route path="profile" element={<OnlyAuth component={<ProfileLayout/>}/>}>
-            <Route index element={<Profile/>}/>
-            <Route path="orders" element={<Orders/>}/>
+          <Route path={pagePath.profile} element={<OnlyAuth component={<ProfileLayout/>}/>}>
+            <Route index element={<ProfileEdit/>}/>
+            <Route path={pagePath.profileOrdersShort} element={<ProfileOrders/>}/>
+            
           </Route>
-          <Route path="/feed" element={<OnlyAuth component={<Feed/>}/>}/>
+
+          <Route path={pagePath.feed} element={<Feed/>}/>
+          <Route path={pagePath.orderInfoFeed} element={<OrderInfo/>}/>
+          <Route path={pagePath.orderInfoProfile} element={<OnlyAuth component={<OrderInfo/>}/>}/>
 
         </Route>
 
-        <Route path="*" element={<NotFound/>}/>
+        <Route path={pagePath.otherPages} element={<NotFound/>}/>
       </Routes>
 
       {background && <Routes>
-        <Route path="/ingredients/:id" element={<Modal onClose={handleModalClose} header={"Детали ингредиента"}>
+        <Route path={pagePath.ingredientsInfo} element={<Modal onClose={handleModalClose} header={"Детали ингредиента"}>
           <IngredientDetails/>
+        </Modal>}/>
+      </Routes>}
+
+      {background && <Routes>
+        <Route path={pagePath.orderInfoFeed} element={<Modal onClose={handleModalClose} header={"need = params.id"}>
+          <OrderInfo/>
+        </Modal>}/>
+      </Routes>}
+
+      {background && <Routes>
+        <Route path={pagePath.orderInfoProfile} element={<Modal onClose={handleModalClose} header={"need = params.id"}>
+          <OrderInfo/>
         </Modal>}/>
       </Routes>}
 

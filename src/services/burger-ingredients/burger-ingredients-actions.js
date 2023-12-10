@@ -6,9 +6,17 @@ export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
 
 const sortedData = (data) => data.toSorted((a, b) => a._id > b._id ? 1 : -1)
 
+const mapIngredients = (sortedDataArr) => {
+  const map = new Map()
+  sortedDataArr.forEach((element) => {
+    map.set(element._id, element);
+  });
+  return map
+}
+
 export function getIngredientsSuccess(ingredients) {
   return {
-    type: GET_INGREDIENTS_SUCCESS, ingredients: sortedData(ingredients)
+    type: GET_INGREDIENTS_SUCCESS, ingredients: sortedData(ingredients), mapIngredients: mapIngredients(ingredients)
   }
 }
 

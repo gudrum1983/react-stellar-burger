@@ -6,6 +6,10 @@ import {IngredientsTypeList} from "./ingredients-type-list/ingredients-type-list
 import {useSelector} from "react-redux";
 import {burgerIngredients} from "../../services/burger-ingredients/burger-ingredients-selector";
 
+import {sizesText} from "../../utils/constants";
+import {Text} from "../typography/text/text";
+
+
 export function BurgerIngredients() {
 
   const {ingredients} = useSelector(burgerIngredients)
@@ -63,24 +67,24 @@ export function BurgerIngredients() {
 
   return (
     <>
-      <p className="text text_type_main-large mb-5 pt-10">Соберите&nbsp;бургер</p>
-      <ul ref={tabsRef} className={`pb-10 ${styles.tab} ${styles.nonList} `}>
+      <Text size={sizesText.displayLarge} extraClass="mb-5 pt-10">Соберите бургер</Text>
+      <ul ref={tabsRef} className={`pb-10 ${styles.tab} nonList`}>
         <li>
-          <a href="#buns" className={`${styles.nonLink} cursor`}>
+          <a href="#buns" className="nonLink cursor">
             <Tab value="buns" active={currentTab === 'buns'} onClick={setCurrentTab}>
               Булки
             </Tab>
           </a>
         </li>
         <li>
-          <a href="#sauces" className={`${styles.nonLink} cursor`}>
+          <a href="#sauces" className="nonLink cursor">
             <Tab value="sauces" active={currentTab === 'sauces'} onClick={setCurrentTab}>
               Соусы
             </Tab>
           </a>
         </li>
         <li>
-          <a href="#mains" className={`${styles.nonLink} cursor`}>
+          <a href="#mains" className="nonLink cursor">
             <Tab value="mains" active={currentTab === 'mains'} onClick={setCurrentTab}>
               Начинки
             </Tab>
@@ -88,7 +92,7 @@ export function BurgerIngredients() {
         </li>
       </ul>
       <ul onScroll={handleScrollList}
-          className={`${styles.ingredients} ${stylesConstr.scroll} ${styles.nonList} custom-scroll`}>
+          className={`${styles.ingredients} ${stylesConstr.scroll} nonList custom-scroll`}>
         <IngredientsTypeList ref={bunsRef} name="Булки" data={filteredIngredients.buns} id="buns"/>
         <IngredientsTypeList ref={saucesRef} name="Соусы" data={filteredIngredients.sauces} id="sauces"/>
         <IngredientsTypeList ref={mainsRef} name="Начинки" data={filteredIngredients.mains} id="mains"/>

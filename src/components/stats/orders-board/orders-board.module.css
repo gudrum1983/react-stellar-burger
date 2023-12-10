@@ -1,0 +1,19 @@
+.listNumbersTwoColumns {
+  display: grid;
+  gap: 8px;
+  grid-template-rows: repeat(10, 1fr);
+  grid-auto-flow: column;
+}
+
+.listOrdersBoard {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.listNumbers {
+  gap: 8px;
+  display: grid;
+  grid-auto-flow: row;
+}

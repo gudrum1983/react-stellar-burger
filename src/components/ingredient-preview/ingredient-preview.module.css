@@ -1,0 +1,34 @@
+
+.box {
+  width: 64px;
+  height: 64px;
+  position: relative;
+  box-sizing: border-box;
+  background: black 50% / 175% 87.5% no-repeat;
+/*  background: black  no-repeat;*/
+  border-radius: 50%;
+}
+.box::before {
+
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50px;
+  padding: 2px;
+  background:linear-gradient(63deg, #801AB2 0%, #4C4CFF 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box,  linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.imgCardSmallFonNumber {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.6) 50% / 180% 100% no-repeat;
+}
