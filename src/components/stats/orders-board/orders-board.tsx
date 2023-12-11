@@ -1,18 +1,16 @@
 import styles from "./orders-board.module.css";
-import React, {Fragment} from "react";
+import React, {FC, Fragment} from "react";
 import {Text} from "../../typography/text/text";
-import {sizesDigits, sizesText} from "../../../utils/constants";
 import {Digits} from "../../typography/digits/digits";
-import {arrayOptional, booleanOptional, stringOptional} from "../../../utils/prop-types";
+import {COLOR_SUCCESS, DISPLAY_SMALL, TPropsOrdersBoard} from "../../../utils/types";
 
-export function OrdersBoard({header, items, done = false}) {
+export const OrdersBoard: FC<TPropsOrdersBoard> = ({header, items, done = false}) => {
 
   const styleGrid = (items.length > 10) ? styles.listNumbersTwoColumns : styles.listNumbers
-  const styleText = done ? 'text_color_success' : ''
 
   return (
     <div className={styles.listOrdersBoard}>
-      <Text size={sizesText.displaySmall}>
+      <Text size={DISPLAY_SMALL}>
         {header}
       </Text>
       <div className={styleGrid}>
@@ -20,7 +18,7 @@ export function OrdersBoard({header, items, done = false}) {
           if (index < 20) {
             return (
               <Fragment key={item}>
-                <Digits size={sizesDigits.small} extraClass={styleText}>{item}</Digits>
+                <Digits {...done && {color:COLOR_SUCCESS}}>{item}</Digits>
               </Fragment>
             )
           }
@@ -29,9 +27,3 @@ export function OrdersBoard({header, items, done = false}) {
     </div>
   )
 }
-
-OrdersBoard.propTypes = {
-  header: stringOptional,
-  items: arrayOptional,
-  done: booleanOptional,
-};

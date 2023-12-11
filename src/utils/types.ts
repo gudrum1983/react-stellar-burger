@@ -14,6 +14,17 @@ export type TPropsDate = {
   value: string;
 };
 
+export type TPropsOrdersBoard = {
+  header: string;
+  items: Array<string>;
+  done?: boolean;
+};
+
+export type TPropsCountCompleted = {
+  header: string;
+  value: number;
+};
+
 type TSizesText =
   typeof TEXT_MOBILE
   | typeof TEXT_DESKTOP
@@ -53,3 +64,11 @@ export const TEXT_DESKTOP = "text_type_main-default"
 export const DISPLAY_SMALL = "text_type_main-medium"
 // figma - /* desktop/display large */
 export const DISPLAY_LARGE = "text_type_main-large"
+
+/*export enum ColorsText {
+  error = "text_color_error",
+  primary = "text_color_primary",
+  accent = "text_color_accent",
+  success = "text_color_success",
+  inactive = "text_color_inactive",
+}*/
