@@ -4,7 +4,7 @@ import {Text} from "../text/text";
 import {COLOR_INACTIVE, TPropsDate} from "../../../utils/types";
 
 /**
- * Возвращает отформатированную дату текстовый элемент с классами text text_type_main-default
+ * Возвращает отформатированную дату с указанием тайм зоны
  * @param value - текст
  */
 export const DateWithTimezone: FC<TPropsDate> = ({value}) => {

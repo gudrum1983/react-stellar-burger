@@ -1,3 +1,7 @@
+
+import {MouseEventHandler} from "react";
+
+
 export type TPropsTextElement = {
   size?: TSizesText;
   extraClass?: string;
@@ -14,6 +18,11 @@ export type TPropsDate = {
   value: string;
 };
 
+export type TPropsModal = {
+  header: string;
+  onClose: () => MouseEventHandler<HTMLDivElement> ;
+};
+
 export type TPropsOrdersBoard = {
   header: string;
   items: Array<string>;
@@ -24,6 +33,39 @@ export type TPropsCountCompleted = {
   header: string;
   value: number;
 };
+
+export type TPropsIngredientPreview = {
+  image: string;
+  count?: number;
+};
+
+export type TPropsIngredients = {
+  ingredient: string;
+  index: number;
+  count?: number;
+};
+
+export type TPropsCardOrder = {
+  order: TOrder;
+};
+
+export type TSelectorOrders = Array<TOrder> | undefined;
+
+export type TOrder = {
+  _id: string;
+  status: TStatusOrder;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  number: number
+  ingredients: Array<string>
+};
+
+export type TPropsModalOverlay = {
+  onClose: () => MouseEventHandler<HTMLDivElement> ;
+};
+
+export type TKeyEv = (e: KeyboardEvent) => void;
 
 type TSizesText =
   typeof TEXT_MOBILE
@@ -65,10 +107,10 @@ export const DISPLAY_SMALL = "text_type_main-medium"
 // figma - /* desktop/display large */
 export const DISPLAY_LARGE = "text_type_main-large"
 
-/*export enum ColorsText {
-  error = "text_color_error",
-  primary = "text_color_primary",
-  accent = "text_color_accent",
-  success = "text_color_success",
-  inactive = "text_color_inactive",
-}*/
+export enum STATUS_ORDER {
+  done,
+  pending,
+  created ,
+}
+
+type TStatusOrder = keyof typeof STATUS_ORDER;

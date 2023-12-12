@@ -1,35 +1,32 @@
-import React from "react";
+import React, {FC} from "react";
 import ReactDOM from "react-dom";
-
 import styles from "./modal.module.css";
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {ModalOverlay} from "./modal-overlay/modal-overlay";
-import {nodeElementPropType, functionPropType, stringPropType} from "../../utils/prop-types";
 import {useParams} from "react-router-dom";
-
-import {sizesText} from "../../utils/constants";
 import {Text} from "../typography/text/text";
+import {DISPLAY_LARGE, TPropsModal} from "../../utils/types";
+import {Digits} from "../typography/digits/digits";
 
-export function Modal({children, header, onClose}) {
+export const Modal: FC<TPropsModal> = ({children, header, onClose}) => {
 
   const params = useParams()
-  let newHeader = null
+  const needNewHeader: boolean = (header === "need = params.id")
 
-  if (header === "need = params.id") {
+  let newHeader: string | null = null
 
+  if (needNewHeader) {
     newHeader = `# ${params.id}`
   }
-
 
   return ReactDOM.createPortal(
     (
       <div className={styles.modalWindow}>
         <div className={`${styles.modalContainer} p-10`}>
           <div className={styles.header}>
-            {newHeader
-              ? <p className="text text_type_digits-default">{newHeader}</p>
-              : <Text size={sizesText.displayLarge}>{header}</Text>}
-
+            {needNewHeader
+              ? <Digits>{newHeader}</Digits>
+              : <Text size={DISPLAY_LARGE}>{header}</Text>}
             <button className={`${styles.buttonClose} cursor`} onClick={onClose}><CloseIcon type="primary"/></button>
           </div>
           {children}
@@ -37,12 +34,6 @@ export function Modal({children, header, onClose}) {
         <ModalOverlay onClose={onClose}/>
       </div>
     ),
-    document.getElementById("modal")
+    document.getElementById("modal") as HTMLElement
   );
 }
-
-Modal.propTypes = {
-  children: nodeElementPropType,
-  header: stringPropType,
-  onClose: functionPropType,
-};

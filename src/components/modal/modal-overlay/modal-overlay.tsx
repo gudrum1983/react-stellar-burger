@@ -1,15 +1,17 @@
-import React from "react";
+import React, {FC} from "react";
 import styles from "./modal-overlay.module.css";
-import {functionPropType} from "../../../utils/prop-types";
+import {TPropsModalOverlay} from "../../../utils/types";
 
-export function ModalOverlay({onClose}) {
+
+export const ModalOverlay: FC<TPropsModalOverlay> = ({onClose}) =>  {
 
   React.useEffect(() => {
-    function keyClose(e) {
+    function keyClose(e: KeyboardEvent): void {
       if (e.key === 'Escape') {
         onClose()
       }
     }
+
     document.addEventListener("keydown", keyClose)
     return () => {
       document.removeEventListener("keydown", keyClose);
@@ -20,7 +22,3 @@ export function ModalOverlay({onClose}) {
     <div className={`${styles.modalOverlay}`} onClick={onClose}></div>
   )
 }
-
-ModalOverlay.propTypes = {
-  onClose: functionPropType,
-};

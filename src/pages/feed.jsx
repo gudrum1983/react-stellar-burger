@@ -22,7 +22,7 @@ export function Feed() {
   const data = useSelector(selectorFeedOrdersData)
   const isDisconnected = status !== WebsocketStatus.ONLINE
 
-  const handleErrorModalClose = () => {
+  const handleErrorModalClose = ()=> {
     dispatch(closeErrorModal());
   };
 
