@@ -1,10 +1,17 @@
 import styles from "./orders-board.module.css";
-import React, {FC, Fragment} from "react";
+import React, {Fragment} from "react";
 import {Text} from "../../typography/text/text";
 import {Digits} from "../../typography/digits/digits";
-import {COLOR_SUCCESS, DISPLAY_SMALL, TPropsOrdersBoard} from "../../../utils/types";
+import {COLOR_SUCCESS, DISPLAY_SMALL} from "../../../utils/types";
 
-export const OrdersBoard: FC<TPropsOrdersBoard> = ({header, items, done = false}) => {
+
+type TPropsOrdersBoard = {
+  header: string;
+  items: Array<string>;
+  done?: boolean;
+};
+
+export function OrdersBoard ({header, items, done = false}:TPropsOrdersBoard):JSX.Element {
 
   const styleGrid = (items.length > 10) ? styles.listNumbersTwoColumns : styles.listNumbers
 

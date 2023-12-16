@@ -1,43 +1,15 @@
+import React, {MouseEventHandler} from "react";
 
-import {MouseEventHandler} from "react";
+
+export type TFunctionComponentWithChildren = {
+  children: React.ReactNode
+}
 
 
-export type TPropsTextElement = {
-  size?: TSizesText;
-  extraClass?: string;
-  color?: TColorsText;
-};
 
-export type TPropsDigitsElement = {
-  size?: TSizesDigits;
-  extraClass?: string;
-  color?: TColorsText;
-};
 
-export type TPropsDate = {
-  value: string;
-};
 
-export type TPropsModal = {
-  header: string;
-  onClose: () => MouseEventHandler<HTMLDivElement> ;
-};
 
-export type TPropsOrdersBoard = {
-  header: string;
-  items: Array<string>;
-  done?: boolean;
-};
-
-export type TPropsCountCompleted = {
-  header: string;
-  value: number;
-};
-
-export type TPropsIngredientPreview = {
-  image: string;
-  count?: number;
-};
 
 export type TPropsIngredients = {
   ingredient: string;
@@ -61,19 +33,25 @@ export type TOrder = {
   ingredients: Array<string>
 };
 
+
+
+
+
+
+
 export type TPropsModalOverlay = {
   onClose: () => MouseEventHandler<HTMLDivElement> ;
 };
 
 export type TKeyEv = (e: KeyboardEvent) => void;
 
-type TSizesText =
+export type TSizesText =
   typeof TEXT_MOBILE
   | typeof TEXT_DESKTOP
   | typeof DISPLAY_SMALL
   | typeof DISPLAY_LARGE;
 
-type TSizesDigits =
+export type TSizesDigits =
   typeof DIGITS_SMALL
   | typeof DIGITS_MEDIUM
   | typeof DIGITS_LARGE;
@@ -114,3 +92,18 @@ export enum STATUS_ORDER {
 }
 
 type TStatusOrder = keyof typeof STATUS_ORDER;
+
+/*
+type TIngredient = {
+_id:string;
+name:string;
+type:string;
+proteins:number;
+fat:number;
+carbohydrates:number;
+calories:number;
+price:number;
+image:string;
+image_mobile:string;
+image_large:string;
+__v:number;}*/

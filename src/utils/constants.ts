@@ -1,5 +1,3 @@
-import React from "react";
-
 export const sizesDigits = {
   small: "text_type_digits-default",
   medium: "text_type_digits-medium",
@@ -42,4 +40,19 @@ export const pagePath = {
   orderInfoFeed: "/feed/:id",
   orderInfoProfile: "/profile/orders/:id",
   otherPages: "*",
+}
+
+/**
+ * Возвращает строку с пробелами через каждый 3-й символ с конца (справа)
+ * @param str
+ */
+export function format(str: string): string {
+  const s = str.length;
+  const chars = str.split('');
+  const strWithSpaces = chars.reduceRight((acc, char, i) => {
+    const spaceOrNothing = ((((s - i) % 3) === 0) ? ' ' : '');
+    return (spaceOrNothing + char + acc);
+  }, '');
+
+  return ((strWithSpaces[0] === ' ') ? strWithSpaces.slice(1) : strWithSpaces);
 }

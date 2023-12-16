@@ -1,10 +1,13 @@
 import styles from "./ingredient-preview.module.css";
-import React, {FC} from "react";
-import {TPropsIngredientPreview} from "../../utils/types";
+import React from "react";
 import {Text} from "../typography/text/text";
 
+type TPropsIngredientPreview = {
+  image: string;
+  count?: number;
+};
 
-export const IngredientPreview: FC<TPropsIngredientPreview> = ({image, count = 0}) => {
+export function IngredientPreview({image, count = 0}:TPropsIngredientPreview):JSX.Element {
 
   const text = String(count)
 

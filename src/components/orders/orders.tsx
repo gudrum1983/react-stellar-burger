@@ -8,7 +8,9 @@ import {selectorFeedOrdersDataOrders} from "../../services/feed-orders/selector-
 import {pagePath} from "../../utils/constants";
 import {TSelectorOrders} from "../../utils/types";
 
-export function Orders() {
+
+
+export function Orders() : JSX.Element {
 
   const isProfile = !!useMatch({path: pagePath.profileOrdersFull, end: false});
 

@@ -8,7 +8,7 @@ import {
   selectorFeedOrdersTotal, selectorFeedOrdersTotalToday
 } from "../../services/feed-orders/selector-feed-orders";
 
-export function Stats() {
+export function Stats():JSX.Element {
 
   const total: number = useSelector(selectorFeedOrdersTotal)
   const totalToday: number = useSelector(selectorFeedOrdersTotalToday)

@@ -1,12 +1,14 @@
-import {sizesDigits} from "../../utils/constants";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import {useSelector} from "react-redux";
 import {burgerIngredientsMap} from "../../services/burger-ingredients/burger-ingredients-selector";
 import {Digits} from "../typography/digits/digits";
-import {arrayStringOptional,} from "../../utils/prop-types";
 
-export function OrderPrice({ingredients}) {
+type TPropsOrderPrice = {
+  ingredients: Array<string>
+};
+
+export function OrderPrice({ingredients}:TPropsOrderPrice): JSX.Element {
 
   const [price, setPrice] = React.useState(0)
   const mapIngredients = useSelector(burgerIngredientsMap)
@@ -24,11 +26,7 @@ export function OrderPrice({ingredients}) {
 
   return (
     <div className="orderPrice">
-      <Digits size={sizesDigits.small} extraClass='pr-2'>{price}</Digits>
+      <Digits extraClass='pr-2'>{price}</Digits>
       <CurrencyIcon type="primary"/>
     </div>)
 }
-
-OrderPrice.propTypes = {
-  ingredients: arrayStringOptional,
-};

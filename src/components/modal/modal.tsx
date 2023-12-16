@@ -1,14 +1,19 @@
-import React, {FC} from "react";
+import React, {MouseEventHandler} from "react";
 import ReactDOM from "react-dom";
 import styles from "./modal.module.css";
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {ModalOverlay} from "./modal-overlay/modal-overlay";
 import {useParams} from "react-router-dom";
 import {Text} from "../typography/text/text";
-import {DISPLAY_LARGE, TPropsModal} from "../../utils/types";
+import {DISPLAY_LARGE, TFunctionComponentWithChildren} from "../../utils/types";
 import {Digits} from "../typography/digits/digits";
 
-export const Modal: FC<TPropsModal> = ({children, header, onClose}) => {
+export type TPropsModal = {
+  header: string;
+  onClose: () => MouseEventHandler<HTMLDivElement> ;
+} & TFunctionComponentWithChildren;
+
+export function Modal({children, header, onClose}:TPropsModal):JSX.Element {
 
   const params = useParams()
   const needNewHeader: boolean = (header === "need = params.id")

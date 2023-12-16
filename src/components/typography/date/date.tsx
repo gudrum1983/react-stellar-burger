@@ -1,15 +1,17 @@
 import {FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
-import React, {FC} from "react";
+import React from "react";
 import {Text} from "../text/text";
-import {COLOR_INACTIVE, TPropsDate} from "../../../utils/types";
+import {COLOR_INACTIVE} from "../../../utils/types";
+
+export type TPropsDate = {
+  value: string;
+};
 
 /**
  * Возвращает отформатированную дату с указанием тайм зоны
  * @param value - текст
  */
-export const DateWithTimezone: FC<TPropsDate> = ({value}) => {
-
-  console.log("type",typeof value)
+export function DateWithTimezone({value}:TPropsDate):JSX.Element {
 
   //todo: сделать проверку на формат строки и значение по умолчанию
 
