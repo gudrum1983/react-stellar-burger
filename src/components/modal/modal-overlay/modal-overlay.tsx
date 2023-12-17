@@ -1,9 +1,9 @@
-import React, {FC} from "react";
+import React from "react";
 import styles from "./modal-overlay.module.css";
 import {TPropsModalOverlay} from "../../../utils/types";
 
 
-export const ModalOverlay: FC<TPropsModalOverlay> = ({onClose}) =>  {
+export function ModalOverlay({onClose}:TPropsModalOverlay):JSX.Element  {
 
   React.useEffect(() => {
     function keyClose(e: KeyboardEvent): void {

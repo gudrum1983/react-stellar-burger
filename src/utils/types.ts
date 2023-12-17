@@ -93,8 +93,8 @@ export enum STATUS_ORDER {
 
 type TStatusOrder = keyof typeof STATUS_ORDER;
 
-/*
-type TIngredient = {
+
+export type TIngredient = {
 _id:string;
 name:string;
 type:string;
@@ -106,4 +106,6 @@ price:number;
 image:string;
 image_mobile:string;
 image_large:string;
-__v:number;}*/
+__v:number;}
+
+export type TIngredientImage = Pick<TIngredient, "image"> | Pick<TIngredient, "image_mobile">;
