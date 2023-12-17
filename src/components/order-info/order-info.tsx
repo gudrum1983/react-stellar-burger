@@ -6,7 +6,7 @@ import React from "react";
 import {connectFeed, connectProfile, disconnectFeed, disconnectProfile, WebsocketStatus} from "../../utils/config-ws";
 import {orderDetails} from "../../services/order-details/order-details-selectors";
 import {clearOrderDetails, getInfoOrderDetails} from "../../services/order-details/order-details-actions";
-import {sizesDigits, colorsText, sizesText, pagePath} from "../../utils/constants";
+import {pagePath, sizesDigits, sizesText} from "../../utils/constants";
 import {openErrorModal} from "../../services/error-modal/error-modal-action";
 import {OrderPrice} from "../order-price/order-price";
 import {Text} from "../typography/text/text";
@@ -17,12 +17,18 @@ import {
   selectorProfileOrdersStatus
 } from "../../services/feed-orders-profile/feed-orders-selector";
 import {selectorFeedOrdersData, selectorFeedOrdersStatus} from "../../services/feed-orders/selector-feed-orders";
+import {COLOR_SUCCESS, DISPLAY_SMALL} from "../../utils/types";
 
+type ToRder = {
+  orderRequest: boolean;
+  orderFailed:boolean
+  order: object
+}
 
 /**
  * карточка с деталями заказа OrderInfo
  */
-export function OrderInfo() {
+export function OrderInfo():JSX.Element {
 
 
   const dispatch = useDispatch();
@@ -37,9 +43,9 @@ export function OrderInfo() {
   const isProfile = useMatch({path: pagePath.profile, end: false});
 
 
-  const dataFeedProfile = useSelector(selectorProfileOrdersData)
+  const dataFeedProfile:any = useSelector(selectorProfileOrdersData)
   const statusFeedProfile = useSelector(selectorProfileOrdersStatus)
-  const dataFeed = useSelector(selectorFeedOrdersData)
+  const dataFeed:any = useSelector(selectorFeedOrdersData)
   const statusFeed = useSelector(selectorFeedOrdersStatus)
 
   let data = dataFeedProfile
@@ -54,7 +60,7 @@ export function OrderInfo() {
 
   const isDisconnected = status !== WebsocketStatus.ONLINE
 
-  const {orderRequest, orderFailed, order: orderRest} = useSelector(orderDetails)
+  const {orderRequest, orderFailed, order: orderRest}:ToRder = useSelector(orderDetails)
 
   React.useEffect(() => {
     if (isFeed && isDisconnected) {
@@ -76,7 +82,10 @@ export function OrderInfo() {
     let findOrderRest = null
 
     if (data?.success) {
-      findOrderWS = data.orders.find((itemOrder) => itemOrder.number === Number(idCurrentItem))
+      //todo any clear
+      const orders:Array<any> = data.orders
+
+      findOrderWS = orders.find((itemOrder) => itemOrder.number === Number(idCurrentItem))
     }
 
     if (orderRest) {
@@ -98,31 +107,31 @@ export function OrderInfo() {
 
   if (isDisconnected || orderRequest) {
     return (
-      <Text size={sizesText.displaySmall}>Загрузка...</Text>
+      <Text size={DISPLAY_SMALL}>Загрузка...</Text>
     )
   }
 
   const styleCard = background ? styles.cardOrder3 : styles.cardOrder2
 
-  if (orderFailed) {
+/*  if (orderFailed) {
     dispatch(openErrorModal(`Заказ с номером ${idCurrentItem} не найден, Милорд...! `));
     return <Navigate to={pagePath.profileOrdersFull}/>
-  }
+  }*/
 
   if (order || orderRest) {
     return (
       <div className={styleCard}>
-        {!background && <Digits size={sizesDigits.small} extraClass={styles.header}># {order.number}</Digits>}
+        {!background && <Digits extraClass={styles.header}># {order.number}</Digits>}
 
         <div className="mb-15 ">
-          <Text size={sizesText.displaySmall} extraClass='mb-3'>{order.name}</Text>
+          <Text size={DISPLAY_SMALL} extraClass='mb-3'>{order.name}</Text>
           {(order.status === "done")
-            ? <Text size={sizesText.textDesktop} color={colorsText.success}>Выполнен</Text>
-            : <Text size={sizesText.textDesktop}>"B работе"</Text>
+            ? <Text color={COLOR_SUCCESS}>Выполнен</Text>
+            : <Text>"B работе"</Text>
           }
 
         </div>
-        <Text size={sizesText.displaySmall} extraClass='mb-6'>Состав</Text>
+        <Text size={DISPLAY_SMALL} extraClass='mb-6'>Состав</Text>
         <IngredientsItems componentsOrder={order.ingredients}/>
         <div className="orderId pt-10">
           {DateWithTimezone({value: order.createdAt})}
@@ -130,5 +139,6 @@ export function OrderInfo() {
         </div>
       </div>
     )
-  }
+  } else {    dispatch(openErrorModal(`Заказ с номером ${idCurrentItem} не найден, Милорд...! `));
+    return <Navigate to={pagePath.profileOrdersFull}/>}
 }
