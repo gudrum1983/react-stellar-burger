@@ -6,7 +6,7 @@ import React from "react";
 import {connectFeed, connectProfile, disconnectFeed, disconnectProfile, WebsocketStatus} from "../../utils/config-ws";
 import {orderDetails} from "../../services/order-details/order-details-selectors";
 import {clearOrderDetails, getInfoOrderDetails} from "../../services/order-details/order-details-actions";
-import {sizesDigits, colorsText, sizesText, pagePath} from "../../utils/constants";
+import {pagePath} from "../../utils/constants";
 import {openErrorModal} from "../../services/error-modal/error-modal-action";
 import {OrderPrice} from "../order-price/order-price";
 import {Text} from "../typography/text/text";
@@ -17,12 +17,18 @@ import {
   selectorProfileOrdersStatus
 } from "../../services/feed-orders-profile/feed-orders-selector";
 import {selectorFeedOrdersData, selectorFeedOrdersStatus} from "../../services/feed-orders/selector-feed-orders";
+import {COLOR_SUCCESS, DISPLAY_SMALL, TOrder} from "../../utils/types";
 
+type TSelectorOrder = {
+  orderRequest: boolean;
+  orderFailed: boolean
+  order: TOrder
+}
 
 /**
  * карточка с деталями заказа OrderInfo
  */
-export function OrderInfo() {
+export function OrderInfo(): JSX.Element {
 
 
   const dispatch = useDispatch();
@@ -54,7 +60,7 @@ export function OrderInfo() {
 
   const isDisconnected = status !== WebsocketStatus.ONLINE
 
-  const {orderRequest, orderFailed, order: orderRest} = useSelector(orderDetails)
+  const {orderRequest, order: orderRest}: TSelectorOrder = useSelector(orderDetails)
 
   React.useEffect(() => {
     if (isFeed && isDisconnected) {
@@ -76,7 +82,10 @@ export function OrderInfo() {
     let findOrderRest = null
 
     if (data?.success) {
-      findOrderWS = data.orders.find((itemOrder) => itemOrder.number === Number(idCurrentItem))
+      //todo any clear
+      const orders: Array<TOrder>  = data.orders
+
+      findOrderWS = orders.find(itemOrder => itemOrder.number === Number(idCurrentItem))
     }
 
     if (orderRest) {
@@ -98,37 +107,39 @@ export function OrderInfo() {
 
   if (isDisconnected || orderRequest) {
     return (
-      <Text size={sizesText.displaySmall}>Загрузка...</Text>
+      <Text size={DISPLAY_SMALL}>Загрузка...</Text>
     )
   }
 
   const styleCard = background ? styles.cardOrder3 : styles.cardOrder2
 
-  if (orderFailed) {
-    dispatch(openErrorModal(`Заказ с номером ${idCurrentItem} не найден, Милорд...! `));
-    return <Navigate to={pagePath.profileOrdersFull}/>
-  }
 
-  if (order || orderRest) {
+  if (!!order) {
+
+    const {number, name, status, ingredients, createdAt } = order
+
     return (
       <div className={styleCard}>
-        {!background && <Digits size={sizesDigits.small} extraClass={styles.header}># {order.number}</Digits>}
+        {!background && <Digits extraClass={styles.header}># {number}</Digits>}
 
         <div className="mb-15 ">
-          <Text size={sizesText.displaySmall} extraClass='mb-3'>{order.name}</Text>
-          {(order.status === "done")
-            ? <Text size={sizesText.textDesktop} color={colorsText.success}>Выполнен</Text>
-            : <Text size={sizesText.textDesktop}>"B работе"</Text>
+          <Text size={DISPLAY_SMALL} extraClass='mb-3'>{name}</Text>
+          {(status === "done")
+            ? <Text color={COLOR_SUCCESS}>Выполнен</Text>
+            : <Text>"B работе"</Text>
           }
 
         </div>
-        <Text size={sizesText.displaySmall} extraClass='mb-6'>Состав</Text>
-        <IngredientsItems componentsOrder={order.ingredients}/>
+        <Text size={DISPLAY_SMALL} extraClass='mb-6'>Состав</Text>
+        <IngredientsItems componentsOrder={ingredients}/>
         <div className="orderId pt-10">
-          {DateWithTimezone({value: order.createdAt})}
-          <OrderPrice ingredients={order.ingredients}/>
+          {DateWithTimezone({value: createdAt})}
+          <OrderPrice ingredients={ingredients}/>
         </div>
       </div>
     )
+  } else {
+    dispatch(openErrorModal(`Заказ с номером ${idCurrentItem} не найден, Милорд...! `));
+    return <Navigate to={pagePath.profileOrdersFull}/>
   }
 }

@@ -91,7 +91,7 @@ export enum STATUS_ORDER {
   created ,
 }
 
-type TStatusOrder = keyof typeof STATUS_ORDER;
+export type TStatusOrder = keyof typeof STATUS_ORDER;
 
 
 export type TIngredient = {
