@@ -1,19 +1,24 @@
-import {booleanOptional, functionOptional, stringOptional} from "../../../utils/prop-types";
 import React from "react";
 import {EmailInput} from "@ya.praktikum/react-developer-burger-ui-components";
 
+export type TPropsInputEmail = {
+  placeholder: string;
+  value: string;
+  isEdit: boolean;
+  onChange(e: React.ChangeEvent<HTMLInputElement>): void;
+  clearError: boolean;
+}
 
 export function InputEmail({placeholder,
                              value,
                              isEdit = false,
                              onChange,
-                             clearError = false}) {
+                             clearError = false}:TPropsInputEmail):JSX.Element {
 
   const text = !!value ? value : ''
   return (
     <div className="input_container">
       <EmailInput onChange={onChange}
-/*                  defaultValue={''}*/
                   value={text}
                   name={'email'}
                   isIcon={isEdit}
@@ -23,10 +28,3 @@ export function InputEmail({placeholder,
     </div>
   )
 }
-
-InputEmail.propTypes = {
-  placeholder: stringOptional,
-  value: stringOptional,
-  isEdit: booleanOptional,
-  onChange: functionOptional,
-};
