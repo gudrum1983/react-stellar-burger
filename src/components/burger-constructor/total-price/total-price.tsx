@@ -1,11 +1,16 @@
 import React from "react";
 import {useSelector} from 'react-redux';
-import {selectBurgerConstructor} from "../../../services/burger-constructor/burger-constructor-selector";
+import {selectBun, selectOther} from "../../../services/burger-constructor/burger-constructor-selector";
+import {DIGITS_MEDIUM, TIngredient} from "../../../utils/types";
+import {TSelectedIngredientOther} from "../constructor-item/constructor-item";
+import {Digits} from "../../typography/digits/digits";
 
 
-export function TotalPrice() {
+export function TotalPrice():JSX.Element {
 
-  const {bun, other} = useSelector(selectBurgerConstructor)
+  const bun:TIngredient = useSelector(selectBun)
+  const other:Array<TSelectedIngredientOther> = useSelector(selectOther)
+
   const numberOtherIngredients = other.length
 
   const total = React.useMemo(() => {
@@ -24,6 +29,6 @@ export function TotalPrice() {
   }, [bun, numberOtherIngredients])
 
   return (
-    <p className="text text_type_digits-medium">{total}</p>
+    <Digits size={DIGITS_MEDIUM}>{total}</Digits>
   )
 }

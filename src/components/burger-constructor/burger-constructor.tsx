@@ -1,20 +1,24 @@
 import React from "react";
 import stylesConstr from "../burger-constructor/burger-constructor.module.css";
-import {ConstructorElement, Button} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
 import {ConstructorList} from "./constructor-list/constructor-list";
 import {TotalPrice} from "./total-price/total-price";
 import styles from "./constructor-list/constructor-list.module.css";
 import {useDrop} from "react-dnd";
 import {useDispatch, useSelector} from "react-redux";
 import {getReadyOrderDetails} from "../../services/order-details/order-details-actions";
-import {selectBurgerConstructor} from "../../services/burger-constructor/burger-constructor-selector";
+import {selectBun, selectOther} from "../../services/burger-constructor/burger-constructor-selector";
 import {addFilling, chooseBun} from "../../services/burger-constructor/burger-constructor-actions";
 import {useNavigate} from "react-router-dom";
-import {userAuth, user} from "../../services/user/user-selector";
+import {user, userAuth} from "../../services/user/user-selector";
+import {TIngredient} from "../../utils/types";
+import {TSelectedIngredientOther} from "./constructor-item/constructor-item";
 
-export function BurgerConstructor() {
+export function BurgerConstructor(): JSX.Element {
   const dispatch = useDispatch();
   const navigate = useNavigate()
+
+  //@ts-ignore
   const onDropHandler = (ingredient) => {
     if (ingredient.type === "bun") {
       dispatch(chooseBun(ingredient))
@@ -38,10 +42,9 @@ export function BurgerConstructor() {
   const isAuthChecked = useSelector(userAuth)
   const isUser = useSelector(user)
 
-  const selectedIngredients = useSelector(selectBurgerConstructor)
-  const bun = selectedIngredients.bun
-    , {name, image, price, _id} = {...bun}
-    , other = selectedIngredients.other;
+  const bun: TIngredient = useSelector(selectBun)
+  const {name, image, price, _id} = {...bun}
+  const other: Array<TSelectedIngredientOther> = useSelector(selectOther)
 
   function getListIdIngredients() {
     const idBun = [_id];
@@ -72,8 +75,7 @@ export function BurgerConstructor() {
                                 thumbnail={image}
             />
           </div>}
-          {(other.length > 0) && <ConstructorList filling={other}
-          />}
+          {(other.length > 0) && <ConstructorList/>}
           {bun && <div className={styles.elementConstructor}>
             <ConstructorElement extraClass="ml-8 mr-4 notAllowed"
                                 type="bottom"
