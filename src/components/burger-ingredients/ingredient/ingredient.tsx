@@ -1,13 +1,19 @@
 import styles from "./ingredient.module.css";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
-import {ingredientPropType} from "../../../utils/prop-types";
 import {useSelector} from "react-redux";
 import {useDrag} from "react-dnd";
 import {selectCount} from "../../../services/burger-constructor/burger-constructor-selector";
 import {Link, useLocation} from "react-router-dom";
+import {TIngredient} from "../../../utils/types";
+import {Text} from "../../typography/text/text";
+import {Digits} from "../../typography/digits/digits";
 
-export function Ingredient({currentItem}) {
+type TPropsIngredient = {
+  currentItem:TIngredient;}
+
+
+export function Ingredient({currentItem}:TPropsIngredient):JSX.Element {
 
   const location = useLocation()
   const id = currentItem._id
@@ -27,11 +33,11 @@ export function Ingredient({currentItem}) {
       <Link className={`${styles.nonlink} ${cursorStyle}`} to={`/ingredients/${id}`} state={{background: location}}>
         <img className={styles.imgCard} alt={currentItem.name} src={currentItem.image}/>
         <div className={`pt-1 pb-1 ${styles.price}`}>
-          <p className="text text_type_digits-default pr-2">{currentItem.price}</p>
+          <Digits extraClass={'pr-2'}>{currentItem.price}</Digits>
           <CurrencyIcon type="primary"/>
         </div>
         <div className={styles.cardName}>
-          <p className="text text_type_main-default">{currentItem.name}</p>
+          <Text>{currentItem.name}</Text>
         </div>
         {(count > 0) ? <Counter count={count} size="default"/> : null}
       </Link>
@@ -39,7 +45,3 @@ export function Ingredient({currentItem}) {
 
   )
 }
-
-Ingredient.propTypes = {
-  currentItem: ingredientPropType,
-};
