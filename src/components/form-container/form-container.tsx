@@ -1,22 +1,27 @@
-import React from "react";
+import React, {ForwardedRef} from "react";
 import styles from "./form-container.module.css";
 import {useLocation} from "react-router-dom";
-import {
-  arrayNodeElementOptional,
-  functionOptional,
-  functionPropType,
-  stringOptional
-} from "../../utils/prop-types";
+import {Text} from "../typography/text/text";
+
+type TLink = typeof Text
+
+type TPropsFormContainer = {
+  header?: string;
+  links?: Array<TLink>;
+  button: Array<HTMLButtonElement>;
+  handleSubmit: () => void;
+  handleReset?: (() => void) | null;
+  children: React.ReactNode;
+}
 
 export const FormContainer = React.forwardRef(({
                                                  children,
-                                                 header = null,
-                                                 inputs,
-                                                 links = null,
+                                                 header,
+                                                 links,
                                                  button,
                                                  handleSubmit,
-                                                 handleReset = null
-                                               }, ref) => {
+                                                 handleReset
+                                               }: TPropsFormContainer, ref: ForwardedRef<HTMLFormElement>) => {
 
   const location = useLocation()
   const containerClass = location.pathname === "/profile"
@@ -26,14 +31,13 @@ export const FormContainer = React.forwardRef(({
   return (
     <div className={containerClass}>
 
-      {header && <p className="text text_type_main-medium">
+      {header && <Text>
         {header}
-      </p>}
+      </Text>}
 
       <form ref={ref} onSubmit={handleSubmit} {...(handleReset && {onReset: handleReset})}>
         <fieldset className={styles.fieldset}>
           <div className={`${styles.placeItems}`}>
-            {inputs}
             {children}
           </div>
           <div className={`${styles.buttonExtra}`}>
@@ -49,12 +53,3 @@ export const FormContainer = React.forwardRef(({
     </div>
   )
 })
-
-FormContainer.propTypes = {
-  header: stringOptional,
-  inputs: arrayNodeElementOptional,
-  links: arrayNodeElementOptional,
-  button: arrayNodeElementOptional,
-  handleSubmit: functionPropType,
-  handleReset: functionOptional,
-};
