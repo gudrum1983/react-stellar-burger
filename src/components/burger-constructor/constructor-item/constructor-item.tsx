@@ -1,17 +1,31 @@
 import styles from "../constructor-item/constructor-item.module.css";
 import React from "react";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {functionPropType, numPropType, stringPropType, otherIngredientPropType} from "../../../utils/prop-types";
 import {useDispatch, useSelector} from 'react-redux';
 import {deleteFilling} from "../../../services/burger-constructor/burger-constructor-actions";
 import {useDrag, useDrop} from "react-dnd";
 import {selectBurgerConstructor} from "../../../services/burger-constructor/burger-constructor-selector";
+import {TIngredient} from "../../../utils/types";
 
-export function ConstructorItem({moveCard, index, id, item}) {
+type TSelectedIngredientOther = {
+  ingredient: TIngredient;
+  numberIngredient: string;
+}
+
+type TConstructorItem = {
+  moveCard: void;
+  index: number;
+  id: string;
+  currentItem: TSelectedIngredientOther;
+};
+
+
+
+export function ConstructorItem({moveCard, index, id, currentItem}:TConstructorItem):JSX.Element {
   const dispatch = useDispatch();
   const {other} = useSelector(selectBurgerConstructor)
 
-  function deleteCard(idItem) {
+  function deleteCard(idItem:string) {
     dispatch(deleteFilling(idItem))
   }
 
@@ -27,15 +41,18 @@ export function ConstructorItem({moveCard, index, id, item}) {
       if (!ref.current) {
         return
       }
+      // @ts-ignore
       const dragIndex = item.index
       const hoverIndex = index
       if (dragIndex === hoverIndex) {
         return
       }
+      // @ts-ignore
       const hoverBoundingRect = ref.current?.getBoundingClientRect()
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
       const clientOffset = monitor.getClientOffset()
+      // @ts-ignore
       const hoverClientY = clientOffset.y - hoverBoundingRect.top
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return
@@ -43,7 +60,9 @@ export function ConstructorItem({moveCard, index, id, item}) {
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return
       }
+      // @ts-ignore
       moveCard(dragIndex, hoverIndex, other)
+      // @ts-ignore
       item.index = hoverIndex
     },
   })
@@ -65,19 +84,12 @@ export function ConstructorItem({moveCard, index, id, item}) {
       <DragIcon type="primary"/>
       <ConstructorElement
         extraClass='cursor cursor_type_nresize'
-        text={item.ingredient.name}
-        price={item.ingredient.price}
-        thumbnail={item.ingredient.image}
-        handleClose={(e) => {
-          deleteCard(item.numberIngredient, e)
+        text={currentItem.ingredient.name}
+        price={currentItem.ingredient.price}
+        thumbnail={currentItem.ingredient.image}
+        handleClose={() => {
+          deleteCard(currentItem.numberIngredient)
         }}/>
     </div>
   )
 }
-
-ConstructorItem.propTypes = {
-  moveCard: functionPropType,
-  index: numPropType,
-  id: stringPropType,
-  item: otherIngredientPropType,
-};
