@@ -3,14 +3,17 @@ import React from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import {moveFilling} from "../../../services/burger-constructor/burger-constructor-actions";
 import update from 'immutability-helper'
-import {selectBurgerConstructor} from "../../../services/burger-constructor/burger-constructor-selector";
-import {ConstructorItem} from "../constructor-item/constructor-item";
+import {selectBun, selectOther} from "../../../services/burger-constructor/burger-constructor-selector";
+import {ConstructorItem, TSelectedIngredientOther} from "../constructor-item/constructor-item";
+import {TIngredient} from "../../../utils/types";
 
-export function ConstructorList() {
+export function ConstructorList():JSX.Element {
 
-  const {bun, other} = useSelector(selectBurgerConstructor)
+  const bun:TIngredient = useSelector(selectBun)
+  const other:Array<TSelectedIngredientOther> = useSelector(selectOther)
   const dispatch = useDispatch();
   const topGap = !bun ? styles.topGap : '';
+  //@ts-ignore
   const moveCard = React.useCallback((dragIndex, hoverIndex, other) => {
 
     const newOther = update(other, {
@@ -27,7 +30,8 @@ export function ConstructorList() {
   return (
     <div className={`${styles.listScroll} ${styles.scroll} ${topGap} custom-scroll`}>
       {other.map((item, i) => (
-        <ConstructorItem moveCard={moveCard} index={i} key={item.numberIngredient} id={item.numberIngredient} item={item}>
+        //@ts-ignore
+        <ConstructorItem moveCard={moveCard} index={i} key={item.numberIngredient} id={item.numberIngredient} currentItem={item}>
 
         </ConstructorItem>
       ))}

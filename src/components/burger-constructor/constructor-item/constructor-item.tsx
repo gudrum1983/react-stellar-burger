@@ -7,7 +7,7 @@ import {useDrag, useDrop} from "react-dnd";
 import {selectBurgerConstructor} from "../../../services/burger-constructor/burger-constructor-selector";
 import {TIngredient} from "../../../utils/types";
 
-type TSelectedIngredientOther = {
+export type TSelectedIngredientOther = {
   ingredient: TIngredient;
   numberIngredient: string;
 }
