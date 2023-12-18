@@ -31,13 +31,10 @@ export function Login() {
   }
 
   function onSubmit({values: {passwordInput, emailInput}}) {
-
     const target = formElement.current
     const isError = !!target.querySelector(".input_status_error")
-
     if (!isError) {
       dispatch(login(passwordInput, emailInput));
-
     } else {
       dispatch(openErrorModal("Перепроверьте логин и пароль, Милорд... Они введены не корректно."));
     }
@@ -73,6 +70,7 @@ export function Login() {
   )
 } else {
     return (
-      <p>PFUHEPRF</p>
+      <p>Загрузка...</p>
     )
-  }}
+  }
+}

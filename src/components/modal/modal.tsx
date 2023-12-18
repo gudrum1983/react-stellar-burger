@@ -1,4 +1,4 @@
-import React, {MouseEventHandler} from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import styles from "./modal.module.css";
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
@@ -10,7 +10,7 @@ import {Digits} from "../typography/digits/digits";
 
 export type TPropsModal = {
   header: string;
-  onClose: () => MouseEventHandler<HTMLDivElement> ;
+  onClose: () => void ;
 } & TFunctionComponentWithChildren;
 
 export function Modal({children, header, onClose}:TPropsModal):JSX.Element {
