@@ -1,10 +1,12 @@
-import {booleanOptional, functionOptional, stringOptional} from "../../../utils/prop-types";
 import React from "react";
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {TPropsInputEmail} from "./input-email";
 
-export function InputName({placeholder = 'Имя', value, isEdit = false, onChange}) {
+export type TPropsInputName = Omit<TPropsInputEmail, 'clearError'>
 
-  const inputRef = React.useRef(null)
+export function InputName({placeholder = 'Имя', value, isEdit = false, onChange}: TPropsInputName): JSX.Element {
+
+  const inputRef = React.useRef<HTMLInputElement | null>(null)
   const [disabled, setDisable] = React.useState(false)
 
   React.useEffect(() => {
@@ -12,15 +14,17 @@ export function InputName({placeholder = 'Имя', value, isEdit = false, onChan
   }, []);
 
   const onIconClick = () => {
-    inputRef.current.focus()
-    setDisable(!disabled)
+    if (inputRef.current) {
+      inputRef.current.focus()
+      setDisable(!disabled)
+    }
   }
 
   const onBlur = () => {
     setDisable(!disabled)
   }
 
-const text = !!value ? value : ''
+  const text = !!value ? value : ''
 
   return (
 
@@ -31,19 +35,10 @@ const text = !!value ? value : ''
         value={text}
         name={'name'}
         placeholder={placeholder}
-        onFocus
         ref={inputRef}
         disabled={disabled}
         {...(isEdit && {icon: "EditIcon", onIconClick: onIconClick, onBlur: onBlur,})}
       />
     </div>
   )
-
 }
-
-InputName.propTypes = {
-  placeholder: stringOptional,
-  value: stringOptional,
-  isEdit: booleanOptional,
-  onChange: functionOptional,
-};
