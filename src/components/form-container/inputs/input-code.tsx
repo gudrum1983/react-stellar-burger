@@ -1,9 +1,10 @@
 import React from "react";
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {functionOptional, stringOptional} from "../../../utils/prop-types";
+import {TPropsInputEmail} from "./input-email";
 
+export type TPropsInputCode =  Pick<TPropsInputEmail, 'value'|'onChange'>
 
-export function InputCode({value, onChange}) {
+export function InputCode({value, onChange}:TPropsInputCode):JSX.Element {
 
   return (
     <div className="input_container">
@@ -16,8 +17,3 @@ export function InputCode({value, onChange}) {
     </div>
   )
 }
-
-InputCode.propTypes = {
-  value: stringOptional,
-  onChange: functionOptional,
-};
