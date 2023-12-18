@@ -11,15 +11,14 @@ import {InputPassword} from "../components/form-container/inputs/input-password"
 import {InputEmail} from "../components/form-container/inputs/input-email";
 import {InputName} from "../components/form-container/inputs/input-name";
 import {Text} from "../components/typography/text/text";
+import {pagePath} from "../utils/constants";
 
 
 export function Register() {
 
   const dispatch = useDispatch();
-  const openErrModal = useSelector(isOpenErrorModal)
-  const textErrorModal = useSelector(errorModalText)
-  const formElement = React.createRef()
 
+  const formElement = React.createRef()
 
   const formInputs = {
     passwordInput: {},
@@ -27,7 +26,6 @@ export function Register() {
     emailInput: {},
   }
   const {fields, handleSubmit} = useForm(formInputs);
-
   const {passwordInput, nameInput, emailInput} = fields;
 
   function onChange(field) {
@@ -44,14 +42,16 @@ export function Register() {
     }
   }
 
-  const header = "Регистрация"
-  const buttons = [createButton({label: "Зарегистрироваться", key: "register"})];
-  const footerLinks = [typeLinksFooter.alreadyRegistered];
+  const openErrModal = useSelector(isOpenErrorModal)
+  const textErrorModal = useSelector(errorModalText)
 
   const handleErrorModalClose = () => {
     dispatch(closeErrorModal());
   };
 
+  const header = "Регистрация"
+  const buttons = [createButton({label: "Зарегистрироваться", key: pagePath.register})];
+  const footerLinks = [typeLinksFooter.alreadyRegistered];
 
   if(!!fields) {
     return (
@@ -78,9 +78,9 @@ export function Register() {
     )
 
   } else {
+    return (
     <p>Загрузка...</p>
+    )
   }
-
-
 }
 

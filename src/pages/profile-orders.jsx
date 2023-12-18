@@ -7,6 +7,7 @@ import {
 } from "../services/feed-orders-profile/feed-orders-selector";
 import {connectProfile, disconnectProfile, WebsocketStatus} from "../utils/config-ws";
 import {Preloader} from "../components/preloader/preloader";
+import {Text} from "../components/typography/text/text";
 
 export function ProfileOrders() {
 
@@ -24,15 +25,11 @@ export function ProfileOrders() {
     }
   }, []);
 
-  if( isDisconnected || !data ) {
-    return <Preloader/>
+  if (isDisconnected || !data) {
+    return (<Preloader/>)
+  } else if (!isDisconnected && !!data) {
+    return (<Orders/>)
+  } else {
+    return (<Text>Произошла ошибка, Милорд...</Text>)
   }
-
-if(!isDisconnected && !!data){
-
-  return (
-    <Orders/>
-  )
-}
-
 }

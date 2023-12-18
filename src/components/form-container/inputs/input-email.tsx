@@ -2,11 +2,11 @@ import React from "react";
 import {EmailInput} from "@ya.praktikum/react-developer-burger-ui-components";
 
 export type TPropsInput = {
-  placeholder: string;
+  placeholder?: string;
   value: string;
-  isEdit: boolean;
+  isEdit?: boolean;
   onChange(e: React.ChangeEvent<HTMLInputElement>): void;
-  clearError: boolean;
+  clearError?: boolean;
 }
 
 export function InputEmail({placeholder,

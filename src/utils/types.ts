@@ -40,6 +40,11 @@ export type TOrder = {
 
 
 export type TPropsModalOverlay = {
+  onClose: () => void ;
+};
+
+
+export type TPropsModalOverlay2 = {
   onClose: () => MouseEventHandler<HTMLDivElement> ;
 };
 

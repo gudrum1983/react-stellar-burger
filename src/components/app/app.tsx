@@ -24,7 +24,7 @@ import {ProfileOrders} from "../../pages/profile-orders";
 import {pagePath} from "../../utils/constants";
 
 
-export default function App() {
+export default function App(): JSX.Element {
 
   const dispatch = useDispatch();
 
