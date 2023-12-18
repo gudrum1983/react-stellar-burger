@@ -94,10 +94,24 @@ export enum STATUS_ORDER {
 export type TStatusOrder = keyof typeof STATUS_ORDER;
 
 
+export enum typeIngredients {
+  bun = 'bun',
+  sauce = 'sauce' ,
+  main ='main',
+}
+
+/*enum typeIngredients2 {
+  bun = "Булки",
+  sauce = "Соусы",
+  main = "Начинки",
+}*/
+
+export type TTypeIngredients = keyof typeof typeIngredients
+
 export type TIngredient = {
 _id:string;
 name:string;
-type:string;
+type:TTypeIngredients;
 proteins:number;
 fat:number;
 carbohydrates:number;

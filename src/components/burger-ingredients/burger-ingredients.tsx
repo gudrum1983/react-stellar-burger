@@ -4,20 +4,24 @@ import stylesConstr from "../burger-constructor/burger-constructor.module.css";
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
 import {IngredientsTypeList} from "./ingredients-type-list/ingredients-type-list";
 import {useSelector} from "react-redux";
-import {burgerIngredients} from "../../services/burger-ingredients/burger-ingredients-selector";
-
-import {sizesText} from "../../utils/constants";
+import {burgerIngredientsArray} from "../../services/burger-ingredients/burger-ingredients-selector";
 import {Text} from "../typography/text/text";
+import {DISPLAY_LARGE, TIngredient, TTypeIngredients, typeIngredients} from "../../utils/types";
 
+type TFilteredIngredients = {
+  buns:   Array<TIngredient> | [],
+  sauces: Array<TIngredient> | [],
+  mains:  Array<TIngredient> | [],
+}
 
-export function BurgerIngredients() {
+export function BurgerIngredients():JSX.Element {
 
-  const {ingredients} = useSelector(burgerIngredients)
-  const filtered = (type) => {
+  const ingredients:Array<TIngredient> = useSelector(burgerIngredientsArray)
+  const filtered = (type:TTypeIngredients):Array<TIngredient> => {
     return ingredients.filter((item) => item.type === type);
   }
 
-  const [filteredIngredients, setFilteredIngredients] = React.useState(
+  const [filteredIngredients, setFilteredIngredients] = React.useState<TFilteredIngredients>(
     {
       buns: [],
       sauces: [],
@@ -29,19 +33,19 @@ export function BurgerIngredients() {
     () =>
       setFilteredIngredients(
         {
-          buns: filtered("bun"),
-          sauces: filtered("sauce"),
-          mains: filtered("main"),
+          buns: filtered(typeIngredients.bun),
+          sauces: filtered(typeIngredients.sauce),
+          mains: filtered(typeIngredients.main),
         }
       )
     , [ingredients]
   );
 
   const [currentTab, setCurrentTab] = React.useState('buns');
-  const tabsRef = React.useRef()
-  const mainsRef = React.useRef();
-  const bunsRef = React.useRef()
-  const saucesRef = React.useRef()
+  const tabsRef = React.useRef<HTMLUListElement>(null!)
+  const mainsRef = React.useRef<HTMLParagraphElement>(null!)
+  const bunsRef = React.useRef<HTMLParagraphElement>(null!)
+  const saucesRef = React.useRef<HTMLParagraphElement>(null!)
 
   function handleScrollList() {
     const tabsBottom = tabsRef.current?.getBoundingClientRect().bottom;
@@ -67,7 +71,7 @@ export function BurgerIngredients() {
 
   return (
     <>
-      <Text size={sizesText.displayLarge} extraClass="mb-5 pt-10">Соберите бургер</Text>
+      <Text size={DISPLAY_LARGE} extraClass="mb-5 pt-10">Соберите бургер</Text>
       <ul ref={tabsRef} className={`pb-10 ${styles.tab} nonList`}>
         <li>
           <a href="#buns" className="nonLink cursor">
