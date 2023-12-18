@@ -1,7 +1,7 @@
 import React from "react";
 import {EmailInput} from "@ya.praktikum/react-developer-burger-ui-components";
 
-export type TPropsInputEmail = {
+export type TPropsInput = {
   placeholder: string;
   value: string;
   isEdit: boolean;
@@ -13,7 +13,7 @@ export function InputEmail({placeholder,
                              value,
                              isEdit = false,
                              onChange,
-                             clearError = false}:TPropsInputEmail):JSX.Element {
+                             clearError = false}:TPropsInput):JSX.Element {
 
   const text = !!value ? value : ''
   return (

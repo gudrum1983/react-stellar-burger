@@ -1,8 +1,8 @@
 import React from "react";
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {TPropsInputEmail} from "./input-email";
+import {TPropsInput} from "./input-email";
 
-export type TPropsInputCode =  Pick<TPropsInputEmail, 'value'|'onChange'>
+export type TPropsInputCode =  Pick<TPropsInput, 'value'|'onChange'>
 
 export function InputCode({value, onChange}:TPropsInputCode):JSX.Element {
 

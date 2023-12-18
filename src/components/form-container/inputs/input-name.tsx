@@ -1,8 +1,8 @@
 import React from "react";
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {TPropsInputEmail} from "./input-email";
+import {TPropsInput} from "./input-email";
 
-export type TPropsInputName = Omit<TPropsInputEmail, 'clearError'>
+export type TPropsInputName = Omit<TPropsInput, 'clearError'>
 
 export function InputName({placeholder = 'Имя', value, isEdit = false, onChange}: TPropsInputName): JSX.Element {
 
