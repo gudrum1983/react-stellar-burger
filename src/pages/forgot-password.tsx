@@ -8,33 +8,39 @@ import {Modal} from "../components/modal/modal";
 import {closeErrorModal, openErrorModal} from "../services/error-modal/error-modal-action";
 import {errorModalText, isOpenErrorModal} from "../services/error-modal/error-modal-selector";
 import {InputEmail} from "../components/form-container/inputs/input-email";
-import {useForm} from "../hooks/useForm";
-
-import {sizesText} from "../utils/constants";
+import {TFormInputs, TFormInputsValue, useForm} from "../hooks/useForm";
 import {Text} from "../components/typography/text/text";
+import {DISPLAY_SMALL} from "../utils/types";
 
+export enum Inputs1 {
+  emailInput,
+}
 
-export function ForgotPassword() {
+export type TNameInputs = keyof typeof Inputs1
+
+export function ForgotPassword():JSX.Element {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const openErrModal = useSelector(isOpenErrorModal)
   const textErrorModal = useSelector(errorModalText)
-  const formElement = React.createRef()
+  const formElement:React.RefObject<HTMLFormElement> = React.createRef()
 
-  const formInputs = {
+  const formInputs:TFormInputs<TNameInputs> = {
     emailInput: {},
   }
   const {fields, handleSubmit} = useForm(formInputs);
   const {emailInput} = fields;
 
-  function onSubmit({values: {emailInput}}) {
+  function onSubmit(values:TFormInputsValue<TNameInputs>):void {
+
+    const {emailInput} = values
 
     const target = formElement.current
-    const isError = !!target.querySelector(".input_status_error")
+    const isError = !!target?.querySelector(".input_status_error")
     if (!isError) {
       getForgot(emailInput)
         .then(() => {
-          localStorage.setItem("forgotConfirmed", true);
+          localStorage.setItem('forgotConfirmed', 'true');
           navigate('/reset-password', {replace: false});
         })
         .catch(() => dispatch(openErrorModal("Что-то пошло не так, Милорд... Попробуйте позже.")))
@@ -58,13 +64,13 @@ export function ForgotPassword() {
                      handleSubmit={handleSubmit(onSubmit)}>
 
         <InputEmail placeholder="Укажите e-mail"
-                    key="email" value={emailInput.value}
-                    onChange={emailInput.setState}/>
+                    key="email" value={emailInput.value!}
+                    onChange={emailInput.setState!}/>
       </FormContainer>
 
       {openErrModal &&
         <Modal onClose={handleErrorModalClose} header={"Ошибка"}>
-          <Text size={sizesText.displaySmall}>{textErrorModal}</Text>
+          <Text size={DISPLAY_SMALL}>{textErrorModal}</Text>
         </Modal>}
     </>
   )

@@ -7,30 +7,38 @@ import {userMail, userName} from "../services/user/user-selector";
 import {InputEmail} from "../components/form-container/inputs/input-email";
 import {InputName} from "../components/form-container/inputs/input-name";
 import {InputPassword} from "../components/form-container/inputs/input-password";
-import {useForm} from "../hooks/useForm";
+import {IField, TFormInputs, TFormInputsValue, useForm} from "../hooks/useForm";
 
-export function ProfileEdit() {
+export enum Inputs1 {
+  passwordInput,
+  nameInput,
+  emailInput,
+}
 
-/*  const [clearError, setClearError] = useState(false)*/
+export type TNameInputs = keyof typeof Inputs1
+
+export function ProfileEdit():JSX.Element {
 
   const dispatch = useDispatch();
   const nameValueTest = useSelector(userName)
   const emailValueTest = useSelector(userMail)
 
-  const formElement = React.createRef()
+  const formElement:React.RefObject<HTMLFormElement> = React.createRef()
 
-  const formInputs = {
-    passwordInput: '',
-    nameInput: nameValueTest,
-    emailInput: emailValueTest,
+
+  //todo в юзФорм есть проверка но строку, как раз если передается валью строкой - пофиксить
+  const formInputs:TFormInputs<TNameInputs> = {
+    passwordInput: {value:''},
+    nameInput: {value:nameValueTest},
+    emailInput: {value:emailValueTest},
   }
 
   const {fields, handleSubmit, handleReset} = useForm(formInputs);
 
   const {passwordInput, nameInput, emailInput} = fields;
 
-  function onChange(field) {
-    return field.setState
+  function onChange(field:IField):((event: React.ChangeEvent<HTMLInputElement>) => {}) {
+    return field.setState!
   }
 
   function setValue() {
@@ -51,23 +59,9 @@ export function ProfileEdit() {
 
   }, [nameValueTest, emailValueTest]);
 
+  function onSubmit(values:TFormInputsValue<TNameInputs> ) {
 
-/* React.useEffect(() => {
-
-    if (clearError && !isEdit) {
-
-    } else {
-      setClearError(false)
-    }
-
-  }, [isEdit]);*/
-
-
-/*  function onReset() {
-    setClearError(true)
-  }*/
-
-  function onSubmit({values: {passwordInput, nameInput, emailInput}}) {
+    const {passwordInput, nameInput, emailInput} = values
 
     dispatch(getUser());
     if (isEdit) {
@@ -84,12 +78,12 @@ export function ProfileEdit() {
     >
 
       <InputName isEdit={true} key="name"
-                 value={nameInput.value}
+                 value={nameInput.value!}
                  onChange={onChange(nameInput)}/>
-      <InputEmail placeholder="Логин" value={emailInput.value} key="email" isEdit={true}
+      <InputEmail placeholder="Логин" value={emailInput.value!} key="email" isEdit={true}
 
                   onChange={onChange(emailInput)}  {...(!isEditMail && {clearError: true})}/>
-      <InputPassword isEdit={true} key="password" value={passwordInput.value}
+      <InputPassword isEdit={true} key="password" value={passwordInput.value!}
                      onChange={onChange(passwordInput)} {...(!isEditPassword && {clearError: true})}/>
     </FormContainer>
   )

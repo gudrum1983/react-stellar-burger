@@ -38,10 +38,12 @@ export type IForm = {
 export const useForm = (initialFields:ICustomObject):IForm => {
 
   const form:ICustomObject = Object.entries<IField>(initialFields).reduce((fields:{}, [name, value]) => {
+    const isString = typeof value === 'string';
+
 
     const field:IField = {
       [name]: {
-        value: (value.value || ''),
+        value: (isString && value) || ((!isString && value.value) || ''),
         setState: (value: ChangeEvent<HTMLInputElement>) => handleInput(value, name),
         ...(value),
       },
@@ -84,8 +86,6 @@ export const useForm = (initialFields:ICustomObject):IForm => {
     fields,
   }
 }
-
-
 
 
 

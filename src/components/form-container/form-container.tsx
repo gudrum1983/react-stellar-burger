@@ -6,9 +6,9 @@ import {Text} from "../typography/text/text";
 export interface IPropsForm extends React.FormHTMLAttributes<HTMLFormElement> {
   header?: string;
   links?: Array<JSX.Element>;
-  button: Array<JSX.Element>;
+  button?: Array<JSX.Element>;
   handleSubmit: (e: FormEvent) => void;
-  handleReset?: (() => void);
+  handleReset?: (e: FormEvent) => void;
   children: React.ReactNode;
 }
 

@@ -6,18 +6,26 @@ import {login} from "../services/user/user-action";
 import {Modal} from "../components/modal/modal";
 import {errorModalText, isOpenErrorModal} from "../services/error-modal/error-modal-selector";
 import {openErrorModal, closeErrorModal} from "../services/error-modal/error-modal-action";
-import {useForm} from "../hooks/useForm";
+import {IField, TFormInputsValue, useForm} from "../hooks/useForm";
 import {InputEmail} from "../components/form-container/inputs/input-email";
 import {InputPassword} from "../components/form-container/inputs/input-password";
 
-import {pagePath, sizesText} from "../utils/constants";
+import {pagePath} from "../utils/constants";
 import {Text} from "../components/typography/text/text";
+import {DISPLAY_SMALL} from "../utils/types";
 
-export function Login() {
+export enum Inputs1 {
+  passwordInput,
+  emailInput,
+}
+
+export type TNameInputs = keyof typeof Inputs1
+
+export function Login():JSX.Element {
 
   const dispatch = useDispatch();
 
-  const formElement = React.createRef()
+  const formElement:React.RefObject<HTMLFormElement> = React.createRef()
 
   const formInputs = {
     passwordInput: {},
@@ -26,13 +34,14 @@ export function Login() {
   const {fields, handleSubmit} = useForm(formInputs);
   const {passwordInput, emailInput} = fields;
 
-  function onChange(field) {
-    return field.setState
+  function onChange(field:IField): ((event: React.ChangeEvent<HTMLInputElement>) => {}) {
+    return field.setState!
   }
 
-  function onSubmit({values: {passwordInput, emailInput}}) {
+  function onSubmit(values:TFormInputsValue<TNameInputs> ) {
+    const {passwordInput, emailInput} = values
     const target = formElement.current
-    const isError = !!target.querySelector(".input_status_error")
+    const isError = !!target?.querySelector(".input_status_error")
     if (!isError) {
       dispatch(login(passwordInput, emailInput));
     } else {
@@ -57,14 +66,14 @@ export function Login() {
                      button={buttons} links={footerLinks}
                      handleSubmit={handleSubmit(onSubmit)}>
         <InputEmail
-          value={emailInput.value} key="email"
+          value={emailInput.value!} key="email"
           onChange={onChange(emailInput)}/>
-        <InputPassword key="password" value={passwordInput.value}
+        <InputPassword key="password" value={passwordInput.value!}
                        onChange={onChange(passwordInput)}/>
       </FormContainer>
       {openErrModal &&
         <Modal onClose={handleErrorModalClose} header={"Ошибка"}>
-          <Text size={sizesText.displaySmall}>{textErrorModal}</Text>
+          <Text size={DISPLAY_SMALL}>{textErrorModal}</Text>
         </Modal>}
     </>
   )
