@@ -6,21 +6,28 @@ import {register} from "../services/user/user-action";
 import {errorModalText, isOpenErrorModal} from "../services/error-modal/error-modal-selector";
 import {closeErrorModal, openErrorModal} from "../services/error-modal/error-modal-action";
 import {Modal} from "../components/modal/modal";
-import {useForm} from "../hooks/useForm";
+import {TFormInputs, TFormInputsValue, useForm} from "../hooks/useForm";
 import {InputPassword} from "../components/form-container/inputs/input-password";
 import {InputEmail} from "../components/form-container/inputs/input-email";
 import {InputName} from "../components/form-container/inputs/input-name";
 import {Text} from "../components/typography/text/text";
 import {pagePath} from "../utils/constants";
 
+export enum Inputs {
+  passwordInput,
+  nameInput,
+  emailInput,
+}
 
-export function Register() {
+export type TNameInputs = keyof typeof Inputs
+
+export function Register():JSX.Element {
 
   const dispatch = useDispatch();
 
-  const formElement = React.createRef()
+  const formElement:React.RefObject<HTMLFormElement> = React.createRef()
 
-  const formInputs = {
+  const formInputs:TFormInputs<TNameInputs> = {
     passwordInput: {},
     nameInput: {},
     emailInput: {},
@@ -28,13 +35,12 @@ export function Register() {
   const {fields, handleSubmit} = useForm(formInputs);
   const {passwordInput, nameInput, emailInput} = fields;
 
-  function onChange(field) {
-    return field.setState
-  }
+  function onSubmit(values:TFormInputsValue<TNameInputs>) {
 
-  function onSubmit({values: {passwordInput, nameInput, emailInput}}) {
+    const {passwordInput, nameInput, emailInput} = values
+
     const target = formElement.current
-    const isError = !!target.querySelector(".input_status_error")
+    const isError = !!target?.querySelector(".input_status_error")
     if (!isError) {
       dispatch(register(nameInput, passwordInput, emailInput));
     } else {
@@ -61,13 +67,13 @@ export function Register() {
                        name='formRegister'
                        handleSubmit={handleSubmit(onSubmit)}>
           <InputName placeholder="Имя" key="name"
-                     value={nameInput.value}
-                     onChange={onChange(nameInput)}/>
+                     value={nameInput.value!}
+                     onChange={nameInput.setState!}/>
           <InputEmail
-                      value={emailInput.value} key="email"
-                      onChange={onChange(emailInput)}/>
-          <InputPassword key="password" value={passwordInput.value}
-                         onChange={onChange(passwordInput)}/>
+                      value={emailInput.value!} key="email"
+                      onChange={emailInput.setState!}/>
+          <InputPassword key="password" value={passwordInput.value!}
+                         onChange={passwordInput.setState!}/>
 
         </FormContainer>
         {openErrModal &&

@@ -1,27 +1,25 @@
-import React, {ForwardedRef} from "react";
+import React, {FormEvent} from "react";
 import styles from "./form-container.module.css";
 import {useLocation} from "react-router-dom";
 import {Text} from "../typography/text/text";
 
-type TLink = typeof Text
-
-type TPropsFormContainer = {
+export interface IPropsForm extends React.FormHTMLAttributes<HTMLFormElement> {
   header?: string;
-  links?: Array<TLink>;
-  button: Array<HTMLButtonElement>;
-  handleSubmit: () => void;
-  handleReset?: (() => void) | null;
+  links?: Array<JSX.Element>;
+  button: Array<JSX.Element>;
+  handleSubmit: (e: FormEvent) => void;
+  handleReset?: (() => void);
   children: React.ReactNode;
 }
 
-export const FormContainer = React.forwardRef(({
+export const FormContainer = React.forwardRef<HTMLFormElement, IPropsForm >(({
                                                  children,
                                                  header,
                                                  links,
                                                  button,
                                                  handleSubmit,
                                                  handleReset
-                                               }: TPropsFormContainer, ref: ForwardedRef<HTMLFormElement>) => {
+                                               }, ref) => {
 
   const location = useLocation()
   const containerClass = location.pathname === "/profile"

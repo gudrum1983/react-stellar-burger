@@ -9,8 +9,14 @@ export const typeLinksFooter = {
   newUser:<ContainerLink textDescription="Вы — новый пользователь?" textLink="Зарегистрироваться" to='/register' key='newUser'/>,
 }
 
-export const createButton = ({label, key}) => {
-  return <Button htmlType="submit" type="primary" size="medium" children={label} key={key}/>
+
+type Tbutton = {
+  label:string;
+  key:string;
+}
+
+export function createButton({label, key}:Tbutton):JSX.Element {
+  return (<Button htmlType="submit" type="primary" size="medium" children={label} key={key}/>)
 }
 
 export const profileButtons = [

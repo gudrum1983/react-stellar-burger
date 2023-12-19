@@ -9,31 +9,41 @@ import {closeErrorModal, openErrorModal} from "../services/error-modal/error-mod
 import {Modal} from "../components/modal/modal";
 import {InputPassword} from "../components/form-container/inputs/input-password";
 import {InputCode} from "../components/form-container/inputs/input-code";
-import {useForm} from "../hooks/useForm";
+import {TFormInputs, TFormInputsValue, useForm} from "../hooks/useForm";
 
-import {pagePath, sizesText} from "../utils/constants";
+import {pagePath} from "../utils/constants";
 import {Text} from "../components/typography/text/text";
+import {DISPLAY_SMALL} from "../utils/types";
 
-export function ResetPassword() {
+export enum Inputs1 {
+  passwordInput,
+  codeInput,
+}
+
+export type TNameInputs = keyof typeof Inputs1
+
+export function ResetPassword():JSX.Element {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const textErrorModal = useSelector(errorModalText)
   const openErrModal = useSelector(isOpenErrorModal)
 
 
-  const formElement = React.createRef()
+  const formElement :React.RefObject<HTMLFormElement> = React.createRef()
 
-  const formInputs = {
+  const formInputs:TFormInputs<TNameInputs> = {
     passwordInput: {},
     codeInput: {},
   }
   const {fields, handleSubmit} = useForm(formInputs);
   const {passwordInput, codeInput} = fields;
 
-  function onSubmit({values: {passwordInput, codeInput}}) {
 
+  function onSubmit(values:TFormInputsValue<TNameInputs>):void {
+
+    const {passwordInput, codeInput} = values
     const target = formElement.current
-    const isError = !!target.querySelector(".input_status_error")
+    const isError = !!target?.querySelector(".input_status_error")
 
     if (!isError) {
       getReset(passwordInput, codeInput)
@@ -47,9 +57,9 @@ export function ResetPassword() {
     }
   }
 
-  const header = "Восстановление пароля"
-  const buttons = [createButton({label: "Сохранить", key: "save"})];
-  const footerLinks = [typeLinksFooter.rememberPassword];
+  const header:string = "Восстановление пароля"
+  const buttons:JSX.Element[] = [createButton({label: "Сохранить", key: "save"})];
+  const footerLinks:JSX.Element[] = [typeLinksFooter.rememberPassword];
 
   const handleErrorModalClose = () => {
     dispatch(closeErrorModal());
@@ -67,23 +77,23 @@ export function ResetPassword() {
                      handleSubmit={handleSubmit(onSubmit)}>
 
         <InputPassword placeholder="Введите новый пароль"
-                       key="password" value={passwordInput.value}
-                       onChange={passwordInput.setState}/>
+                       key="password" value={passwordInput.value!}
+                       onChange={passwordInput.setState!}/>
 
-        <InputCode key="token" value={codeInput.value}
-                   onChange={codeInput.setState}/>
+        <InputCode key="token" value={codeInput.value!}
+                   onChange={codeInput.setState!}/>
 
       </FormContainer>
 
       {openErrModal &&
         <Modal onClose={handleErrorModalClose} header={"Ошибка"}>
-          <Text size={sizesText.displaySmall}>{textErrorModal}</Text>
+          <Text size={DISPLAY_SMALL}>{textErrorModal}</Text>
         </Modal>}
     </>
 
   )
 } else {
   return (
-    <p>PFUHEPRF</p>
+    <p>Загрузка, Милорд...</p>
   )
 }}
