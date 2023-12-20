@@ -35,7 +35,7 @@ export function Register():JSX.Element {
   const {fields, handleSubmit} = useForm(formInputs);
   const {passwordInput, nameInput, emailInput} = fields;
 
-  function onSubmit(values:TFormInputsValue<TNameInputs>) {
+  function onSubmit(values:TFormInputsValue<TNameInputs>):void {
 
     const {passwordInput, nameInput, emailInput} = values
 

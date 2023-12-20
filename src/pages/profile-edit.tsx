@@ -59,7 +59,7 @@ export function ProfileEdit():JSX.Element {
 
   }, [nameValueTest, emailValueTest]);
 
-  function onSubmit(values:TFormInputsValue<TNameInputs> ) {
+  function onSubmit(values:TFormInputsValue<TNameInputs> ):void {
 
     const {passwordInput, nameInput, emailInput} = values
 

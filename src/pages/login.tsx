@@ -38,7 +38,7 @@ export function Login():JSX.Element {
     return field.setState!
   }
 
-  function onSubmit(values:TFormInputsValue<TNameInputs> ) {
+  function onSubmit(values:TFormInputsValue<TNameInputs> ):void {
     debugger
     const {passwordInput, emailInput} = values
     const target = formElement.current

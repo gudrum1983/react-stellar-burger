@@ -38,6 +38,9 @@ export type IForm = {
 export const useForm = (initialFields:ICustomObject):IForm => {
 
   const form:ICustomObject = Object.entries<IField>(initialFields).reduce((fields:{}, [name, value]) => {
+
+
+    //todo из profile-edit передавалось раньше строкой, а не объектом - пофиксить обратно
     const isString = typeof value === 'string';
 
 
@@ -67,10 +70,10 @@ export const useForm = (initialFields:ICustomObject):IForm => {
     if (e && e.preventDefault) {
       e.preventDefault();
     }
-
+debugger
     const values:TValuesInput = Object.entries(fields).reduce(((prev, [name, {value}]) => ({ ...prev, [name]: value })), {});
 
-    onSubmit({ values });
+    onSubmit(values);
   }
 
   const handleReset = () => (e:FormEvent) => {
