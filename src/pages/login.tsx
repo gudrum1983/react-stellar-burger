@@ -39,6 +39,7 @@ export function Login():JSX.Element {
   }
 
   function onSubmit(values:TFormInputsValue<TNameInputs> ) {
+    debugger
     const {passwordInput, emailInput} = values
     const target = formElement.current
     const isError = !!target?.querySelector(".input_status_error")
