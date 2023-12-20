@@ -5,14 +5,14 @@ import React from "react";
 import {useSelector} from "react-redux";
 import {userName} from "../services/user/user-selector";
 import {pagePath} from "../utils/constants";
-export function AppLayout() {
+export function AppLayout():JSX.Element {
 
   const location = useLocation();
   const isProfile = useMatch({path: pagePath.profile, end: false})
 
   const nameUser = useSelector(userName)
 
-  const active = (to) => {
+  const active = (to:string) => {
     if (to === "/profile") {
       return (isProfile)
         ? "primary"
