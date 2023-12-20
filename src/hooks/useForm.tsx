@@ -70,9 +70,8 @@ export const useForm = (initialFields:ICustomObject):IForm => {
     if (e && e.preventDefault) {
       e.preventDefault();
     }
-debugger
-    const values:TValuesInput = Object.entries(fields).reduce(((prev, [name, {value}]) => ({ ...prev, [name]: value })), {});
 
+    const values:TValuesInput = Object.entries(fields).reduce(((prev, [name, {value}]) => ({ ...prev, [name]: value })), {});
     onSubmit(values);
   }
 
