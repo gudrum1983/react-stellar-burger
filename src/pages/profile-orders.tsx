@@ -9,7 +9,7 @@ import {connectProfile, disconnectProfile, WebsocketStatus} from "../utils/confi
 import {Preloader} from "../components/preloader/preloader";
 import {Text} from "../components/typography/text/text";
 
-export function ProfileOrders() {
+export function ProfileOrders():JSX.Element {
 
   const dispatch = useDispatch();
   const token = localStorage.getItem("accessToken")?.slice(7) ?? ""

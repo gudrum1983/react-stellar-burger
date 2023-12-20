@@ -12,11 +12,10 @@ import {
   orderDetailsInfo,
   orderDetailsRequest
 } from "../services/order-details/order-details-selectors";
-
-import {sizesText} from "../utils/constants";
 import {Text} from "../components/typography/text/text";
+import {DISPLAY_SMALL} from "../utils/types";
 
-export function Home() {
+export function Home():JSX.Element {
 
   const dispatch = useDispatch();
   const orderRequest = useSelector(orderDetailsRequest)
@@ -24,13 +23,13 @@ export function Home() {
   const order = useSelector(orderDetailsInfo)
   const number = order?.number
 
-  function handleCloseModal() {
+  function handleCloseModal():void {
     if (number) {
       dispatch(clearOrderDetails())
     }
   }
 
-  function modal(content, header = "") {
+  function modal(content:React.ReactNode, header = ""):JSX.Element {
     return (<Modal onClose={handleCloseModal} header={header}>
       {content}
     </Modal>)
@@ -49,7 +48,7 @@ export function Home() {
 
       {number && modal(<OrderDetails/>)}
       {orderFailed && modal(
-        <Text size={sizesText.displaySmall} >Наш краторный хмель пожрал антарианский долгоносик,
+        <Text size={DISPLAY_SMALL} >Наш краторный хмель пожрал антарианский долгоносик,
            попробуйте сформировать заказ позже, Милорд...</Text>
         , "Ошибка")}
       {orderRequest && modal('', "Загрузка Милорд...")}
