@@ -6,8 +6,9 @@ import {Modal} from "../components/modal/modal";
 import {closeErrorModal} from "../services/error-modal/error-modal-action";
 import {errorModalText, isOpenErrorModal} from "../services/error-modal/error-modal-selector";
 
-import {colorsText, pagePath, sizesText} from "../utils/constants";
+import {pagePath} from "../utils/constants";
 import {Text} from "../components/typography/text/text";
+import {COLOR_INACTIVE, DISPLAY_SMALL} from "../utils/types";
 
 export const ProfileLayout = () => {
 
@@ -19,8 +20,8 @@ export const ProfileLayout = () => {
   const openErrModal = useSelector(isOpenErrorModal)
   const textErrorModal = useSelector(errorModalText)
 
-  function handleClick(e) {
-    e.preventDefault()
+  function handleClick(e: React.MouseEvent<HTMLButtonElement>): void {
+    e.preventDefault();
     dispatch(logout());
   }
 
@@ -44,7 +45,7 @@ export const ProfileLayout = () => {
             </button>
           </li>
         </ul>
-        <Text size={sizesText.textDesktop} extraClass="description pt-20" color={colorsText.inactive}>
+        <Text extraClass="description pt-20" color={COLOR_INACTIVE}>
           В этом разделе вы можете изменить свои персональные данные
         </Text>
       </nav>
@@ -54,7 +55,7 @@ export const ProfileLayout = () => {
 
       {openErrModal &&
         <Modal onClose={handleErrorModalClose} header={"Ошибка"}>
-          <Text size={sizesText.displaySmall}>{textErrorModal}</Text>
+          <Text size={DISPLAY_SMALL}>{textErrorModal}</Text>
         </Modal>}
 
 
