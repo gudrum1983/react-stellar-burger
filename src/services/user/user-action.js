@@ -6,6 +6,7 @@ export const SET_USER = "SET_USER";
 export const CLEAR_USER = "CLEAR_USER";
 
 
+
 export const setAuthChecked = (value) => ({
   type: SET_AUTH_CHECKED,
   payload: value,
@@ -30,10 +31,12 @@ export const getUser = () => {
   };
 };
 
+
 export const updateUser = (email, name, password) => {
   return (dispatch) => {
-    return authApi.updateUser(email, name, password)
+    return authApi.updateUser({email, name, password})
       .then((res) => {
+        console.log("resUPD",res)
         dispatch(setUser(res.user));
       });
   };
@@ -42,7 +45,8 @@ export const updateUser = (email, name, password) => {
 export const logout = () => {
   return (dispatch) => {
     return authApi.logout()
-      .then(() => {
+      .then((res) => {
+        console.log("logout", res)
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
         dispatch(clearUser());
@@ -50,10 +54,11 @@ export const logout = () => {
   };
 };
 
-export const login = (pass, email) => {
+export const login = (password, email) => {
   return (dispatch) => {
-    return authApi.login(pass, email)
+    return authApi.login({password, email})
       .then((res) => {
+        console.log({res})
         localStorage.setItem("accessToken", res.accessToken);
         localStorage.setItem("refreshToken", res.refreshToken);
         dispatch(setUser(res.user));
@@ -63,9 +68,9 @@ export const login = (pass, email) => {
   };
 };
 
-export const register = (name, pass, email) => {
+export const register = (name, password, email) => {
   return (dispatch) => {
-    return authApi.register(name, pass, email)
+    return authApi.register({name, password, email})
       .then((res) => {
         localStorage.setItem("accessToken", res.accessToken);
         localStorage.setItem("refreshToken", res.refreshToken);

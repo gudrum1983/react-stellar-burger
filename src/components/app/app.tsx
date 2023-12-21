@@ -89,15 +89,11 @@ export default function App(): JSX.Element {
         <Route path={pagePath.ingredientsInfo} element={<Modal onClose={handleModalClose} header={"Детали ингредиента"}>
           <IngredientDetails/>
         </Modal>}/>
-      </Routes>}
 
-      {background && <Routes>
         <Route path={pagePath.orderInfoFeed} element={<Modal onClose={handleModalClose} header={"need = params.id"}>
           <OrderInfo/>
         </Modal>}/>
-      </Routes>}
 
-      {background && <Routes>
         <Route path={pagePath.orderInfoProfile} element={<Modal onClose={handleModalClose} header={"need = params.id"}>
           <OrderInfo/>
         </Modal>}/>

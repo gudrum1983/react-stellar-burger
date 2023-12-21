@@ -37,6 +37,7 @@ export function loadBurgerIngredients() {
     dispatch(getIngredientsRequest());
     getIngredients()
       .then(res => {
+        console.log("brg", res)
         dispatch(getIngredientsSuccess(res.data));
       })
       .catch(() => {

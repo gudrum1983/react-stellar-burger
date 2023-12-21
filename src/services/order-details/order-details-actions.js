@@ -41,6 +41,7 @@ export function getInfoOrderDetails(number) {
     dispatch(orderDetailsRequest());
     getOrderDetailsInfo(number)
       .then(res => {
+        console.log("infOrd", res)
         dispatch(orderDetailsSuccess(res.orders[0]));
       })
       .catch(() => {

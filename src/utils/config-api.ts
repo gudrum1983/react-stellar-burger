@@ -11,21 +11,29 @@ export const ENDPOINTS = {
   passwordForgot: "password-reset",
   passwordReset: "password-reset/reset",
 }
-const checkResponse = (res) => {
+
+
+
+
+const checkResponse = <T>(res:Response):Promise<T> | Promise<any> => {
   if (res.ok) {
     return res.json();
   }
   return Promise.reject(`Ошибка ${res.status}`);
 };
 
-const checkSuccess = (res) => {
+
+//todo any clear
+const checkSuccess = <T>(res:any | T): any| Promise<T> => {
+  console.log({res})
   if (res && res.success) {
     return res;
   }
   return Promise.reject(`Ответ не success: ${res}`);
 };
 
-export const request = (endpoint, options) => {
+//todo any clear
+export const request = (endpoint: string, options?: any) => {
   return (fetch(`${BASE_URL}${endpoint}`, options)
     .then(checkResponse)
     .then(checkSuccess));
