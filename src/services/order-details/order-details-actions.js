@@ -27,6 +27,7 @@ export function getReadyOrderDetails(ingredientsOrder) {
     dispatch(orderDetailsRequest());
     getOrderDetailsReady(ingredientsOrder)
       .then(res => {
+        console.log("resReady",res)
           dispatch(orderDetailsSuccess(res.order));
           dispatch(clearBurgerConstructor());
       })

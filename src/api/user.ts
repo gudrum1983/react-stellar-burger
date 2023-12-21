@@ -1,7 +1,7 @@
-import {ENDPOINTS} from "../utils/config-api";
+import {ENDPOINTS, request2} from "../utils/config-api";
 import {fetchWithRefresh} from "./refresh-token";
 import {request} from "../utils/config-api";
-import {TIngredient} from "../utils/types";
+import {TIngredient, TOrder} from "../utils/types";
 
 type ArgumentsUser = {
   email?: string;
@@ -31,6 +31,10 @@ type MessageLogout = {
   message: "Successful logout" | string
 }
 
+export type MessageOrder = {
+  success: boolean;
+  data: Array<TOrder>
+}
 
 export type MessageIngredients = {
   success: boolean;
@@ -95,7 +99,7 @@ const logout = ():Promise<MessageLogout> => {
  *  @param values.email - значения инпута почты.
  */
 const login = ({password, email}:ArgumentsUser):Promise<MessageLogin> => {
-  return request(ENDPOINTS.authLogin, {
+  return request2(ENDPOINTS.authLogin, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
