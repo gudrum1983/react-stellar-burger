@@ -9,12 +9,15 @@ export function AppLayout():JSX.Element {
 
   const location = useLocation();
   const isProfile = useMatch({path: pagePath.profile, end: false})
-
+  console.log({isProfile})
+  console.log({isProfile})
+  console.log({location})
   const nameUser = useSelector(userName)
 
   const active = (to:string) => {
-    if (to === "/profile") {
-      return (isProfile)
+
+    if (to === "profile") {
+      return (!!isProfile)
         ? "primary"
         : "secondary"
     } else {

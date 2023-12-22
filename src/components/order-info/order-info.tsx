@@ -82,7 +82,7 @@ export function OrderInfo(): JSX.Element {
     let findOrderRest = null
 
     if (data?.success) {
-      //todo any clear
+
       const orders: Array<TOrder>  = data.orders
 
       findOrderWS = orders.find(itemOrder => itemOrder.number === Number(idCurrentItem))
