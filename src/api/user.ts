@@ -119,7 +119,7 @@ const login = ({password, email}:ArgumentsUser):Promise<MessageLogin> => {
  *  @param values.email - значения инпута почты.
  */
 export const register = ({name, password, email}:ArgumentsUser):Promise<MessageLogin> => {
-  return request(ENDPOINTS.authRegister, {
+  return request2(ENDPOINTS.authRegister, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

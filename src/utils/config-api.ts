@@ -12,11 +12,8 @@ export const ENDPOINTS = {
   passwordReset: "password-reset/reset",
 }
 
-type Success = {success?: boolean}
 
-
-
-const checkResponse = <T>(res:Response):Promise<T> | Promise<any> => {
+const checkResponse = <T>(res: Response): Promise<T> | Promise<any> => {
   if (res.ok) {
     return res.json();
   }
@@ -25,7 +22,7 @@ const checkResponse = <T>(res:Response):Promise<T> | Promise<any> => {
 
 
 //todo any clear
-const checkSuccess = <T>(res:any | T): any| Promise<T> => {
+const checkSuccess = <T>(res: any | T): any | Promise<T> => {
   console.log({res})
   if (res && res.success) {
     return res;
@@ -41,29 +38,22 @@ export const request = (endpoint: string, options?: any) => {
 };
 
 
-const checkResponse2 = <T>(res:Response):Promise<T> => {
+const checkResponse2 = async <T>(res: Response): Promise<T> => {
   if (res.ok) {
-    return res.json();
+    const resJson = await res.json()
+    if (resJson && typeof resJson === 'object' && "success" in resJson) {
+      console.log({resJson});
+      if (resJson.success) {
+        return resJson;
+      }
+    }
   }
   return Promise.reject(`Ошибка ${res.status}`);
 };
 
-
-const checkSuccess2 = <T extends Success>(res:T):T | Promise<T> => {
-  console.log({res})
-  if (res && typeof res === 'object' && "success" in res) {
-    console.log("success", res.success)
-    if (res.success) {
-      return res;
-    }
-  }
-  return Promise.reject(new Error(`Ответ не success: ${res}`)) as Promise<T>;
-};
-
 //todo any clear
-export const request2 = <T extends Success>(endpoint: string, options?: any) => {
+export const request2 = <T>(endpoint: string, options?: any) => {
   return (fetch(`${BASE_URL}${endpoint}`, options)
-    .then(res => checkResponse2<T>(res))
-    .then(res => checkSuccess2<T>(res))
+      .then(checkResponse2<T>)
   )
 };
