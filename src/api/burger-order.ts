@@ -1,11 +1,6 @@
-import {ENDPOINTS, request, request2} from "../utils/config-api";
+import {ENDPOINTS, request} from "../utils/config-api";
 import {MessageOrder} from "./user";
 import {TIngredient, TOrder, TStatusOrder} from "../utils/types";
-
-
-
-
-
 
 type ReadyOrder = {
     success: boolean;
@@ -30,11 +25,11 @@ type ReadyOrder = {
 
 
 export const getOrderDetailsReady = (ingredientsOrder: Pick<TOrder, "ingredients">): Promise<ReadyOrder> => {
-  return request2<ReadyOrder>(ENDPOINTS.orders, {
+  return request<ReadyOrder>(ENDPOINTS.orders, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      authorization: localStorage.getItem('accessToken')
+      'authorization': String(localStorage.getItem('accessToken'))
     },
     body: JSON.stringify({
       ingredients: ingredientsOrder,
