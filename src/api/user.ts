@@ -2,10 +2,11 @@ import {ENDPOINTS, request} from "../utils/config-api";
 import {fetchWithRefresh} from "./refresh-token";
 import {TIngredient, TOrder} from "../utils/types";
 
-type ArgumentsUser = {
+export type ArgumentsUser = {
   email?: string;
   name?: string;
   password?: string;
+  token?:string;
 }
 
 type DataUser = {

@@ -38,7 +38,7 @@ export function ForgotPassword():JSX.Element {
     const target = formElement.current
     const isError = !!target?.querySelector(".input_status_error")
     if (!isError) {
-      getForgot(emailInput)
+      getForgot({email:emailInput})
         .then(() => {
           localStorage.setItem('forgotConfirmed', 'true');
           navigate('/reset-password', {replace: false});

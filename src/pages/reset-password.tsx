@@ -46,7 +46,7 @@ export function ResetPassword():JSX.Element {
     const isError = !!target?.querySelector(".input_status_error")
 
     if (!isError) {
-      getReset(passwordInput, codeInput)
+      getReset({password:passwordInput, token:codeInput})
         .then(() => {
           localStorage.removeItem("forgotConfirmed");
           navigate('/register', {replace: true});
