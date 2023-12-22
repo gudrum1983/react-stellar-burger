@@ -4,13 +4,22 @@ const url = (endpoint: string): string => `${BASE_URL}${endpoint}`;
 
 const endpointsRefresh: string = ENDPOINTS.authToken;
 
-const checkResponseWithRefresh = (res: Response) => {
+
+type authToken = {
+  "success": boolean;
+  "accessToken": string;
+  "refreshToken": string;
+}
+
+
+
+const checkResponseWithRefresh = <T>(res: Response):Promise<T> => {
   return res.ok
     ? res.json()
     : res.json().then((err) => Promise.reject(err));
 };
 
-const authToken = (): Promise<any> => {
+const authToken = (): Promise<authToken> => {
   return fetch(url(endpointsRefresh), {
     method: "POST",
     headers: {
@@ -19,20 +28,18 @@ const authToken = (): Promise<any> => {
     body: JSON.stringify({
       token: localStorage.getItem("refreshToken"),
     }),
-  }).then(checkResponseWithRefresh);
+  }).then(checkResponseWithRefresh<authToken>);
 };
 
-
-//todo any clear
-
-export const fetchWithRefresh = async (endpoint: string, options: RequestInit) => {
+export const fetchWithRefresh =  async <T>(endpoint: string, options: RequestInit):Promise<T> => {
   try {
     const res = await fetch(url(endpoint), options);
-    return await checkResponseWithRefresh(res);
+    return await checkResponseWithRefresh<T>(res);
   } catch (err) {
     if (err && typeof err === 'object' && "message" in err) {
       if (err.message === "jwt expired") {
         const refreshData = await authToken();
+        console.log()
         if (!refreshData.success) {
           return Promise.reject(refreshData);
         }
@@ -52,10 +59,12 @@ export const fetchWithRefresh = async (endpoint: string, options: RequestInit) =
         };
 
         const res = await fetch(`${BASE_URL}${endpoint}`, newOptions);
-        return await checkResponseWithRefresh(res);
+        return await checkResponseWithRefresh<T>(res);
       } else {
         return Promise.reject(err);
       }
+    } else {
+      return Promise.reject(err);
     }
   }
 };
