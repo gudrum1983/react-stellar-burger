@@ -1,28 +1,44 @@
-import {authApi} from "../../api/user";
+import {authApi, DataUser} from "../../api/user";
 import {openErrorModal} from "../error-modal/error-modal-action";
+import {AppThunk} from "../store";
+import {TValuesInput} from "../../hooks/useForm";
 
 export const SET_AUTH_CHECKED = "SET_AUTH_CHECKED";
 export const SET_USER = "SET_USER";
 export const CLEAR_USER = "CLEAR_USER";
 
+type TSetAuthChecked = {
+  type: typeof SET_AUTH_CHECKED,
+  payload: boolean,
+};
 
+type TSetUser = {
+  type: typeof SET_USER,
+  payload: DataUser | null,
+};
 
-export const setAuthChecked = (value) => ({
+type TClearUser = {
+  type: typeof CLEAR_USER,
+};
+
+export type TUserActions = TSetAuthChecked | TSetUser | TClearUser;
+
+export const setAuthChecked = (value:boolean):TSetAuthChecked => ({
   type: SET_AUTH_CHECKED,
   payload: value,
 });
 
-export const setUser = (user) => ({
+export const setUser = (user:DataUser | null):TSetUser => ({
   type: SET_USER,
   payload: user,
 });
 
-export const clearUser = () => ({
+export const clearUser = ():TClearUser => ({
   type: CLEAR_USER,
 });
 
 
-export const getUser = () => {
+export const getUser = ():AppThunk<Promise<void>> => {
   return (dispatch) => {
     return authApi.getUser()
       .then((res) => {
@@ -32,17 +48,16 @@ export const getUser = () => {
 };
 
 
-export const updateUser = (email, name, password) => {
+export const updateUser = ({email, name, password}:TValuesInput):AppThunk => {
   return (dispatch) => {
     return authApi.updateUser({email, name, password})
       .then((res) => {
-        console.log("resUPD",res)
         dispatch(setUser(res.user));
       });
   };
 };
 
-export const logout = () => {
+export const logout = ():AppThunk => {
   return (dispatch) => {
     return authApi.logout()
       .then((res) => {
@@ -54,7 +69,7 @@ export const logout = () => {
   };
 };
 
-export const login = (password, email) => {
+export const login = ({password, email}:TValuesInput):AppThunk => {
   return (dispatch) => {
     return authApi.login({password, email})
       .then((res) => {
@@ -68,7 +83,7 @@ export const login = (password, email) => {
   };
 };
 
-export const register = (name, password, email) => {
+export const register = ({name, password, email}:TValuesInput):AppThunk => {
   return (dispatch) => {
     return authApi.register({name, password, email})
       .then((res) => {
@@ -77,11 +92,11 @@ export const register = (name, password, email) => {
         dispatch(setUser(res.user));
         dispatch(setAuthChecked(true));
       })
-      .catch(() => dispatch(openErrorModal("Перепроверьте данные, Милорд... Данные введены не корректно или такой пользователь уже существуетю")));
+      .catch(() => dispatch(openErrorModal("Перепроверьте данные, Милорд... Данные введены не корректно или такой пользователь уже существует.")));
   };
 };
 
-export const checkUserAuth = () => {
+export const checkUserAuth = ():AppThunk => {
   return (dispatch) => {
     if (localStorage.getItem("accessToken")) {
       dispatch(getUser())

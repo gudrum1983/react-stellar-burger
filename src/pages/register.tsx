@@ -42,7 +42,7 @@ export function Register():JSX.Element {
     const target = formElement.current
     const isError = !!target?.querySelector(".input_status_error")
     if (!isError) {
-      dispatch(register(nameInput, passwordInput, emailInput));
+      dispatch(register({name:nameInput, password:passwordInput, email:emailInput}));
     } else {
       dispatch(openErrorModal("Перепроверьте данные, Милорд... Они введены не корректно."));
     }

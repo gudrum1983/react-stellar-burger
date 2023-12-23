@@ -1,4 +1,3 @@
-import {configureStore} from "@reduxjs/toolkit";
 import {burgerConstructorReducer} from "./burger-constructor/burger-constructor-reducer";
 import {orderDetailsReducer} from "./order-details/order-details-reducer";
 import {burgerIngredientsReducer} from "./burger-ingredients/burger-ingredients-reducer";
@@ -7,6 +6,10 @@ import {errorModalReducer} from "./error-modal/error-modal-reducer";
 import {reducerFeedOrders} from "./feed-orders/feed-orders-reducer";
 import {socketMiddleware} from "./middleware/socket-middleware";
 
+
+import {configureStore, ThunkAction} from "@reduxjs/toolkit";
+import {combineReducers} from "redux";
+import {TypedUseSelectorHook, useDispatch as dispatchHook, useSelector as selectorHook,} from "react-redux";
 
 import {
   FEED_ORDERS_CONNECT,
@@ -19,15 +22,18 @@ import {
 } from "./feed-orders/feed-orders-actions";
 
 import {
-  FEED_ORDERS_PROFILE_WS_MESSAGE,
-  FEED_ORDERS_PROFILE_WS_OPEN,
   FEED_ORDERS_PROFILE_CONNECT,
   FEED_ORDERS_PROFILE_DISCONNECT,
+  FEED_ORDERS_PROFILE_WS_CLOSE,
   FEED_ORDERS_PROFILE_WS_CONNECTING,
   FEED_ORDERS_PROFILE_WS_ERROR,
-  FEED_ORDERS_PROFILE_WS_CLOSE,
+  FEED_ORDERS_PROFILE_WS_MESSAGE,
+  FEED_ORDERS_PROFILE_WS_OPEN,
 } from "./feed-orders-profile/feed-orders-actions";
 import {reducerFeedOrdersProfile} from "./feed-orders-profile/feed-orders-reducer";
+import {TUserActions} from "./user/user-action";
+import {TErrorModalActions} from "./error-modal/error-modal-action";
+import {TOrderDetailsActions} from "./order-details/order-details-actions";
 
 
 const feedOrdersMiddleware = socketMiddleware({
@@ -52,18 +58,43 @@ const feedOrdersMiddlewareProfile = socketMiddleware({
 
 })
 
-export const store = configureStore(({
-  reducer: {
-    chooseIngredients: burgerConstructorReducer,
-    orderDetails: orderDetailsReducer,
-    burgerIngredients: burgerIngredientsReducer,
+const reducer = combineReducers({
+  chooseIngredients: burgerConstructorReducer,
+  orderDetails: orderDetailsReducer,
+  burgerIngredients: burgerIngredientsReducer,
+  user: userDataReducer,
+  errorModal: errorModalReducer,
+  feedOrders: reducerFeedOrders,
+  feedOrdersProfile: reducerFeedOrdersProfile,
+});
 
-    user: userDataReducer,
-    errorModal: errorModalReducer,
-    feedOrders: reducerFeedOrders,
-    feedOrdersProfile: reducerFeedOrdersProfile,
-  },
+export type TRootState = ReturnType<typeof reducer>;
+
+/*type AllState = TUserData | TErrorModalState*/
+
+export const store = configureStore({
+  reducer,
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({serializableCheck: false}).concat(feedOrdersMiddleware, feedOrdersMiddlewareProfile)
   }
-}));
+});
+
+type TAppActions = TUserActions | TErrorModalActions | TOrderDetailsActions;
+//todo почему export type ThunkAction<
+//   ReturnType,
+//   State,
+//   ExtraThunkArg, ---unknown??????
+//   BasicAction extends Action
+// >
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, TRootState, unknown, TAppActions>;
+
+type AppDispatch<TReturnType = void> = (
+  action: TAppActions | AppThunk<TReturnType>
+) => TReturnType;
+
+export const useDispatch: () => AppDispatch = dispatchHook;
+export const useSelector2: TypedUseSelectorHook<TRootState> = selectorHook;
+
+
+
+

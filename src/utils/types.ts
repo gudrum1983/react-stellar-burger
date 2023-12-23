@@ -5,12 +5,6 @@ export type TFunctionComponentWithChildren = {
   children: React.ReactNode
 }
 
-
-
-
-
-
-
 export type TPropsIngredients = {
   ingredient: string;
   index: number;
@@ -23,29 +17,66 @@ export type TPropsCardOrder = {
 
 export type TSelectorOrders = Array<TOrder> | undefined;
 
-export type TOrder = {
+/*export type TOrder = {
   _id: string;
   status: TStatusOrder;
   name: string;
   createdAt: string;
   updatedAt: string;
   number: number
-  ingredients: Array<string>
+  ingredients: TOrderIngredients
+};
+
+export type TReadyOrder = {
+  _id: string;
+  status: TStatusOrder;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  number: number;
+  ingredients: Array<TOrderIngredients>;
+
+  owner: {
+    name: string;
+    email: string;
+    createdAt: string;
+    updatedAt: string;
+  },
+  price: number;
+}*/
+
+export type TOrder = {
+  _id: string;
+  status: TStatusOrder;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  number: number;
+  ingredients: TOrderIngredients;
 };
 
 
+export type TReadyOrder = TOrder & {
+  owner: {
+    name: string;
+    email: string;
+    createdAt: string;
+    updatedAt: string;
+  },
+  price: number;
+};
 
 
-
+export type TOrderIngredients = Array<TIdIngredient>
 
 
 export type TPropsModalOverlay = {
-  onClose: () => void ;
+  onClose: () => void;
 };
 
 
 export type TPropsModalOverlay2 = {
-  onClose: () => MouseEventHandler<HTMLDivElement> ;
+  onClose: () => MouseEventHandler<HTMLDivElement>;
 };
 
 export type TKeyEv = (e: KeyboardEvent) => void;
@@ -93,7 +124,7 @@ export const DISPLAY_LARGE = "text_type_main-large"
 export enum STATUS_ORDER {
   done,
   pending,
-  created ,
+  created,
 }
 
 export type TStatusOrder = keyof typeof STATUS_ORDER;
@@ -101,8 +132,8 @@ export type TStatusOrder = keyof typeof STATUS_ORDER;
 
 export enum typeIngredients {
   bun = 'bun',
-  sauce = 'sauce' ,
-  main ='main',
+  sauce = 'sauce',
+  main = 'main',
 }
 
 /*enum typeIngredients2 {
@@ -114,17 +145,20 @@ export enum typeIngredients {
 export type TTypeIngredients = keyof typeof typeIngredients
 
 export type TIngredient = {
-_id:string;
-name:string;
-type:TTypeIngredients;
-proteins:number;
-fat:number;
-carbohydrates:number;
-calories:number;
-price:number;
-image:string;
-image_mobile:string;
-image_large:string;
-__v:number;}
+  _id: TIdIngredient;
+  name: string;
+  type: TTypeIngredients;
+  proteins: number;
+  fat: number;
+  carbohydrates: number;
+  calories: number;
+  price: number;
+  image: string;
+  image_mobile: string;
+  image_large: string;
+  __v: number;
+}
+
+export type TIdIngredient = string
 
 export type TIngredientImage = Pick<TIngredient, "image"> | Pick<TIngredient, "image_mobile">;

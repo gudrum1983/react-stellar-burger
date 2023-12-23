@@ -13,6 +13,8 @@ export function ConstructorList():JSX.Element {
   const other:Array<TSelectedIngredientOther> = useSelector(selectOther)
   const dispatch = useDispatch();
   const topGap = !bun ? styles.topGap : '';
+
+  //todo   //@ts-ignore
   //@ts-ignore
   const moveCard = React.useCallback((dragIndex, hoverIndex, other) => {
 
@@ -30,6 +32,7 @@ export function ConstructorList():JSX.Element {
   return (
     <div className={`${styles.listScroll} ${styles.scroll} ${topGap} custom-scroll`}>
       {other.map((item, i) => (
+        //todo   //@ts-ignore
         //@ts-ignore
         <ConstructorItem moveCard={moveCard} index={i} key={item.numberIngredient} id={item.numberIngredient} currentItem={item}>
 

@@ -43,7 +43,7 @@ export function Login():JSX.Element {
     const target = formElement.current
     const isError = !!target?.querySelector(".input_status_error")
     if (!isError) {
-      dispatch(login(passwordInput, emailInput));
+      dispatch(login({password:passwordInput, email:emailInput}));
     } else {
       dispatch(openErrorModal("Перепроверьте логин и пароль, Милорд... Они введены не корректно."));
     }

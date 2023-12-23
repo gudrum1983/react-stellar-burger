@@ -9,7 +9,7 @@ export type ArgumentsUser = {
   token?:string;
 }
 
-type DataUser = {
+export type DataUser = {
   email: string;
   name: string;
 }
@@ -33,8 +33,10 @@ type MessageLogout = {
 
 export type MessageOrder = {
   success: boolean;
-  data: Array<TOrder>
+  orders: Array<TOrder>;
+/*  data?: Array<TOrder>;*/
 }
+
 
 export type MessageIngredients = {
   success: boolean;
@@ -45,7 +47,7 @@ export type MessageIngredients = {
 /**
  * Функция запрос к АПИ для получения данных о пользователе
  */
-const getUser = () => {
+const getUser = (): Promise<MessageUpdUser> => {
     return fetchWithRefresh(ENDPOINTS.authUser, {
         method: 'GET',
         headers: {
