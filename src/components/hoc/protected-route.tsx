@@ -3,6 +3,7 @@ import {Navigate, useLocation} from "react-router-dom";
 import {pagePath} from "../../utils/constants";
 import {user, userAuth} from "../../services/user/user-selector";
 import {Preloader} from "../preloader/preloader";
+import {useSelector2} from "../../services/store";
 
 type TPropsProtected = {
   onlyUnAuth?: boolean;
@@ -16,7 +17,7 @@ const ProtectedRouteElement = ({onlyUnAuth = false, component}: TPropsProtected)
   // при этом результат этой проверки не имеет значения, важно только,
   // что сам факт проверки имел место.
   const isAuthChecked = useSelector(userAuth);
-  const isUser = !!useSelector(user);
+  const isUser = !!useSelector2(user);
   const location = useLocation();
 
   if (!isAuthChecked) {

@@ -13,11 +13,12 @@ import {useNavigate} from "react-router-dom";
 import {user, userAuth} from "../../services/user/user-selector";
 import {TIngredient} from "../../utils/types";
 import {TSelectedIngredientOther} from "./constructor-item/constructor-item";
+import {useSelector2} from "../../services/store";
 
 export function BurgerConstructor(): JSX.Element {
   const dispatch = useDispatch();
   const navigate = useNavigate()
-
+//todo   //@ts-ignore
   //@ts-ignore
   const onDropHandler = (ingredient) => {
     if (ingredient.type === "bun") {
@@ -40,7 +41,7 @@ export function BurgerConstructor(): JSX.Element {
 
   const borderColor = isHover ? stylesConstr.borderLightgreen : (isCanD ? stylesConstr.borderLightgreen2 : stylesConstr.borderTransparent);
   const isAuthChecked = useSelector(userAuth)
-  const isUser = useSelector(user)
+  const isUser = useSelector2(user)
 
   const bun: TIngredient = useSelector(selectBun)
   const {name, image, price, _id} = {...bun}

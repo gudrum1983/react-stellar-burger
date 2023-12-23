@@ -1,30 +1,15 @@
 import {ENDPOINTS, request} from "../utils/config-api";
 import {MessageOrder} from "./user";
-import {TIngredient, TOrder, TStatusOrder} from "../utils/types";
+import {TOrderIngredients, TReadyOrder} from "../utils/types";
 
 type ReadyOrder = {
     success: boolean;
     name: string;
-    order: {
-      ingredients: Array<TIngredient>;
-      _id: string;
-      owner: {
-        name: string;
-        email: string;
-        createdAt: string;
-        updatedAt: string;
-      },
-      status: TStatusOrder;
-      name: string;
-      createdAt: string;
-      updatedAt: string;
-      number: number;
-      price: number;
-    }
+    order: TReadyOrder
   }
 
 
-export const getOrderDetailsReady = (ingredientsOrder: Pick<TOrder, "ingredients">): Promise<ReadyOrder> => {
+export const getOrderDetailsReady = (ingredientsOrder: TOrderIngredients): Promise<ReadyOrder> => {
   return request<ReadyOrder>(ENDPOINTS.orders, {
     method: 'POST',
     headers: {

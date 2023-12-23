@@ -6,21 +6,18 @@ import {BurgerIngredients} from "../components/burger-ingredients/burger-ingredi
 import {OrderDetails} from "../components/modal/order-details/order-details";
 import {Modal} from "../components/modal/modal";
 import {clearOrderDetails} from "../services/order-details/order-details-actions";
-import {useDispatch, useSelector} from "react-redux";
-import {
-  orderDetailsFailed,
-  orderDetailsInfo,
-  orderDetailsRequest
-} from "../services/order-details/order-details-selectors";
+import {useDispatch} from "react-redux";
+import { orderDetailsFailed, orderDetailsInfo, orderDetailsRequest } from "../services/order-details/order-details-selectors";
 import {Text} from "../components/typography/text/text";
 import {DISPLAY_SMALL} from "../utils/types";
+import {useSelector2} from "../services/store";
 
 export function Home():JSX.Element {
 
   const dispatch = useDispatch();
-  const orderRequest = useSelector(orderDetailsRequest)
-  const orderFailed = useSelector(orderDetailsFailed)
-  const order = useSelector(orderDetailsInfo)
+  const orderRequest = useSelector2(orderDetailsRequest)
+  const orderFailed = useSelector2(orderDetailsFailed)
+  const order = useSelector2(orderDetailsInfo)
   const number = order?.number
 
   function handleCloseModal():void {
@@ -46,7 +43,7 @@ export function Home():JSX.Element {
         </section>
       </DndProvider>
 
-      {number && modal(<OrderDetails/>)}
+      {number && modal(<OrderDetails number={number}/>)}
       {orderFailed && modal(
         <Text size={DISPLAY_SMALL} >Наш краторный хмель пожрал антарианский долгоносик,
            попробуйте сформировать заказ позже, Милорд...</Text>

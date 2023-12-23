@@ -3,9 +3,10 @@ import React from "react";
 import {useSelector} from "react-redux";
 import {burgerIngredientsMap} from "../../services/burger-ingredients/burger-ingredients-selector";
 import {Digits} from "../typography/digits/digits";
+import {TIdIngredient} from "../../utils/types";
 
 type TPropsOrderPrice = {
-  ingredients: Array<string>
+  ingredients: Array<TIdIngredient>
 };
 
 export function OrderPrice({ingredients}:TPropsOrderPrice): JSX.Element {

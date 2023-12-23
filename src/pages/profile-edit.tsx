@@ -65,7 +65,7 @@ export function ProfileEdit():JSX.Element {
 
     dispatch(getUser());
     if (isEdit) {
-      dispatch(updateUser(emailInput, nameInput, passwordInput));
+      dispatch(updateUser({email:emailInput, name:nameInput, password:passwordInput}));
     }
 
   }

@@ -18,12 +18,13 @@ import {
 } from "../../services/feed-orders-profile/feed-orders-selector";
 import {selectorFeedOrdersData, selectorFeedOrdersStatus} from "../../services/feed-orders/selector-feed-orders";
 import {COLOR_SUCCESS, DISPLAY_SMALL, TOrder} from "../../utils/types";
+import {useSelector2} from "../../services/store";
 
-type TSelectorOrder = {
+/*type TSelectorOrder = {
   orderRequest: boolean;
   orderFailed: boolean
   order: TOrder
-}
+}*/
 
 /**
  * карточка с деталями заказа OrderInfo
@@ -60,7 +61,7 @@ export function OrderInfo(): JSX.Element {
 
   const isDisconnected = status !== WebsocketStatus.ONLINE
 
-  const {orderRequest, order: orderRest}: TSelectorOrder = useSelector(orderDetails)
+  const {orderRequest, order: orderRest} = useSelector2(orderDetails)
 
   React.useEffect(() => {
     if (isFeed && isDisconnected) {
@@ -69,6 +70,7 @@ export function OrderInfo(): JSX.Element {
         dispatch(disconnectFeed())
       }
     } else if (isProfile && isDisconnected) {
+      // @ts-ignore
       dispatch(connectProfile());
       return () => {
         dispatch(disconnectProfile());
@@ -96,7 +98,7 @@ export function OrderInfo(): JSX.Element {
   }, [data, orderRest])
 
   React.useEffect(() => {
-    if (!order) {
+    if (!order && idCurrentItem) {
       dispatch(getInfoOrderDetails(idCurrentItem))
       return () => {
         dispatch(clearOrderDetails())

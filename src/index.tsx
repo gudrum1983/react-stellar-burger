@@ -7,6 +7,7 @@ import "./index.css";
 import {store} from "./services/store";
 import {BrowserRouter} from "react-router-dom";
 
+
 /*StrictMode — инструмент для обнаружения потенциальных проблем в приложении, не рендерит видимого UI.
   Строгий режим активирует дополнительные проверки и предупреждения для своих потомков.*/
 
