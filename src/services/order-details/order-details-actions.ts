@@ -65,6 +65,7 @@ export function getInfoOrderDetails(number:string):AppThunk {
     getOrderDetailsInfo(number)
       .then(res => {
         console.log("infOrd", res)
+        //todo определиться с res orders или  data????
         dispatch(orderDetailsSuccess(res.orders[0]));
       })
       .catch(() => {
