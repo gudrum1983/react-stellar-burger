@@ -8,6 +8,7 @@ import {Link, useLocation} from "react-router-dom";
 import {TIngredient} from "../../../utils/types";
 import {Text} from "../../typography/text/text";
 import {Digits} from "../../typography/digits/digits";
+import {useSelector2} from "../../../services/store";
 
 type TPropsIngredient = {
   currentItem:TIngredient;}
@@ -17,14 +18,15 @@ export function Ingredient({currentItem}:TPropsIngredient):JSX.Element {
 
   const location = useLocation()
   const id = currentItem._id
+  const type = currentItem.type
 
   const [, dragRef] = useDrag({
     type: "burgerConstructor",
     item: currentItem,
   });
 
-  const count = useSelector(selectCount(currentItem._id, currentItem.type))
-  const canDraggable = (currentItem?.type !== "bun") ? true : !(count)
+  const count = useSelector2(selectCount(id, type))
+  const canDraggable = (type !== "bun") ? true : !(count)
   const cursorStyle = !canDraggable ? 'cursor_type_noGrab' : ''
 
   return (
