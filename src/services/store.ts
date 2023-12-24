@@ -35,6 +35,7 @@ import {TUserActions} from "./user/user-action";
 import {TErrorModalActions} from "./error-modal/error-modal-action";
 import {TOrderDetailsActions} from "./order-details/order-details-actions";
 import {TBurgerConstructorActions} from "./burger-constructor/burger-constructor-actions";
+import {TIngredientsActions} from "./burger-ingredients/burger-ingredients-actions";
 
 
 const feedOrdersMiddleware = socketMiddleware({
@@ -80,7 +81,7 @@ export const store = configureStore({
   }
 });
 
-type TAppActions = TUserActions | TErrorModalActions | TOrderDetailsActions | TBurgerConstructorActions ;
+type TAppActions = TUserActions | TErrorModalActions | TOrderDetailsActions | TBurgerConstructorActions | TIngredientsActions;
 //todo почему export type ThunkAction<
 //   ReturnType,
 //   State,

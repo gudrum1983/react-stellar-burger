@@ -1,5 +1,4 @@
 import styles from "./ingredient-details.module.css";
-import {useSelector} from "react-redux";
 import {useLocation, useParams} from "react-router-dom";
 import {burgerIngredientsMap,} from "../../services/burger-ingredients/burger-ingredients-selector";
 import React from "react";
@@ -13,7 +12,7 @@ export function IngredientDetails(): JSX.Element {
   const params = useParams()
   const location = useLocation()
   const background = location.state && location.state.background;
-  const ingredients: Map<string, TIngredient> = useSelector(burgerIngredientsMap)
+  const ingredients: Map<string, TIngredient> = useSelector2(burgerIngredientsMap)
   const idCurrentItem = params.id
 
   if (!!idCurrentItem) {

@@ -1,6 +1,5 @@
 import React, {FC} from "react";
 import {IngredientPreview} from "../../ingredient-preview/ingredient-preview";
-import {useSelector} from "react-redux";
 import {burgerIngredientsMap} from "../../../services/burger-ingredients/burger-ingredients-selector";
 import {TPropsIngredients} from "../../../utils/types";
 
@@ -12,7 +11,7 @@ import {TPropsIngredients} from "../../../utils/types";
  */
 export const Ingredients: FC<TPropsIngredients> = ({ingredient, index, count}) => {
 
-  const mapIngredients = useSelector(burgerIngredientsMap)
+  const mapIngredients = useSelector2(burgerIngredientsMap)
 
   if (!mapIngredients.has(ingredient)) {
     return null

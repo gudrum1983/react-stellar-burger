@@ -1,5 +1,5 @@
 import React from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import styles from "./app.module.css";
 import {Routes, Route, useLocation, useNavigate} from "react-router-dom";
 import {Home} from "../../pages/home";
@@ -33,7 +33,7 @@ export default function App(): JSX.Element {
     dispatch(loadBurgerIngredients())
   }, []);
 
-  const {ingredients, isLoading, hasError} = useSelector(burgerIngredients);
+  const {ingredients, isLoading, hasError} = useSelector2(burgerIngredients);
   const location = useLocation()
 
   const navigate = useNavigate()

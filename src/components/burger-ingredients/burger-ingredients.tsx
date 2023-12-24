@@ -3,7 +3,6 @@ import styles from "./burger-ingredients.module.css";
 import stylesConstr from "../burger-constructor/burger-constructor.module.css";
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
 import {IngredientsTypeList} from "./ingredients-type-list/ingredients-type-list";
-import {useSelector} from "react-redux";
 import {burgerIngredientsArray} from "../../services/burger-ingredients/burger-ingredients-selector";
 import {Text} from "../typography/text/text";
 import {DISPLAY_LARGE, TIngredient, TTypeIngredients, typeIngredients} from "../../utils/types";
@@ -16,7 +15,7 @@ type TFilteredIngredients = {
 
 export function BurgerIngredients():JSX.Element {
 
-  const ingredients:Array<TIngredient> = useSelector(burgerIngredientsArray)
+  const ingredients:Array<TIngredient> = useSelector2(burgerIngredientsArray)
   const filtered = (type:TTypeIngredients):Array<TIngredient> => {
     return ingredients.filter((item) => item.type === type);
   }

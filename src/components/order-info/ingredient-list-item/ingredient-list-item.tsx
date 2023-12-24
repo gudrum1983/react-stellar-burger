@@ -1,4 +1,3 @@
-import {useSelector} from "react-redux";
 import {burgerIngredientsMap} from "../../../services/burger-ingredients/burger-ingredients-selector";
 import styles from "./ingredient-list-item.module.css";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
@@ -18,7 +17,7 @@ export type TPropsIngredientListItem = {
  */
 export function IngredientListItem({idIng, count}: TPropsIngredientListItem): JSX.Element {
 
-  const mapIngredients = useSelector(burgerIngredientsMap)
+  const mapIngredients = useSelector2(burgerIngredientsMap)
 
 /*  const tek = count?.get(idIng)*/
 

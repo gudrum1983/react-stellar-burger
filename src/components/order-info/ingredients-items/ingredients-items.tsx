@@ -1,7 +1,6 @@
 import styles from "./ingredients-items.module.css";
 import React from "react";
 import {IngredientListItem} from "../ingredient-list-item/ingredient-list-item";
-import {useSelector} from "react-redux";
 import {burgerIngredientsMap} from "../../../services/burger-ingredients/burger-ingredients-selector";
 import {TIdIngredient} from "../../../utils/types";
 
@@ -15,7 +14,7 @@ type TPropsIngredientsItems = {
  */
 export function IngredientsItems({componentsOrder}: TPropsIngredientsItems): JSX.Element {
 
-  const mapIngredients = useSelector(burgerIngredientsMap)
+  const mapIngredients = useSelector2(burgerIngredientsMap)
   const mapCount: Map<TIdIngredient, {count: number}> = new Map()
   const listItems: Array<JSX.Element> = []
 
