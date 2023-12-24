@@ -1,16 +1,16 @@
 import styles from "./constructor-list.module.css";
 import React from "react";
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {moveFilling} from "../../../services/burger-constructor/burger-constructor-actions";
 import update from 'immutability-helper'
 import {selectBun, selectOther} from "../../../services/burger-constructor/burger-constructor-selector";
 import {ConstructorItem, TSelectedIngredientOther} from "../constructor-item/constructor-item";
-import {TIngredient} from "../../../utils/types";
+import {useSelector2} from "../../../services/store";
 
 export function ConstructorList():JSX.Element {
 
-  const bun:TIngredient = useSelector(selectBun)
-  const other:Array<TSelectedIngredientOther> = useSelector(selectOther)
+  const bun = useSelector2(selectBun)
+  const other:Array<TSelectedIngredientOther> = useSelector2(selectOther)
   const dispatch = useDispatch();
   const topGap = !bun ? styles.topGap : '';
 

@@ -11,7 +11,7 @@ import {selectBun, selectOther} from "../../services/burger-constructor/burger-c
 import {addFilling, chooseBun} from "../../services/burger-constructor/burger-constructor-actions";
 import {useNavigate} from "react-router-dom";
 import {user, userAuth} from "../../services/user/user-selector";
-import {TIngredient} from "../../utils/types";
+import {TIngredient, TOrderIngredients} from "../../utils/types";
 import {TSelectedIngredientOther} from "./constructor-item/constructor-item";
 import {useSelector2} from "../../services/store";
 
@@ -43,12 +43,12 @@ export function BurgerConstructor(): JSX.Element {
   const isAuthChecked = useSelector(userAuth)
   const isUser = useSelector2(user)
 
-  const bun: TIngredient = useSelector(selectBun)
+  const bun = useSelector2(selectBun)
   const {name, image, price, _id} = {...bun}
-  const other: Array<TSelectedIngredientOther> = useSelector(selectOther)
+  const other = useSelector2(selectOther)
 
-  function getListIdIngredients() {
-    const idBun = [_id];
+  function getListIdIngredients():TOrderIngredients {
+    const idBun = [_id!];
     const idOther = other.map((item) => item.ingredient._id);
     return idBun.concat(idOther, idBun)
   }
@@ -72,8 +72,8 @@ export function BurgerConstructor(): JSX.Element {
                                 type="top"
                                 isLocked={true}
                                 text={`${name} (верх)`}
-                                price={price}
-                                thumbnail={image}
+                                price={price!}
+                                thumbnail={image!}
             />
           </div>}
           {(other.length > 0) && <ConstructorList/>}
@@ -82,8 +82,8 @@ export function BurgerConstructor(): JSX.Element {
                                 type="bottom"
                                 isLocked={true}
                                 text={`${name} (низ)`}
-                                price={price}
-                                thumbnail={image}
+                                price={price!}
+                                thumbnail={image!}
             />
           </div>}
         </div>
