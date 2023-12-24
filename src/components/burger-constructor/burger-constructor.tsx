@@ -11,8 +11,7 @@ import {selectBun, selectOther} from "../../services/burger-constructor/burger-c
 import {addFilling, chooseBun} from "../../services/burger-constructor/burger-constructor-actions";
 import {useNavigate} from "react-router-dom";
 import {user, userAuth} from "../../services/user/user-selector";
-import {TIngredient, TOrderIngredients} from "../../utils/types";
-import {TSelectedIngredientOther} from "./constructor-item/constructor-item";
+import {TOrderIngredients} from "../../utils/types";
 import {useSelector2} from "../../services/store";
 
 export function BurgerConstructor(): JSX.Element {

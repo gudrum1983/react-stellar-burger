@@ -1,7 +1,6 @@
 import React from "react";
-import {useSelector} from 'react-redux';
 import {selectBun, selectOther} from "../../../services/burger-constructor/burger-constructor-selector";
-import {DIGITS_MEDIUM, TIngredient} from "../../../utils/types";
+import {DIGITS_MEDIUM} from "../../../utils/types";
 import {TSelectedIngredientOther} from "../constructor-item/constructor-item";
 import {Digits} from "../../typography/digits/digits";
 import {useSelector2} from "../../../services/store";
