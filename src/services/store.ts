@@ -81,7 +81,8 @@ export const store = configureStore({
   }
 });
 
-type TAppActions = TUserActions | TErrorModalActions | TOrderDetailsActions | TBurgerConstructorActions | TIngredientsActions;
+type TAppActions = TUserActions
+  | TErrorModalActions | TOrderDetailsActions | TBurgerConstructorActions | TIngredientsActions;
 //todo почему export type ThunkAction<
 //   ReturnType,
 //   State,

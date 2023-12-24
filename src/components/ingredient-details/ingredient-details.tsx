@@ -5,6 +5,7 @@ import React from "react";
 import {Text} from "../typography/text/text";
 import {COLOR_INACTIVE, DISPLAY_LARGE, TIngredient} from "../../utils/types";
 import {Digits} from "../typography/digits/digits";
+import {useSelector2} from "../../services/store";
 
 
 export function IngredientDetails(): JSX.Element {

@@ -25,17 +25,17 @@ type TGetIngredientsRequest = {
 
 export type TIngredientsActions = TGetIngredientsSuccess | TGetIngredientsFailed | TGetIngredientsRequest;
 
-const sortedData = (data) => data.toSorted((a, b) => a._id > b._id ? 1 : -1)
+const sortedData = (data:Array<TIngredient>):Array<TIngredient> => data.sort((a:TIngredient, b:TIngredient) => a._id > b._id ? 1 : -1)
 
-const mapIngredients = (sortedDataArr) => {
-  const map = new Map()
+const mapIngredients = (sortedDataArr:Array<TIngredient>) => {
+  const map:TMapIngredients = new Map()
   sortedDataArr.forEach((element) => {
     map.set(element._id, element);
   });
   return map
 }
 
-export function getIngredientsSuccess(ingredients):TGetIngredientsSuccess {
+export function getIngredientsSuccess(ingredients:Array<TIngredient>):TGetIngredientsSuccess {
   return {
     type: GET_INGREDIENTS_SUCCESS,
     ingredients: sortedData(ingredients),

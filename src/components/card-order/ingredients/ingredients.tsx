@@ -2,6 +2,7 @@ import React, {FC} from "react";
 import {IngredientPreview} from "../../ingredient-preview/ingredient-preview";
 import {burgerIngredientsMap} from "../../../services/burger-ingredients/burger-ingredients-selector";
 import {TPropsIngredients} from "../../../utils/types";
+import {useSelector2} from "../../../services/store";
 
 /**
  * Список ингредиентов в карточке заказа CardOrder
@@ -16,7 +17,8 @@ export const Ingredients: FC<TPropsIngredients> = ({ingredient, index, count}) =
   if (!mapIngredients.has(ingredient)) {
     return null
   }
-
+  //todo //@ts-ignore
+//@ts-ignore
   const {image_mobile} = mapIngredients.get(ingredient)
 
   const marginLeft = index * 48

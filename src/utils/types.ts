@@ -162,3 +162,6 @@ export type TIngredient = {
 export type TIdIngredient = string
 
 export type TIngredientImage = Pick<TIngredient, "image"> | Pick<TIngredient, "image_mobile">;
+
+
+export type TUrl = string

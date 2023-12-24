@@ -3,6 +3,7 @@ import React from "react";
 import {IngredientListItem} from "../ingredient-list-item/ingredient-list-item";
 import {burgerIngredientsMap} from "../../../services/burger-ingredients/burger-ingredients-selector";
 import {TIdIngredient} from "../../../utils/types";
+import {useSelector2} from "../../../services/store";
 
 type TPropsIngredientsItems = {
   componentsOrder:  Array<TIdIngredient>;
@@ -30,7 +31,7 @@ export function IngredientsItems({componentsOrder}: TPropsIngredientsItems): JSX
         const count = mapCount.get(item)!.count
         mapCount.set(item, {count: count + 1})
       } else {
-        if (mapIngredients.has(item)) {
+        if (mapIngredients && mapIngredients.has(item)) {
           mapCount.set(item, {count: 1})
         }
       }

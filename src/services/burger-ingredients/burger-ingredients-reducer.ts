@@ -15,11 +15,11 @@ export type TIngredientsState = {
 }
 
 
-const initialState = {
+const initialState:TIngredientsState = {
   isLoading: false,
   hasError: false,
   ingredients: [],
-  mapIngredients: {}
+  mapIngredients: new Map
 };
 
 export const burgerIngredientsReducer = (state:TIngredientsState = initialState, action:TIngredientsActions):TIngredientsState => {

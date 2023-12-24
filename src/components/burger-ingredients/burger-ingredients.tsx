@@ -6,6 +6,7 @@ import {IngredientsTypeList} from "./ingredients-type-list/ingredients-type-list
 import {burgerIngredientsArray} from "../../services/burger-ingredients/burger-ingredients-selector";
 import {Text} from "../typography/text/text";
 import {DISPLAY_LARGE, TIngredient, TTypeIngredients, typeIngredients} from "../../utils/types";
+import {useSelector2} from "../../services/store";
 
 type TFilteredIngredients = {
   buns:   Array<TIngredient> | [],

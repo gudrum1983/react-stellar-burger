@@ -22,6 +22,7 @@ import {OrderInfo} from "../order-info/order-info";
 import {ProfileOrders} from "../../pages/profile-orders";
 
 import {pagePath} from "../../utils/constants";
+import {useSelector2} from "../../services/store";
 
 
 export default function App(): JSX.Element {
