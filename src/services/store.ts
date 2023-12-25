@@ -18,7 +18,8 @@ import {
   FEED_ORDERS_WS_CONNECTING,
   FEED_ORDERS_WS_ERROR,
   FEED_ORDERS_WS_MESSAGE,
-  FEED_ORDERS_WS_OPEN
+  FEED_ORDERS_WS_OPEN,
+  TFeedOrders
 } from "./feed-orders/feed-orders-actions";
 
 import {
@@ -82,7 +83,11 @@ export const store = configureStore({
 });
 
 type TAppActions = TUserActions
-  | TErrorModalActions | TOrderDetailsActions | TBurgerConstructorActions | TIngredientsActions;
+  | TErrorModalActions
+  | TOrderDetailsActions
+  | TBurgerConstructorActions
+  | TIngredientsActions
+  | TFeedOrders;
 //todo почему export type ThunkAction<
 //   ReturnType,
 //   State,

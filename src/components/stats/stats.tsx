@@ -6,7 +6,7 @@ import {OrdersBoard} from "./orders-board/orders-board";
 import {
    selectorFeedOrdersDoneOrdersNumber, selectorFeedOrdersProgressOrdersNumber,
   selectorFeedOrdersTotal, selectorFeedOrdersTotalToday
-} from "../../services/feed-orders/selector-feed-orders";
+} from "../../services/feed-orders/feed-orders-selector";
 
 export function Stats():JSX.Element {
 

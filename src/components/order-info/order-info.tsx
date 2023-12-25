@@ -16,7 +16,7 @@ import {
   selectorProfileOrdersData,
   selectorProfileOrdersStatus
 } from "../../services/feed-orders-profile/feed-orders-selector";
-import {selectorFeedOrdersData, selectorFeedOrdersStatus} from "../../services/feed-orders/selector-feed-orders";
+import {selectorFeedOrdersData, selectorFeedOrdersStatus} from "../../services/feed-orders/feed-orders-selector";
 import {COLOR_SUCCESS, DISPLAY_SMALL, TOrder} from "../../utils/types";
 import {useSelector2} from "../../services/store";
 

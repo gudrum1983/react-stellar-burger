@@ -7,12 +7,20 @@ import {
   FEED_ORDERS_WS_CLOSE
 } from "./feed-orders-actions";
 
+
+export type TFeedOrdersState = {
+  status: WebsocketStatus.OFFLINE,
+  data: null,
+  connectingError: null,
+}
+
 const initialState = {
   status: WebsocketStatus.OFFLINE,
   data: null,
   connectingError: null,
 }
 
+//@ts-ignore
 export const reducerFeedOrders = (state = initialState, action) => {
   switch (action.type) {
     case FEED_ORDERS_WS_CONNECTING:

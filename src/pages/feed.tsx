@@ -6,7 +6,7 @@ import {Modal} from "../components/modal/modal";
 import {errorModalText, isOpenErrorModal} from "../services/error-modal/error-modal-selector";
 import {closeErrorModal} from "../services/error-modal/error-modal-action";
 import {Text} from "../components/typography/text/text";
-import {selectorFeedOrdersData, selectorFeedOrdersStatus} from "../services/feed-orders/selector-feed-orders";
+import {selectorFeedOrdersData, selectorFeedOrdersStatus} from "../services/feed-orders/feed-orders-selector";
 import {connectFeed, disconnectFeed, WebsocketStatus} from "../utils/config-ws";
 import {Preloader} from "../components/preloader/preloader";
 import {DISPLAY_LARGE, DISPLAY_SMALL} from "../utils/types";
