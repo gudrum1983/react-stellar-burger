@@ -2,7 +2,6 @@ import React from "react";
 import {createButton, typeLinksFooter} from "../utils/form-items";
 import {FormContainer} from "../components/form-container/form-container";
 import {Navigate, useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
 import {getReset} from "../api/password-config";
 import {errorModalText, isOpenErrorModal} from "../services/error-modal/error-modal-selector";
 import {closeErrorModal, openErrorModal} from "../services/error-modal/error-modal-action";
@@ -14,6 +13,7 @@ import {TFormInputs, TFormInputsValue, useForm} from "../hooks/useForm";
 import {pagePath} from "../utils/constants";
 import {Text} from "../components/typography/text/text";
 import {DISPLAY_SMALL} from "../utils/types";
+import {useDispatch2, useSelector2} from "../services/store";
 
 export enum Inputs1 {
   passwordInput,
@@ -23,10 +23,10 @@ export enum Inputs1 {
 export type TNameInputs = keyof typeof Inputs1
 
 export function ResetPassword():JSX.Element {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch2();
   const navigate = useNavigate();
-  const textErrorModal = useSelector(errorModalText)
-  const openErrModal = useSelector(isOpenErrorModal)
+  const textErrorModal = useSelector2(errorModalText)
+  const openErrModal = useSelector2(isOpenErrorModal)
 
 
   const formElement :React.RefObject<HTMLFormElement> = React.createRef()

@@ -6,8 +6,7 @@ import {errorModalReducer} from "./error-modal/error-modal-reducer";
 import {reducerFeedOrders} from "./feed-orders/feed-orders-reducer";
 import {socketMiddleware} from "./middleware/socket-middleware";
 
-
-import {configureStore, ThunkAction} from "@reduxjs/toolkit";
+import {Action, configureStore, ThunkAction} from "@reduxjs/toolkit";
 import {combineReducers} from "redux";
 import {TypedUseSelectorHook, useDispatch as dispatchHook, useSelector as selectorHook,} from "react-redux";
 
@@ -19,7 +18,7 @@ import {
   FEED_ORDERS_WS_ERROR,
   FEED_ORDERS_WS_MESSAGE,
   FEED_ORDERS_WS_OPEN,
-  TFeedOrders
+  TFeedOrdersActions
 } from "./feed-orders/feed-orders-actions";
 
 import {
@@ -73,10 +72,8 @@ const reducer = combineReducers({
 
 export type TRootState = ReturnType<typeof reducer>;
 
-/*type AllState = TUserData | TErrorModalState*/
-
 export const store = configureStore({
-  reducer,
+  reducer: reducer,
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({serializableCheck: false}).concat(feedOrdersMiddleware, feedOrdersMiddlewareProfile)
   }
@@ -87,22 +84,20 @@ type TAppActions = TUserActions
   | TOrderDetailsActions
   | TBurgerConstructorActions
   | TIngredientsActions
-  | TFeedOrders;
+  | TFeedOrdersActions;
 //todo почему export type ThunkAction<
 //   ReturnType,
 //   State,
 //   ExtraThunkArg, ---unknown??????
 //   BasicAction extends Action
 // >
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, TRootState, unknown, TAppActions>;
+/*export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, TRootState, Action<any>, TAppActions>;*/
 
-type AppDispatch<TReturnType = void> = (
-  action: TAppActions | AppThunk<TReturnType>
-) => TReturnType;
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, Action, TRootState, TAppActions>;
 
-export const useDispatch: () => AppDispatch = dispatchHook;
+
+export type AppDispatch<TReturnType = void> = (action: TAppActions | AppThunk<TReturnType>) => TReturnType;
+
+export const useDispatch2: () => AppDispatch = dispatchHook;
+
 export const useSelector2: TypedUseSelectorHook<TRootState> = selectorHook;
-
-
-
-

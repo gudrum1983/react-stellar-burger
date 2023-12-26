@@ -2,9 +2,9 @@ import {Logo, BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-devel
 import {NavigationLink} from "../components/navigation-link/navigation-link";
 import {Link, Outlet, useLocation, useMatch} from "react-router-dom";
 import React from "react";
-import {useSelector} from "react-redux";
 import {userName} from "../services/user/user-selector";
 import {pagePath} from "../utils/constants";
+import {useSelector2} from "../services/store";
 export function AppLayout():JSX.Element {
 
   const location = useLocation();
@@ -12,7 +12,7 @@ export function AppLayout():JSX.Element {
   console.log({isProfile})
   console.log({isProfile})
   console.log({location})
-  const nameUser = useSelector(userName)
+  const nameUser = useSelector2(userName)
 
   const active = (to:string) => {
 

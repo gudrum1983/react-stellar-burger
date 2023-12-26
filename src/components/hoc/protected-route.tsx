@@ -1,4 +1,3 @@
-import {useSelector} from "react-redux";
 import {Navigate, useLocation} from "react-router-dom";
 import {pagePath} from "../../utils/constants";
 import {user, userAuth} from "../../services/user/user-selector";
@@ -16,7 +15,7 @@ const ProtectedRouteElement = ({onlyUnAuth = false, component}: TPropsProtected)
   // isAuthChecked это флаг, показывающий что проверка токена произведена
   // при этом результат этой проверки не имеет значения, важно только,
   // что сам факт проверки имел место.
-  const isAuthChecked = useSelector(userAuth);
+  const isAuthChecked = useSelector2(userAuth);
   const isUser = !!useSelector2(user);
   const location = useLocation();
 

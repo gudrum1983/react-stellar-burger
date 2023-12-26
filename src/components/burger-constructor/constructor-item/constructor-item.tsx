@@ -1,12 +1,11 @@
 import styles from "../constructor-item/constructor-item.module.css";
 import React from "react";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useDispatch} from 'react-redux';
 import {deleteFilling} from "../../../services/burger-constructor/burger-constructor-actions";
 import {useDrag, useDrop} from "react-dnd";
 import {selectBurgerConstructor} from "../../../services/burger-constructor/burger-constructor-selector";
 import {TIngredient} from "../../../utils/types";
-import {useSelector2} from "../../../services/store";
+import {useDispatch2, useSelector2} from "../../../services/store";
 
 export type TSelectedIngredientOther = {
   ingredient: TIngredient;
@@ -23,7 +22,7 @@ type TConstructorItem = {
 
 
 export function ConstructorItem({moveCard, index, id, currentItem}:TConstructorItem):JSX.Element {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch2();
   const {other} = useSelector2(selectBurgerConstructor)
 
   function deleteCard(idItem:string) {

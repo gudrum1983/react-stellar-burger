@@ -38,7 +38,7 @@ export const clearUser = ():TClearUser => ({
 });
 
 
-export const getUser = ():AppThunk<Promise<void>> => {
+export const getUser = ():AppThunk<Promise<unknown>> => {
   return (dispatch) => {
     return authApi.getUser()
       .then((res) => {

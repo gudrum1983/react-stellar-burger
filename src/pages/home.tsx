@@ -6,15 +6,14 @@ import {BurgerIngredients} from "../components/burger-ingredients/burger-ingredi
 import {OrderDetails} from "../components/modal/order-details/order-details";
 import {Modal} from "../components/modal/modal";
 import {clearOrderDetails} from "../services/order-details/order-details-actions";
-import {useDispatch} from "react-redux";
 import { orderDetailsFailed, orderDetailsInfo, orderDetailsRequest } from "../services/order-details/order-details-selectors";
 import {Text} from "../components/typography/text/text";
 import {DISPLAY_SMALL} from "../utils/types";
-import {useSelector2} from "../services/store";
+import {useDispatch2, useSelector2} from "../services/store";
 
 export function Home():JSX.Element {
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch2();
   const orderRequest = useSelector2(orderDetailsRequest)
   const orderFailed = useSelector2(orderDetailsFailed)
   const order = useSelector2(orderDetailsInfo)

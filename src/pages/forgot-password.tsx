@@ -2,7 +2,6 @@ import React from "react";
 import {createButton, typeLinksFooter} from "../utils/form-items";
 import {FormContainer} from "../components/form-container/form-container";
 import {useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
 import {getForgot} from "../api/password-config";
 import {Modal} from "../components/modal/modal";
 import {closeErrorModal, openErrorModal} from "../services/error-modal/error-modal-action";
@@ -11,6 +10,7 @@ import {InputEmail} from "../components/form-container/inputs/input-email";
 import {TFormInputs, TFormInputsValue, useForm} from "../hooks/useForm";
 import {Text} from "../components/typography/text/text";
 import {DISPLAY_SMALL} from "../utils/types";
+import {useDispatch2, useSelector2} from "../services/store";
 
 export enum Inputs1 {
   emailInput,
@@ -19,10 +19,10 @@ export enum Inputs1 {
 export type TNameInputs = keyof typeof Inputs1
 
 export function ForgotPassword():JSX.Element {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch2();
   const navigate = useNavigate();
-  const openErrModal = useSelector(isOpenErrorModal)
-  const textErrorModal = useSelector(errorModalText)
+  const openErrModal = useSelector2(isOpenErrorModal)
+  const textErrorModal = useSelector2(errorModalText)
   const formElement:React.RefObject<HTMLFormElement> = React.createRef()
 
   const formInputs:TFormInputs<TNameInputs> = {

@@ -5,17 +5,16 @@ import {ConstructorList} from "./constructor-list/constructor-list";
 import {TotalPrice} from "./total-price/total-price";
 import styles from "./constructor-list/constructor-list.module.css";
 import {useDrop} from "react-dnd";
-import {useDispatch, useSelector} from "react-redux";
 import {getReadyOrderDetails} from "../../services/order-details/order-details-actions";
 import {selectBun, selectOther} from "../../services/burger-constructor/burger-constructor-selector";
 import {addFilling, chooseBun} from "../../services/burger-constructor/burger-constructor-actions";
 import {useNavigate} from "react-router-dom";
 import {user, userAuth} from "../../services/user/user-selector";
 import {TOrderIngredients} from "../../utils/types";
-import {useSelector2} from "../../services/store";
+import {useDispatch2, useSelector2} from "../../services/store";
 
 export function BurgerConstructor(): JSX.Element {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch2();
   const navigate = useNavigate()
 //todo   //@ts-ignore
   //@ts-ignore
@@ -39,7 +38,7 @@ export function BurgerConstructor(): JSX.Element {
   });
 
   const borderColor = isHover ? stylesConstr.borderLightgreen : (isCanD ? stylesConstr.borderLightgreen2 : stylesConstr.borderTransparent);
-  const isAuthChecked = useSelector(userAuth)
+  const isAuthChecked = useSelector2(userAuth)
   const isUser = useSelector2(user)
 
   const bun = useSelector2(selectBun)

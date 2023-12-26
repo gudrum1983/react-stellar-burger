@@ -1,7 +1,6 @@
 import {NavLink, Outlet} from "react-router-dom";
 import React from "react";
 import {logout} from "../services/user/user-action";
-import {useDispatch, useSelector} from "react-redux";
 import {Modal} from "../components/modal/modal";
 import {closeErrorModal} from "../services/error-modal/error-modal-action";
 import {errorModalText, isOpenErrorModal} from "../services/error-modal/error-modal-selector";
@@ -9,16 +8,17 @@ import {errorModalText, isOpenErrorModal} from "../services/error-modal/error-mo
 import {pagePath} from "../utils/constants";
 import {Text} from "../components/typography/text/text";
 import {COLOR_INACTIVE, DISPLAY_SMALL} from "../utils/types";
+import {useDispatch2, useSelector2} from "../services/store";
 
 export const ProfileLayout = () => {
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch2();
 
   const handleErrorModalClose = () => {
     dispatch(closeErrorModal());
   };
-  const openErrModal = useSelector(isOpenErrorModal)
-  const textErrorModal = useSelector(errorModalText)
+  const openErrModal = useSelector2(isOpenErrorModal)
+  const textErrorModal = useSelector2(errorModalText)
 
   function handleClick(e: React.MouseEvent<HTMLButtonElement>): void {
     e.preventDefault();

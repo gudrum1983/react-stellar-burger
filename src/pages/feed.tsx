@@ -1,7 +1,6 @@
 import React from "react";
 import {Orders} from "../components/orders/orders";
 import {Stats} from "../components/stats/stats";
-import { useDispatch, useSelector} from "react-redux";
 import {Modal} from "../components/modal/modal";
 import {errorModalText, isOpenErrorModal} from "../services/error-modal/error-modal-selector";
 import {closeErrorModal} from "../services/error-modal/error-modal-action";
@@ -10,15 +9,16 @@ import {selectorFeedOrdersData, selectorFeedOrdersStatus} from "../services/feed
 import {connectFeed, disconnectFeed, WebsocketStatus} from "../utils/config-ws";
 import {Preloader} from "../components/preloader/preloader";
 import {DISPLAY_LARGE, DISPLAY_SMALL} from "../utils/types";
+import {useDispatch2, useSelector2} from "../services/store";
 
 export function Feed():JSX.Element {
 
-  const dispatch = useDispatch();
-  const openErrModal = useSelector(isOpenErrorModal)
-  const textErrorModal = useSelector(errorModalText)
+  const dispatch = useDispatch2();
+  const openErrModal = useSelector2(isOpenErrorModal)
+  const textErrorModal = useSelector2(errorModalText)
 
-  const status = useSelector(selectorFeedOrdersStatus)
-  const data = useSelector(selectorFeedOrdersData)
+  const status = useSelector2(selectorFeedOrdersStatus)
+  const data = useSelector2(selectorFeedOrdersData)
   const isDisconnected = status !== WebsocketStatus.ONLINE
 
   const handleErrorModalClose = ():void => {

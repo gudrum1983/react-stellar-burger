@@ -1,7 +1,6 @@
 import React from "react";
 import {createButton, typeLinksFooter} from "../utils/form-items";
 import {FormContainer} from "../components/form-container/form-container";
-import {useDispatch, useSelector} from "react-redux";
 import {register} from "../services/user/user-action";
 import {errorModalText, isOpenErrorModal} from "../services/error-modal/error-modal-selector";
 import {closeErrorModal, openErrorModal} from "../services/error-modal/error-modal-action";
@@ -12,6 +11,7 @@ import {InputEmail} from "../components/form-container/inputs/input-email";
 import {InputName} from "../components/form-container/inputs/input-name";
 import {Text} from "../components/typography/text/text";
 import {pagePath} from "../utils/constants";
+import {useDispatch2, useSelector2} from "../services/store";
 
 export enum Inputs {
   passwordInput,
@@ -23,7 +23,7 @@ export type TNameInputs = keyof typeof Inputs
 
 export function Register():JSX.Element {
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch2();
 
   const formElement:React.RefObject<HTMLFormElement> = React.createRef()
 
@@ -48,8 +48,8 @@ export function Register():JSX.Element {
     }
   }
 
-  const openErrModal = useSelector(isOpenErrorModal)
-  const textErrorModal = useSelector(errorModalText)
+  const openErrModal = useSelector2(isOpenErrorModal)
+  const textErrorModal = useSelector2(errorModalText)
 
   const handleErrorModalClose = () => {
     dispatch(closeErrorModal());

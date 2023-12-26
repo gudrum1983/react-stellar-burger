@@ -1,4 +1,5 @@
 import {TUrl} from "../../utils/types";
+import {TFeedOrdersMessage} from "./feed-orders-reducer";
 
 export const FEED_ORDERS_CONNECT = "FEED_ORDERS_CONNECT"
 export const FEED_ORDERS_DISCONNECT = "FEED_ORDERS_DISCONNECT"
@@ -7,6 +8,30 @@ export const FEED_ORDERS_WS_OPEN = "FEED_ORDERS_WS_OPEN"
 export const FEED_ORDERS_WS_CLOSE = "FEED_ORDERS_WS_CLOSE"
 export const FEED_ORDERS_WS_MESSAGE = "FEED_ORDERS_WS_MESSAGE"
 export const FEED_ORDERS_WS_ERROR = "FEED_ORDERS_WS_ERROR"
+
+type TWSConnectingFeedOrders = {
+  type: typeof FEED_ORDERS_WS_CONNECTING,
+}
+
+type TWSOnOpenFeedOrders = {
+  type: typeof FEED_ORDERS_WS_OPEN,
+}
+
+type TWSOnErrorFeedOrders = {
+  type: typeof FEED_ORDERS_WS_ERROR,
+  payload: string,
+}
+
+type TWSMessageFeedOrders = {
+  type: typeof FEED_ORDERS_WS_MESSAGE,
+  payload: TFeedOrdersMessage
+}
+
+type TWSCloseFeedOrders = {
+  type: typeof FEED_ORDERS_WS_CLOSE,
+}
+
+
 
 type TConnectFeedOrders = {
   type: typeof FEED_ORDERS_CONNECT,
@@ -17,7 +42,13 @@ type TDisconnectFeedOrders = {
   type: typeof FEED_ORDERS_DISCONNECT,
 }
 
-export type TFeedOrders = TConnectFeedOrders | TDisconnectFeedOrders
+export type TFeedOrdersActions = TConnectFeedOrders
+  | TDisconnectFeedOrders
+  | TWSConnectingFeedOrders
+  | TWSOnOpenFeedOrders
+  | TWSOnErrorFeedOrders
+  | TWSMessageFeedOrders
+| TWSCloseFeedOrders
 
 
 export const connectFeedOrders = (url:TUrl):TConnectFeedOrders => ({

@@ -1,5 +1,4 @@
 import React from "react";
-import {useDispatch} from "react-redux";
 import styles from "./app.module.css";
 import {Routes, Route, useLocation, useNavigate} from "react-router-dom";
 import {Home} from "../../pages/home";
@@ -22,12 +21,12 @@ import {OrderInfo} from "../order-info/order-info";
 import {ProfileOrders} from "../../pages/profile-orders";
 
 import {pagePath} from "../../utils/constants";
-import {useSelector2} from "../../services/store";
+import {useDispatch2, useSelector2} from "../../services/store";
 
 
 export default function App(): JSX.Element {
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch2();
 
   React.useEffect(() => {
     dispatch(checkUserAuth());

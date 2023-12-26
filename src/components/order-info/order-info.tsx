@@ -1,5 +1,4 @@
 import {Navigate, useLocation, useMatch, useParams} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
 import styles from "./order-info.module.css";
 import {IngredientsItems} from "./ingredients-items/ingredients-items";
 import React from "react";
@@ -18,7 +17,7 @@ import {
 } from "../../services/feed-orders-profile/feed-orders-selector";
 import {selectorFeedOrdersData, selectorFeedOrdersStatus} from "../../services/feed-orders/feed-orders-selector";
 import {COLOR_SUCCESS, DISPLAY_SMALL, TOrder} from "../../utils/types";
-import {useSelector2} from "../../services/store";
+import {useDispatch2, useSelector2} from "../../services/store";
 
 /*type TSelectorOrder = {
   orderRequest: boolean;
@@ -32,7 +31,7 @@ import {useSelector2} from "../../services/store";
 export function OrderInfo(): JSX.Element {
 
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch2();
 
   const params = useParams()
   const idCurrentItem = params.id
@@ -44,10 +43,10 @@ export function OrderInfo(): JSX.Element {
   const isProfile = useMatch({path: pagePath.profile, end: false});
 
 
-  const dataFeedProfile = useSelector(selectorProfileOrdersData)
-  const statusFeedProfile = useSelector(selectorProfileOrdersStatus)
-  const dataFeed = useSelector(selectorFeedOrdersData)
-  const statusFeed = useSelector(selectorFeedOrdersStatus)
+  const dataFeedProfile = useSelector2(selectorProfileOrdersData)
+  const statusFeedProfile = useSelector2(selectorProfileOrdersStatus)
+  const dataFeed = useSelector2(selectorFeedOrdersData)
+  const statusFeed = useSelector2(selectorFeedOrdersStatus)
 
   let data = dataFeedProfile
   let status = statusFeedProfile
@@ -73,6 +72,8 @@ export function OrderInfo(): JSX.Element {
       // @ts-ignore
       dispatch(connectProfile());
       return () => {
+        //@ts-ignore
+        //todo //@ts-ignore
         dispatch(disconnectProfile());
       }
     }

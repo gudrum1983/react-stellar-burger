@@ -5,7 +5,7 @@ import {
 import {connectFeedOrders, disconnectFeedOrders} from "../services/feed-orders/feed-orders-actions";
 
 export enum WebsocketStatus {
-  CONNECTING = 'CONNECTING...',
+  CONNECTING = 'CONNECTING',
   ONLINE = 'ONLINE',
   OFFLINE ='OFFLINE',
 }

@@ -1,13 +1,13 @@
 import React from "react";
 import {profileButtons} from "../utils/form-items";
 import {FormContainer} from "../components/form-container/form-container";
-import {useDispatch, useSelector} from "react-redux";
 import {getUser, updateUser} from "../services/user/user-action";
 import {userMail, userName} from "../services/user/user-selector";
 import {InputEmail} from "../components/form-container/inputs/input-email";
 import {InputName} from "../components/form-container/inputs/input-name";
 import {InputPassword} from "../components/form-container/inputs/input-password";
 import {IField, TFormInputs, TFormInputsValue, useForm} from "../hooks/useForm";
+import {useDispatch2, useSelector2} from "../services/store";
 
 export enum Inputs1 {
   passwordInput,
@@ -19,9 +19,9 @@ export type TNameInputs = keyof typeof Inputs1
 
 export function ProfileEdit():JSX.Element {
 
-  const dispatch = useDispatch();
-  const nameValueTest = useSelector(userName)
-  const emailValueTest = useSelector(userMail)
+  const dispatch = useDispatch2();
+  const nameValueTest = useSelector2(userName)
+  const emailValueTest = useSelector2(userMail)
 
   const formElement:React.RefObject<HTMLFormElement> = React.createRef()
 

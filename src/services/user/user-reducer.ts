@@ -13,7 +13,7 @@ const initialState:TUserDataState = {
 
 //todo any delete
 
-export const userDataReducer = (state:TUserDataState = initialState, action:TUserActions):TUserDataState => {
+export const userDataReducer = (state = initialState, action:TUserActions):TUserDataState => {
   switch (action.type) {
     case SET_AUTH_CHECKED:
       return {

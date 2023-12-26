@@ -7,7 +7,7 @@ import {COLOR_SUCCESS, DISPLAY_SMALL} from "../../../utils/types";
 
 type TPropsOrdersBoard = {
   header: string;
-  items: Array<string>;
+  items: Array<number>;
   done?: boolean;
 };
 
