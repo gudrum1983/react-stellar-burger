@@ -19,14 +19,14 @@ import {
 } from "../feed-orders-profile/feed-orders-actions";
 
 type TwsActions = {
-  wsConnect: typeof FEED_ORDERS_CONNECT| typeof FEED_ORDERS_PROFILE_CONNECT,
+  wsConnect: string |typeof FEED_ORDERS_CONNECT| typeof FEED_ORDERS_PROFILE_CONNECT,
   wsSendMessage?: string,
-  onOpen: typeof FEED_ORDERS_WS_OPEN| typeof FEED_ORDERS_PROFILE_WS_OPEN,
-  onClose: typeof FEED_ORDERS_WS_CLOSE| typeof FEED_ORDERS_PROFILE_WS_CLOSE,
-  onError: typeof FEED_ORDERS_WS_ERROR| typeof FEED_ORDERS_PROFILE_WS_ERROR,
-  onMessage: typeof FEED_ORDERS_WS_MESSAGE| typeof FEED_ORDERS_PROFILE_WS_MESSAGE,
-  wsConnecting: typeof FEED_ORDERS_WS_CONNECTING| typeof FEED_ORDERS_PROFILE_WS_CONNECTING,
-  wsDisconnect: typeof FEED_ORDERS_DISCONNECT| typeof FEED_ORDERS_PROFILE_DISCONNECT,
+  onOpen: string |typeof FEED_ORDERS_WS_OPEN| typeof FEED_ORDERS_PROFILE_WS_OPEN,
+  onClose: string |typeof FEED_ORDERS_WS_CLOSE| typeof FEED_ORDERS_PROFILE_WS_CLOSE,
+  onError: string |typeof FEED_ORDERS_WS_ERROR| typeof FEED_ORDERS_PROFILE_WS_ERROR,
+  onMessage: string |typeof FEED_ORDERS_WS_MESSAGE| typeof FEED_ORDERS_PROFILE_WS_MESSAGE,
+  wsConnecting: string |typeof FEED_ORDERS_WS_CONNECTING| typeof FEED_ORDERS_PROFILE_WS_CONNECTING,
+  wsDisconnect: string |typeof FEED_ORDERS_DISCONNECT| typeof FEED_ORDERS_PROFILE_DISCONNECT,
 }
 
 
