@@ -13,13 +13,15 @@ type TPropsIngredient = {
   currentItem:TIngredient;}
 
 
+type TDragObject =  TIngredient
+
 export function Ingredient({currentItem}:TPropsIngredient):JSX.Element {
 
   const location = useLocation()
   const id = currentItem._id
   const type = currentItem.type
 
-  const [, dragRef] = useDrag({
+  const [, dragRef] = useDrag<TDragObject,unknown,unknown>({
     type: "burgerConstructor",
     item: currentItem,
   });

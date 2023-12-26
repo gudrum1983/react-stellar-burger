@@ -10,11 +10,11 @@ import {useSelector2} from "../../services/store";
 
 export function Stats():JSX.Element {
 
-  const total = useSelector2(selectorFeedOrdersTotal)!
-  const totalToday = useSelector2(selectorFeedOrdersTotalToday)!
+  const total = useSelector2(selectorFeedOrdersTotal) ?? 0
+  const totalToday = useSelector2(selectorFeedOrdersTotalToday) ?? 0
 
-  const ordersListDone = useSelector2(selectorFeedOrdersDoneOrdersNumber)
-  const ordersListProgress = useSelector2(selectorFeedOrdersProgressOrdersNumber)
+  const ordersListDone = useSelector2(selectorFeedOrdersDoneOrdersNumber)  ?? []
+  const ordersListProgress = useSelector2(selectorFeedOrdersProgressOrdersNumber) ?? []
 
   return (
     <div className={styles.stats}>

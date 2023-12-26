@@ -79,7 +79,7 @@ export const store = configureStore({
   }
 });
 
-type TAppActions = | TErrorModalActions
+type TAppActions = TErrorModalActions
   | TOrderDetailsActions
   | TBurgerConstructorActions
   | TIngredientsActions
@@ -89,10 +89,7 @@ type TAppActions = | TErrorModalActions
 
 
 
-//todo почему export type ThunkAction<
-//   ReturnType,
-//   State,
-//   ExtraThunkArg, ---unknown??????
+//   почему export type ThunkAction<ReturnType,State, ExtraThunkArg, ---unknown??????
 //   BasicAction extends Action
 // >
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, TRootState, unknown, TAppActions>;

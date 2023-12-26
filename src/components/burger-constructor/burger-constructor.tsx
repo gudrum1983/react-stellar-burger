@@ -10,15 +10,21 @@ import {selectBun, selectOther} from "../../services/burger-constructor/burger-c
 import {addFilling, chooseBun} from "../../services/burger-constructor/burger-constructor-actions";
 import {useNavigate} from "react-router-dom";
 import {user, userAuth} from "../../services/user/user-selector";
-import {TOrderIngredients} from "../../utils/types";
+import {TIngredient, TOrderIngredients} from "../../utils/types";
 import {useDispatch2, useSelector2} from "../../services/store";
+
+type TDropObject =  TIngredient
+
+type TDropCollectedProps = {
+  isHover: boolean,
+  isCanD: boolean
+}
+
 
 export function BurgerConstructor(): JSX.Element {
   const dispatch = useDispatch2();
   const navigate = useNavigate()
-//todo   //@ts-ignore
-  //@ts-ignore
-  const onDropHandler = (ingredient) => {
+  const onDropHandler = (ingredient:TIngredient) => {
     if (ingredient.type === "bun") {
       dispatch(chooseBun(ingredient))
     } else {
@@ -26,7 +32,7 @@ export function BurgerConstructor(): JSX.Element {
     }
   };
 
-  const [{isHover, isCanD}, dropTarget] = useDrop({
+  const [{isHover, isCanD}, dropTarget] = useDrop<TDropObject,unknown,TDropCollectedProps>({
     accept: "burgerConstructor",
     drop(ingredient) {
       onDropHandler(ingredient);

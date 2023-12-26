@@ -13,13 +13,6 @@ export type TPropsDate = {
  */
 export function DateWithTimezone({value}:TPropsDate):JSX.Element {
 
-  //todo: сделать проверку на формат строки и значение по умолчанию
-
-/*  const str: string = value;
-
-  let result = str.match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/gm);
-  console.log( !!result )*/
-
   const orderDate = new Date(value)
   const timezoneOffset = orderDate.getTimezoneOffset()
 

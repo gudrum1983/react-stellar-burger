@@ -21,7 +21,7 @@ export function OrdersBoard ({header, items, done = false}:TPropsOrdersBoard):JS
         {header}
       </Text>
       <div className={styleGrid}>
-        {items.map((item, index) => {
+        {items && items.map((item, index) => {
           if (index < 20) {
             return (
               <Fragment key={item}>

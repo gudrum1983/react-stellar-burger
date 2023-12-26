@@ -10,7 +10,6 @@ const initialState:TErrorModalState = {
   errorText: '',
 };
 
-//todo action:TErrorModalActions - проверить нужна ли эта запись
 export const errorModalReducer = (state:TErrorModalState = initialState, action:TErrorModalActions):TErrorModalState => {
   switch (action.type) {
     case OPEN_ERROR_MODAL: {

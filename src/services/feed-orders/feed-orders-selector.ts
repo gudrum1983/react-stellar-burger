@@ -8,9 +8,7 @@ export const selectorFeedOrdersDataOrders = (store:TRootState) => store.feedOrde
 export const selectorFeedOrdersTotal = (store:TRootState) => store.feedOrders.data?.total
 export const selectorFeedOrdersTotalToday = (store:TRootState) => store.feedOrders.data?.totalToday
 
-//@ts-ignore
-export const selectorFeedOrdersDoneOrdersNumber = (store:TRootState) => store.feedOrders.data.orders.filter(item => item.status === "done").map(item => item.number)
+export const selectorFeedOrdersDoneOrdersNumber = (store:TRootState) => store.feedOrders?.data?.orders.filter(item => item.status === "done").map(item => item.number)
 
-//@ts-ignore
-export const selectorFeedOrdersProgressOrdersNumber = (store:TRootState) => store.feedOrders.data.orders.filter(item => item.status !== "done").map(item => item.number)
+export const selectorFeedOrdersProgressOrdersNumber = (store:TRootState) => store.feedOrders?.data?.orders.filter(item => item.status !== "done").map(item => item.number)
 

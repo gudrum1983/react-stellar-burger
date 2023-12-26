@@ -48,6 +48,4 @@ export const CardOrder : FC<TPropsCardOrder> = ({order}) => {
       </Link>
     </li>
   )
-
-  //todo - попробовать вынести 43 строку с индексом в отдельную функцию/константу
 }
