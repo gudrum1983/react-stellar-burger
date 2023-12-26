@@ -6,7 +6,7 @@ export type ArgumentsUser = {
   email?: string;
   name?: string;
   password?: string;
-  token?:string;
+  token?: string;
 }
 
 export type DataUser = {
@@ -26,6 +26,11 @@ type MessageUpdUser = {
   user: DataUser
 }
 
+type MessageGetUser = {
+  success: boolean;
+  user: DataUser
+}
+
 type MessageLogout = {
   success: boolean,
   message: "Successful logout" | string
@@ -34,7 +39,7 @@ type MessageLogout = {
 export type MessageOrder = {
   success: boolean;
   orders: Array<TOrder>;
-/*  data?: Array<TOrder>;*/
+  /*  data?: Array<TOrder>;*/
 }
 
 
@@ -47,7 +52,7 @@ export type MessageIngredients = {
 /**
  * Функция запрос к АПИ для получения данных о пользователе
  */
-const getUser = (): Promise<MessageUpdUser> => {
+/*const getUser = (): Promise<MessageGetUser> => {
     return fetchWithRefresh(ENDPOINTS.authUser, {
         method: 'GET',
         headers: {
@@ -57,7 +62,18 @@ const getUser = (): Promise<MessageUpdUser> => {
       }
     )
   }
-;
+;*/
+
+const getUser = (): Promise<MessageGetUser> => {
+  const accessToken: string | null = localStorage.getItem("accessToken");
+  return request(ENDPOINTS.authUser, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: accessToken!,
+    },
+  });
+};
 
 
 /**

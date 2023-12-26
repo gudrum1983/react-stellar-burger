@@ -5,11 +5,6 @@ export interface IField {
   setState?: (event: ChangeEvent<HTMLInputElement>) => {};
 }
 
-export interface IField2 {
-  value?: Date;
-  setState?: (event: ChangeEvent<HTMLInputElement>) => {};
-}
-
 export type TFormInputs<T extends string | number | symbol> = {
   [key in T]: IField;
 };
@@ -40,13 +35,9 @@ export const useForm = (initialFields:ICustomObject):IForm => {
   const form:ICustomObject = Object.entries<IField>(initialFields).reduce((fields:{}, [name, value]) => {
 
 
-    //todo из profile-edit передавалось раньше строкой, а не объектом - пофиксить обратно
-    const isString = typeof value === 'string';
-
-
     const field:IField = {
       [name]: {
-        value: (isString && value) || ((!isString && value.value) || ''),
+        value: ((value.value) || ''),
         setState: (value: ChangeEvent<HTMLInputElement>) => handleInput(value, name),
         ...(value),
       },

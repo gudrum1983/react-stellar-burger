@@ -100,6 +100,9 @@ export const checkUserAuth = ():AppThunk => {
   return (dispatch) => {
     if (localStorage.getItem("accessToken")) {
       dispatch(getUser())
+        .then(() => {
+          // handle successful getUser() dispatch
+        })
         .catch(() => {
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");

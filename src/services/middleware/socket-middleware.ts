@@ -1,11 +1,13 @@
-import {checkUserAuth, getUser} from "../user/user-action";
-import {AppDispatch, AppThunk, TRootState} from "../store";
+import {checkUserAuth} from "../user/user-action";
 import {Middleware, MiddlewareAPI} from "redux";
 import {
   FEED_ORDERS_CONNECT,
-  FEED_ORDERS_DISCONNECT, FEED_ORDERS_WS_CLOSE,
-  FEED_ORDERS_WS_CONNECTING, FEED_ORDERS_WS_ERROR, FEED_ORDERS_WS_MESSAGE, FEED_ORDERS_WS_OPEN, TFeedOrdersActions
-} from "../feed-orders/feed-orders-actions";
+  FEED_ORDERS_DISCONNECT,
+  FEED_ORDERS_WS_CLOSE,
+  FEED_ORDERS_WS_CONNECTING,
+  FEED_ORDERS_WS_ERROR,
+  FEED_ORDERS_WS_MESSAGE,
+  FEED_ORDERS_WS_OPEN} from "../feed-orders/feed-orders-actions";
 import {
   FEED_ORDERS_PROFILE_CONNECT,
   FEED_ORDERS_PROFILE_DISCONNECT,
@@ -64,6 +66,8 @@ export const socketMiddleware = (wsActions:TwsActions):Middleware => {
           const {data} = event;
           const parsedData = JSON.parse(data);
           if (parsedData.message === "Invalid or missing token") {
+            //@ts-ignore
+            //todo     //@ts-ignore
             dispatch(checkUserAuth());
             dispatch({type: wsConnect})
           } else {

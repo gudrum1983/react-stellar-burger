@@ -10,23 +10,24 @@ import {useSelector2} from "../../../services/store";
  * @param  index - счетчик для остальных ингредиентов
  * @param  count - счетчик для остальных ингредиентов
  */
-export const Ingredients: FC<TPropsIngredients> = ({ingredient, index, count}) => {
+export const Ingredients: FC<TPropsIngredients> = ({ingredient, index, count}):JSX.Element | null => {
 
   const mapIngredients = useSelector2(burgerIngredientsMap)
+  const isIngredients = mapIngredients.get(ingredient)
 
-  if (!mapIngredients.has(ingredient)) {
+  if (isIngredients) {
+
+    const {image_mobile} = isIngredients
+
+    const marginLeft = index * 48
+    const postIndex = 6 - index
+
+    return (
+      <div style={{left: marginLeft, zIndex: postIndex}} className="absolute">
+        <IngredientPreview image={image_mobile} {...(!!count && {count})}></IngredientPreview>
+      </div>
+    )
+  } else {
     return null
   }
-  //todo //@ts-ignore
-//@ts-ignore
-  const {image_mobile} = mapIngredients.get(ingredient)
-
-  const marginLeft = index * 48
-  const postIndex = 6 - index
-
-  return (
-    <div style={{left: marginLeft, zIndex: postIndex}} className="absolute">
-      <IngredientPreview image={image_mobile} {...(!!count && {count})}></IngredientPreview>
-    </div>
-  )
 }

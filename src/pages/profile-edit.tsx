@@ -26,7 +26,6 @@ export function ProfileEdit():JSX.Element {
   const formElement:React.RefObject<HTMLFormElement> = React.createRef()
 
 
-  //todo в юзФорм есть проверка но строку, как раз если передается валью строкой - пофиксить
   const formInputs:TFormInputs<TNameInputs> = {
     passwordInput: {value:''},
     nameInput: {value:nameValueTest},

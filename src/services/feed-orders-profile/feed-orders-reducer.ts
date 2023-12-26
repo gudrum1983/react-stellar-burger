@@ -4,18 +4,17 @@ import {
   FEED_ORDERS_PROFILE_WS_ERROR,
   FEED_ORDERS_PROFILE_WS_MESSAGE,
   FEED_ORDERS_PROFILE_WS_OPEN,
-  FEED_ORDERS_PROFILE_WS_CLOSE
+  FEED_ORDERS_PROFILE_WS_CLOSE, TProfileOrdersActions
 } from "./feed-orders-actions";
+import {TFeedOrdersState} from "../feed-orders/feed-orders-reducer";
 
-const initialState = {
+const initialState:TFeedOrdersState = {
   status: WebsocketStatus.OFFLINE,
   data: null,
   connectingError: null,
-  mapData: null,
-
 }
 
-export const reducerFeedOrdersProfile = (state = initialState, action) => {
+export const reducerFeedOrdersProfile = (state = initialState, action:TProfileOrdersActions):TFeedOrdersState => {
   switch (action.type) {
     case FEED_ORDERS_PROFILE_WS_CONNECTING:
       return{

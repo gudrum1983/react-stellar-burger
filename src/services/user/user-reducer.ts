@@ -11,8 +11,6 @@ const initialState:TUserDataState = {
     isAuthChecked: false,
 };
 
-//todo any delete
-
 export const userDataReducer = (state = initialState, action:TUserActions):TUserDataState => {
   switch (action.type) {
     case SET_AUTH_CHECKED:

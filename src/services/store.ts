@@ -6,7 +6,7 @@ import {errorModalReducer} from "./error-modal/error-modal-reducer";
 import {reducerFeedOrders} from "./feed-orders/feed-orders-reducer";
 import {socketMiddleware} from "./middleware/socket-middleware";
 
-import {Action, configureStore, ThunkAction} from "@reduxjs/toolkit";
+import {configureStore, ThunkAction} from "@reduxjs/toolkit";
 import {combineReducers} from "redux";
 import {TypedUseSelectorHook, useDispatch as dispatchHook, useSelector as selectorHook,} from "react-redux";
 
@@ -28,7 +28,7 @@ import {
   FEED_ORDERS_PROFILE_WS_CONNECTING,
   FEED_ORDERS_PROFILE_WS_ERROR,
   FEED_ORDERS_PROFILE_WS_MESSAGE,
-  FEED_ORDERS_PROFILE_WS_OPEN,
+  FEED_ORDERS_PROFILE_WS_OPEN, TProfileOrdersActions,
 } from "./feed-orders-profile/feed-orders-actions";
 import {reducerFeedOrdersProfile} from "./feed-orders-profile/feed-orders-reducer";
 import {TUserActions} from "./user/user-action";
@@ -79,21 +79,25 @@ export const store = configureStore({
   }
 });
 
-type TAppActions = TUserActions
-  | TErrorModalActions
+type TAppActions = | TErrorModalActions
   | TOrderDetailsActions
   | TBurgerConstructorActions
   | TIngredientsActions
-  | TFeedOrdersActions;
+  | TFeedOrdersActions
+  | TProfileOrdersActions
+  | TUserActions;
+
+
+
 //todo почему export type ThunkAction<
 //   ReturnType,
 //   State,
 //   ExtraThunkArg, ---unknown??????
 //   BasicAction extends Action
 // >
-/*export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, TRootState, Action<any>, TAppActions>;*/
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, TRootState, unknown, TAppActions>;
 
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, Action, TRootState, TAppActions>;
+/*export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, Action, TRootState, TAppActions>;*/
 
 
 export type AppDispatch<TReturnType = void> = (action: TAppActions | AppThunk<TReturnType>) => TReturnType;

@@ -2,7 +2,7 @@ import {Navigate, useLocation, useMatch, useParams} from "react-router-dom";
 import styles from "./order-info.module.css";
 import {IngredientsItems} from "./ingredients-items/ingredients-items";
 import React from "react";
-import {connectFeed, connectProfile, disconnectFeed, disconnectProfile, WebsocketStatus} from "../../utils/config-ws";
+import {WebsocketStatus} from "../../utils/config-ws";
 import {orderDetails} from "../../services/order-details/order-details-selectors";
 import {clearOrderDetails, getInfoOrderDetails} from "../../services/order-details/order-details-actions";
 import {pagePath} from "../../utils/constants";
@@ -19,12 +19,6 @@ import {selectorFeedOrdersData, selectorFeedOrdersStatus} from "../../services/f
 import {COLOR_SUCCESS, DISPLAY_SMALL, TOrder} from "../../utils/types";
 import {useDispatch2, useSelector2} from "../../services/store";
 
-/*type TSelectorOrder = {
-  orderRequest: boolean;
-  orderFailed: boolean
-  order: TOrder
-}*/
-
 /**
  * карточка с деталями заказа OrderInfo
  */
@@ -40,7 +34,6 @@ export function OrderInfo(): JSX.Element {
   const background = location.state && location.state.background;
 
   const isFeed = useMatch({path: pagePath.feed, end: false});
-  const isProfile = useMatch({path: pagePath.profile, end: false});
 
 
   const dataFeedProfile = useSelector2(selectorProfileOrdersData)
@@ -61,23 +54,6 @@ export function OrderInfo(): JSX.Element {
   const isDisconnected = status !== WebsocketStatus.ONLINE
 
   const {orderRequest, order: orderRest} = useSelector2(orderDetails)
-
-  React.useEffect(() => {
-    if (isFeed && isDisconnected) {
-      dispatch(connectFeed());
-      return () => {
-        dispatch(disconnectFeed())
-      }
-    } else if (isProfile && isDisconnected) {
-      // @ts-ignore
-      dispatch(connectProfile());
-      return () => {
-        //@ts-ignore
-        //todo //@ts-ignore
-        dispatch(disconnectProfile());
-      }
-    }
-  }, []);
 
   const order = React.useMemo(() => {
 

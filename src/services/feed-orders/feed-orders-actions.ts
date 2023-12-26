@@ -42,13 +42,13 @@ type TDisconnectFeedOrders = {
   type: typeof FEED_ORDERS_DISCONNECT,
 }
 
-export type TFeedOrdersActions = TConnectFeedOrders
-  | TDisconnectFeedOrders
-  | TWSConnectingFeedOrders
+export type TFeedOrdersActions =  TWSConnectingFeedOrders
   | TWSOnOpenFeedOrders
   | TWSOnErrorFeedOrders
   | TWSMessageFeedOrders
-| TWSCloseFeedOrders
+  | TWSCloseFeedOrders
+  | TConnectFeedOrders
+  | TDisconnectFeedOrders
 
 
 export const connectFeedOrders = (url:TUrl):TConnectFeedOrders => ({

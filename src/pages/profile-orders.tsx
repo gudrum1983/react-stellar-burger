@@ -1,6 +1,5 @@
 import React from "react";
 import {Orders} from "../components/orders/orders";
-import {useDispatch} from "react-redux";
 import {
   selectorProfileOrdersData,
   selectorProfileOrdersStatus
@@ -8,11 +7,11 @@ import {
 import {connectProfile, disconnectProfile, WebsocketStatus} from "../utils/config-ws";
 import {Preloader} from "../components/preloader/preloader";
 import {Text} from "../components/typography/text/text";
-import {useSelector2} from "../services/store";
+import {useDispatch2, useSelector2} from "../services/store";
 
 export function ProfileOrders():JSX.Element {
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch2();
   const token = localStorage.getItem("accessToken")?.slice(7) ?? ""
 
   const data = useSelector2(selectorProfileOrdersData)

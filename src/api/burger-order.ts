@@ -22,7 +22,6 @@ export const getOrderDetailsReady = (ingredientsOrder: TOrderIngredients): Promi
   })
 };
 
-//todo number dont string - Pick<TOrder, "number">
 export const getOrderDetailsInfo = (number: string): Promise<MessageOrder> => {
   return request(`${ENDPOINTS.orders}/${number}`, {
     method: 'GET',
