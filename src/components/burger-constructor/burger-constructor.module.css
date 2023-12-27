@@ -33,7 +33,7 @@
   width: 36px;
   height: 36px;
   object-fit: cover;
-  background-image: url("../../images/icon 36x36.svg");
+  background-image: url("../../vendor/images/icon 36x36.svg");
 }
 
 .scroll {

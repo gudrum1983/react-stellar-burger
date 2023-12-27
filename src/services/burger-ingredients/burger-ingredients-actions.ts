@@ -1,4 +1,4 @@
-import {getIngredients} from "../../api/burger-ingredients";
+import {getIngredients} from "../../api-config/api-burger-ingredients";
 import {AppThunk} from "../store";
 import {TIngredient} from "../../utils/types";
 

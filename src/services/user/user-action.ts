@@ -1,4 +1,4 @@
-import {authApi, DataUser} from "../../api/user";
+import {configUserApi, DataUser} from "../../api-config/api-user";
 import {openErrorModal} from "../error-modal/error-modal-action";
 import {AppThunk} from "../store";
 import {TValuesInput} from "../../hooks/useForm";
@@ -40,7 +40,7 @@ export const clearUser = ():TClearUser => ({
 
 export const getUser = ():AppThunk<Promise<unknown>> => {
   return (dispatch) => {
-    return authApi.getUser()
+    return configUserApi.getUser()
       .then((res) => {
         dispatch(setUser(res.user));
       });
@@ -50,7 +50,7 @@ export const getUser = ():AppThunk<Promise<unknown>> => {
 
 export const updateUser = ({email, name, password}:TValuesInput):AppThunk => {
   return (dispatch) => {
-    return authApi.updateUser({email, name, password})
+    return configUserApi.updateUser({email, name, password})
       .then((res) => {
         dispatch(setUser(res.user));
       });
@@ -59,7 +59,7 @@ export const updateUser = ({email, name, password}:TValuesInput):AppThunk => {
 
 export const logout = ():AppThunk => {
   return (dispatch) => {
-    return authApi.logout()
+    return configUserApi.logout()
       .then((res) => {
         console.log("logout", res)
         localStorage.removeItem("accessToken");
@@ -71,9 +71,8 @@ export const logout = ():AppThunk => {
 
 export const login = ({password, email}:TValuesInput):AppThunk => {
   return (dispatch) => {
-    return authApi.login({password, email})
+    return configUserApi.login({password, email})
       .then((res) => {
-        console.log({res})
         localStorage.setItem("accessToken", res.accessToken);
         localStorage.setItem("refreshToken", res.refreshToken);
         dispatch(setUser(res.user));
@@ -85,7 +84,7 @@ export const login = ({password, email}:TValuesInput):AppThunk => {
 
 export const register = ({name, password, email}:TValuesInput):AppThunk => {
   return (dispatch) => {
-    return authApi.register({name, password, email})
+    return configUserApi.register({name, password, email})
       .then((res) => {
         localStorage.setItem("accessToken", res.accessToken);
         localStorage.setItem("refreshToken", res.refreshToken);

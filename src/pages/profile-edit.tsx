@@ -40,9 +40,9 @@ export function ProfileEdit():JSX.Element {
     return field.setState!
   }
 
-  function setValue() {
+/*  function setValue() {
     dispatch(getUser());
-  }
+  }*/
 
   const isEditName = nameValueTest !== nameInput.value
   const isEditMail = emailValueTest !== emailInput.value
@@ -53,15 +53,14 @@ export function ProfileEdit():JSX.Element {
   }, [isEditName, isEditMail, isEditPassword])
 
 
-  React.useEffect(() => {
+/*  React.useEffect(() => {
     setValue()
 
-  }, [nameValueTest, emailValueTest]);
+  }, [nameValueTest, emailValueTest]);*/
 
   function onSubmit(values:TFormInputsValue<TNameInputs> ):void {
 
     const {passwordInput, nameInput, emailInput} = values
-
     dispatch(getUser());
     if (isEdit) {
       dispatch(updateUser({email:emailInput, name:nameInput, password:passwordInput}));

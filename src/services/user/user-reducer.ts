@@ -1,5 +1,5 @@
 import {SET_AUTH_CHECKED, SET_USER, CLEAR_USER, TUserActions} from './user-action';
-import {DataUser} from "../../api/user";
+import {DataUser} from "../../api-config/api-user";
 
 export type TUserDataState = {
   user: DataUser | null,

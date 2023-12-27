@@ -2,7 +2,7 @@ import React from "react";
 import {createButton, typeLinksFooter} from "../utils/form-items";
 import {FormContainer} from "../components/form-container/form-container";
 import {Navigate, useNavigate} from "react-router-dom";
-import {getReset} from "../api/password-config";
+import {getReset} from "../api-config/api-password";
 import {errorModalText, isOpenErrorModal} from "../services/error-modal/error-modal-selector";
 import {closeErrorModal, openErrorModal} from "../services/error-modal/error-modal-action";
 import {Modal} from "../components/modal/modal";

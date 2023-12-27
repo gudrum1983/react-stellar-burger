@@ -1,5 +1,5 @@
 import {ENDPOINTS, request} from "../utils/config-api";
-import {fetchWithRefresh} from "./refresh-token";
+import {fetchWithRefresh} from "./api-refresh-token";
 import {TIngredient, TOrder} from "../utils/types";
 
 export type ArgumentsUser = {
@@ -52,7 +52,7 @@ export type MessageIngredients = {
 /**
  * Функция запрос к АПИ для получения данных о пользователе
  */
-/*const getUser = (): Promise<MessageGetUser> => {
+const getUser = (): Promise<MessageGetUser> => {
     return fetchWithRefresh(ENDPOINTS.authUser, {
         method: 'GET',
         headers: {
@@ -62,9 +62,9 @@ export type MessageIngredients = {
       }
     )
   }
-;*/
+;
 
-const getUser = (): Promise<MessageGetUser> => {
+/*const getUser = (): Promise<MessageGetUser> => {
   const accessToken: string | null = localStorage.getItem("accessToken");
   return request(ENDPOINTS.authUser, {
     method: "GET",
@@ -73,7 +73,7 @@ const getUser = (): Promise<MessageGetUser> => {
       authorization: accessToken!,
     },
   });
-};
+};*/
 
 
 /**
@@ -154,7 +154,7 @@ export const register = ({name, password, email}: ArgumentsUser): Promise<Messag
   })
 };
 
-export const authApi = {
+export const configUserApi = {
   login,
   logout,
   updateUser,

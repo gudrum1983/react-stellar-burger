@@ -92,8 +92,9 @@ export function OrderInfo(): JSX.Element {
 
   const styleCard = background ? styles.cardOrder3 : styles.cardOrder2
 
+  console.log(order)
 
-  if (!!order) {
+  if (order) {
 
     const {number, name, status, ingredients, createdAt } = order
 

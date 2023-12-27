@@ -19,7 +19,7 @@ const checkResponseWithRefresh = <T>(res: Response):Promise<T> => {
     : res.json().then((err) => Promise.reject(err));
 };
 
-const authToken = (): Promise<authToken> => {
+export const authToken = (): Promise<authToken> => {
   return fetch(url(endpointsRefresh), {
     method: "POST",
     headers: {

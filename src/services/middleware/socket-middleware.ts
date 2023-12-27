@@ -1,4 +1,4 @@
-import {checkUserAuth} from "../user/user-action";
+import { getUser} from "../user/user-action";
 import {Middleware, MiddlewareAPI} from "redux";
 import {
   FEED_ORDERS_CONNECT,
@@ -17,6 +17,10 @@ import {
   FEED_ORDERS_PROFILE_WS_MESSAGE,
   FEED_ORDERS_PROFILE_WS_OPEN
 } from "../feed-orders-profile/feed-orders-actions";
+import {TRootState} from "../store";
+import type {} from "redux-thunk/extend-redux";
+import {connectProfile} from "../../utils/config-ws";
+
 
 type TwsActions = {
   wsConnect: string |typeof FEED_ORDERS_CONNECT| typeof FEED_ORDERS_PROFILE_CONNECT,
@@ -29,8 +33,7 @@ type TwsActions = {
   wsDisconnect: string |typeof FEED_ORDERS_DISCONNECT| typeof FEED_ORDERS_PROFILE_DISCONNECT,
 }
 
-
-export const socketMiddleware = (wsActions:TwsActions):Middleware => {
+export const socketMiddleware = (wsActions:TwsActions):Middleware<{},TRootState> => {
   return (store:MiddlewareAPI) => {
     let socket : WebSocket | null = null;
     let isDisconnect = false
@@ -62,18 +65,19 @@ export const socketMiddleware = (wsActions:TwsActions):Middleware => {
           dispatch({type: onError, payload: "Error"});
         };
 
-        socket.onmessage = event => {
+        socket.onmessage = async event => {
+
           const {data} = event;
           const parsedData = JSON.parse(data);
           if (parsedData.message === "Invalid or missing token") {
-            //@ts-ignore
-            //todo     //@ts-ignore
-            dispatch(checkUserAuth());
-            dispatch({type: wsConnect})
+
+            await dispatch(getUser());
+
+            const token = localStorage.getItem("accessToken")?.slice(7) ?? ""
+            dispatch(connectProfile(token))
           } else {
             dispatch({type: onMessage, payload: parsedData});
           }
-
         };
 
         socket.close = () => {

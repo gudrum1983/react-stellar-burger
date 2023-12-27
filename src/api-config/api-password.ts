@@ -1,5 +1,5 @@
 import {ENDPOINTS, request} from "../utils/config-api";
-import {ArgumentsUser} from "./user";
+import {ArgumentsUser} from "./api-user";
 
 
 type Forgot = {

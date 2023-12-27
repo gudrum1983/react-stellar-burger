@@ -1,5 +1,5 @@
 import {clearBurgerConstructor} from "../burger-constructor/burger-constructor-actions";
-import {getOrderDetailsInfo, getOrderDetailsReady} from "../../api/burger-order";
+import {getOrderDetailsInfo, getOrderDetailsReady} from "../../api-config/api-burger-order";
 import {TOrder, TOrderIngredients, TReadyOrder} from "../../utils/types";
 import {AppThunk} from "../store";
 
