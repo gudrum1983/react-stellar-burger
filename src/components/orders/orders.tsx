@@ -6,7 +6,7 @@ import {selectorProfileOrdersDataOrders} from "../../services/feed-orders-profil
 import {selectorFeedOrdersDataOrders} from "../../services/feed-orders/feed-orders-selector";
 import {pagePath} from "../../utils/constants";
 import {TSelectorOrders} from "../../utils/types";
-import {useSelector2} from "../../services/store";
+import {useSelectorApp} from "../../services/store";
 
 
 
@@ -14,8 +14,8 @@ export function Orders() : JSX.Element {
 
   const isProfile = !!useMatch({path: pagePath.profileOrdersFull, end: false});
 
-  const dataProfile: TSelectorOrders = useSelector2(selectorProfileOrdersDataOrders)
-  const dataFeed: TSelectorOrders = useSelector2(selectorFeedOrdersDataOrders)
+  const dataProfile: TSelectorOrders = useSelectorApp(selectorProfileOrdersDataOrders)
+  const dataFeed: TSelectorOrders = useSelectorApp(selectorFeedOrdersDataOrders)
 
   const orders = React.useMemo(() =>
       (isProfile && !!dataProfile) ? dataProfile.reverse() : dataFeed,

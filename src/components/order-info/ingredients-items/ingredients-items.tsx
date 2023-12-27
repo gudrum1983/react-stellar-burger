@@ -3,7 +3,7 @@ import React from "react";
 import {IngredientListItem} from "../ingredient-list-item/ingredient-list-item";
 import {burgerIngredientsMap} from "../../../services/burger-ingredients/burger-ingredients-selector";
 import {TIdIngredient} from "../../../utils/types";
-import {useSelector2} from "../../../services/store";
+import {useSelectorApp} from "../../../services/store";
 
 type TPropsIngredientsItems = {
   componentsOrder:  Array<TIdIngredient>;
@@ -15,7 +15,7 @@ type TPropsIngredientsItems = {
  */
 export function IngredientsItems({componentsOrder}: TPropsIngredientsItems): JSX.Element {
 
-  const mapIngredients = useSelector2(burgerIngredientsMap)
+  const mapIngredients = useSelectorApp(burgerIngredientsMap)
   const mapCount: Map<TIdIngredient, {count: number}> = new Map()
   const listItems: Array<JSX.Element> = []
 

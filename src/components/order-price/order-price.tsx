@@ -3,7 +3,7 @@ import React from "react";
 import {burgerIngredientsMap} from "../../services/burger-ingredients/burger-ingredients-selector";
 import {Digits} from "../typography/digits/digits";
 import {TIdIngredient} from "../../utils/types";
-import {useSelector2} from "../../services/store";
+import {useSelectorApp} from "../../services/store";
 
 type TPropsOrderPrice = {
   ingredients: Array<TIdIngredient>
@@ -12,7 +12,7 @@ type TPropsOrderPrice = {
 export function OrderPrice({ingredients}:TPropsOrderPrice): JSX.Element {
 
   const [price, setPrice] = React.useState(0)
-  const mapIngredients = useSelector2(burgerIngredientsMap)
+  const mapIngredients = useSelectorApp(burgerIngredientsMap)
 
   React.useEffect(() => {
     let newSum = price

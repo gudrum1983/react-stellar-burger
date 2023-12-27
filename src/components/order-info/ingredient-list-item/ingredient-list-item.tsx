@@ -3,7 +3,7 @@ import styles from "./ingredient-list-item.module.css";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import {IngredientPreview} from "../../ingredient-preview/ingredient-preview";
-import {useSelector2} from "../../../services/store";
+import {useSelectorApp} from "../../../services/store";
 import {Text} from "../../typography/text/text";
 
 export type TPropsIngredientListItem = {
@@ -19,7 +19,7 @@ export type TPropsIngredientListItem = {
  */
 export function IngredientListItem({idIng, count}: TPropsIngredientListItem): JSX.Element {
 
-  const mapIngredients = useSelector2(burgerIngredientsMap)
+  const mapIngredients = useSelectorApp(burgerIngredientsMap)
 
 
   const currentIngredient = mapIngredients.get(idIng)

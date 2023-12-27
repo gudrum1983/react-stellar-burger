@@ -48,30 +48,3 @@ export const otherIngredientPropType = PropTypes.shape({
 })
 
 export const stringOrArrayOptional = stringOptional || arrayOptional;
-
-/*
-function tested() {
-
-  type TMap = Map<string, number>
-
-  const testMap: TMap = new Map
-
-  testMap.set("T", 10)
-  testMap.set("e", 25)
-  testMap.set("s", 37)
-  testMap.set("t", 48)
-
-  if (testMap.has("s")) {
-    const number1 = testMap.get("s")
-    console.log("number1", number1)
-  }
-
-  const key = "e"
-
-  if (!!testMap.get(key)) {
-    const number = testMap.get(key)
-    return console.log("number", number)
-  }
-
-
-}*/

@@ -11,7 +11,7 @@ import {InputEmail} from "../components/form-container/inputs/input-email";
 import {InputName} from "../components/form-container/inputs/input-name";
 import {Text} from "../components/typography/text/text";
 import {pagePath} from "../utils/constants";
-import {useDispatch2, useSelector2} from "../services/store";
+import {useDispatchApp, useSelectorApp} from "../services/store";
 
 export enum Inputs {
   passwordInput,
@@ -23,7 +23,7 @@ export type TNameInputs = keyof typeof Inputs
 
 export function Register():JSX.Element {
 
-  const dispatch = useDispatch2();
+  const dispatch = useDispatchApp();
 
   const formElement:React.RefObject<HTMLFormElement> = React.createRef()
 
@@ -48,8 +48,8 @@ export function Register():JSX.Element {
     }
   }
 
-  const openErrModal = useSelector2(isOpenErrorModal)
-  const textErrorModal = useSelector2(errorModalText)
+  const openErrModal = useSelectorApp(isOpenErrorModal)
+  const textErrorModal = useSelectorApp(errorModalText)
 
   const handleErrorModalClose = () => {
     dispatch(closeErrorModal());

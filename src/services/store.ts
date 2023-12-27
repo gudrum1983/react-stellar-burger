@@ -5,7 +5,6 @@ import {userDataReducer} from "./user/user-reducer";
 import {errorModalReducer} from "./error-modal/error-modal-reducer";
 import {reducerFeedOrders} from "./feed-orders/feed-orders-reducer";
 import {socketMiddleware} from "./middleware/socket-middleware";
-
 import {configureStore, ThunkAction} from "@reduxjs/toolkit";
 import {combineReducers} from "redux";
 import {TypedUseSelectorHook, useDispatch as dispatchHook, useSelector as selectorHook,} from "react-redux";
@@ -88,17 +87,10 @@ type TAppActions = TErrorModalActions
   | TUserActions;
 
 
-
-//   почему export type ThunkAction<ReturnType,State, ExtraThunkArg, ---unknown??????
-//   BasicAction extends Action
-// >
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, TRootState, unknown, TAppActions>;
-
-/*export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, Action, TRootState, TAppActions>;*/
-
 
 export type AppDispatch<TReturnType = void> = (action: TAppActions | AppThunk<TReturnType>) => TReturnType;
 
-export const useDispatch2: () => AppDispatch = dispatchHook;
+export const useDispatchApp: () => AppDispatch = dispatchHook;
 
-export const useSelector2: TypedUseSelectorHook<TRootState> = selectorHook;
+export const useSelectorApp: TypedUseSelectorHook<TRootState> = selectorHook;

@@ -8,7 +8,7 @@ import {
 import {useDrag, useDrop} from "react-dnd";
 import {selectBurgerConstructor} from "../../../services/burger-constructor/burger-constructor-selector";
 import {TIngredient} from "../../../utils/types";
-import {useDispatch2, useSelector2} from "../../../services/store";
+import {useDispatchApp, useSelectorApp} from "../../../services/store";
 import {Identifier} from "dnd-core";
 
 export type TSelectedIngredientOther = {
@@ -46,8 +46,8 @@ type TDropCollectedProps = {
 }
 
 export function ConstructorItem({moveCard, index, id, currentItem}: TConstructorItem): JSX.Element {
-  const dispatch = useDispatch2();
-  const {other} = useSelector2(selectBurgerConstructor)
+  const dispatch = useDispatchApp();
+  const {other} = useSelectorApp(selectBurgerConstructor)
 
   function deleteCard(idItem: string) {
     dispatch(deleteFilling(idItem))

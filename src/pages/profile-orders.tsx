@@ -7,15 +7,15 @@ import {
 import {connectProfile, disconnectProfile, WebsocketStatus} from "../utils/config-ws";
 import {Preloader} from "../components/preloader/preloader";
 import {Text} from "../components/typography/text/text";
-import {useDispatch2, useSelector2} from "../services/store";
+import {useDispatchApp, useSelectorApp} from "../services/store";
 
 export function ProfileOrders():JSX.Element {
 
-  const dispatch = useDispatch2();
+  const dispatch = useDispatchApp();
   const token = localStorage.getItem("accessToken")?.slice(7) ?? ""
 
-  const data = useSelector2(selectorProfileOrdersData)
-  const status = useSelector2(selectorProfileOrdersStatus)
+  const data = useSelectorApp(selectorProfileOrdersData)
+  const status = useSelectorApp(selectorProfileOrdersStatus)
   const isDisconnected = status !== WebsocketStatus.ONLINE
 
   React.useEffect(() => {

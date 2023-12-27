@@ -11,7 +11,7 @@ import {addFilling, chooseBun} from "../../services/burger-constructor/burger-co
 import {useNavigate} from "react-router-dom";
 import {user, userAuth} from "../../services/user/user-selector";
 import {TIngredient, TOrderIngredients} from "../../utils/types";
-import {useDispatch2, useSelector2} from "../../services/store";
+import {useDispatchApp, useSelectorApp} from "../../services/store";
 
 type TDropObject =  TIngredient
 
@@ -22,7 +22,7 @@ type TDropCollectedProps = {
 
 
 export function BurgerConstructor(): JSX.Element {
-  const dispatch = useDispatch2();
+  const dispatch = useDispatchApp();
   const navigate = useNavigate()
   const onDropHandler = (ingredient:TIngredient) => {
     if (ingredient.type === "bun") {
@@ -44,12 +44,12 @@ export function BurgerConstructor(): JSX.Element {
   });
 
   const borderColor = isHover ? stylesConstr.borderLightgreen : (isCanD ? stylesConstr.borderLightgreen2 : stylesConstr.borderTransparent);
-  const isAuthChecked = useSelector2(userAuth)
-  const isUser = useSelector2(user)
+  const isAuthChecked = useSelectorApp(userAuth)
+  const isUser = useSelectorApp(user)
 
-  const bun = useSelector2(selectBun)
+  const bun = useSelectorApp(selectBun)
   const {name, image, price, _id} = {...bun}
-  const other = useSelector2(selectOther)
+  const other = useSelectorApp(selectOther)
 
   function getListIdIngredients():TOrderIngredients {
     const idBun = [_id!];

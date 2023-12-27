@@ -60,7 +60,6 @@ export function loadBurgerIngredients(): AppThunk {
     dispatch(getIngredientsRequest());
     getIngredients()
       .then(res => {
-        console.log("brg", res)
         dispatch(getIngredientsSuccess(res.data));
       })
       .catch(() => {

@@ -2,7 +2,7 @@ import {Navigate, useLocation, useMatch, useParams} from "react-router-dom";
 import styles from "./order-info.module.css";
 import {IngredientsItems} from "./ingredients-items/ingredients-items";
 import React from "react";
-import {WebsocketStatus} from "../../utils/config-ws";
+import {connectFeed, connectProfile, disconnectFeed, disconnectProfile, WebsocketStatus} from "../../utils/config-ws";
 import {orderDetails} from "../../services/order-details/order-details-selectors";
 import {clearOrderDetails, getInfoOrderDetails} from "../../services/order-details/order-details-actions";
 import {pagePath} from "../../utils/constants";
@@ -17,7 +17,7 @@ import {
 } from "../../services/feed-orders-profile/feed-orders-selector";
 import {selectorFeedOrdersData, selectorFeedOrdersStatus} from "../../services/feed-orders/feed-orders-selector";
 import {COLOR_SUCCESS, DISPLAY_SMALL, TOrder} from "../../utils/types";
-import {useDispatch2, useSelector2} from "../../services/store";
+import {useDispatchApp, useSelectorApp} from "../../services/store";
 
 /**
  * карточка с деталями заказа OrderInfo
@@ -25,7 +25,7 @@ import {useDispatch2, useSelector2} from "../../services/store";
 export function OrderInfo(): JSX.Element {
 
 
-  const dispatch = useDispatch2();
+  const dispatch = useDispatchApp();
 
   const params = useParams()
   const idCurrentItem = params.id
@@ -34,12 +34,12 @@ export function OrderInfo(): JSX.Element {
   const background = location.state && location.state.background;
 
   const isFeed = useMatch({path: pagePath.feed, end: false});
+  const isProfile = useMatch({path: pagePath.profile, end: false});
 
-
-  const dataFeedProfile = useSelector2(selectorProfileOrdersData)
-  const statusFeedProfile = useSelector2(selectorProfileOrdersStatus)
-  const dataFeed = useSelector2(selectorFeedOrdersData)
-  const statusFeed = useSelector2(selectorFeedOrdersStatus)
+  const dataFeedProfile = useSelectorApp(selectorProfileOrdersData)
+  const statusFeedProfile = useSelectorApp(selectorProfileOrdersStatus)
+  const dataFeed = useSelectorApp(selectorFeedOrdersData)
+  const statusFeed = useSelectorApp(selectorFeedOrdersStatus)
 
   let data = dataFeedProfile
   let status = statusFeedProfile
@@ -53,7 +53,7 @@ export function OrderInfo(): JSX.Element {
 
   const isDisconnected = status !== WebsocketStatus.ONLINE
 
-  const {orderRequest, order: orderRest} = useSelector2(orderDetails)
+  const {orderRequest, order: orderRest} = useSelectorApp(orderDetails)
 
   const order = React.useMemo(() => {
 
@@ -74,6 +74,26 @@ export function OrderInfo(): JSX.Element {
     return findOrderWS ? findOrderWS : findOrderRest
   }, [data, orderRest])
 
+
+  React.useEffect(() => {
+    if (isFeed && isDisconnected) {
+      dispatch(connectFeed());
+      return () => {
+        dispatch(disconnectFeed())
+      }
+    } else if (isProfile && isDisconnected) {
+
+      const token = localStorage.getItem("accessToken")?.slice(7) ?? ""
+      dispatch(connectProfile(token));
+      return () => {
+        dispatch(disconnectProfile());
+      }
+    }
+  }, []);
+
+
+
+
   React.useEffect(() => {
     if (!order && idCurrentItem) {
       dispatch(getInfoOrderDetails(idCurrentItem))
@@ -91,8 +111,6 @@ export function OrderInfo(): JSX.Element {
   }
 
   const styleCard = background ? styles.cardOrder3 : styles.cardOrder2
-
-  console.log(order)
 
   if (order) {
 

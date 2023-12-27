@@ -6,15 +6,15 @@ import {
    selectorFeedOrdersDoneOrdersNumber, selectorFeedOrdersProgressOrdersNumber,
   selectorFeedOrdersTotal, selectorFeedOrdersTotalToday
 } from "../../services/feed-orders/feed-orders-selector";
-import {useSelector2} from "../../services/store";
+import {useSelectorApp} from "../../services/store";
 
 export function Stats():JSX.Element {
 
-  const total = useSelector2(selectorFeedOrdersTotal) ?? 0
-  const totalToday = useSelector2(selectorFeedOrdersTotalToday) ?? 0
+  const total = useSelectorApp(selectorFeedOrdersTotal) ?? 0
+  const totalToday = useSelectorApp(selectorFeedOrdersTotalToday) ?? 0
 
-  const ordersListDone = useSelector2(selectorFeedOrdersDoneOrdersNumber)  ?? []
-  const ordersListProgress = useSelector2(selectorFeedOrdersProgressOrdersNumber) ?? []
+  const ordersListDone = useSelectorApp(selectorFeedOrdersDoneOrdersNumber)  ?? []
+  const ordersListProgress = useSelectorApp(selectorFeedOrdersProgressOrdersNumber) ?? []
 
   return (
     <div className={styles.stats}>

@@ -3,13 +3,13 @@ import {selectBun, selectOther} from "../../../services/burger-constructor/burge
 import {DIGITS_MEDIUM} from "../../../utils/types";
 import {TSelectedIngredientOther} from "../constructor-item/constructor-item";
 import {Digits} from "../../typography/digits/digits";
-import {useSelector2} from "../../../services/store";
+import {useSelectorApp} from "../../../services/store";
 
 
 export function TotalPrice():JSX.Element {
 
-  const bun = useSelector2(selectBun)
-  const other:Array<TSelectedIngredientOther> = useSelector2(selectOther)
+  const bun = useSelectorApp(selectBun)
+  const other:Array<TSelectedIngredientOther> = useSelectorApp(selectOther)
 
   const numberOtherIngredients = other.length
 

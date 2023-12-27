@@ -4,15 +4,12 @@ import {Link, Outlet, useLocation, useMatch} from "react-router-dom";
 import React from "react";
 import {userName} from "../services/user/user-selector";
 import {pagePath} from "../utils/constants";
-import {useSelector2} from "../services/store";
+import {useSelectorApp} from "../services/store";
 export function AppLayout():JSX.Element {
 
   const location = useLocation();
   const isProfile = useMatch({path: pagePath.profile, end: false})
-  console.log({isProfile})
-  console.log({isProfile})
-  console.log({location})
-  const nameUser = useSelector2(userName)
+  const nameUser = useSelectorApp(userName)
 
   const active = (to:string) => {
 

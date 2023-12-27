@@ -10,7 +10,7 @@ import {InputEmail} from "../components/form-container/inputs/input-email";
 import {TFormInputs, TFormInputsValue, useForm} from "../hooks/useForm";
 import {Text} from "../components/typography/text/text";
 import {DISPLAY_SMALL} from "../utils/types";
-import {useDispatch2, useSelector2} from "../services/store";
+import {useDispatchApp, useSelectorApp} from "../services/store";
 
 export enum Inputs1 {
   emailInput,
@@ -19,10 +19,10 @@ export enum Inputs1 {
 export type TNameInputs = keyof typeof Inputs1
 
 export function ForgotPassword():JSX.Element {
-  const dispatch = useDispatch2();
+  const dispatch = useDispatchApp();
   const navigate = useNavigate();
-  const openErrModal = useSelector2(isOpenErrorModal)
-  const textErrorModal = useSelector2(errorModalText)
+  const openErrModal = useSelectorApp(isOpenErrorModal)
+  const textErrorModal = useSelectorApp(errorModalText)
   const formElement:React.RefObject<HTMLFormElement> = React.createRef()
 
   const formInputs:TFormInputs<TNameInputs> = {

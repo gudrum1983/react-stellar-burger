@@ -7,7 +7,7 @@ import {InputEmail} from "../components/form-container/inputs/input-email";
 import {InputName} from "../components/form-container/inputs/input-name";
 import {InputPassword} from "../components/form-container/inputs/input-password";
 import {IField, TFormInputs, TFormInputsValue, useForm} from "../hooks/useForm";
-import {useDispatch2, useSelector2} from "../services/store";
+import {useDispatchApp, useSelectorApp} from "../services/store";
 
 export enum Inputs1 {
   passwordInput,
@@ -19,9 +19,9 @@ export type TNameInputs = keyof typeof Inputs1
 
 export function ProfileEdit():JSX.Element {
 
-  const dispatch = useDispatch2();
-  const nameValueTest = useSelector2(userName)
-  const emailValueTest = useSelector2(userMail)
+  const dispatch = useDispatchApp();
+  const nameValueTest = useSelectorApp(userName)
+  const emailValueTest = useSelectorApp(userMail)
 
   const formElement:React.RefObject<HTMLFormElement> = React.createRef()
 

@@ -60,8 +60,7 @@ export const updateUser = ({email, name, password}:TValuesInput):AppThunk => {
 export const logout = ():AppThunk => {
   return (dispatch) => {
     return configUserApi.logout()
-      .then((res) => {
-        console.log("logout", res)
+      .then(() => {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
         dispatch(clearUser());

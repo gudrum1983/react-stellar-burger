@@ -39,7 +39,6 @@ export const fetchWithRefresh =  async <T>(endpoint: string, options: RequestIni
     if (err && typeof err === 'object' && "message" in err) {
       if (err.message === "jwt expired") {
         const refreshData = await authToken();
-        console.log()
         if (!refreshData.success) {
           return Promise.reject(refreshData);
         }

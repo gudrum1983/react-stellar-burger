@@ -7,7 +7,7 @@ import {Link, useLocation} from "react-router-dom";
 import {TIngredient} from "../../../utils/types";
 import {Text} from "../../typography/text/text";
 import {Digits} from "../../typography/digits/digits";
-import {useSelector2} from "../../../services/store";
+import {useSelectorApp} from "../../../services/store";
 
 type TPropsIngredient = {
   currentItem:TIngredient;}
@@ -26,7 +26,7 @@ export function Ingredient({currentItem}:TPropsIngredient):JSX.Element {
     item: currentItem,
   });
 
-  const count = useSelector2(selectCount(id, type))
+  const count = useSelectorApp(selectCount(id, type))
   const canDraggable = (type !== "bun") ? true : !(count)
   const cursorStyle = !canDraggable ? 'cursor_type_noGrab' : ''
 

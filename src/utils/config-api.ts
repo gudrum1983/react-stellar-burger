@@ -16,7 +16,6 @@ const checkResponse = async <T>(res: Response): Promise<T> => {
   if (res.ok) {
     const resJson = await res.json()
     if (resJson && typeof resJson === 'object' && "success" in resJson) {
-      console.log({resJson});
       if (resJson.success) {
         return resJson;
       }

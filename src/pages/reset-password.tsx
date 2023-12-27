@@ -13,7 +13,7 @@ import {TFormInputs, TFormInputsValue, useForm} from "../hooks/useForm";
 import {pagePath} from "../utils/constants";
 import {Text} from "../components/typography/text/text";
 import {DISPLAY_SMALL} from "../utils/types";
-import {useDispatch2, useSelector2} from "../services/store";
+import {useDispatchApp, useSelectorApp} from "../services/store";
 
 export enum Inputs1 {
   passwordInput,
@@ -23,10 +23,10 @@ export enum Inputs1 {
 export type TNameInputs = keyof typeof Inputs1
 
 export function ResetPassword():JSX.Element {
-  const dispatch = useDispatch2();
+  const dispatch = useDispatchApp();
   const navigate = useNavigate();
-  const textErrorModal = useSelector2(errorModalText)
-  const openErrModal = useSelector2(isOpenErrorModal)
+  const textErrorModal = useSelectorApp(errorModalText)
+  const openErrModal = useSelectorApp(isOpenErrorModal)
 
 
   const formElement :React.RefObject<HTMLFormElement> = React.createRef()

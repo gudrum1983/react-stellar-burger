@@ -8,17 +8,17 @@ import {errorModalText, isOpenErrorModal} from "../services/error-modal/error-mo
 import {pagePath} from "../utils/constants";
 import {Text} from "../components/typography/text/text";
 import {COLOR_INACTIVE, DISPLAY_SMALL} from "../utils/types";
-import {useDispatch2, useSelector2} from "../services/store";
+import {useDispatchApp, useSelectorApp} from "../services/store";
 
 export const ProfileLayout = () => {
 
-  const dispatch = useDispatch2();
+  const dispatch = useDispatchApp();
 
   const handleErrorModalClose = () => {
     dispatch(closeErrorModal());
   };
-  const openErrModal = useSelector2(isOpenErrorModal)
-  const textErrorModal = useSelector2(errorModalText)
+  const openErrModal = useSelectorApp(isOpenErrorModal)
+  const textErrorModal = useSelectorApp(errorModalText)
 
   function handleClick(e: React.MouseEvent<HTMLButtonElement>): void {
     e.preventDefault();

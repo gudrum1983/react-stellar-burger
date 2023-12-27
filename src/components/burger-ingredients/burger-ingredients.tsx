@@ -6,7 +6,7 @@ import {IngredientsTypeList} from "./ingredients-type-list/ingredients-type-list
 import {burgerIngredientsArray} from "../../services/burger-ingredients/burger-ingredients-selector";
 import {Text} from "../typography/text/text";
 import {DISPLAY_LARGE, TIngredient, TTypeIngredients, typeIngredients} from "../../utils/types";
-import {useSelector2} from "../../services/store";
+import {useSelectorApp} from "../../services/store";
 
 type TFilteredIngredients = {
   buns:   Array<TIngredient> | [],
@@ -16,7 +16,7 @@ type TFilteredIngredients = {
 
 export function BurgerIngredients():JSX.Element {
 
-  const ingredients:Array<TIngredient> = useSelector2(burgerIngredientsArray)
+  const ingredients:Array<TIngredient> = useSelectorApp(burgerIngredientsArray)
   const filtered = (type:TTypeIngredients):Array<TIngredient> => {
     return ingredients.filter((item) => item.type === type);
   }

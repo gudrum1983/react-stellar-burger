@@ -5,7 +5,7 @@ import React from "react";
 import {Text} from "../typography/text/text";
 import {COLOR_INACTIVE, DISPLAY_LARGE, TIngredient} from "../../utils/types";
 import {Digits} from "../typography/digits/digits";
-import {useSelector2} from "../../services/store";
+import {useSelectorApp} from "../../services/store";
 
 
 export function IngredientDetails(): JSX.Element {
@@ -13,7 +13,7 @@ export function IngredientDetails(): JSX.Element {
   const params = useParams()
   const location = useLocation()
   const background = location.state && location.state.background;
-  const ingredients: Map<string, TIngredient> = useSelector2(burgerIngredientsMap)
+  const ingredients: Map<string, TIngredient> = useSelectorApp(burgerIngredientsMap)
   const idCurrentItem = params.id
 
   if (!!idCurrentItem) {

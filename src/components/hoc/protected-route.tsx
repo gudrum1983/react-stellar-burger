@@ -2,7 +2,7 @@ import {Navigate, useLocation} from "react-router-dom";
 import {pagePath} from "../../utils/constants";
 import {user, userAuth} from "../../services/user/user-selector";
 import {Preloader} from "../preloader/preloader";
-import {useSelector2} from "../../services/store";
+import {useSelectorApp} from "../../services/store";
 
 type TPropsProtected = {
   onlyUnAuth?: boolean;
@@ -15,8 +15,8 @@ const ProtectedRouteElement = ({onlyUnAuth = false, component}: TPropsProtected)
   // isAuthChecked это флаг, показывающий что проверка токена произведена
   // при этом результат этой проверки не имеет значения, важно только,
   // что сам факт проверки имел место.
-  const isAuthChecked = useSelector2(userAuth);
-  const isUser = !!useSelector2(user);
+  const isAuthChecked = useSelectorApp(userAuth);
+  const isUser = !!useSelectorApp(user);
   const location = useLocation();
 
   if (!isAuthChecked) {

@@ -2,7 +2,7 @@ import React, {FC} from "react";
 import {IngredientPreview} from "../../ingredient-preview/ingredient-preview";
 import {burgerIngredientsMap} from "../../../services/burger-ingredients/burger-ingredients-selector";
 import {TPropsIngredients} from "../../../utils/types";
-import {useSelector2} from "../../../services/store";
+import {useSelectorApp} from "../../../services/store";
 
 /**
  * Список ингредиентов в карточке заказа CardOrder
@@ -12,7 +12,7 @@ import {useSelector2} from "../../../services/store";
  */
 export const Ingredients: FC<TPropsIngredients> = ({ingredient, index, count}):JSX.Element | null => {
 
-  const mapIngredients = useSelector2(burgerIngredientsMap)
+  const mapIngredients = useSelectorApp(burgerIngredientsMap)
   const isIngredients = mapIngredients.get(ingredient)
 
   if (isIngredients) {

@@ -21,19 +21,19 @@ import {OrderInfo} from "../order-info/order-info";
 import {ProfileOrders} from "../../pages/profile-orders";
 
 import {pagePath} from "../../utils/constants";
-import {useDispatch2, useSelector2} from "../../services/store";
+import {useDispatchApp, useSelectorApp} from "../../services/store";
 
 
 export default function App(): JSX.Element {
 
-  const dispatch = useDispatch2();
+  const dispatch = useDispatchApp();
 
   React.useEffect(() => {
     dispatch(checkUserAuth());
     dispatch(loadBurgerIngredients())
   }, []);
 
-  const {ingredients, isLoading, hasError} = useSelector2(burgerIngredients);
+  const {ingredients, isLoading, hasError} = useSelectorApp(burgerIngredients);
   const location = useLocation()
 
   const navigate = useNavigate()

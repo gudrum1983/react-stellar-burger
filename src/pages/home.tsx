@@ -9,14 +9,14 @@ import {clearOrderDetails} from "../services/order-details/order-details-actions
 import { orderDetailsFailed, orderDetailsInfo, orderDetailsRequest } from "../services/order-details/order-details-selectors";
 import {Text} from "../components/typography/text/text";
 import {DISPLAY_SMALL} from "../utils/types";
-import {useDispatch2, useSelector2} from "../services/store";
+import {useDispatchApp, useSelectorApp} from "../services/store";
 
 export function Home():JSX.Element {
 
-  const dispatch = useDispatch2();
-  const orderRequest = useSelector2(orderDetailsRequest)
-  const orderFailed = useSelector2(orderDetailsFailed)
-  const order = useSelector2(orderDetailsInfo)
+  const dispatch = useDispatchApp();
+  const orderRequest = useSelectorApp(orderDetailsRequest)
+  const orderFailed = useSelectorApp(orderDetailsFailed)
+  const order = useSelectorApp(orderDetailsInfo)
   const number = order?.number
 
   function handleCloseModal():void {
