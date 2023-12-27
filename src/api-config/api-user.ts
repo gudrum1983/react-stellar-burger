@@ -39,7 +39,6 @@ type MessageLogout = {
 export type MessageOrder = {
   success: boolean;
   orders: Array<TOrder>;
-  /*  data?: Array<TOrder>;*/
 }
 
 
@@ -63,18 +62,6 @@ const getUser = (): Promise<MessageGetUser> => {
     )
   }
 ;
-
-/*const getUser = (): Promise<MessageGetUser> => {
-  const accessToken: string | null = localStorage.getItem("accessToken");
-  return request(ENDPOINTS.authUser, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: accessToken!,
-    },
-  });
-};*/
-
 
 /**
  * Функция запрос к АПИ для обновления данных пользователя
