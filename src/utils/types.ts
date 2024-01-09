@@ -17,34 +17,6 @@ export type TPropsCardOrder = {
 
 export type TSelectorOrders = Array<TOrder> | undefined;
 
-/*export type TOrder = {
-  _id: string;
-  status: TStatusOrder;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-  number: number
-  ingredients: TOrderIngredients
-};
-
-export type TReadyOrder = {
-  _id: string;
-  status: TStatusOrder;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-  number: number;
-  ingredients: Array<TOrderIngredients>;
-
-  owner: {
-    name: string;
-    email: string;
-    createdAt: string;
-    updatedAt: string;
-  },
-  price: number;
-}*/
-
 export type TOrder = {
   _id: string;
   status: TStatusOrder;
@@ -135,12 +107,6 @@ export enum typeIngredients {
   sauce = 'sauce',
   main = 'main',
 }
-
-/*enum typeIngredients2 {
-  bun = "Булки",
-  sauce = "Соусы",
-  main = "Начинки",
-}*/
 
 export type TTypeIngredients = keyof typeof typeIngredients
 

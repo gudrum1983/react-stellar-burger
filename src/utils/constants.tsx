@@ -25,21 +25,21 @@ export const sizesText = {
 }
 
 export const pagePath = {
-  home: "/",
-  ingredientsInfo: "/ingredients/:id",
-  login: "login",
-  loginAbsolut: "/login",
-  register: "register",
-  forgotPassword: "forgot-password",
-  resetPassword: "reset-password",
-  profile: "profile",
-  profileFull: "/profile",
-  profileOrdersFull: "profile/orders",
-  profileOrdersShort: "orders",
-  feed: "/feed",
-  orderInfoFeed: "/feed/:id",
-  orderInfoProfile: "/profile/orders/:id",
-  otherPages: "*",
+  home: "/" as const,
+  ingredientsInfo: "/ingredients/:id" as const,
+  login: "login" as const,
+  loginAbsolut: "/login" as const,
+  register: "register" as const,
+  forgotPassword: "forgot-password" as const,
+  resetPassword: "reset-password" as const,
+  profile: "profile" as const,
+  profileFull: "/profile" as const,
+  profileOrdersFull: "profile/orders" as const,
+  profileOrdersShort: "orders" as const,
+  feed: "/feed" as const,
+  orderInfoFeed: "/feed/:id" as const,
+  orderInfoProfile: "/profile/orders/:id" as const,
+  otherPages: "*" as const,
 }
 
 /**

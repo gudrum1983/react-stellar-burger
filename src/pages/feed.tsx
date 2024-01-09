@@ -11,7 +11,7 @@ import {Preloader} from "../components/preloader/preloader";
 import {DISPLAY_LARGE, DISPLAY_SMALL} from "../utils/types";
 import {useDispatchApp, useSelectorApp} from "../services/store";
 
-export function Feed():JSX.Element {
+export function Feed(): JSX.Element {
 
   const dispatch = useDispatchApp();
   const openErrModal = useSelectorApp(isOpenErrorModal)
@@ -21,7 +21,7 @@ export function Feed():JSX.Element {
   const data = useSelectorApp(selectorFeedOrdersData)
   const isDisconnected = status !== WebsocketStatus.ONLINE
 
-  const handleErrorModalClose = ():void => {
+  const handleErrorModalClose = (): void => {
     dispatch(closeErrorModal());
   };
 
@@ -32,7 +32,11 @@ export function Feed():JSX.Element {
     }
   }, []);
 
-  if (!isDisconnected && data) {  return (
+  if (isDisconnected && !data) {
+    return <Preloader/>
+  }
+
+  return (
     <>
       <section className={'pl-5 pr-5 half-home'}>
         <Text size={DISPLAY_LARGE} extraClass="pb-5">Лента заказов</Text>
@@ -46,7 +50,5 @@ export function Feed():JSX.Element {
           <Text size={DISPLAY_SMALL}>{textErrorModal}</Text>
         </Modal>}
     </>
-  )} else {
-    return <Preloader/>
-  }
+  )
 }

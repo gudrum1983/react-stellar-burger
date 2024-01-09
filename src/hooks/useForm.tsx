@@ -34,7 +34,6 @@ export const useForm = (initialFields:ICustomObject):IForm => {
 
   const form:ICustomObject = Object.entries<IField>(initialFields).reduce((fields:{}, [name, value]) => {
 
-
     const field:IField = {
       [name]: {
         value: ((value.value) || ''),
