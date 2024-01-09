@@ -35,7 +35,7 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-image: url("../src/images/404.svg");
+  background-image: url("vendor/images/404.svg");
 }
 
 
