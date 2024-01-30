@@ -2,7 +2,7 @@
   "name": "react-burger-starter",
   "version": "0.1.0",
   "private": true,
-  "homepage": "./",
+  "homepage": "https://gudrum1983.github.io/react-stellar-burger/",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
     "@ya.praktikum/react-developer-burger-ui-components": "^1.14.0",
