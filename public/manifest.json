@@ -19,7 +19,6 @@
     }
   ],
   "start_url": ".",
-  "homepage_url": "https://gudrum1983.github.io/react-stellar-burger/",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"
