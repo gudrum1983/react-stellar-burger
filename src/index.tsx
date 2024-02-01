@@ -14,7 +14,7 @@ import {BrowserRouter} from "react-router-dom";
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter basename='/react-stellar-burger'>
+      <BrowserRouter basename={process.env.PUBLIC_URL ?  process.env.PUBLIC_URL :'/'  }>
       <App />
         </BrowserRouter>
     </Provider>
