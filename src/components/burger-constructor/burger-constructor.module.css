@@ -16,7 +16,7 @@
 
 .list {
   width: 100%;
-  align-items: end;
+  align-items: flex-end;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -25,7 +25,7 @@
 
 .price {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
 }
 

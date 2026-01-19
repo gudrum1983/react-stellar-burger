@@ -295,7 +295,7 @@ text-decoration: none;
   width: fit-content;
   display: flex;
   flex-direction: row;
-  justify-self: end;
+  justify-self: flex-end;
   margin-left: auto;
 }
 
